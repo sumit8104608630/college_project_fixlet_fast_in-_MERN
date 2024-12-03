@@ -4,6 +4,7 @@
   "description": "backend for my fixlet fast project",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon src/index.js"
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -13,5 +14,8 @@
     "fast"
   ],
   "author": "Sumit Sharma",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^3.1.7"
+  }
 }
