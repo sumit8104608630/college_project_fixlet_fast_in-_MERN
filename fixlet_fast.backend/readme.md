@@ -7,3 +7,6 @@ while doing this project we will learn lot so to high light them we will using s
 
 * dev dependencies  it is used by developer which will in the development phase only not in production 
 * dependencies it is used by application which will be in production and development phase
+
+
+* app.use is mostly use for middleware

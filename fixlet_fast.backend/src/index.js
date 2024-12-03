@@ -5,6 +5,9 @@ const {app}=require("../src/app");
 
 // doing connection to database  
 connection_database().then(()=>
+    app.on("error",(error)=>{
+        console.log(error);
+    }),
     app.listen(process.env.PORT||8000,()=>{
         console.log(`server is running on port ${process.env.PORT}`)
     }),
