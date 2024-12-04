@@ -68,19 +68,21 @@ userSchema.static("matchPasswordGenerateToken",async function(email,password){
     const user=await this.findOne({email:email})
     // check if user exist or not
     if(!user){
-        return new Error("user does not exist");
+        return;
     }
     // check if password is correct or not
     const salt=user.salt;
     const hashAlgorithm=createHmac("sha256",salt).update(password).digest("hex");
     // check if password is correct or not
     if(hashAlgorithm!==user.password){
-        return new Error("password is incorrect");
+        throw new Error("Password is incorrect");
     }
     // generate token
     const token=setUser(user);
     return token;
 })
+
+
 
 // let's export the model 
 const User=mongoose.model("User",userSchema);
