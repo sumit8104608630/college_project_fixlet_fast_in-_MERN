@@ -2,7 +2,6 @@
 require("dotenv").config({path:'./.env'});
 const {connection_database}=require("../db/connect")
 const {app}=require("../src/app");
-
 // doing connection to database  
 connection_database().then(()=>
     app.on("error",(error)=>{

@@ -1,3 +1,4 @@
+const cors=require("cors")
 // let's create the app with the help of express
 // first we will initialize the express
 const express=require("express")
@@ -10,7 +11,7 @@ app.use(cors({
     credential:true,
 }))
 // let set the file type which  we will except and give
-app.use(express.json())
+app.use(express.json({limit:"1mb"}));
 //let use urlencoded
 app.use(express.urlencoded({extended:true,limit:"16kb"}))
 // let set static folder for the image 
