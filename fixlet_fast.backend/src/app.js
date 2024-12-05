@@ -18,5 +18,15 @@ app.use(express.urlencoded({extended:true,limit:"16kb"}))
 app.use(express.static("public"))
 // let set the cookie-parser
 app.use(cookieParser());
+
+
+
+// let's get the user route and use some url path as middleware for the user route 
+// let's use it
+const userRoute=require("../routes/user.routes.js");
+
 //export this app
+app.use("/user",userRoute);
+
+
 module.exports = {app}
