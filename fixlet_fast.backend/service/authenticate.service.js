@@ -13,8 +13,23 @@ const setUser=(user)=>{
         email:user.email,
         role:user.role
     };
-    const token=jwt.sign(payLoad,secret);
+    const token=jwt.sign(payLoad,secret,{
+        expiresIn:process.env.EXPIRE
+    });
     return token;
+}
+const refreshToken=async(user)=>{
+    if(!user){
+        return {error:"user not found"};
+    }
+    const payLoad={
+        id:user._id,
+    };
+    const refresh_token=jwt.sign(payLoad,process.env.REFRESH_TOKEN_SECRET,{
+        expiresIn:process.env.REFRESH_EXPIRE
+    });
+    return refresh_token;
+    
 }
 
 // let's write the code for getUser function 
@@ -39,5 +54,6 @@ const getUser=async (token)=>{
 
 module.exports={
     setUser,
-    getUser
+    getUser,
+    refreshToken
 }

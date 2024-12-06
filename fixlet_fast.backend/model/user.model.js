@@ -1,6 +1,6 @@
 const mongoose=require("mongoose");
 const {createHmac,randomBytes} = require('node:crypto');
-const {setUser}=require("../service/authenticate.service.js")
+const {setUser,refreshToken}=require("../service/authenticate.service.js")
 
 
 // let's create schema for user or you can say table 
@@ -64,22 +64,27 @@ userSchema.pre('save',async function(next){
 // let's create function 
 // IMP Don't ever use arrow function whenever you dealing with this key word
 userSchema.static("matchPasswordGenerateToken",async function(email,password){
-    // get the user
-    const user=await this.findOne({email:email})
-    // check if user exist or not
-    if(!user){
-        return;
-    }
-    // check if password is correct or not
-    const salt=user.salt;
-    const hashAlgorithm=createHmac("sha256",salt).update(password).digest("hex");
-    // check if password is correct or not
-    if(hashAlgorithm!==user.password){
-        throw new Error("Password is incorrect");
-    }
-    // generate token
-    const token=setUser(user);
-    return token;
+try {
+        // get the user
+        const user=await this.findOne({email:email})
+        // check if user exist or not
+        if(!user){
+            throw new Error("User not found");
+        }
+        // check if password is correct or not
+        const salt=user.salt;
+        const hashAlgorithm=createHmac("sha256",salt).update(password).digest("hex");
+        // check if password is correct or not
+        if(hashAlgorithm!==user.password){
+            throw new Error("Password is incorrect");
+        }
+        // generate token
+        const token=setUser(user);
+        const refresh_token=refreshToken( user);
+        return {token,refresh_token};
+} catch (error) {
+    throw new Error(error.message);
+}
 })
 
 
