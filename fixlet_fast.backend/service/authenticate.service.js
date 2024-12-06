@@ -1,7 +1,6 @@
 // let's get the jwt 
 const jwt=require("jsonwebtoken");
 const secret=process.env.SECRET;
-const User=require("../model/user.model.js")
 
 const setUser=(user)=>{
     if(!user){

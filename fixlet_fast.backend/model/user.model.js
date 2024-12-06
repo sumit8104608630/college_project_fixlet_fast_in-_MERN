@@ -80,7 +80,7 @@ try {
         }
         // generate token
         const token=setUser(user);
-        const refresh_token=refreshToken( user);
+        const refresh_token=refreshToken(user);
         return {token,refresh_token};
 } catch (error) {
     throw new Error(error.message);

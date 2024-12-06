@@ -95,7 +95,7 @@ const userLogin=asyncHandler(async(req,res)=>{
     }
 });
 
-// let's create the functionality of logout 
+// let's create the functionality of logout  
 const userLogout=asyncHandler(async(req,res)=>{
     try{
         const {_id}=req.user._id;

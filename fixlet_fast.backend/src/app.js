@@ -21,7 +21,7 @@ app.use(express.static("public"))
 // let set the cookie-parser
 app.use(cookieParser());
 //let's use authentication middleWare
-app.use(app.use(checkAuthenticationCookie("token")))
+app.use(checkAuthenticationCookie("token"));
 
 
 
