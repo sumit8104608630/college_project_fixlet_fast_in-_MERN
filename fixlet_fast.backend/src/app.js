@@ -6,6 +6,8 @@ const express=require("express")
 const cookieParser = require("cookie-parser");
 //creating app
 const app=express();
+const {checkAuthenticationCookie}=require("../middlewares/authenticate.middleware.js")
+
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
     credential:true,
@@ -18,6 +20,8 @@ app.use(express.urlencoded({extended:true,limit:"16kb"}))
 app.use(express.static("public"))
 // let set the cookie-parser
 app.use(cookieParser());
+//let's use authentication middleWare
+app.use(app.use(checkAuthenticationCookie("token")))
 
 
 

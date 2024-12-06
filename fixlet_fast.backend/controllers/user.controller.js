@@ -89,6 +89,27 @@ const userLogin=asyncHandler(async(req,res)=>{
             },
             "user logged in successfully"
         ))
+    }
+    catch(error){
+        console.log(error);
+    }
+});
+
+// let's create the functionality of logout 
+const userLogout=asyncHandler(async(req,res)=>{
+    try{
+        const {_id}=req.user._id;
+        await  User.findByIdAndUpdate(_id,{
+         $set:{   refreshToken:undefined}
+        });
+
+        res.status(200).clearCookie('token',{
+            httpOnly:true,
+            secure:true,
+        }).clearCookie('refreshToken',{
+                httpOnly:true,
+                secure:true,
+        }).json(new  ApiResponse(200,"logout successfully"));
 
     }
     catch(error){
@@ -98,6 +119,7 @@ const userLogin=asyncHandler(async(req,res)=>{
 
  module.exports={
     userRegister,
-    userLogin
+    userLogin,
+    userLogout
  }
 
