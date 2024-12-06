@@ -44,7 +44,7 @@ const userSchema=mongoose.Schema({
 
 // let's write some functionality to store encrypted password
 // IMP Don't ever use arrow function whenever you dealing with this key word
-userSchema.pre('save',function(next){
+userSchema.pre('save',async function(next){
     // get the user schema
     const user=this;
     // check if password is modified or not
@@ -52,9 +52,9 @@ userSchema.pre('save',function(next){
         return
     }
     // generate salt
-    const salt=randomBytes(16).toString().trim()
+    const salt= randomBytes(16).toString().trim()
     // generate hash
-    const hashAlgorithm=createHmac("sha256",salt).update(user.password).digest("hex")
+    const hashAlgorithm= createHmac("sha256",salt).update(user.password).digest("hex")
     this.salt=salt;
     this.password=hashAlgorithm;
     // next
