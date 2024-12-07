@@ -71,7 +71,7 @@ const userLogin=asyncHandler(async(req,res)=>{
       
         const refresh_token=token?.refresh_token;
         User.refreshToken=refresh_token;
-        await User.save({validateBeforeSave:false});
+        await user.save({validateBeforeSave:false});
         const loginUser=await User.findOne({email}).select("-password -salt -refreshToken");
 
 
@@ -103,7 +103,7 @@ const userLogout=asyncHandler(async(req,res)=>{
          $set:{   refreshToken:undefined}
         });
 
-        res.status(200).clearCookie('token',{
+        res.status(200).clearCookie('accessToken',{
             httpOnly:true,
             secure:true,
         }).clearCookie('refreshToken',{

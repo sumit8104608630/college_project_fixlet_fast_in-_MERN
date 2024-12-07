@@ -79,8 +79,8 @@ try {
             throw new Error("Password is incorrect");
         }
         // generate token
-        const token=setUser(user);
-        const refresh_token=refreshToken(user);
+        const token=await setUser(user);
+        const refresh_token=await refreshToken(user);
         return {token,refresh_token};
 } catch (error) {
     throw new Error(error.message);
