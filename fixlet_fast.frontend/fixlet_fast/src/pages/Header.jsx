@@ -1,14 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link ,NavLink} from 'react-router'
 import logo from "../assets/Symbol-01.png"
 import { BsFillPersonFill } from "react-icons/bs";
 import SearchBar from "../component/Search"
-import { useSelector} from 'react-redux';
+import { useSelector,useDispatch} from 'react-redux';
 import Location from '../component/Location'
+import { fetchUser } from '../app/Actions/user_action';
 
 function Header() {
-
+const dispatch=useDispatch()
 const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
+
+useEffect(()=>{
+  dispatch(fetchUser())
+  return () => {
+    // Cleanup code (optional)
+    console.log("Cleanup function called");
+  };
+},[isLogin])
 
 console.log(isLogin)
   return (
@@ -64,7 +73,7 @@ console.log(isLogin)
             </NavLink>
             </div>
             
-          </div>:""
+          </div>:null
 }
 
         </div>

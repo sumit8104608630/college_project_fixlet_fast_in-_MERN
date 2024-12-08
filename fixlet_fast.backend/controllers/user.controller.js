@@ -70,7 +70,7 @@ const userLogin=asyncHandler(async(req,res)=>{
       const token=await User.matchPasswordGenerateToken(email,password);
       
         const refresh_token=token?.refresh_token;
-        User.refreshToken=refresh_token;
+        user.refreshToken=refresh_token;
         await user.save({validateBeforeSave:false});
         const loginUser=await User.findOne({email}).select("-password -salt -refreshToken");
 
@@ -84,9 +84,9 @@ const userLogin=asyncHandler(async(req,res)=>{
             secure:true,
         }).json(new ApiResponse(
             200,
-            {
-                user:loginUser
-            },
+        
+                loginUser
+            ,
             "user logged in successfully"
         ))
     }

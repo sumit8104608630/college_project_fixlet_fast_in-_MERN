@@ -8,12 +8,13 @@ export const fetchUser=createAsyncThunk(
         try{
             const userResponse = await fetch("http://localhost:8000/user/user_info", {
         method: 'GET',
-       // credentials: 'include'
+        credentials: 'include'
       });
             if(!userResponse){
                 throw new Error("User not found");
             }
-            return userResponse.data;
+            const userData=await userResponse.json()
+            return userData.data
         }
         catch(error){
             return rejectWithValue(error.message)

@@ -52,7 +52,7 @@ console.log(userInfo)
   console.log(data);
 
 
-if(userInfo){
+if(data){
   navigate('/')
 }
 

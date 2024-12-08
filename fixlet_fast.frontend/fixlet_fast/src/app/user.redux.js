@@ -25,7 +25,6 @@ export const authenticationSlice=createSlice({
     extraReducers:(builder)=>{
         builder
         .addCase(fetchUser.pending,(state)=>{
-            state.isLogin=false;
             state.isLoading=true
             state.error=null;
         })
@@ -37,8 +36,8 @@ export const authenticationSlice=createSlice({
         .addCase(fetchUser.rejected,(state,action)=>{
             state.isLoading=false
             state.error=action.payload
-            state.userInfo=null
             state.isLogin=false
+            state.userInfo=null
         })
     }
 })
