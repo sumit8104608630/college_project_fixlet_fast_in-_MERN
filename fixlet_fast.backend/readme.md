@@ -10,3 +10,6 @@ while doing this project we will learn lot so to high light them we will using s
 
 
 * app.use is mostly use for middleware
+
+
+// now let's start with frontend make it login register page with redux

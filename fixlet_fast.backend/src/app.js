@@ -6,10 +6,10 @@ const express=require("express")
 const cookieParser = require("cookie-parser");
 //creating app
 const app=express();
-
+console.log(process.env.CORS_ORIGIN)
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
-    credential:true,
+    credentials:true,
 }))
 // let set the file type which  we will except and give
 app.use(express.json({limit:"1mb"}));

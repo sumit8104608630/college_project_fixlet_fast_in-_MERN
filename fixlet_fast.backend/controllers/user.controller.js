@@ -117,9 +117,30 @@ const userLogout=asyncHandler(async(req,res)=>{
     }
 })
 
+const userInfo=asyncHandler(async(req,res)=>{
+    try{
+    const userInfo=req.user;
+    if(!userInfo){
+        return new ApiResponse(401,"user not found");
+    }
+    res.status(200).json(
+        new ApiResponse(
+            200,
+            userInfo,
+            "user info",
+        )
+    )
+    }
+    catch(error){
+        console.log(error);
+    }
+
+})
+
  module.exports={
     userRegister,
     userLogin,
-    userLogout
+    userLogout,
+    userInfo
  }
 

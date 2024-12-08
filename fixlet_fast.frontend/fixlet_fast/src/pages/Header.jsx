@@ -1,12 +1,23 @@
 import React from 'react'
 import { Link ,NavLink} from 'react-router'
 import logo from "../assets/Symbol-01.png"
+import { BsFillPersonFill } from "react-icons/bs";
+import SearchBar from "../component/Search"
+import { useSelector} from 'react-redux';
+import Location from '../component/Location'
 
 function Header() {
+
+const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
+
+console.log(isLogin)
   return (
-    <div >
-      <nav>
-        <div className='flex justify-between px-5 items-center bg-orange-500'>
+    <div>
+
+      {
+       
+      <nav className='fixed w-full'>
+        <div className='flex justify-between px-5 items-center py-2 bg-orange-500'>
           <div>
             <Link to={"/"}>  
               <img className='w-14' src={logo} alt='logo'></img>
@@ -14,26 +25,31 @@ function Header() {
           </div>
 
           <div>
-            <ul className='flex items-center text-white text-2xl gap-5 font-semibold'>
+            <ul className='flex items-center text-white text-2xl gap-8 font-semibold'>
               <li>
-                <NavLink to="/">
+                <NavLink to="/" className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid" : ""}  hover:text-white after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px]  after:w-0 after:bg-white after:transition-all after:duration-300  hover:after:left-0 hover:after:w-full `}>
                   Home
                 </NavLink>
               </li>
               <li>
-              <NavLink to="/about">
+              <NavLink className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid" : ""}  hover:text-white after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px]  after:w-0 after:bg-white after:transition-all after:duration-300  hover:after:left-0 hover:after:w-full `}to="/about">
                   About
                 </NavLink>
               </li>
               <li>
-              <NavLink className={({isActive})=>`${isActive?"text-white  decoration-solid":"text-white"} hover:text-white`} to="/store">
-                  Store
+              <NavLink className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid" : ""}  hover:text-white after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px]  after:w-0 after:bg-white after:transition-all after:duration-300  hover:after:left-0 hover:after:w-full `}to="/store">
+                   Store
               </NavLink>
               </li>
             </ul>
           </div>
+          
+          <div className="flex gap-5">
+            <Location/>
+           <SearchBar/>
+            </div>
 
-
+{ !isLogin?
           <div className='flex gap-5'>
 
             <div>
@@ -48,11 +64,13 @@ function Header() {
             </NavLink>
             </div>
             
-          </div>
-          
+          </div>:""
+}
 
         </div>
       </nav>
+    }
+
     </div>
   )
 }

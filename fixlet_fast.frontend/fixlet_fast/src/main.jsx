@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import {createBrowserRouter,RouterProvider} from "react-router-dom"
 import './index.css'
+import {Provider} from "react-redux"
 import ServiceDetail from './pages/ServiceDetail.jsx'
 import ServiceDetailPage from './pages/ServiceDetailPage.jsx'
 import Dashbord from './pages/Dashbord.jsx'
@@ -15,6 +16,8 @@ import BookingPage from './pages/BookingPage.jsx'
 import PaymentHistory from './pages/PaymentHistory.jsx'
 import About from './pages/About.jsx'
 import Native from './pages/Native.jsx'
+import store from './app/store.js'
+import Contact from './pages/Contact.jsx'
 
 
 const route=createBrowserRouter([
@@ -69,6 +72,10 @@ const route=createBrowserRouter([
       {
         path:"/store",
         element:<Native/>
+      },
+      {
+        path:"/contact",
+        element:<Contact/>
       }
     ]
   }
@@ -78,8 +85,9 @@ const route=createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <Provider store={store}>
     <RouterProvider router={route}>
-
     </RouterProvider>
+    </Provider>
   </StrictMode>,
 )
