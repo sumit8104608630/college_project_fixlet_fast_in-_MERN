@@ -49,22 +49,24 @@ console.log(userInfo)
       console.log("Error during login:", error);
     }
   };
-  console.log(data);
 
 
-if(data){
-  navigate('/')
-}
+  const isEmpty=(obj)=>Object.keys(obj).length===0;  
+ 
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/');
+    }
+  }, [userInfo,navigate]);
 
 
-useEffect( ()=>{
-  console.log(data)
-  dispatch(fetchUser())
+useEffect(() => {
+  dispatch(fetchUser());
   return () => {
-    // Cleanup code (optional)
     console.log("Cleanup function called");
   };
-}, [data])
+}, [data, dispatch]);
+
 
 
 
@@ -72,7 +74,7 @@ useEffect( ()=>{
 
 
   return (
-    <div className=' w-max md:w-1/2 shadow-gray-300 bg-gray-50 shadow-lg p-5 rounded-lg mb-36 mt-36 '>
+    <div className='    w-max md:w-1/2 shadow-gray-300 bg-gray-50 shadow-lg p-5 rounded-lg mb-36 mt-36 '>
     <div className='flex gap-8'>
       <div className='hidden md:block'>
         <img  src={MyImage} alt='background image' />

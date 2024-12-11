@@ -1,15 +1,26 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link ,NavLink} from 'react-router'
 import logo from "../assets/Symbol-01.png"
 import { BsFillPersonFill } from "react-icons/bs";
 import SearchBar from "../component/Search"
 import { useSelector,useDispatch} from 'react-redux';
 import Location from '../component/Location'
+import { CgProfile } from "react-icons/cg";
 import { fetchUser } from '../app/Actions/user_action';
 
 function Header() {
 const dispatch=useDispatch()
+const [isScroll,setIsScroll]=useState(false)
 const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
+
+window.addEventListener("scroll",()=>{
+  setIsScroll(true)
+  if(window.scrollY==0)
+    {
+      setIsScroll(false)
+    }
+})
+
 
 useEffect(()=>{
   dispatch(fetchUser())
@@ -19,14 +30,13 @@ useEffect(()=>{
   };
 },[isLogin])
 
-console.log(isLogin)
   return (
-    <div>
+    <div className='absolute top-0 z-10'>
 
       {
-       
-      <nav className='fixed w-full'>
-        <div className='flex justify-between px-5 items-center py-2 bg-orange-500'>
+        
+      <nav className={`fixed w-full ${isScroll ? 'shadow-xl' : 'shadow-none'}`}>
+        <div className='flex justify-between px-10 items-center py-2 bg-orange-500'>
           <div>
             <Link to={"/"}>  
               <img className='w-14' src={logo} alt='logo'></img>
@@ -58,7 +68,7 @@ console.log(isLogin)
            <SearchBar/>
             </div>
 
-{ !isLogin?
+{ !userInfo?
           <div className='flex gap-5'>
 
             <div>
@@ -75,7 +85,9 @@ console.log(isLogin)
             
           </div>:null
 }
-
+<div>
+  <Link to={"/profile"}><CgProfile className='text-white' size={25} /></Link>
+</div>
         </div>
       </nav>
     }

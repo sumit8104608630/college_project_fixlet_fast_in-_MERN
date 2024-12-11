@@ -13,3 +13,6 @@ while doing this project we will learn lot so to high light them we will using s
 
 
 // now let's start with frontend make it login register page with redux
+
+
+// now let's design the dashboard

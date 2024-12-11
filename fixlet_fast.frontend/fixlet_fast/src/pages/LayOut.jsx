@@ -7,7 +7,7 @@ function LayOut() {
   return (
     <div>
       <Header/>
-     <div className='flex justify-center'> <Outlet/> </div>
+     <div className='flex '> <Outlet/> </div>
       <Footer/>
     </div>
   )
