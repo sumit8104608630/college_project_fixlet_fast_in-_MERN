@@ -5,26 +5,29 @@ import electresian from "../assets/button_image/electresian.webp"
 import festival_decoration from "../assets/button_image/festival_decoration.webp"
 import paint from "../assets/button_image/paint.webp"
 import wallPanel from "../assets/button_image/wallPanel.jpeg"
-
-import Ac_repair from "../assets/staticPhotp/Ac_repair.webp"
-import cleaning_img from "../assets/staticPhotp/cleaning.webp"
-import carpenter_img from "../assets/staticPhotp/carpenter_img.webp"
-import plumber_img from "../assets/staticPhotp/plumber_img.webp"
+import { FaStar } from "react-icons/fa6";
+import Addvertice from '../component/Addvertice'
+import AC_service_image from "../assets/book_image/AC_img.webp"
+import sofa from "../assets/Add/pexels-martinpechy-1866149.jpg"
+import decoration_img from "../assets/book_image/decoration_book_img.avif"
+import bathRoom_img from "../assets/book_image/bathRoom_img.webp"
+import { Link } from 'react-router'
+import { LuIndianRupee } from "react-icons/lu";
 
 
 
 function Dashbord() {
   return (
     <>
-      <main className='mt-28 w-full'>
+      <main className='mt-28 w-full px-32'>
 
-        <div className='px-32 flex  w-full items-center justify-between'>
+        <div className=' flex justify-center w-full items-center justify-between'>
 
-          <div className='flex justify-center flex-col items-center'>
-          <h1 className='text-4xl  text-start   text-gray-600 font-semibold'>
+          <div className='flex  flex-col '>
+          <h1  className='text-4xl w-96  text-start   text-gray-600 font-semibold'>
             Home service at your doorstep
           </h1>
-          <div className='flex flex-col  gap-5 mt-10 p-10 border-1 rounded w-max border-gray-600 shadow justify-center items-center'>
+          <div className='flex flex-col w-full  gap-5 mt-10 p-10 border-1 rounded  border-gray-600 shadow justify-center items-center'>
             <div className='flex gap-5'>
              <div className='w-28 '>
             <button className="relative  hover:text-gray-600 group">
@@ -97,33 +100,101 @@ function Dashbord() {
                 <div className='flex flex-col items-center'><span className='text-xl font-semibold'>12 M</span><h1 className='text-gray-600 text-sm'>Customer Globally</h1></div> 
               </div>
         </div>
+          <Addvertice/>
+        </div>
 
 
-        <div className='flex gap-3 rounded'>
-  <div className='flex flex-col gap-3'>
-    <div className='w-72 h-56'> 
-      <img className='w-full rounded h-full object-cover' src={Ac_repair} alt="AC Repair" />    
-    </div>
-    <div className='w-72 h-56'> 
-      <img className='w-full h-full rounded object-cover' src={cleaning_img} alt="Cleaning" />    
-    </div>
-  </div>
-  <div className='flex flex-col gap-3'>
-    <div className='w-72 h-56'> 
-      <img className='w-full h-full rounded object-cover' src={carpenter_img} alt="Carpenter" />    
-    </div>
-    <div className='w-72 h-56'> 
-      <img className='w-full h-full rounded object-cover' src={plumber_img} alt="Plumber" />    
-    </div>
-  </div>
-</div>
+        <div className='flex justify-between mt-20 '>
 
 
+            <div className='flex flex-col h-48 rounded w-72 justify-end bg-cover' style={{ backgroundImage: `url(${decoration_img})` }}>
+              <p className='px-5 text-2xl font-semibold text-white  my-auto'>Home & Lights Decoration</p>
+              <Link><h1 className='w-full h-12 px-5 flex items-center bg-gray-600 text-xl font-semibold bg-opacity-35 text-white hover:bg-opacity-50 hover:bg-gray-600'>Book now</h1></Link>
+            </div>
+
+             <div className='flex flex-col h-48 rounded w-72 justify-end bg-cover' style={{ backgroundImage: `url(${AC_service_image})` }}>
+              <Link><h1 className='w-full h-12 px-5 flex items-center bg-gray-600 text-xl font-semibold bg-opacity-35 text-white hover:bg-opacity-50 hover:bg-gray-600'>Book now</h1></Link>
+            </div>
+
+            <div className='flex flex-col h-48 rounded w-72 justify-end bg-cover' style={{ backgroundImage: `url(${bathRoom_img})` }}>
+              <Link><h1 className='w-full h-12 px-5 flex items-center bg-gray-600 text-xl font-semibold bg-opacity-35 text-white hover:bg-opacity-50 hover:bg-gray-600'>Book now</h1></Link>
+            </div>
 
         </div>
 
-        <div>
 
+        <div className='flex mt-20 py-10 px-10  bg-amber-100'>
+          <div className='w-full flex flex-col justify-between ' >
+            <div className=''>
+            <span className='text-xl px-5 w-max rounded py-2  text-white bg-green-700 '>Decorate your Home</span>
+            <p className='text-4xl font-semibold text-gray-600  py-5'>Transform your living space with our premium selection of sofas and home essentials, designed for comfort and style</p>
+            </div>
+            <Link > <span className=' bg-black py-2 font-bold  text-white  rounded px-10'>By now</span></Link>
+          </div>
+          <div className=' w-full flex  justify-end'><img  className='rounded w-96 ' src={sofa}></img></div>
+        </div>
+
+
+
+        <h1 className='mt-20 text-2xl font-semibold mb-5'>Quick Home Installation</h1>
+
+        <div className='flex justify-between  '>
+        <div className='w-72'>
+            <Link>
+            <div className='flex flex-col h-48 rounded w-72 justify-end bg-cover' style={{ backgroundImage: `url(${AC_service_image})` }}>
+            </div>
+            <div>
+            <p className=' text-lg font-semibold text-gray-600  my-auto'>Save electricity bill </p>
+            <span className='flex items-center text-gray-600'><FaStar /> 4.8 (4.5M)</span>
+            <span className='flex items-center'>
+            <LuIndianRupee/>150
+            </span>
+            </div>
+            </Link>
+            </div>
+
+            
+
+            <div className='w-72'>
+            <Link>
+            <div className='flex flex-col h-48 rounded w-72 justify-end bg-cover' style={{ backgroundImage: `url(${AC_service_image})` }}>
+            </div>
+            <div>
+            <p className=' text-lg font-semibold text-gray-600  my-auto'>Save electricity bill </p>
+            <span className='flex items-center text-gray-600'><FaStar /> 4.8 (4.5M)</span>
+            <span className='flex items-center'>
+            <LuIndianRupee/>150
+            </span>
+            </div>
+            </Link>
+            </div>
+
+            <div className='w-72'>
+            <Link>
+            <div className='flex flex-col h-48 rounded w-72 justify-end bg-cover' style={{ backgroundImage: `url(${AC_service_image})` }}>
+            </div>
+            <div>
+            <p className=' text-lg font-semibold text-gray-600  my-auto'>Save electricity bill </p>
+            <span className='flex items-center text-gray-600'><FaStar /> 4.8 (4.5M)</span>
+            <span className='flex items-center'>
+            <LuIndianRupee/>150
+            </span>
+            </div>
+            </Link>
+            </div>
+
+        </div>
+
+
+        <div className='flex mt-20 py-10 px-10  bg-amber-100'>
+          <div className='w-full flex flex-col justify-between ' >
+            <div className=''>
+            <span className='text-xl px-5 w-max rounded py-2  text-white bg-green-700 '>Decorate your Home</span>
+            <p className='text-4xl font-semibold text-gray-600  py-5'>Transform your living space with our premium selection of sofas and home essentials, designed for comfort and style</p>
+            </div>
+            <Link > <span className=' bg-black py-2 font-bold  text-white  rounded px-10'>By now</span></Link>
+          </div>
+          <div className=' w-full flex  justify-end'><img  className='rounded w-96 ' src={sofa}></img></div>
         </div>
 
       </main>

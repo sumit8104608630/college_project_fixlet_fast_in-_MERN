@@ -15,6 +15,10 @@ const serviceSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  serviceSubType:{
+    type:String,
+    required:true
+  },
   included: {
     type: [String],
     required: true,

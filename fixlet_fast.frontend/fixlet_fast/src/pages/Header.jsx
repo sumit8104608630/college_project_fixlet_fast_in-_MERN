@@ -64,7 +64,7 @@ useEffect(()=>{
           </div>
           
           <div className="flex gap-5">
-            <Location/>
+           {userInfo?<Location/>:""}
            <SearchBar/>
             </div>
 
@@ -85,9 +85,10 @@ useEffect(()=>{
             
           </div>:null
 }
+{userInfo?
 <div>
   <Link to={"/profile"}><CgProfile className='text-white' size={25} /></Link>
-</div>
+</div>:""}
         </div>
       </nav>
     }
