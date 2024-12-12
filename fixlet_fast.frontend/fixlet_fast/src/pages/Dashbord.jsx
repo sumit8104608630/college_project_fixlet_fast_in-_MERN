@@ -19,9 +19,9 @@ import { LuIndianRupee } from "react-icons/lu";
 function Dashbord() {
   return (
     <>
-      <main className='mt-28 w-full px-32'>
+      <main  className='mt-28 w-full px-32 '>
 
-        <div className=' flex justify-center w-full items-center justify-between'>
+        <div className=' flex w-full items-center justify-between'>
 
           <div className='flex  flex-col '>
           <h1  className='text-4xl w-96  text-start   text-gray-600 font-semibold'>
@@ -78,7 +78,7 @@ function Dashbord() {
                 <img className="w-14" src={wallPanel} alt="Wall Panel" />
               </div>
               <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
-              <span className='text-sm'>Wall Panel</span>
+              <span className='text-sm'>Wall Panel installation</span>
             </button>
             </div>
 

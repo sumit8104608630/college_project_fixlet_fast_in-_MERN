@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Link ,NavLink} from 'react-router'
 import logo from "../assets/Symbol-01.png"
-import { BsFillPersonFill } from "react-icons/bs";
+import axios from 'axios';
+import Cookies from "js-cookie"
 import SearchBar from "../component/Search"
 import { useSelector,useDispatch} from 'react-redux';
 import Location from '../component/Location'
 import { CgProfile } from "react-icons/cg";
 import { fetchUser } from '../app/Actions/user_action';
+import {logout} from "../app/user.redux"
 
 function Header() {
+const [profileToggle,setProfileToggle]=useState(false)
 const dispatch=useDispatch()
 const [isScroll,setIsScroll]=useState(false)
 const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
@@ -21,6 +24,23 @@ window.addEventListener("scroll",()=>{
     }
 })
 
+
+const handelLogout=()=>{
+   axios.post('http://localhost:8000/user/user_logout',{},{
+    withCredentials:true
+  }).then((response)=>{
+    if(response.status===200){
+    Cookies.remove('accessToken')
+    Cookies.remove('refresh_token')
+    dispatch(logout())
+    }
+    else{
+      console.log("logout failed")
+    }
+  })
+}
+
+console.log(profileToggle)
 
 useEffect(()=>{
   dispatch(fetchUser())
@@ -86,8 +106,27 @@ useEffect(()=>{
           </div>:null
 }
 {userInfo?
-<div>
-  <Link to={"/profile"}><CgProfile className='text-white' size={25} /></Link>
+  <div className='relative'>
+  <button onClick={() => setProfileToggle(prev => !prev)}>
+    <CgProfile className='text-white' size={30} />
+  </button>
+  {profileToggle ? (
+    <div className='absolute top-full left-1/2 transform -translate-x-1/2 bg-gray-100 w-max rounded shadow-md'>
+      <ul className='flex flex-col gap-2 px-4 py-2'>
+        <li>
+          <Link>Help Center</Link>
+        </li>
+        <li>
+          <Link>My Booking</Link>
+        </li>
+        <li>
+          <button onClick={handelLogout}>Logout</button>
+        </li>
+      </ul>
+    </div>
+  ) : (
+    ""
+  )}
 </div>:""}
         </div>
       </nav>

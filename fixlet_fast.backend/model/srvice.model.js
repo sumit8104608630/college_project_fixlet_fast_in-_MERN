@@ -7,32 +7,58 @@ const serviceSchema = mongoose.Schema({
     required: true,
     index: true,
   },
+  serviceImage: {
+    type: String,
+    required: true,
+  },
   serviceName: {
     type: String,
     required: true,
   },
-  serviceDescription: {
+  servicePartName: {
     type: String,
     required: true,
   },
-  serviceSubType:{
-    type:String,
-    required:true
-  },
+  serviceSubType: [
+    {
+      _id: mongoose.Schema.Types.ObjectId,  // Explicitly define the _id
+      subServiceImage: {
+        type: String,
+        required: true,
+      },
+      subServiceName: {
+        type: String,
+        required: true,
+      },
+      serviceTime: {
+        type: Number,
+        required: true,
+      },
+      serviceRatingCount: {
+        type: Number,
+        default: 0,
+      },
+      price: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
+
   included: {
     type: [String],
     required: true,
     validate: {
       validator: (arr) => arr.length > 0,
-      message: 'Included items cannot be empty.',
+      message: "Included items cannot be empty.",
     },
   },
-  excluded: {
+  note: {
     type: [String],
     required: true,
     validate: {
       validator: (arr) => arr.length > 0,
-      message: 'Excluded items cannot be empty.',
+      message: "Excluded items cannot be empty.",
     },
   },
   price: {
@@ -42,17 +68,16 @@ const serviceSchema = mongoose.Schema({
   },
   rating: {
     type: Number,
-    required: true,
+    default: 0,
     min: 0,
     max: 5,
   },
   reviewCount: {
     type: Number,
-    required: true,
-    default:0,
-    },
+    default: 0,
+  },
 },
- {
+{
   timestamps: true, // Automatically manage createdAt and updatedAt
 });
 

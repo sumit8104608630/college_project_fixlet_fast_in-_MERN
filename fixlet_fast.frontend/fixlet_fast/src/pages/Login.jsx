@@ -74,6 +74,7 @@ useEffect(() => {
 
 
   return (
+    <div className='w-full justify-center flex'>
     <div className='    w-max md:w-1/2 shadow-gray-300 bg-gray-50 shadow-lg p-5 rounded-lg mb-36 mt-36 '>
     <div className='flex gap-8'>
       <div className='hidden md:block'>
@@ -121,6 +122,7 @@ useEffect(() => {
 
       </div>
     </div>
+  </div>
   </div>
   ) 
 }
