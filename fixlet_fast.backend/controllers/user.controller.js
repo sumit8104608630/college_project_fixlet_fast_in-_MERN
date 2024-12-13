@@ -88,19 +88,17 @@ const nodemailer=require("nodemailer")
 
         }
         // let's send email to user
-        const transporter=nodemailer.createTransport({
-            host: "smtp.ethereal.email",
-            port: 587,
-            secure: false,
-            auth:{
-                user:"kelsi3@ethereal.email",
-                pass:"dzTsZfwgg2unsBg9y9",
-            }
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: "sumit8104608630@gmail.com",
+                pass: process.env.COMPANY_EMAIL_PASSWORD, // Your Gmail app password
+            },
         });
-
+        
         //Email  message configuration
         const mailOptions = {
-            from: process.env.COMPANY_EMAIL, // sender address
+            from: process.env.COMPANY_EMAIL, // sender address 
             to: email, 
             subject: OTP,
             text: `Your OTP is ${OTP} and it will expire in 5 minutes` //
