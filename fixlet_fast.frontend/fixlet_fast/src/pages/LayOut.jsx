@@ -12,7 +12,7 @@ function LayOut() {
         overflow: "auto",
         scrollbarWidth: "none", // Firefox
         msOverflowStyle: "none", // IE and Edge
-      }} className="flex overflow-auto scrollbar-none">
+      }} className="flex overflow-auto  scrollbar-none">
   <Outlet />
 </div>
       <Footer/>

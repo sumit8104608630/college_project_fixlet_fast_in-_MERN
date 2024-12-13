@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 import ac_repair from "../assets/button_image/ac_repair.webp"
 import cleaning from "../assets/button_image/cleaning.webp"
 import electresian from "../assets/button_image/electresian.webp"
@@ -11,15 +11,261 @@ import AC_service_image from "../assets/book_image/AC_img.webp"
 import sofa from "../assets/Add/pexels-martinpechy-1866149.jpg"
 import decoration_img from "../assets/book_image/decoration_book_img.avif"
 import bathRoom_img from "../assets/book_image/bathRoom_img.webp"
+import { IoCloseOutline } from "react-icons/io5";
+import electricity_image from "../assets/togglebutton/electrician/electricity.webp"
 import { Link } from 'react-router'
 import { LuIndianRupee } from "react-icons/lu";
+import plumber from "../assets/togglebutton/electrician/plumber.webp"
+import carpenter from "../assets/togglebutton/electrician/carpenter.webp"
 
-
+import bathroom from "../assets/togglebutton/clean&pestControll/1728900638112-d33369.webp"
+import home from "../assets/togglebutton/clean&pestControll/home.webp"
+import sofa_image from"../assets/togglebutton/clean&pestControll/sofa.png";
+import pest from "../assets/togglebutton/clean&pestControll/pest.webp"
+import coboard from"../assets/togglebutton/clean&pestControll/coboard.png"
+import bed from "../assets/togglebutton/clean&pestControll/bed.jpeg"
+import chimney from "../assets/togglebutton/AC&Apliance/chimaney.webp"
+import gas from "../assets/togglebutton/AC&Apliance/Gas.webp"
+import refrigerator from "../assets/togglebutton/AC&Apliance/Refirgerator.png"
+import mixer from "../assets/togglebutton/AC&Apliance/mixer.webp"
+import washinMashin from "../assets/togglebutton/AC&Apliance/washing_mashin.jpeg"
 
 function Dashbord() {
+
+  const [link3Toggle,setlink3Toggle]=useState(false);
+  const [link2Toggle,setlink2Toggle]=useState(false);
+  const [link1Toggle,setlink1Toggle]=useState(false);
+
+  
+  useEffect(() => {
+
+    if (link3Toggle||link2Toggle||link1Toggle) {
+      document.body.style.overflow="hidden"
+      
+    } else {
+      // Restore normal scroll behavior
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [link3Toggle,link2Toggle,link1Toggle]);
+
+
+
+
+
+
   return (
     <>
-      <main  className='mt-28 w-full px-32 '>
+      <main  className={ `pt-28  w-full px-32 ${ link3Toggle?"  overflow-hidden ":""}` }>
+{link3Toggle?
+<div className='fixed z-20 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
+  
+  
+      <div className=' border-1 rounded   backdrop-blur-lg bg-opacity-10 '>
+      <button onClick={()=>setlink3Toggle(false)} className='bg-white rounded-full p-1 mb-2 absolute right-0  -top-10 translate-y-0'><IoCloseOutline size={20}/></button>
+
+      <div className='rounded border-gray-600  shadow p-5 bg-white'>
+              <h1 className='mb-5 font-semibold text-lg'>Electrician, Plumber & Carpenter</h1>
+              <div className='flex  gap-5 mb-5  mt-3'>
+              <div className='flex gap-5 '>
+              <div className='w-28'>
+            <Link className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+              <div className="bg-gray-100 px-8 rounded py-3">
+                <img className="w-14" src={electricity_image} alt="Cleaning" />
+              </div>
+                <span className='text-sm'>Electrician</span>
+            </Link>
+            </div>
+
+            <div className='w-28'>
+            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+              <div className="bg-gray-100 px-8 rounded py-3">
+                <img className="w-14" src={plumber} alt="Electrician" />
+              </div>
+                <span className='text-sm'>Plumber</span>
+            </Link>
+            </div>
+
+            <div className='w-28'>
+            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+              <div className="bg-gray-100 px-8 rounded py-3">
+                <img className="w-14" src={carpenter} alt="Festival Decoration" />
+              </div>
+              <span className='text-sm'>Carpenter</span>
+            </Link>
+          </div>
+            </div>
+            </div>
+            </div>
+              </div></div>:""
+
+}
+
+
+
+
+{link1Toggle?
+<div className='fixed z-20 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
+  
+  
+      <div className=' border-1 rounded   backdrop-blur-lg bg-opacity-10 '>
+      <button onClick={()=>setlink1Toggle(false)} className='bg-white rounded-full p-1 mb-2 absolute right-0  -top-10 translate-y-0'><IoCloseOutline size={20}/></button>
+
+      <div className='rounded border-gray-600  shadow p-5 bg-white'>
+              <h1 className='mb-5 font-semibold text-lg'>AC & Appliance repair</h1>
+              <div className='flex flex-col  gap-5 mb-5  mt-3'>
+              <div className='flex gap-5 '>
+
+              <div className='w-28'>
+            <Link className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+              <div className="bg-gray-100 px-8 rounded py-3">
+                <img className="w-14" src={ac_repair} alt="Cleaning" />
+              </div>
+                <span className='text-sm'>AC repair & Service</span>
+            </Link>
+            </div>
+
+              <div className='w-28'>
+            <Link className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+              <div className="bg-gray-100 px-8 rounded py-3">
+                <img className="w-14" src={chimney} alt="Cleaning" />
+              </div>
+                <span className='text-sm'>Chimney Repair & Service</span>
+            </Link>
+            </div>
+
+            <div className='w-28'>
+            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+              <div className="bg-gray-100 px-8 rounded py-3">
+                <img className="w-14" src={gas} alt="Electrician" />
+              </div>
+                <span className='text-sm'>Gas Repair & service</span>
+            </Link>
+            </div>
+         
+            </div>
+
+
+
+
+
+            <div className='flex gap-5 '>
+            <div className='w-28'>
+            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+              <div className="bg-gray-100 px-8 rounded py-3">
+                <img className="w-14" src={refrigerator} alt="Festival Decoration" />
+              </div>
+              <span className='text-sm'>Refrigerator Repair </span>
+            </Link>
+          </div>
+
+            <div className='w-28'>
+            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+              <div className="bg-gray-100 px-8 rounded py-3">
+                <img className="w-14" src={mixer} alt="Electrician" />
+              </div>
+                <span className='text-sm'>Mixer & Grinder Repair</span>
+            </Link>
+            </div>
+
+            <div className='w-28'>
+            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+              <div className="bg-gray-100 px-8 rounded py-3">
+                <img className="w-14" src={washinMashin} alt="Festival Decoration" />
+              </div>
+              <span className='text-sm'>Washin Machine Repair </span>
+            </Link>
+          </div>
+            </div>
+            </div>
+            </div>
+              </div></div>:""
+
+}
+
+
+
+{link2Toggle?
+  <div className='fixed z-20 bg-opacity-50 left-0 top-0 justify-center items-center bg-black flex w-full h-screen '>
+  <div className=' border-1 rounded    backdrop-blur-lg bg-opacity-10     '>
+      <button onClick={()=>setlink2Toggle(false)} className='bg-white rounded-full p-1 mb-2 absolute right-0  -top-10 translate-y-0'><IoCloseOutline size={20}/></button>
+
+              
+              <div className='rounded border-gray-600  shadow p-5 bg-white'>
+              <h1 className='mb-5 font-semibold text-lg'>Cleaning & Pest pest control</h1>
+              <span>Cleaning</span>
+              <div className='flex  gap-5 mb-5  mt-3'>
+              <div className='w-28'>
+            <Link className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+              <div className="bg-gray-100 px-8 rounded py-3">
+                <img className="w-14" src={bathroom} alt="Cleaning" />
+              </div>
+                <span className='text-sm'>Bathroom & Kitchen Cleaning</span>
+            </Link>
+            </div>
+
+            <div className='w-28'>
+            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+              <div className="bg-gray-100 px-8 rounded py-3">
+                <img className="w-14" src={home} alt="Electrician" />
+              </div>
+                <span className='text-sm'>Full Home Cleaning</span>
+            </Link>
+            </div>
+
+            <div className='w-28'>
+            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+              <div className="bg-gray-100 px-8 rounded py-3">
+                <img className="w-14" src={sofa_image} alt="Festival Decoration" />
+              </div>
+              <span className='text-sm'>Sofa Cleaning</span>
+            </Link>
+          </div>
+            </div>
+
+            <span>Pest Control</span>
+              <div className='flex  gap-5  mt-3'>
+              <div className='w-28'>
+            <Link className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+              <div className="bg-gray-100 px-8 rounded py-3">
+                <img className="w-14" src={pest} alt="Cleaning" />
+              </div>
+                <span className='text-sm'>Bathroom & Kitchen Cleaning</span>
+            </Link>
+            </div>
+
+            <div className='w-28'>
+            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+              <div className="bg-gray-100 px-8 rounded py-3">
+                <img className="w-14" src={coboard} alt="Electrician" />
+              </div>
+                <span className='text-sm'>Full Home Cleaning</span>
+            </Link>
+            </div>
+
+            <div className='w-28'>
+            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+              <div className="bg-gray-100 px-8 rounded py-3">
+                <img className="w-14" src={bed} alt="Festival Decoration" />
+              </div>
+              <span className='text-sm'>Sofa Cleaning</span>
+            </Link>
+          </div>
+            </div>
+            </div>
+              </div></div>:""
+
+}
+
+
+
+
+
+
+
 
         <div className=' flex w-full items-center justify-between'>
 
@@ -30,9 +276,9 @@ function Dashbord() {
           <div className='flex flex-col w-full  gap-5 mt-10 p-10 border-1 rounded  border-gray-600 shadow justify-center items-center'>
             <div className='flex gap-5'>
              <div className='w-28 '>
-            <button className="relative  hover:text-gray-600 group">
+            <button onClick={()=>setlink2Toggle(true)} className="relative  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={ac_repair} alt="AC Repair" />
+                <img className="w-14" src={cleaning} alt="AC Repair" />
                </div>
                 <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
                 <span className='text-sm'>Cleaning & pest control</span>
@@ -40,17 +286,17 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <button className="relative hover:text-gray-600 group">
+            <button onClick={()=>setlink1Toggle(true)} className="relative hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={cleaning} alt="Cleaning" />
+                <img className="w-14" src={ac_repair} alt="Cleaning" />
               </div>
                 <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
                 <span className='text-sm'>AC & Appliance Repair</span>
             </button>
             </div>
 
-            <div className='w-28'>
-            <button className="relative  hover:text-gray-600 group">
+            <div  className='w-28'>
+            <button onClick={()=>!link2Toggle?setlink3Toggle(true):setlink3Toggle(false )} className="relative  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={electresian} alt="Electrician" />
               </div>
@@ -58,38 +304,39 @@ function Dashbord() {
                 <span className='text-sm'>Electrician,Plumber & Carpenter</span>
             </button>
             </div>
+
   
               </div>
             <div className='flex gap-5'>
             <div className='w-28'>
-            <button className="relative  hover:text-gray-600 group">
+            <Link to={"/booking_detail/"} className="relative  flex flex-col text-center hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={festival_decoration} alt="Festival Decoration" />
               </div>
               <span className="absolute left-1/2 bottom-0 h-[2px] w-0  bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
               <span className='text-sm'>Festival Lights decoration</span>
-            </button>
+            </Link>
           </div>
 
 
           <div className='w-28'>
-            <button className="relative   hover:text-gray-600 group">
+            <Link to={"/booking_detail/"} className="relative w-full flex flex-col text-center    hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={wallPanel} alt="Wall Panel" />
               </div>
               <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
               <span className='text-sm'>Wall Panel installation</span>
-            </button>
+            </Link>
             </div>
 
             <div className='w-28'>
-            <button className="relative  hover:text-gray-600 group">
+            <Link to={"/booking_detail/"} className="relative w-full flex flex-col text-center hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={paint} alt="Paint" />
               </div>
               <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
               <span className='text-sm'>Painting & Water proofing</span>
-            </button>
+            </Link>
             </div>
   
               </div>

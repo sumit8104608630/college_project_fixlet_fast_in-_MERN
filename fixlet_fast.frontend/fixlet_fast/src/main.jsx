@@ -76,7 +76,13 @@ const route=createBrowserRouter([
       {
         path:"/contact",
         element:<Contact/>
-      }
+      },
+      
+        {
+          path:"/booking_page:id",
+          element:<Contact/>
+        }
+      
     ]
   }
 ])

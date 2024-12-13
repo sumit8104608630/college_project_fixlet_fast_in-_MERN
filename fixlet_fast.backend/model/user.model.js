@@ -17,6 +17,10 @@ const userSchema=mongoose.Schema({
         unique:true,
         trim:true
     },
+    verified:{
+        type:Boolean,
+        default:false
+    },
     salt:{
         type:String
     },

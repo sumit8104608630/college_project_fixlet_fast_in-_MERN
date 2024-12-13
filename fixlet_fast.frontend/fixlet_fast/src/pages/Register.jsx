@@ -1,4 +1,4 @@
-import React ,{useState} from 'react'
+import React ,{useEffect, useState} from 'react'
 import {IoMdEyeOff}from "react-icons/io"
 import { IoEye } from "react-icons/io5";
 import { useSelector } from 'react-redux';
@@ -56,7 +56,10 @@ function Register() {
   const confirmPassword=(e)=>{
     setConfirmPassword(e.target.value)
   }
-  
+  useEffect(()=>{
+    window.scrollTo(0,0)
+
+  },[])
   
   console.log(formData)
 

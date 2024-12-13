@@ -8,11 +8,13 @@ import { useSelector,useDispatch} from 'react-redux';
 import Location from '../component/Location'
 import { CgProfile } from "react-icons/cg";
 import { fetchUser } from '../app/Actions/user_action';
+import { FaShoppingCart } from "react-icons/fa";
 import {logout} from "../app/user.redux"
 
 function Header() {
 const [profileToggle,setProfileToggle]=useState(false)
-const dispatch=useDispatch()
+const dispatch=useDispatch();
+const [cartCount, setCartCount] = useState(1); // Example cart count
 const [isScroll,setIsScroll]=useState(false)
 const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
 
@@ -66,17 +68,17 @@ useEffect(()=>{
           <div>
             <ul className='flex items-center text-white text-2xl gap-8 font-semibold'>
               <li>
-                <NavLink to="/" className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid" : ""}  hover:text-white after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px]  after:w-0 after:bg-white after:transition-all after:duration-300  hover:after:left-0 hover:after:w-full `}>
+                <NavLink to="/" className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid after:w-full after:left-0" : ""}  hover:text-white after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px]  after:w-0 after:bg-white after:transition-all after:duration-300  hover:after:left-0 hover:after:w-full `}>
                   Home
                 </NavLink>
               </li>
               <li>
-              <NavLink className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid" : ""}  hover:text-white after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px]  after:w-0 after:bg-white after:transition-all after:duration-300  hover:after:left-0 hover:after:w-full `}to="/about">
+              <NavLink className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid after:w-full after:left-0" : ""}  hover:text-white after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px]  after:w-0 after:bg-white after:transition-all after:duration-300  hover:after:left-0 hover:after:w-full `}to="/about">
                   About
                 </NavLink>
               </li>
               <li>
-              <NavLink className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid" : ""}  hover:text-white after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px]  after:w-0 after:bg-white after:transition-all after:duration-300  hover:after:left-0 hover:after:w-full `}to="/store">
+              <NavLink className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid after:w-full after:left-0" : ""}  hover:text-white after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px]  after:w-0 after:bg-white after:transition-all after:duration-300  hover:after:left-0 hover:after:w-full `}to="/store">
                    Store
               </NavLink>
               </li>
@@ -106,7 +108,19 @@ useEffect(()=>{
           </div>:null
 }
 {userInfo?
+<div className='flex items-center gap-5'>
+<div className="relative">
+      <Link to="/cart">
+        <FaShoppingCart size={25} className="text-white font-bold" />
+        {cartCount > 0 && (
+          <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 text-xs font-semibold text-white bg-red-600 rounded-full px-2 py-0.5">
+            {cartCount}
+          </span>
+        )}
+      </Link>
+    </div>
   <div className='relative'>
+    
   <button onClick={() => setProfileToggle(prev => !prev)}>
     <CgProfile className='text-white' size={30} />
   </button>
@@ -117,7 +131,7 @@ useEffect(()=>{
           <Link>Help Center</Link>
         </li>
         <li>
-          <Link>My Booking</Link>
+          <Link to={"/booking_page"}>My Booking</Link>
         </li>
         <li>
           <button onClick={handelLogout}>Logout</button>
@@ -127,7 +141,7 @@ useEffect(()=>{
   ) : (
     ""
   )}
-</div>:""}
+</div></div>:""}
         </div>
       </nav>
     }

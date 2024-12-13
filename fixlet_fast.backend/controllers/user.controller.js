@@ -6,7 +6,10 @@ const {ApiResponse}=require("../utils/apiResponse.js")
  const User = require("../model/user.model.js");
 // let require cookie for saving token into the cookie
 const cookie=require("cookie-parser");
-
+// otp  model
+const EmailOtp =require("../model/emailOTP.model.js")
+// nodemailer
+const nodemailer=require("nodemailer")
 
 
 
@@ -50,6 +53,70 @@ const cookie=require("cookie-parser");
         console.log(error);
     }
  })
+
+
+ const generateOtp=asyncHandler(async(req,res)=>{
+    try{
+        const {email}=req.body;
+        if(!email){
+            throw new apiError("please fill all the field",400)
+        }
+        const emailOtp=await EmailOtp.findOne({email})   
+         const OTP = Math.floor(1000 + Math.random() * 9000); // Generate a 4-digit OTP
+
+        const expireTime = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes from now
+
+        if(emailOtp){
+        await EmailOtp.findOneAndUpdate(
+            { email }, // Filter: Match by email
+            {
+              $set: {
+                otp: OTP,            // Update or set OTP
+                expireTime: expireTime // Update expiration time
+              }
+            }
+          ); 
+          
+        }
+        else{
+            const emailOtpObject={
+                email:email,
+                otp:OTP,
+                expireTime:expireTime
+            }
+            await EmailOtp.create(emailOtpObject);
+
+        }
+        // let's send email to user
+        const transporter=nodemailer.createTransport({
+            host: "smtp.ethereal.email",
+            port: 587,
+            secure: false,
+            auth:{
+                user:"kelsi3@ethereal.email",
+                pass:"dzTsZfwgg2unsBg9y9",
+            }
+        });
+
+        //Email  message configuration
+        const mailOptions = {
+            from: process.env.COMPANY_EMAIL, // sender address
+            to: email, 
+            subject: OTP,
+            text: `Your OTP is ${OTP} and it will expire in 5 minutes` //
+        };
+        //send email
+        await transporter.sendMail(mailOptions);
+        return res.status(201).json( new ApiResponse(200,"OTP send successfully"))
+
+    }
+    catch(error){
+        console.log(error);
+    }
+
+ })
+
+
 
 // let's create the user login algorithm to create user functionality
 const userLogin=asyncHandler(async(req,res)=>{
@@ -137,10 +204,12 @@ const userInfo=asyncHandler(async(req,res)=>{
 
 })
 
+
  module.exports={
     userRegister,
     userLogin,
     userLogout,
-    userInfo
+    userInfo,
+    generateOtp
  }
 

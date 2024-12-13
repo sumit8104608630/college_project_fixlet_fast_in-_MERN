@@ -5,19 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
-  },
-  plugins: [
-    function({ addUtilities }) {
-      addUtilities({
-        '.scrollbar-none': {
-          '-ms-overflow-style': 'none', /* IE and Edge */
-          'scrollbar-width': 'none', /* Firefox */
-        },
-        '.scrollbar-none::-webkit-scrollbar': {
-          display: 'none', /* Chrome, Safari, and Edge */
-        },
-      });
+    extend: {
+      backdropBlur: {
+        md: '12px',
+        lg: '24px',
+      },
     },
-  ],
+  },
+  plugins: [],
 };

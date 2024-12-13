@@ -61,6 +61,7 @@ console.log(userInfo)
 
 
 useEffect(() => {
+  window.scrollTo(0,0)
   dispatch(fetchUser());
   return () => {
     console.log("Cleanup function called");
