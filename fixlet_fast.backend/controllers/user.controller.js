@@ -104,8 +104,10 @@ const nodemailer=require("nodemailer")
             text: `Your OTP is ${OTP} and it will expire in 5 minutes` //
         };
         //send email
-        await transporter.sendMail(mailOptions);
-        return res.status(201).json( new ApiResponse(200,"OTP send successfully"))
+         transporter.sendMail(mailOptions).then(()=>{
+            return res.status(201).json( new ApiResponse(200,"OTP send successfully"))
+
+         })
 
     }
     catch(error){
@@ -115,11 +117,36 @@ const nodemailer=require("nodemailer")
  })
 
 
+ // let's create API to check weather the OTP is correct or not
+ const verify_otp=asyncHandler(async(req,res)=>{
+    try{
+        const{email,otp}=req.body;
+        if(!email||!otp){
+            throw new apiError("please fill all the field")
+        }
+        const emailOtp=EmailOtp.findOne({email});
+        if(!emailOtp){
+            throw new apiError("please write correct emailID ");
+        }
+        const response=await EmailOtp.verify_otp(email,otp);
+        if(response){
+            res.status(200).json( new ApiResponse(200,"","email is verified successfully"))
+        }
+        else{
+            throw new apiError("otp verified unsuccessful",404)
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+ })
+
+
 
 // let's create the user login algorithm to create user functionality
 const userLogin=asyncHandler(async(req,res)=>{
     /*
-    1.get user detail from the frontend
+    1.get user detail from the frontend 
     2.check validation all possible validation
 
     */ 
@@ -208,6 +235,7 @@ const userInfo=asyncHandler(async(req,res)=>{
     userLogin,
     userLogout,
     userInfo,
-    generateOtp
+    generateOtp,
+    verify_otp
  }
 
