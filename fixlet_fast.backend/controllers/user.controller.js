@@ -170,7 +170,7 @@ client.connect();
     };
   
     // Store OTP in Redis with email as the key and expiration time
-    await client.set(email, JSON.stringify(otpData), { EX: expireTime });
+    await client.set(email,JSON.stringify(otpData),{EX:expireTime})  
   
     // Send OTP to email
     const transporter = nodemailer.createTransport({
@@ -222,7 +222,7 @@ client.connect();
       }
   
       // OTP is correct, clear OTP from Redis
-      await client.del(email);
+      await client.del(email)  
   
       res.status(200).json(new ApiResponse(200, '', 'Email verified successfully'));
     } catch (error) {
