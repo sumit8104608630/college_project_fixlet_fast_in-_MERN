@@ -42,10 +42,9 @@ const handelLogout=()=>{
   })
 }
 
-console.log(profileToggle)
-
 useEffect(()=>{
   dispatch(fetchUser())
+  setProfileToggle(false)
   return () => {
     // Cleanup code (optional)
     console.log("Cleanup function called");
@@ -68,17 +67,17 @@ useEffect(()=>{
           <div>
             <ul className='flex items-center text-white text-2xl gap-8 font-semibold'>
               <li>
-                <NavLink to="/" className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid after:w-full after:left-0" : ""}  hover:text-white after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px]  after:w-0 after:bg-white after:transition-all after:duration-300  hover:after:left-0 hover:after:w-full `}>
+                <NavLink to="/" className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid after:w-full after:left-0 after:translate-x-0" : "after:left-1/2 after:translate-x-[-50%]"} hover:text-white after:content-[''] after:absolute after:bottom-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:translate-x-0 hover:after:w-full`}>
                   Home
                 </NavLink>
               </li>
               <li>
-              <NavLink className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid after:w-full after:left-0" : ""}  hover:text-white after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px]  after:w-0 after:bg-white after:transition-all after:duration-300  hover:after:left-0 hover:after:w-full `}to="/about">
+              <NavLink className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid after:w-full after:left-0 after:translate-x-0" : "after:left-1/2 after:translate-x-[-50%]"} hover:text-white after:content-[''] after:absolute after:bottom-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:translate-x-0 hover:after:w-full`} to="/about">
                   About
                 </NavLink>
               </li>
               <li>
-              <NavLink className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid after:w-full after:left-0" : ""}  hover:text-white after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px]  after:w-0 after:bg-white after:transition-all after:duration-300  hover:after:left-0 hover:after:w-full `}to="/store">
+              <NavLink className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid after:w-full after:left-0 after:translate-x-0" : "after:left-1/2 after:translate-x-[-50%]"} hover:text-white after:content-[''] after:absolute after:bottom-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:translate-x-0 hover:after:w-full`}to="/store">
                    Store
               </NavLink>
               </li>

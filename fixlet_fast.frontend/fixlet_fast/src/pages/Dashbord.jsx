@@ -72,7 +72,7 @@ function Dashbord() {
               <div className='flex  gap-5 mb-5  mt-3'>
               <div className='flex gap-5 '>
               <div className='w-28'>
-            <Link className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+            <Link to={"/serviceDetailPage/electrician"} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={electricity_image} alt="Cleaning" />
               </div>
@@ -120,7 +120,7 @@ function Dashbord() {
               <div className='flex gap-5 '>
 
               <div className='w-28'>
-            <Link className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+            <Link  className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={ac_repair} alt="Cleaning" />
               </div>

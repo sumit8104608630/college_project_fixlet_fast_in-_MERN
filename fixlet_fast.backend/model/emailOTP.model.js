@@ -31,7 +31,7 @@ emailOtpSchema.pre("save", async function (next) {
     this.salt = salt;
     this.otp = hashOtp;
   }
-  next();
+  next(); 
 });
 
 // Pre-hook for findOneAndUpdate to hash OTP

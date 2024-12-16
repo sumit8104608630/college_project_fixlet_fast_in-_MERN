@@ -7,13 +7,8 @@ function LayOut() {
   return (
     <div>
       <Header/>
-      <div style={{
-        
-        overflow: "auto",
-        scrollbarWidth: "none", // Firefox
-        msOverflowStyle: "none", // IE and Edge
-      }} className="flex overflow-auto  scrollbar-none">
-  <Outlet />
+      <div className="h-screen   overflow-auto scrollbar-thin scrollbar-none scrollbar-track-gray-200">
+  <Outlet  />
 </div>
       <Footer/>
     </div>
