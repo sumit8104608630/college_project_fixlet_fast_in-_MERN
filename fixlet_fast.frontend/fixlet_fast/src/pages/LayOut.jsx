@@ -7,7 +7,7 @@ function LayOut() {
   return (
     <div>
       <Header/>
-      <div className="h-screen   overflow-auto scrollbar-thin scrollbar-none scrollbar-track-gray-200">
+      <div className="">
   <Outlet  />
 </div>
       <Footer/>

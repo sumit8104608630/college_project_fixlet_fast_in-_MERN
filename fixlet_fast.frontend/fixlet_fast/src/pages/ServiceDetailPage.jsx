@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import json from "../component/fakejsonData.js"; // Assuming this is the data you're working with
 import { FaStar } from "react-icons/fa";
 import { FaIndianRupeeSign } from "react-icons/fa6";
@@ -8,25 +8,27 @@ import { FaRegClock } from "react-icons/fa6";
 
 
 
-function serviceDetailPage() {
+function ServiceDetailPage() {
+
+    const [active,setActive]=useState(null);
+
+
+
+
   return (
-    <div className='mt-28   px-32 '>
-
-
-    <div className=' '>
-
-
-
-    <div className=" gap-5  flex ">
-      <div>
+  
+    <div className=" gap-5 justify-center mt-20 flex ">
+      <div className='h-min sticky top-24'>
       <h1  className='text-4xl font-semibold w-max mt-5  text-gray-700 mb-5'>Electrician</h1>
 
-      <div className='grid h-max grid-cols-3 gap-5 border-2 p-5 rounded-xl'>
-      {json.map((service, index) => (
-        <a href={`#${service.servicePartName}`}   key={service.serviceName}
+      <div className='grid h-max grid-cols-3 gap-5 border-2 p-5 rounded'>
+      {json.map((service) => (
+        <a href={`#${service.servicePartName}`}          onClick={()=>setActive(service.serviceName)}
+        key={service.serviceName}
 >
     <div
-    className="bg-white p-4 w-24 h-full flex flex-col items-center justify-between rounded-lg border-2  border-gray-200 transition-transform transform hover:scale-105 hover:shadow-lg hover:border-gray-200 cursor-pointer"
+
+    className={`bg-white p-4 w-24 h-full flex flex-col items-center justify-between rounded border-2  border-gray-200 transition-transform transform hover:scale-95  hover:border-gray-200 cursor-pointer ${service.serviceName===active?" border-2 border-spacing-gray-700":""}`}
   >
   
           <img 
@@ -45,17 +47,17 @@ function serviceDetailPage() {
 
   
 
-<div className='h-screen   overflow-auto scrollbar-thin scrollbar-none scrollbar-track-gray-200'>
+<div className='  scrollbar-thin scrollbar-none scrollbar-track-gray-200'>
     <div className='flex flex-col border-2 rounded px-5  '>
       {
-        json.map((service,index)=>{
+        json.map((service)=>{
           return(
             <div id={`${service.servicePartName}`} className='py-5'  key={service.serviceName}
             >
 
               <h1 className='text-gray-700 text-2xl font-bold'>{service.serviceName}</h1>
               {
-                service.serviceSubType.map((service, index) => {
+                service.serviceSubType.map((service) => {
 
                     return (
                       <>
@@ -104,17 +106,14 @@ function serviceDetailPage() {
 
 
 
-    <div>
+    <div className='w-96 sticky top-24 border'>
+
+
  
  </div>
 
-
-
-
-    </div>
-    </div>
     </div>
   );
 }
 
-export default serviceDetailPage;
+export default ServiceDetailPage;
