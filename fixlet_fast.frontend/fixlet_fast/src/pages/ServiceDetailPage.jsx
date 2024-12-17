@@ -23,12 +23,12 @@ function ServiceDetailPage() {
 
       <div className='grid h-max grid-cols-3 gap-5 border-2 p-5 rounded'>
       {json.map((service) => (
-        <a href={`#${service.servicePartName}`}          onClick={()=>setActive(service.serviceName)}
+        <a href={`#${service.servicePartName}`}    onClick={()=>setActive(service.serviceName)}
         key={service.serviceName}
 >
     <div
 
-    className={`bg-white p-4 w-24 h-full flex flex-col items-center justify-between rounded border-2  border-gray-200 transition-transform transform hover:scale-95  hover:border-gray-200 cursor-pointer ${service.serviceName===active?" border-2 border-spacing-gray-700":""}`}
+    className={`bg-white p-4 w-24 h-full flex flex-col items-center justify-between rounded border-2  border-gray-200 transition-transform transform hover:scale-95  hover:border-gray-700 cursor-pointer ${service.serviceName===active?" border-2 border-gray-700":""}`}
   >
   
           <img 
@@ -62,7 +62,7 @@ function ServiceDetailPage() {
                     return (
                       <>
                       <div className='flex gap-5 items-center w-full justify-between py-4' key={service.subServiceName}>
-                    
+                      <button>
                         <div>
                         <h2 className="text-lg font font-semibold r text-gray-600">{service.subServiceName}</h2>
                         <div className='flex items-center gap-2'>
@@ -73,11 +73,15 @@ function ServiceDetailPage() {
                           <div className='flex items-center'><FaIndianRupeeSign size={12} />  <span> {service.price} </span> </div>
                           <div className='flex gap-2 items-center'><spn><FaRegClock size={12} /></spn><span>{service.serviceTime} mins</span></div>
                         </div>
-                        <div><button className='text-orange-500'>View details</button></div>
+                        <div className='text-start'><button className='text-orange-500'>View details</button></div>
                         </div>
+                        </button>
+
+
+
 
                         <div className='flex flex-col items-center'>
-                          <img className='rounded' src="https://res.cloudinary.com/urbanclap/image/upload/t_high_res_template,q_auto:low,f_auto/w_128,dpr_1,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/supply/customer-app-supply/1726730716477-571a68.jpeg"></img>
+                          <img className='rounded w-20 h-20 object-contain'  src={service.subServiceImage}></img>
                           <div>{service.serviceRatingCount===0?<button className='text-orange-500 border px-5 w-15 rounded text-sm border-orange-400 mt-2 hover:bg-orange-100 font-semibold hover:border-orange-600 hover:text-orange-600'>Add</button>
                           :
                           <div className='flex items-center w-20 border  hover:bg-orange-100 border-orange-500 rounded mt-2 justify-between '>
@@ -106,13 +110,16 @@ function ServiceDetailPage() {
 
 
 
-    <div className='w-96 sticky top-24 border'>
+<div className='w-96 h-min sticky top-24 border'>
 
+      
 
- 
  </div>
 
-    </div>
+
+
+
+</div>
   );
 }
 

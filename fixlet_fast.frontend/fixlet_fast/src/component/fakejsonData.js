@@ -6,28 +6,28 @@ const data = [
     "servicePartName": "Light",
     "serviceSubType": [
       {
-        "subServiceImage": "url_for_wall_light",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734437560/wallLight_khcshl.jpg",
         "subServiceName": "Wall Light Installation",
         "serviceTime": 30,
         "serviceRatingCount": 1,
         "price": 200
       },
       {
-        "subServiceImage": "url_for_ceiling_light",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734438170/celling_light_atq5rr.jpg",
         "subServiceName": "Ceiling Light Installation",
         "serviceTime": 40,
         "serviceRatingCount": 0,
         "price": 250
       },
       {
-        "subServiceImage": "url_for_chandelier",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734438853/chandelier_ky52qb.jpg",
         "subServiceName": "Chandelier Installation",
         "serviceTime": 60,
         "serviceRatingCount": 0,
         "price": 400
       },
       {
-        "subServiceImage": "url_for_led_strip",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734439094/LED_Strip_rgjfyo.jpg",
         "subServiceName": "LED Strip Installation",
         "serviceTime": 45,
         "serviceRatingCount": 0,
@@ -50,47 +50,33 @@ const data = [
     "servicePartName": "Fan",
     "serviceSubType": [
       {
-        "subServiceImage": "url_for_ceiling_fan",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734439257/ceiling_fan_asvxks.jpg",
         "subServiceName": "Ceiling Fan Installation",
         "serviceTime": 50,
         "serviceRatingCount": 0,
         "price": 150
       },
       {
-        "subServiceImage": "url_for_wall_fan",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734439368/wall_fan_qdwzbu.jpg",
         "subServiceName": "Wall Fan Installation",
         "serviceTime": 40,
         "serviceRatingCount": 0,
         "price": 140
       },
       {
-        "subServiceImage": "url_for_exhaust_fan",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734439514/exhaust_fan_mrnkbv.jpg",
         "subServiceName": "Exhaust Fan Installation",
         "serviceTime": 30,
         "serviceRatingCount": 0,
         "price": 160
       },
       {
-        "subServiceImage": "url_for_decorative_fan",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734439594/decorative_fan_f6ebcj.jpg",
         "subServiceName": "Decorative Fan Installation",
         "serviceTime": 60,
         "serviceRatingCount": 0,
         "price": 300
       },
-      {
-        "subServiceImage": "url_for_oscillating_fan",
-        "subServiceName": "Oscillating Fan Installation",
-        "serviceTime": 35,
-        "serviceRatingCount": 0,
-        "price": 180
-      },
-      {
-        "subServiceImage": "url_for_table_fan",
-        "subServiceName": "Table Fan Installation",
-        "serviceTime": 20,
-        "serviceRatingCount": 0,
-        "price": 100
-      }
     ],
     "included": ["Installation of fan", "Post-service cleaning"],
     "note": [
@@ -108,28 +94,28 @@ const data = [
     "servicePartName": "Switchboard",
     "serviceSubType": [
       {
-        "subServiceImage": "url_for_basic_switchboard",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734439863/basic_cxkfgl.jpg",
         "subServiceName": "Basic Switchboard Installation",
         "serviceTime": 30,
         "serviceRatingCount": 0,
         "price": 180
       },
       {
-        "subServiceImage": "url_for_smart_switchboard",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734440043/smart_b4xrgy.jpg",
         "subServiceName": "Smart Switchboard Installation",
         "serviceTime": 50,
         "serviceRatingCount": 0,
         "price": 300
       },
       {
-        "subServiceImage": "url_for_modular_switchboard",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734440442/modular_q2ozqp.jpg",
         "subServiceName": "Modular Switchboard Installation",
         "serviceTime": 40,
         "serviceRatingCount": 0,
         "price": 250
       },
       {
-        "subServiceImage": "url_for_ac_switchboard",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734440586/AC_board_w48ghj.jpg",
         "subServiceName": "AC Switchboard Installation",
         "serviceTime": 60,
         "serviceRatingCount": 0,
@@ -152,47 +138,28 @@ const data = [
     "servicePartName": "Fan",
     "serviceSubType": [
       {
-        "subServiceImage": "url_for_ceiling_fan_repair",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734442731/fanRepair_zblhvi.jpgr",
         "subServiceName": "Ceiling Fan Repair",
         "serviceTime": 50,
         "serviceRatingCount": 0,
         "price": 180
       },
       {
-        "subServiceImage": "url_for_wall_fan_repair",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734442853/wall_fan_l2h0q9.jpg",
         "subServiceName": "Wall Fan Repair",
         "serviceTime": 40,
         "serviceRatingCount": 0,
         "price": 160
       },
       {
-        "subServiceImage": "url_for_exhaust_fan_repair",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734442928/xhaust_fan_repair_eaylbg.jpg",
         "subServiceName": "Exhaust Fan Repair",
         "serviceTime": 30,
         "serviceRatingCount": 0,
         "price": 150
       },
-      {
-        "subServiceImage": "url_for_decorative_fan_repair",
-        "subServiceName": "Decorative Fan Repair",
-        "serviceTime": 60,
-        "serviceRatingCount": 0,
-        "price": 250
-      },
-      {
-        "subServiceImage": "url_for_oscillating_fan_repair",
-        "subServiceName": "Oscillating Fan Repair",
-        "serviceTime": 40,
-        "serviceRatingCount": 0,
-        "price": 180
-      },
-      {
-        "subServiceImage": "url_for_table_fan_repair",
-        "subServiceName": "Table Fan Repair",
-        "serviceTime": 25,
-        "serviceRatingCount": 0,
-        "price": 100
-      }
+
+
     ],
     "included": ["Diagnosis and repair of fan", "Post-service cleaning"],
     "note": [
@@ -210,14 +177,14 @@ const data = [
     "servicePartName": "Wiring",
     "serviceSubType": [
       {
-        "subServiceImage": "url_for_interior_wiring",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734440884/interior_wiring_xncr7t.jpg",
         "subServiceName": "Interior Wiring Installation",
         "serviceTime": 60,
         "serviceRatingCount": 0,
         "price": 500
       },
       {
-        "subServiceImage": "url_for_exterior_wiring",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734441605/extrior_img_kxbu7x.jpg",
         "subServiceName": "Exterior Wiring Installation",
         "serviceTime": 80,
         "serviceRatingCount": 0,
@@ -240,7 +207,7 @@ const data = [
     "servicePartName": "Appointment",
     "serviceSubType": [
       {
-        "subServiceImage": "url_for_general_visit",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734442448/service_man_cjpz9p.jpg",
         "subServiceName": "General Visit",
         "serviceTime": 30,
         "serviceRatingCount": 0,
