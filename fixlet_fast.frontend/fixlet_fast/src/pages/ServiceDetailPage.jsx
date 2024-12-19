@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import json from "../component/fakeJsonPlumberData"; // Assuming this is the data you're working with
+import electricianJson from "../component/fakejsonData"; // Assuming this is the data you're working with
+import plumberJson from "../component/fakeJsonPlumberData"
 import { FaStar } from "react-icons/fa";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaRegClock } from "react-icons/fa6";
@@ -12,6 +13,9 @@ function ServiceDetailPage() {
 
     const [active,setActive]=useState(null);
 
+      const json =electricianJson
+ 
+      
 
 
 

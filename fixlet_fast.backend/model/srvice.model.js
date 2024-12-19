@@ -21,7 +21,7 @@ const serviceSchema = mongoose.Schema({
   },
   serviceSubType: [
     {
-      _id: mongoose.Schema.Types.ObjectId,  // Explicitly define the _id
+      // Explicitly define the _id
       subServiceImage: {
         type: String,
         required: true,
@@ -42,7 +42,7 @@ const serviceSchema = mongoose.Schema({
         type: Number,
         required: true,
       },
-    },
+    },{_id:true},
   ],
 
   included: {
