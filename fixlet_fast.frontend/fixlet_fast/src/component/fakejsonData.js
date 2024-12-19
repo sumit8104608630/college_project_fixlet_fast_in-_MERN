@@ -138,7 +138,7 @@ const data = [
     "servicePartName": "Fan",
     "serviceSubType": [
       {
-        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734442731/fanRepair_zblhvi.jpgr",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734442731/fanRepair_zblhvi.jpg",
         "subServiceName": "Ceiling Fan Repair",
         "serviceTime": 50,
         "serviceRatingCount": 0,
@@ -201,7 +201,7 @@ const data = [
     "reviewCount": 0
   },
   {
-    "serviceType": "general",
+    "serviceType": "electrician",
     "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734344997/service_man_txqrn2.jpg",
     "serviceName": "Book Visit",
     "servicePartName": "Appointment",
