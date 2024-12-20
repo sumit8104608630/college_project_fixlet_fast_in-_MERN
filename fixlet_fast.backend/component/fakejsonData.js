@@ -10,35 +10,51 @@ const data = [
         "subServiceName": "Wall Light Installation",
         "serviceTime": 30,
         "serviceRatingCount": 1,
-        "price": 200
+        "price": 200,
+        "included": ["Installation of light fixture", "Post-service cleaning"],
+        "note": [
+          "Wiring over 2 meters will incur additional charges",
+          "Warranty does not cover customer-sourced spare parts"
+        ],
       },
       {
         "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734438170/celling_light_atq5rr.jpg",
         "subServiceName": "Ceiling Light Installation",
         "serviceTime": 40,
         "serviceRatingCount": 0,
-        "price": 250
+        "price": 250,
+        "included": ["Installation of light fixture", "Post-service cleaning"],
+        "note": [
+          "Wiring over 2 meters will incur additional charges",
+          "Warranty does not cover customer-sourced spare parts"
+        ],
       },
       {
         "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734438853/chandelier_ky52qb.jpg",
         "subServiceName": "Chandelier Installation",
         "serviceTime": 60,
         "serviceRatingCount": 0,
-        "price": 400
+        "price": 400,
+        "included": ["Installation of light fixture", "Post-service cleaning"],
+        "note": [
+          "Wiring over 2 meters will incur additional charges",
+          "Warranty does not cover customer-sourced spare parts"
+        ],
       },
       {
         "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734439094/LED_Strip_rgjfyo.jpg",
         "subServiceName": "LED Strip Installation",
         "serviceTime": 45,
         "serviceRatingCount": 0,
-        "price": 180
+        "price": 180,
+        "included": ["Installation of light fixture", "Post-service cleaning"],
+        "note": [
+          "Wiring over 2 meters will incur additional charges",
+          "Warranty does not cover customer-sourced spare parts"
+        ],
       }
     ],
-    "included": ["Installation of light fixture", "Post-service cleaning"],
-    "note": [
-      "Wiring over 2 meters will incur additional charges",
-      "Warranty does not cover customer-sourced spare parts"
-    ],
+
     "price": 200,
     "rating": 0,
     "reviewCount": 0
@@ -54,35 +70,51 @@ const data = [
         "subServiceName": "Ceiling Fan Installation",
         "serviceTime": 50,
         "serviceRatingCount": 0,
-        "price": 150
+        "price": 150,
+        "included": ["Installation of fan", "Post-service cleaning"],
+        "note": [
+          "Wiring over 2 meters will incur additional charges",
+          "Warranty does not cover customer-sourced spare parts"
+        ],
       },
       {
         "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734439368/wall_fan_qdwzbu.jpg",
         "subServiceName": "Wall Fan Installation",
         "serviceTime": 40,
         "serviceRatingCount": 0,
-        "price": 140
+        "price": 140,
+        "included": ["Installation of fan", "Post-service cleaning"],
+        "note": [
+          "Wiring over 2 meters will incur additional charges",
+          "Warranty does not cover customer-sourced spare parts"
+        ],
       },
       {
         "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734439514/exhaust_fan_mrnkbv.jpg",
         "subServiceName": "Exhaust Fan Installation",
         "serviceTime": 30,
         "serviceRatingCount": 0,
-        "price": 160
+        "price": 160,
+        "included": ["Installation of fan", "Post-service cleaning"],
+        "note": [
+          "Wiring over 2 meters will incur additional charges",
+          "Warranty does not cover customer-sourced spare parts"
+        ],
       },
       {
         "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734439594/decorative_fan_f6ebcj.jpg",
         "subServiceName": "Decorative Fan Installation",
         "serviceTime": 60,
         "serviceRatingCount": 0,
-        "price": 300
+        "price": 300,
+        "included": ["Installation of fan", "Post-service cleaning"],
+        "note": [
+          "Wiring over 2 meters will incur additional charges",
+          "Warranty does not cover customer-sourced spare parts"
+        ],
       },
     ],
-    "included": ["Installation of fan", "Post-service cleaning"],
-    "note": [
-      "Wiring over 2 meters will incur additional charges",
-      "Warranty does not cover customer-sourced spare parts"
-    ],
+
     "price": 150,
     "rating": 0,
     "reviewCount": 0
@@ -98,35 +130,51 @@ const data = [
         "subServiceName": "Basic Switchboard Installation",
         "serviceTime": 30,
         "serviceRatingCount": 0,
-        "price": 180
+        "price": 180,
+        "included": ["Installation of switchboard", "Post-service cleaning"],
+        "note": [
+          "Wiring over 2 meters will incur additional charges",
+          "Warranty does not cover customer-sourced spare parts"
+        ],
       },
       {
         "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734440043/smart_b4xrgy.jpg",
         "subServiceName": "Smart Switchboard Installation",
         "serviceTime": 50,
         "serviceRatingCount": 0,
-        "price": 300
+        "price": 300,
+        "included": ["Installation of switchboard", "Post-service cleaning"],
+        "note": [
+          "Wiring over 2 meters will incur additional charges",
+          "Warranty does not cover customer-sourced spare parts"
+        ],
       },
       {
         "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734440442/modular_q2ozqp.jpg",
         "subServiceName": "Modular Switchboard Installation",
         "serviceTime": 40,
         "serviceRatingCount": 0,
-        "price": 250
+        "price": 250,
+        "included": ["Installation of switchboard", "Post-service cleaning"],
+        "note": [
+          "Wiring over 2 meters will incur additional charges",
+          "Warranty does not cover customer-sourced spare parts"
+        ],
       },
       {
         "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734440586/AC_board_w48ghj.jpg",
         "subServiceName": "AC Switchboard Installation",
         "serviceTime": 60,
         "serviceRatingCount": 0,
-        "price": 350
+        "price": 350,
+        "included": ["Installation of switchboard", "Post-service cleaning"],
+        "note": [
+          "Wiring over 2 meters will incur additional charges",
+          "Warranty does not cover customer-sourced spare parts"
+        ],
       }
     ],
-    "included": ["Installation of switchboard", "Post-service cleaning"],
-    "note": [
-      "Wiring over 2 meters will incur additional charges",
-      "Warranty does not cover customer-sourced spare parts"
-    ],
+
     "price": 180,
     "rating": 0,
     "reviewCount": 0
@@ -142,30 +190,41 @@ const data = [
         "subServiceName": "Ceiling Fan Repair",
         "serviceTime": 50,
         "serviceRatingCount": 0,
-        "price": 180
+        "price": 180,
+        "included": ["Diagnosis and repair of fan", "Post-service cleaning"],
+        "note": [
+          "Additional parts may incur extra charges",
+          "Warranty does not cover customer-sourced spare parts"
+        ],
       },
       {
         "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734442853/wall_fan_l2h0q9.jpg",
         "subServiceName": "Wall Fan Repair",
         "serviceTime": 40,
         "serviceRatingCount": 0,
-        "price": 160
+        "price": 160,
+        "included": ["Diagnosis and repair of fan", "Post-service cleaning"],
+        "note": [
+          "Additional parts may incur extra charges",
+          "Warranty does not cover customer-sourced spare parts"
+        ],
       },
       {
         "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734442928/xhaust_fan_repair_eaylbg.jpg",
         "subServiceName": "Exhaust Fan Repair",
         "serviceTime": 30,
         "serviceRatingCount": 0,
-        "price": 150
+        "price": 150,
+        "included": ["Diagnosis and repair of fan", "Post-service cleaning"],
+        "note": [
+          "Additional parts may incur extra charges",
+          "Warranty does not cover customer-sourced spare parts"
+        ],
       },
 
 
     ],
-    "included": ["Diagnosis and repair of fan", "Post-service cleaning"],
-    "note": [
-      "Additional parts may incur extra charges",
-      "Warranty does not cover customer-sourced spare parts"
-    ],
+
     "price": 180,
     "rating": 0,
     "reviewCount": 0
@@ -181,21 +240,27 @@ const data = [
         "subServiceName": "Interior Wiring Installation",
         "serviceTime": 60,
         "serviceRatingCount": 0,
-        "price": 500
+        "price": 500,
+        "included": ["Wiring installation", "Post-service inspection"],
+        "note": [
+          "Additional wiring length may incur extra charges",
+          "Warranty does not cover customer-sourced materials"
+        ],
       },
       {
         "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734441605/extrior_img_kxbu7x.jpg",
         "subServiceName": "Exterior Wiring Installation",
         "serviceTime": 80,
         "serviceRatingCount": 0,
-        "price": 700
+        "price": 700,
+        "included": ["Wiring installation", "Post-service inspection"],
+        "note": [
+          "Additional wiring length may incur extra charges",
+          "Warranty does not cover customer-sourced materials"
+        ],
       }
     ],
-    "included": ["Wiring installation", "Post-service inspection"],
-    "note": [
-      "Additional wiring length may incur extra charges",
-      "Warranty does not cover customer-sourced materials"
-    ],
+
     "price": 500,
     "rating": 0,
     "reviewCount": 0
@@ -211,13 +276,14 @@ const data = [
         "subServiceName": "General Visit",
         "serviceTime": 30,
         "serviceRatingCount": 0,
-        "price": 100
+        "price": 100,
+        "included": ["On-site assessment of service requirements"],
+        "note": [
+          "Visit charges are non-refundable and will be adjusted in final service cost"
+        ],
       }
     ],
-    "included": ["On-site assessment of service requirements"],
-    "note": [
-      "Visit charges are non-refundable and will be adjusted in final service cost"
-    ],
+
     "price": 100,
     "rating": 0,
     "reviewCount": 0

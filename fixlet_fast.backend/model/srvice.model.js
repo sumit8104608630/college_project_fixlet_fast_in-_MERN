@@ -38,29 +38,32 @@ const serviceSchema = mongoose.Schema({
         type: Number,
         default: 0,
       },
+
       price: {
         type: Number,
         required: true,
       },
-    },{_id:true},
+      included: {
+        type: [String],
+        required: true,
+        validate: {
+          validator: (arr) => arr.length > 0,
+          message: "Included items cannot be empty.",
+        },
+      },
+      note: {
+        type: [String],
+        required: true,
+        validate: {
+          validator: (arr) => arr.length > 0,
+          message: "Excluded items cannot be empty.",
+        },
+      },
+
+    },{_id:true,index:true},
   ],
 
-  included: {
-    type: [String],
-    required: true,
-    validate: {
-      validator: (arr) => arr.length > 0,
-      message: "Included items cannot be empty.",
-    },
-  },
-  note: {
-    type: [String],
-    required: true,
-    validate: {
-      validator: (arr) => arr.length > 0,
-      message: "Excluded items cannot be empty.",
-    },
-  },
+
   price: {
     type: Number,
     required: true,

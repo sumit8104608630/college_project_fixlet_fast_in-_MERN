@@ -4,7 +4,8 @@ const {apiError} =require ("../utils/apiError");
 const Service=require("../model/srvice.model");
 const electricianJson =require("../component/fakejsonData.js"); // Assuming this is the data you're working with
 const plumberJson =require( "../component/fakeJsonPlumberData.js");
-
+const carpenter =require("../component/fakeCarpenterData.js")
+const bathroomKitchen =require ("../component/fakeCleaningbathroomkitchendata.js")
 
 
 
@@ -12,8 +13,9 @@ const plumberJson =require( "../component/fakeJsonPlumberData.js");
 
 const inserting_service_data=asyncHandler(async(req,res)=>{
     try {
-        const json =electricianJson.concat(plumberJson);
+        const json =[...electricianJson,...plumberJson,...carpenter,...bathroomKitchen];
         const serviceData=await Service.insertMany(json);
+        
         return res.status(201).json( new ApiResponse(200,serviceData,"service created successfully"))
     } catch (error) {
         console.log(error);

@@ -81,7 +81,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={"/serviceDetailPage/plumber"} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={plumber} alt="Electrician" />
               </div>
@@ -90,7 +90,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={"/serviceDetailPage/carpenter" } className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={carpenter} alt="Festival Decoration" />
               </div>
@@ -199,7 +199,7 @@ function Dashbord() {
               <span>Cleaning</span>
               <div className='flex  gap-5 mb-5  mt-3'>
               <div className='w-28'>
-            <Link className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+            <Link to={"/serviceDetailPage/bathroom&kitchen"} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={bathroom} alt="Cleaning" />
               </div>
@@ -208,7 +208,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={"/serviceDetailPage/HomeCleaning"} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={home} alt="Electrician" />
               </div>
@@ -217,7 +217,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={"/serviceDetailPage/sofaCleaning"} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={sofa_image} alt="Festival Decoration" />
               </div>
@@ -229,20 +229,20 @@ function Dashbord() {
             <span>Pest Control</span>
               <div className='flex  gap-5  mt-3'>
               <div className='w-28'>
-            <Link className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+            <Link to={"/serviceDetailPage/insectPestControl"}  className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={pest} alt="Cleaning" />
               </div>
-                <span className='text-sm'>Bathroom & Kitchen Cleaning</span>
+                <span className='text-sm'>Insect Pest Control</span>
             </Link>
             </div>
 
             <div className='w-28'>
-            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={"/serviceDetailPage/terminateControl"} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={coboard} alt="Electrician" />
               </div>
-                <span className='text-sm'>Full Home Cleaning</span>
+                <span className='text-sm'>Terminate Control</span>
             </Link>
             </div>
 
@@ -251,7 +251,7 @@ function Dashbord() {
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={bed} alt="Festival Decoration" />
               </div>
-              <span className='text-sm'>Sofa Cleaning</span>
+              <span className='text-sm'>Bed Bugs Control</span>
             </Link>
           </div>
             </div>
