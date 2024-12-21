@@ -3,7 +3,7 @@ const data = [
   {
     "serviceType": "washingmachine",
     "serviceImage": "https://your-image-url.com/washing-machine.jpg",
-    "serviceName": "Washing Machine",
+    "serviceName": "Repair",
     "servicePartName": "Repair",
     "serviceSubType": [
       {
@@ -64,7 +64,7 @@ const data = [
   {
     "serviceType": "washingmachine",
     "serviceImage": "https://your-image-url.com/washing-machine-installation.jpg",
-    "serviceName": "Washing Machine",
+    "serviceName": "Installation",
     "servicePartName": "Installation",
     "serviceSubType": [
       {
@@ -89,7 +89,7 @@ const data = [
   {
     "serviceType": "washingmachine",
     "serviceImage": "https://your-image-url.com/washing-machine-uninstallation.jpg",
-    "serviceName": "Washing Machine",
+    "serviceName": "Uninstallation",
     "servicePartName": "Uninstallation",
     "serviceSubType": [
       {
