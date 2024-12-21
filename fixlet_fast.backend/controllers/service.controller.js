@@ -6,18 +6,18 @@ const electricianJson =require("../component/fakejsonData.js"); // Assuming this
 const plumberJson =require( "../component/fakeJsonPlumberData.js");
 const carpenter =require("../component/fakeCarpenterData.js")
 const bathroomKitchen =require ("../component/fakeCleaningbathroomkitchendata.js")
-
-
+const homeCleaning =require("../component/fakeHomeCleaning.js")
+const sofaCleaning =require("../component/fakeSofaCleaningData.js")
 
 // let's push the data into the service data base 
 
 const inserting_service_data=asyncHandler(async(req,res)=>{
     try {
-        const json =[...electricianJson,...plumberJson,...carpenter,...bathroomKitchen];
+        const json =[...electricianJson,...plumberJson,...carpenter,...bathroomKitchen,...homeCleaning,...sofaCleaning];
         const serviceData=await Service.insertMany(json);
         
         return res.status(201).json( new ApiResponse(200,serviceData,"service created successfully"))
-    } catch (error) {
+    } catch (error) { 
         console.log(error);
        new  apiError("something went wrong",500);
     }

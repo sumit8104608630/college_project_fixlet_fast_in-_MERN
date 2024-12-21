@@ -52,6 +52,7 @@ function ServiceDetailPage() {
             <div id={service.servicePartName} className="py-5" key={service.serviceName}>
               <h1 className="text-gray-700 text-2xl font-bold">{service.serviceName}</h1>
               {service.serviceSubType.map((subService) => (
+                <>
                 <div className="flex gap-5 items-center w-full justify-between py-4" key={subService.subServiceName}>
                   <button>
                     <div>
@@ -96,10 +97,16 @@ function ServiceDetailPage() {
                       )}
                     </div>
                   </div>
+                  
                 </div>
+                <hr className='w-full  bg-gray-400'></hr>
+
+                </>
               ))}
+
             </div>
           ))}
+          
         </div>
       </div>
 

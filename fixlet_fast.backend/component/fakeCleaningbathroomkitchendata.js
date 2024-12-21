@@ -1,155 +1,99 @@
 const data = [
     {
-      "serviceType": "furnishedApartmentCleaning",
-      "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734709468/furnished_hhleui.webp",
-      "serviceName": "Furnished Apartment Cleaning",
-      "servicePartName": "Furnished",
+      "serviceType": "bathroom&kitchen",
+      "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734702427/bathroom_ngnoob.webp",
+      "serviceName": "Bathroom Cleaning",
+      "servicePartName": "Bathroom",
       "serviceSubType": [
         {
-          "subServiceName": "1BHK Apartment Cleaning",
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703309/1bhk_cleaning.webp",
+          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734702699/bathromImage_r6tsul.webp",
+          "subServiceName": "Bathroom Deep Cleaning",
           "serviceTime": 90,
-          "serviceRatingCount": 5,
-          "price": 500,
-          "included": ["Complete cleaning of living area, bedroom, kitchen, and bathroom"],
-          "note": ["Extra charge for balcony cleaning"]
-        },
-        {
-          "subServiceName": "2BHK Apartment Cleaning",
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703309/2bhk_cleaning.webp",
-          "serviceTime": 120,
-          "serviceRatingCount": 8,
-          "price": 800,
-          "included": ["Complete cleaning of living area, bedrooms, kitchen, and bathroom"],
-          "note": ["Extra charge for balcony cleaning"]
-        },
-        {
-          "subServiceName": "3BHK Apartment Cleaning",
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703309/3bhk_cleaning.webp",
-          "serviceTime": 150,
-          "serviceRatingCount": 10,
-          "price": 1100,
-          "included": ["Complete cleaning of living area, bedrooms, kitchen, and bathroom"],
-          "note": ["Extra charge for balcony cleaning"]
-        },
-        {
-          "subServiceName": "4BHK Apartment Cleaning",
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703309/4bhk_cleaning.webp",
-          "serviceTime": 180,
-          "serviceRatingCount": 6,
-          "price": 1400,
-          "included": ["Complete cleaning of living area, bedrooms, kitchen, and bathroom"],
-          "note": ["Extra charge for balcony cleaning"]
-        },
-        {
-          "subServiceName": "5+ BHK Apartment Cleaning",
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703309/5bhk_cleaning.webp",
-          "serviceTime": 240,
-          "serviceRatingCount": 12,
-          "price": 2000,
-          "included": ["Complete cleaning of living area, bedrooms, kitchen, and bathroom"],
-          "note": ["Extra charge for balcony cleaning"]
-        }
-      ]
-    },
-    {
-      "serviceType": "unfurnishedApartmentCleaning",
-      "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734709537/un-furnished_lhagm0.webp",
-      "serviceName": "Unfurnished Apartment Cleaning",
-      "servicePartName": "Unfurnished",
-      "serviceSubType": [
-        {
-          "subServiceName": "1BHK Apartment Cleaning",
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703309/1bhk_unfurnished_cleaning.webp",
-          "serviceTime": 90,
-          "serviceRatingCount": 7,
-          "price": 400,
-          "included": ["Complete cleaning of living area, bedroom, kitchen, and bathroom"],
-          "note": ["Extra charge for balcony cleaning"]
-        },
-        {
-          "subServiceName": "2BHK Apartment Cleaning",
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703309/2bhk_unfurnished_cleaning.webp",
-          "serviceTime": 120,
-          "serviceRatingCount": 4,
-          "price": 650,
-          "included": ["Complete cleaning of living area, bedrooms, kitchen, and bathroom"],
-          "note": ["Extra charge for balcony cleaning"]
-        },
-        {
-          "subServiceName": "3BHK Apartment Cleaning",
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703309/3bhk_unfurnished_cleaning.webp",
-          "serviceTime": 150,
-          "serviceRatingCount": 6,
-          "price": 950,
-          "included": ["Complete cleaning of living area, bedrooms, kitchen, and bathroom"],
-          "note": ["Extra charge for balcony cleaning"]
-        },
-        {
-          "subServiceName": "4BHK Apartment Cleaning",
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703309/4bhk_unfurnished_cleaning.webp",
-          "serviceTime": 180,
-          "serviceRatingCount": 3,
-          "price": 1200,
-          "included": ["Complete cleaning of living area, bedrooms, kitchen, and bathroom"],
-          "note": ["Extra charge for balcony cleaning"]
-        },
-        {
-          "subServiceName": "5+ BHK Apartment Cleaning",
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703309/5bhk_unfurnished_cleaning.webp",
-          "serviceTime": 240,
-          "serviceRatingCount": 9,
-          "price": 1800,
-          "included": ["Complete cleaning of living area, bedrooms, kitchen, and bathroom"],
-          "note": ["Extra charge for balcony cleaning"]
-        }
-      ]
-    },
-    {
-      "serviceType": "roomCleaning",
-      "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734709592/bookmyroom_hasb41.webp",
-      "serviceName": "Book My Room Cleaning",
-      "servicePartName": "Room Cleaning",
-      "serviceSubType": [
-        {
-          "subServiceName": "Bedroom Cleaning",
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703309/bedroom_cleaning.webp",
-          "serviceTime": 60,
-          "serviceRatingCount": 5,
-          "price": 200,
-          "included": ["Dusting and cleaning of all surfaces", "Vacuuming and mopping floors"],
-          "note": ["Extra charge for heavy-duty cleaning"]
-        },
-        {
-          "subServiceName": "Living Room Cleaning",
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703309/living_room_cleaning.webp",
-          "serviceTime": 90,
-          "serviceRatingCount": 8,
-          "price": 350,
-          "included": ["Dusting and cleaning of all surfaces", "Vacuuming and mopping floors", "Cleaning of furniture"],
-          "note": ["Extra charge for heavy-duty cleaning"]
-        },
-        {
-          "subServiceName": "Kitchen Cleaning",
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703309/kitchen_cleaning.webp",
-          "serviceTime": 90,
-          "serviceRatingCount": 7,
+          "serviceRatingCount": 0,
           "price": 300,
-          "included": ["Cleaning of countertops, sink, and stove", "Wiping down surfaces", "Vacuuming and mopping floors"],
-          "note": ["Extra charge for deep cleaning of appliances"]
+          "included": ["Scrubbing and cleaning tiles", "Sanitizing toilets", "Cleaning mirrors", "Dusting and wiping down surfaces", "Floor cleaning"],
+          "note": [
+            "Additional charges for mold removal",
+            "Cleaning of glass shower panels will incur extra charges"
+          ],
         },
         {
-          "subServiceName": "Balcony Cleaning",
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703309/balcony_cleaning.webp",
-          "serviceTime": 60,
-          "serviceRatingCount": 4,
-          "price": 150,
-          "included": ["Dusting and cleaning of surfaces", "Vacuuming and mopping floors"],
-          "note": ["Extra charge for heavy-duty cleaning"]
+          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734702690/toiletImage_bs1yz7.webp",
+          "subServiceName": "Mini Bathroom Cleaning",
+          "serviceTime": 30,
+          "serviceRatingCount": 0,
+          "price": 100,
+          "included": ["Wiping down sink and countertops", "Cleaning toilet surface", "Quick floor cleaning"],
+          "note": [
+            "Only surface-level cleaning, does not include deep cleaning"
+          ],
         }
-      ]
+      ],
+      "price": 350,
+      "rating": 0,
+      "reviewCount": 0
+    },
+    {
+      "serviceType": "bathroom&kitchen",
+      "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734702532/kitchen_n9azvb.webp",
+      "serviceName": "Kitchen Cleaning",
+      "servicePartName": "Kitchen",
+      "serviceSubType": [
+        {
+          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703309/kitchen_aplianc_scac1f.jpg",
+          "subServiceName": "Oven & Kitchen Appliance Cleaning",
+          "serviceTime": 60,
+          "serviceRatingCount": 0,
+          "price": 700,
+          "included": ["Cleaning of oven", "Wiping down kitchen appliances", "Sanitizing sink area", "Cleaning of ventilation hoods"],
+          "note": [
+            "Additional charges for removing heavy grease build-up",
+            "Client must empty the oven prior to cleaning"
+          ],
+        },
+        {
+          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703440/kitchen_tile_f4ax4h.jpg",
+          "subServiceName": "Kitchen Floor Cleaning",
+          "serviceTime": 45,
+          "serviceRatingCount": 0,
+          "price": 180,
+          "included": ["Floor washing", "Scrubbing tiles", "Stain removal"],
+          "note": [
+            "Additional charges for cleaning under heavy furniture"
+          ],
+        },
+        {
+          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703609/chimney_ttitdn.webp",
+          "subServiceName": "Kitchen Chimney Cleaning",
+          "serviceTime": 60,
+          "serviceRatingCount": 0,
+          "price": 180,
+          "included": ["Chimney cleaning", "Cleaning of the filters", "Degreasing the chimney duct"],
+          "note": [
+            "Additional charges for heavy grease build-up",
+            "Client must remove all items from the kitchen area before cleaning"
+          ],
+        },
+        {
+          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734703593/kitchendeep_oiizdh.jpg",
+          "subServiceName": "Kitchen Deep Cleaning",
+          "serviceTime": 100,
+          "serviceRatingCount": 0,
+          "price": 350,
+          "included": ["Cleaning of countertops", "Oven and stove cleaning", "Cabinet wiping", "Floor cleaning", "Dishwasher sanitization"],
+          "note": [
+            "Additional charges for appliance cleaning (fridge, microwave)",
+            "Deep cleaning of kitchen tiles may incur extra cost"
+          ],
+        },
+  
+      ],
+      "price": 650,
+      "rating": 0,
+      "reviewCount": 0
     }
   ];
   
-  export default data;
+  module.exports= data;
+  
   
