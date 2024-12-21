@@ -237,14 +237,7 @@ function Dashbord() {
             </Link>
             </div>
 
-            <div className='w-28'>
-            <Link to={"/serviceDetailPage/terminateControl"} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={coboard} alt="Electrician" />
-              </div>
-                <span className='text-sm'>Terminate Control</span>
-            </Link>
-            </div>
+
 
             <div className='w-28'>
             <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">

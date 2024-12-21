@@ -97,7 +97,7 @@ const data = [
     },
     {
       "serviceType": "mattressCleaning",
-      "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734765075/matter_wrjfry.webp",
+      "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734766648/SingleMattress_qyrfpz.jpg",
       "serviceName": "Mattress Cleaning",
       "servicePartName": "Mattress",
       "serviceSubType": [

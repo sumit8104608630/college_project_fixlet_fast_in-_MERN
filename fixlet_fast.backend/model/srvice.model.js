@@ -9,7 +9,6 @@ const serviceSchema = mongoose.Schema({
   },
   serviceImage: {
     type: String,
-    required: true,
   },
   serviceName: {
     type: String,

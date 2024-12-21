@@ -59,7 +59,7 @@ function ServiceDetailPage() {
                       <h2 className="text-lg font-semibold text-gray-600">{subService.subServiceName}</h2>
                       <div className="flex items-center gap-2">
                         <FaStar size={12} className="text-yellow-400" />
-                        <span>{subService.serviceRatingCount} View</span>
+                        <span>{subService.serviceRatingCount} review</span>
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="flex items-center">

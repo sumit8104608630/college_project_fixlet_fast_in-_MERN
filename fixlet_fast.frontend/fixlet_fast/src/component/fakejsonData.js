@@ -1,138 +1,113 @@
 const data = [
+  // Washing Machine Repair
   {
-    "serviceType": "sofaCleaning",
-    "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734765079/sofa_ay62bk.jpg",
-    "serviceName": "Sofa Cleaning",
-    "servicePartName": "Sofa",
+    "serviceType": "washingmachine",
+    "serviceImage": "https://your-image-url.com/washing-machine.jpg",
+    "serviceName": "Washing Machine",
+    "servicePartName": "Repair",
     "serviceSubType": [
       {
-        "subServiceName": "Single Sofa Cleaning",
-        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734766668/singleSofa_rpmjat.jpg",
-        "serviceTime": 60,
-        "serviceRatingCount": 5,
-        "price": 300,
-        "included": ["Vacuuming of fabric", "Stain treatment", "Deep cleaning of cushions"],
-        "note": ["Extra charge for deep stain removal"]
-      },
-      {
-        "subServiceName": "Double Sofa Cleaning",
-        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734766666/doubleSofa_sk3e5r.jpg",
+        "subServiceImage": "https://your-image-url.com/washing-machine-repair.jpg",
+        "subServiceName": "Washing Machine Repair",
         "serviceTime": 90,
-        "serviceRatingCount": 6,
-        "price": 500,
-        "included": ["Vacuuming of fabric", "Stain treatment", "Deep cleaning of cushions"],
-        "note": ["Extra charge for deep stain removal"]
+        "serviceRatingCount": 0,
+        "price": 600,  // Increased price
+        "included": ["Diagnosis and repair of washing machine", "Post-service cleaning"],
+        "note": [
+          "Parts replacement may incur additional charges",
+          "Warranty does not cover customer-sourced spare parts"
+        ],
       },
       {
-        "subServiceName": "Triple Sofa Cleaning",
-        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734766664/TripleSofa_ipj8ab.jpg",
-        "serviceTime": 120,
-        "serviceRatingCount": 7,
-        "price": 700,
-        "included": ["Vacuuming of fabric", "Stain treatment", "Deep cleaning of cushions"],
-        "note": ["Extra charge for deep stain removal"]
+        "subServiceImage": "https://your-image-url.com/fully-automatic-checkup.jpg",
+        "subServiceName": "Fully Automatic Washing Machine Checkup",
+        "serviceTime": 60,
+        "serviceRatingCount": 0,
+        "price": 550,  // Increased price
+        "included": ["Comprehensive checkup of washing machine", "Testing all functions", "Cleaning of key components"],
+        "note": [
+          "Any issues identified will be communicated with the customer",
+          "Additional charges may apply for parts replacement"
+        ],
       },
       {
-        "subServiceName": "L-Shaped Sofa Cleaning",
-        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734766660/L-ShapedSofa_dakswz.jpg",
-        "serviceTime": 150,
-        "serviceRatingCount": 4,
-        "price": 900,
-        "included": ["Vacuuming of fabric", "Stain treatment", "Deep cleaning of cushions"],
-        "note": ["Extra charge for deep stain removal"]
+        "subServiceImage": "https://your-image-url.com/fully-automatic-front-load-checkup.jpg",
+        "subServiceName": "Fully Automatic Washing Machine Checkup (Front Load)",
+        "serviceTime": 75,
+        "serviceRatingCount": 0,
+        "price": 600,  // Increased price
+        "included": ["Comprehensive checkup for front-load washing machines", "Testing of front-load specific components", "Cleaning and maintenance of front-load features"],
+        "note": [
+          "Any issues identified will be communicated with the customer",
+          "Additional charges may apply for parts replacement"
+        ],
       },
       {
-        "subServiceName": "Sectional Sofa Cleaning",
-        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734766657/SectionalSofa_o1zb6v.jpg",
-        "serviceTime": 180,
-        "serviceRatingCount": 8,
-        "price": 1200,
-        "included": ["Vacuuming of fabric", "Stain treatment", "Deep cleaning of cushions"],
-        "note": ["Extra charge for deep stain removal"]
+        "subServiceImage": "https://your-image-url.com/semi-automatic-checkup.jpg",
+        "subServiceName": "Semi Automatic Washing Machine Checkup",
+        "serviceTime": 65,
+        "serviceRatingCount": 0,
+        "price": 500,  // Increased price
+        "included": ["Comprehensive checkup of semi-automatic washing machine", "Testing all functions", "Cleaning of key components"],
+        "note": [
+          "Any issues identified will be communicated with the customer",
+          "Additional charges may apply for parts replacement"
+        ],
       }
     ],
-    "price": 0,  // No price defined for main service
+    "price": 600,  // Base price for repair
     "rating": 0,
-    "reviewCount": 0,
-    "availability": true
+    "reviewCount": 0
   },
+
+  // Washing Machine Installation
   {
-    "serviceType": "carpetCleaning",
-    "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734765076/carpeter_nsjklj.webp",
-    "serviceName": "Carpet Cleaning",
-    "servicePartName": "Carpet",
+    "serviceType": "washingmachine",
+    "serviceImage": "https://your-image-url.com/washing-machine-installation.jpg",
+    "serviceName": "Washing Machine",
+    "servicePartName": "Installation",
     "serviceSubType": [
       {
-        "subServiceName": "Small Carpet Cleaning",
-        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734766655/SmallCarpet_nuxnrq.jpg",
+        "subServiceImage": "https://your-image-url.com/complete-installation.jpg",
+        "subServiceName": "Complete Installation",
         "serviceTime": 60,
-        "serviceRatingCount": 5,
-        "price": 250,
-        "included": ["Vacuuming of carpet", "Stain treatment", "Deep cleaning of fibers"],
-        "note": ["Extra charge for deep stain removal"]
-      },
-      {
-        "subServiceName": "Medium Carpet Cleaning",
-        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734766652/MediumCarpet_dsjpx0.jpg",
-        "serviceTime": 90,
-        "serviceRatingCount": 6,
-        "price": 400,
-        "included": ["Vacuuming of carpet", "Stain treatment", "Deep cleaning of fibers"],
-        "note": ["Extra charge for deep stain removal"]
-      },
-      {
-        "subServiceName": "Large Carpet Cleaning",
-        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734766650/LargeCarpet_fpyxb7.jpg",
-        "serviceTime": 120,
-        "serviceRatingCount": 7,
-        "price": 600,
-        "included": ["Vacuuming of carpet", "Stain treatment", "Deep cleaning of fibers"],
-        "note": ["Extra charge for deep stain removal"]
+        "serviceRatingCount": 0,
+        "price": 500,  // Increased price
+        "included": ["Complete installation of washing machine", "Connection to water and electricity", "Testing post-installation"],
+        "note": [
+          "Installation is limited to standard hookups only",
+          "Additional charges for custom installations"
+        ],
       }
     ],
-    "price": 0,  // No price defined for main service
+    "price": 500,  // Base price for installation
     "rating": 0,
-    "reviewCount": 0,
-    "availability": true
+    "reviewCount": 0
   },
+
+  // Washing Machine Uninstallation
   {
-    "serviceType": "mattressCleaning",
-    "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734765075/matter_wrjfry.webp",
-    "serviceName": "Mattress Cleaning",
-    "servicePartName": "Mattress",
+    "serviceType": "washingmachine",
+    "serviceImage": "https://your-image-url.com/washing-machine-uninstallation.jpg",
+    "serviceName": "Washing Machine",
+    "servicePartName": "Uninstallation",
     "serviceSubType": [
       {
-        "subServiceName": "Single Mattress Cleaning",
-        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734766648/SingleMattress_qyrfpz.jpg",
+        "subServiceImage": "https://your-image-url.com/complete-uninstallation.jpg",
+        "subServiceName": "Complete Uninstallation",
         "serviceTime": 60,
-        "serviceRatingCount": 4,
-        "price": 250,
-        "included": ["Vacuuming of mattress", "Stain treatment", "Deep cleaning of fibers"],
-        "note": ["Extra charge for deep stain removal"]
-      },
-      {
-        "subServiceName": "Double Mattress Cleaning",
-        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734766646/DoubleMattress_wzsuik.jpg",
-        "serviceTime": 90,
-        "serviceRatingCount": 5,
-        "price": 400,
-        "included": ["Vacuuming of mattress", "Stain treatment", "Deep cleaning of fibers"],
-        "note": ["Extra charge for deep stain removal"]
-      },
-      {
-        "subServiceName": "King Size Mattress Cleaning",
-        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734766645/KingSizeMattress_rd9qrg.jpg",
-        "serviceTime": 120,
-        "serviceRatingCount": 6,
-        "price": 600,
-        "included": ["Vacuuming of mattress", "Stain treatment", "Deep cleaning of fibers"],
-        "note": ["Extra charge for deep stain removal"]
+        "serviceRatingCount": 0,
+        "price": 450,  // Increased price
+        "included": ["Complete removal of washing machine", "Disconnection from water and electricity", "Post-uninstallation cleaning"],
+        "note": [
+          "Additional charges for difficult-to-reach installations",
+          "Warranty does not cover customer-sourced spare parts"
+        ],
       }
     ],
-    "price": 0,  // No price defined for main service
+    "price": 450,  // Base price for uninstallation
     "rating": 0,
-    "reviewCount": 0,
-    "availability": true
+    "reviewCount": 0
   }
 ];
 
