@@ -63,6 +63,7 @@ function Dashbord() {
 {link3Toggle?
 <div className='fixed z-20 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
   
+
   
       <div className=' border-1 rounded   backdrop-blur-lg bg-opacity-10 '>
       <button onClick={()=>setlink3Toggle(false)} className='bg-white rounded-full p-1 mb-2 absolute right-0  -top-10 translate-y-0'><IoCloseOutline size={20}/></button>

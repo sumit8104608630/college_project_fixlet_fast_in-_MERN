@@ -7,6 +7,10 @@ const serviceSchema = mongoose.Schema({
     required: true,
     index: true,
   },
+  serviceArea:{
+    type:[String],
+    default:["mumbai","patna","agra","pune"]
+  },
   serviceImage: {
     type: String,
   },

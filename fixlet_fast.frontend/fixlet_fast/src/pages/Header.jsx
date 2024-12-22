@@ -17,6 +17,7 @@ const dispatch=useDispatch();
 const [cartCount, setCartCount] = useState(1); // Example cart count
 const [isScroll,setIsScroll]=useState(false)
 const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
+const [mapToggle,setMapToggle]=useState(null)
 
 window.addEventListener("scroll",()=>{
   setIsScroll(true)
@@ -51,13 +52,16 @@ useEffect(()=>{
   };
 },[isLogin])
 
+
+
+
   return (
     <div className='absolute top-0 z-10'>
 
       {
         
-      <nav className={`fixed w-full ${isScroll ? 'shadow-xl' : 'shadow-none'}`}>
-        <div className='flex justify-between px-10 items-center py-2 bg-orange-500'>
+      <nav className={`fixed w-full ${isScroll ? 'shadow-xl' : 'shadow-none'} items-center`}>
+        <div className='flex justify-between  px-10 items-center py-2 bg-orange-500'>
           <div>
             <Link to={"/"}>  
               <img className='w-14' src={logo} alt='logo'></img>
@@ -65,7 +69,7 @@ useEffect(()=>{
           </div>
 
           <div>
-            <ul className='flex items-center text-white text-2xl gap-8 font-semibold'>
+            <ul className='flex  items-center text-white text-2xl gap-8 font-semibold'>
               <li>
                 <NavLink to="/" className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid after:w-full after:left-0 after:translate-x-0" : "after:left-1/2 after:translate-x-[-50%]"} hover:text-white after:content-[''] after:absolute after:bottom-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:translate-x-0 hover:after:w-full`}>
                   Home
@@ -85,7 +89,7 @@ useEffect(()=>{
           </div>
           
           <div className="flex gap-5">
-           {userInfo?<Location/>:""}
+           {userInfo?<Location />:""}
            <SearchBar/>
             </div>
 

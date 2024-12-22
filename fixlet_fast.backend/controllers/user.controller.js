@@ -70,16 +70,6 @@ client.connect();
 
 
 
-
-
-
-
-
-
-
-
-
-
 /*
  const generateOtp=asyncHandler(async(req,res)=>{
     try{
@@ -371,12 +361,39 @@ const userInfo=asyncHandler(async(req,res)=>{
 })
 
 
+//let's create functionality for saving the user address
+
+const saveUserAddress=asyncHandler(async(req,res)=>{
+  try {
+
+    const {longitude,latitude}=req.body;
+    console.log(longitude,latitude)
+   // const {id}=req.user._id;  
+    const Api="https://api.opencagedata.com/geocode/v1/json"
+    const apiKey="6657af194bfb4a048eea38f84c4504b6"
+    const query = `${latitude},${longitude}`;
+    const url=`${Api}?key=${apiKey}&q=${query}&pretty=1`;
+
+    const location =await fetch(url);
+    const locationData=await location.json();
+    console.log(locationData.results);
+
+
+    
+  } catch (error) {
+    console.log(error)
+    throw new apiError("some thing went wrong in server please try again after some time",500);
+  }
+})
+
+
  module.exports={
     userRegister,
     userLogin,
     userLogout,
     userInfo,
     generateOtp,
-    verify_otp
+    verify_otp,
+    saveUserAddress
  }
 

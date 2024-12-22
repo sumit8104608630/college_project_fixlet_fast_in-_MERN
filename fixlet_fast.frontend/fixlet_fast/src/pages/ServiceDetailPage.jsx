@@ -30,8 +30,8 @@ function ServiceDetailPage() {
               key={service.serviceName}
             >
               <div
-                className={`bg-white p-4 w-24 h-full flex flex-col items-center justify-between rounded border-2 border-gray-200 transition-transform transform hover:scale-95 hover:border-gray-700 cursor-pointer ${
-                  service.serviceName === active && "border-2 border-gray-700" 
+                className={`bg-white p-4 w-24 h-full flex flex-col items-center justify-between rounded border-2 border-gray-200 transition-transform transform hover:scale-95 hover:border-gray-500 cursor-pointer ${
+                  service.serviceName === active && "border-2 border-gray-500" 
                 }`}
               >
                 <img
@@ -47,7 +47,7 @@ function ServiceDetailPage() {
       </div>
 
       <div className="scrollbar-thin scrollbar-none scrollbar-track-gray-200">
-        <div className="flex flex-col border-2 rounded px-5">
+        <div  className="flex flex-col border-2 rounded w-96 px-5">
           {json.map((service) => (
             <div id={service.servicePartName} className="py-5" key={service.serviceName}>
               <h1 className="text-gray-700 text-start text-2xl font-bold">{service.serviceName}</h1>
