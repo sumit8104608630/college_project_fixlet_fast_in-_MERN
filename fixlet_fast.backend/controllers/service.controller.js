@@ -13,12 +13,17 @@ const bedPestControl=require("../component/fakeBedData.js");
 const ACservice=require("../component/fakeACserviceDta.js");
 const chimney=require("../component/fakeChimneyData.js");
 const stove=require("../component/fakeStoveData.js")
-const refrigerator =require("../component/fakeRefrigeratorData.js")
+const refrigerator =require("../component/fakeRefrigeratorData.js");
+const washinMachine=require("../component/fakeWashingMashineData.js");
+const mixer =require("../component/fakeMixerData.js");
+const decoration =require("../component/lightDecorationData.js");
+const wallPanel=require("../component/fake_wall_panelData.js");
+const wallPaint =require("../component/fakeWallPainData.js")
 // let's push the data into the service data base 
-
+ 
 const inserting_service_data=asyncHandler(async(req,res)=>{
     try {
-        const json =[...electricianJson,...plumberJson,...carpenter,...bathroomKitchen,...homeCleaning,...sofaCleaning,...pestControl,...bedPestControl,...ACservice,...chimney,...stove,...refrigerator];
+        const json =[...electricianJson,...plumberJson,...carpenter,...bathroomKitchen,...homeCleaning,...sofaCleaning,...pestControl,...bedPestControl,...ACservice,...chimney,...stove,...refrigerator,...washinMachine,...mixer,...decoration,...wallPanel,...wallPaint];
         const serviceData=await Service.insertMany(json);
         
         return res.status(201).json( new ApiResponse(200,serviceData,"service created successfully"))

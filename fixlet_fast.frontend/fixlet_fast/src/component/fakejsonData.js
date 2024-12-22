@@ -1,114 +1,90 @@
-const data = [
-  // Washing Machine Repair
+const wallPaintingData = [
   {
-    "serviceType": "washingmachine",
-    "serviceImage": "https://your-image-url.com/washing-machine.jpg",
-    "serviceName": "Repair",
-    "servicePartName": "Repair",
+    "serviceType": "wallpainting",
+    "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734856481/subfullhome_qvsd5o.jpg",
+    "serviceName": "Full Home Painting",
+    "servicePartName": "full",
     "serviceSubType": [
       {
-        "subServiceImage": "https://your-image-url.com/washing-machine-repair.jpg",
-        "subServiceName": "Washing Machine Repair",
-        "serviceTime": 90,
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734856330/fullHome_bwuhes.jpg",
+        "subServiceName": "Standard Paint",
+        "serviceTime": 1440, // Estimated 24 hours
         "serviceRatingCount": 0,
-        "price": 600,  // Increased price
-        "included": ["Diagnosis and repair of washing machine", "Post-service cleaning"],
-        "note": [
-          "Parts replacement may incur additional charges",
-          "Warranty does not cover customer-sourced spare parts"
+        "price": 15000,
+        "included": [
+          "Painting of all walls in the home",
+          "Standard paint quality",
+          "Minor wall repairs included"
         ],
+        "note": [
+          "Furniture and other objects should be covered or moved by the client",
+          "Paint selection to be finalized during booking"
+        ]
       },
       {
-        "subServiceImage": "https://your-image-url.com/fully-automatic-checkup.jpg",
-        "subServiceName": "Fully Automatic Washing Machine Checkup",
-        "serviceTime": 60,
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734856327/premium_zxfy6q.jpg",
+        "subServiceName": "Premium Paint",
+        "serviceTime": 1440, // Estimated 24 hours
         "serviceRatingCount": 0,
-        "price": 550,  // Increased price
-        "included": ["Comprehensive checkup of washing machine", "Testing all functions", "Cleaning of key components"],
-        "note": [
-          "Any issues identified will be communicated with the customer",
-          "Additional charges may apply for parts replacement"
+        "price": 20000,
+        "included": [
+          "Painting of all walls in the home",
+          "Premium paint options",
+          "Minor wall repairs included"
         ],
-      },
-      {
-        "subServiceImage": "https://your-image-url.com/fully-automatic-front-load-checkup.jpg",
-        "subServiceName": "Fully Automatic Washing Machine Checkup (Front Load)",
-        "serviceTime": 75,
-        "serviceRatingCount": 0,
-        "price": 600,  // Increased price
-        "included": ["Comprehensive checkup for front-load washing machines", "Testing of front-load specific components", "Cleaning and maintenance of front-load features"],
         "note": [
-          "Any issues identified will be communicated with the customer",
-          "Additional charges may apply for parts replacement"
-        ],
-      },
-      {
-        "subServiceImage": "https://your-image-url.com/semi-automatic-checkup.jpg",
-        "subServiceName": "Semi Automatic Washing Machine Checkup",
-        "serviceTime": 65,
-        "serviceRatingCount": 0,
-        "price": 500,  // Increased price
-        "included": ["Comprehensive checkup of semi-automatic washing machine", "Testing all functions", "Cleaning of key components"],
-        "note": [
-          "Any issues identified will be communicated with the customer",
-          "Additional charges may apply for parts replacement"
-        ],
+          "Premium textures and finishes available at extra cost",
+          "Wall size may affect the overall price"
+        ]
       }
     ],
-    "price": 600,  // Base price for repair
+    "price": 15000,
     "rating": 0,
     "reviewCount": 0
   },
-
-  // Washing Machine Installation
   {
-    "serviceType": "washingmachine",
-    "serviceImage": "https://your-image-url.com/washing-machine-installation.jpg",
-    "serviceName": "Installation",
-    "servicePartName": "Installation",
+    "serviceType": "wallpainting",
+    "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734856479/subwall_fhqdio.jpg",
+    "serviceName": "Room Wall Painting",
+    "servicePartName": "room",
     "serviceSubType": [
       {
-        "subServiceImage": "https://your-image-url.com/complete-installation.jpg",
-        "subServiceName": "Complete Installation",
-        "serviceTime": 60,
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734856324/standard_zzrk6u.jpg",
+        "subServiceName": "Standard Paint",
+        "serviceTime": 360, // Estimated 6 hours
         "serviceRatingCount": 0,
-        "price": 500,  // Increased price
-        "included": ["Complete installation of washing machine", "Connection to water and electricity", "Testing post-installation"],
-        "note": [
-          "Installation is limited to standard hookups only",
-          "Additional charges for custom installations"
+        "price": 3000,
+        "included": [
+          "Painting of all walls in one room",
+          "Standard paint quality",
+          "Wall surface preparation included"
         ],
-      }
-    ],
-    "price": 500,  // Base price for installation
-    "rating": 0,
-    "reviewCount": 0
-  },
-
-  // Washing Machine Uninstallation
-  {
-    "serviceType": "washingmachine",
-    "serviceImage": "https://your-image-url.com/washing-machine-uninstallation.jpg",
-    "serviceName": "Uninstallation",
-    "servicePartName": "Uninstallation",
-    "serviceSubType": [
+        "note": [
+          "Room size up to 200 sq ft; extra charges for larger rooms",
+          "Ceiling painting can be added at extra cost"
+        ]
+      },
       {
-        "subServiceImage": "https://your-image-url.com/complete-uninstallation.jpg",
-        "subServiceName": "Complete Uninstallation",
-        "serviceTime": 60,
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734856321/texture_ownsgk.jpg",
+        "subServiceName": "Premium Paint",
+        "serviceTime": 360, // Estimated 6 hours
         "serviceRatingCount": 0,
-        "price": 450,  // Increased price
-        "included": ["Complete removal of washing machine", "Disconnection from water and electricity", "Post-uninstallation cleaning"],
-        "note": [
-          "Additional charges for difficult-to-reach installations",
-          "Warranty does not cover customer-sourced spare parts"
+        "price": 5000,
+        "included": [
+          "Painting of all walls in one room",
+          "Premium quality paint options",
+          "Wall surface preparation included"
         ],
+        "note": [
+          "Room size up to 200 sq ft; extra charges for larger rooms",
+          "Textured or stencil painting available at extra cost"
+        ]
       }
     ],
-    "price": 450,  // Base price for uninstallation
+    "price": 3000,
     "rating": 0,
     "reviewCount": 0
   }
 ];
 
-export default data;
+export default wallPaintingData;

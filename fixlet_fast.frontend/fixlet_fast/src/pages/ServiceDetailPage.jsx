@@ -50,13 +50,13 @@ function ServiceDetailPage() {
         <div className="flex flex-col border-2 rounded px-5">
           {json.map((service) => (
             <div id={service.servicePartName} className="py-5" key={service.serviceName}>
-              <h1 className="text-gray-700 text-2xl font-bold">{service.serviceName}</h1>
+              <h1 className="text-gray-700 text-start text-2xl font-bold">{service.serviceName}</h1>
               {service.serviceSubType.map((subService) => (
                 <>
                 <div className="flex gap-5 items-center w-full justify-between py-4" key={subService.subServiceName}>
                   <button>
                     <div>
-                      <h2 className="text-lg font-semibold text-gray-600">{subService.subServiceName}</h2>
+                      <h2 className="text-lg text-start font-semibold text-gray-600">{subService.subServiceName}</h2>
                       <div className="flex items-center gap-2">
                         <FaStar size={12} className="text-yellow-400" />
                         <span>{subService.serviceRatingCount} review</span>
@@ -68,7 +68,7 @@ function ServiceDetailPage() {
                         </div>
                         <div className="flex gap-2 items-center">
                           <FaRegClock size={12} />
-                          <span>{subService.serviceTime} mins</span>
+                          <span>{subService.serviceTime>60?(subService.serviceTime/60) +"hr":subService.serviceTime+"mins"} </span>
                         </div>
                       </div>
                       <div className="text-start">
