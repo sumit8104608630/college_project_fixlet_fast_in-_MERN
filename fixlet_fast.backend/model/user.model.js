@@ -43,7 +43,8 @@ const userSchema=mongoose.Schema({
         default:"USER"
     },
     refreshToken:{
-        type:String
+        type:String,
+        default:null
     }
 },{
     timestamps:true

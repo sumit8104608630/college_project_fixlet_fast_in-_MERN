@@ -293,7 +293,7 @@ const userLogin=asyncHandler(async(req,res)=>{
       const token=await User.matchPasswordGenerateToken(email,password);
       
         const refresh_token=token?.refresh_token;
-        user.refreshToken=refresh_token;
+        user.refreshToken=refresh_token; 
         await user.save({validateBeforeSave:false});
         const loginUser=await User.findOne({email}).select("-password -salt -refreshToken");
 
@@ -321,10 +321,12 @@ const userLogin=asyncHandler(async(req,res)=>{
 // let's create the functionality of logout  
 const userLogout=asyncHandler(async(req,res)=>{
     try{
-        const {_id}=req.user._id;
+        const _id=req.user._id;
+        console.log(_id)
+
         await  User.findByIdAndUpdate(_id,{
-         $set:{   refreshToken:undefined}
-        });
+         $set:{refreshToken:undefined},
+        },{ new: true });
 
         res.status(200).clearCookie('accessToken',{
             httpOnly:true,
@@ -344,7 +346,7 @@ const userInfo=asyncHandler(async(req,res)=>{
     try{
     const userInfo=req.user;
     if(!userInfo){
-        return new ApiResponse(401,"user not found");
+        return new ApiResponse(401,"user not found"); 
     }
     res.status(200).json(
         new ApiResponse(
@@ -367,8 +369,8 @@ const saveUserAddress=asyncHandler(async(req,res)=>{
   try {
 
     const {longitude,latitude}=req.body;
-    console.log(longitude,latitude)
-   // const {id}=req.user._id;  
+    console.log(longitude,latitude) 
+   const _id=req.user._id;  
     const Api="https://api.opencagedata.com/geocode/v1/json"
     const apiKey="6657af194bfb4a048eea38f84c4504b6"
     const query = `${latitude},${longitude}`;
@@ -376,8 +378,31 @@ const saveUserAddress=asyncHandler(async(req,res)=>{
 
     const location =await fetch(url);
     const locationData=await location.json();
-    console.log(locationData.results);
+    const formatted=locationData.results[0].components
+  //  console.log(formatted)
 
+    if(!formatted){
+      return new ApiResponse("invalid location",400);
+    }
+    const pinCode=formatted.postcode;
+
+    const dataLocation=await (await fetch(`http://www.postalpincode.in/api/pincode/${pinCode}`)).json();
+    console.log(dataLocation)
+
+   const currentLocation=`${formatted.neighbourhood},${formatted.city},${dataLocation.PostOffice[0].District},${dataLocation.PostOffice[1].Name},${dataLocation.PostOffice[0].Name},${formatted.postcode}`
+    //let save this or update this to the user model by id
+    const userAddress=await User.findByIdAndUpdate(
+      _id,
+      { $set: { location: currentLocation } },
+      { new: true } // Return the updated document
+  );
+  //let set the district in req
+    req.location={
+      state:dataLocation.PostOffice[0].State,
+      region:dataLocation.PostOffice[0].Region,
+      district:dataLocation.PostOffice[0].District,
+    }
+    res.status(201).json(new ApiResponse(200,currentLocation,"user location as been saved"))
 
     
   } catch (error) {

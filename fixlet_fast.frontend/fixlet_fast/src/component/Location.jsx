@@ -2,36 +2,69 @@ import React, { useEffect, useState } from 'react'
 import { FaLocationDot } from "react-icons/fa6";
 import { FaLocationCrosshairs } from "react-icons/fa6";
 import { IoCloseOutline } from "react-icons/io5";
-import axios from 'axios';
+//import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 function Location(props) {
+  const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
   const [toggle,setToggle]=useState(false);
+  const [toggle2,setToggle2]=useState(false);
+
   const [location,setCompleteLocation]=useState("")
   const [longitude,setLongitude]=useState(null);
   const [latitude,setLatitude]=useState(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    address: "",
+    city: "",
+    state: "",
+    pincode: "",
+    country: "",
+  });
 
   const handleToggle=()=>{
     setToggle(true)
   }
 
-  useEffect(()=>{
 
-     axios(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`).then((data)=>{
-      setCompleteLocation(data);
-     })
 
-  },[longitude,latitude]);
   console.log(location)
   
-  const handleCurrentLocation=()=>{
-    navigator.geolocation.getCurrentPosition((position)=>{
-      setLongitude(position.coords.longitude);
-      setLatitude(position.coords.latitude);
+  const handleCurrentLocation=async()=>{
+    navigator.geolocation.getCurrentPosition(async(position)=>{
+      const obj={
+        longitude:position.coords.longitude,
+      latitude:position.coords.latitude
+      }
+      const fetchData=await fetch("http://localhost:8000/user/storeAddress",{
+        method:"POST",
+        body:JSON.stringify(obj)
+        ,
+        headers:{
+          "Content-Type":"application/json",
+        },
+        credentials:'include'
+      })
+      const data=await fetchData.json()
+      setCompleteLocation(data.data)
     },()=>{
       alert("Unable to get your location please allow the Location")
     })
+ 
   }
   console.log(longitude,latitude);
+
+
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form Submitted", formData);
+  };
+
 
 
   return (
@@ -39,30 +72,146 @@ function Location(props) {
     <div>
         <button onClick={handleToggle}  className=' bg-white flex items-center px-2 py-2 rounded-lg'>
       <FaLocationDot className='text-gray-500' size={20} />
-    <p className='  text-gray-600 text-sm px-2'>Mumbai ghatkopar west indra nagar golibar road</p>
+    <p className='  text-gray-600 text-sm w-96 text-ellipsis overflow-hidden whitespace-nowrap px-2'>{location?location:userInfo.location}</p>
     <FaLocationCrosshairs size={20} className='text-gray-500' />
     </button>
   </div>
   {toggle&&
+<>
 
-  <div className='fixed z-20 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
+  <div className='fixed z-20 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen  '>
     <div className='relative h-max'>
-          <button onClick={()=>setToggle(false)} className='bg-white rounded-full p-1 mb-2 absolute   -top-28 -right-96 translate-y-0'><IoCloseOutline size={20}/></button>
-    </div>
-         <div className=' bg-white flex flex-col  p-5 rounded'>
+    <button onClick={()=>setToggle(false)} className='bg-white rounded-full p-1 mb-2 absolute   -top-10 right-0 translate-y-0'><IoCloseOutline size={20}/></button>
+
+         <div className=' bg-white flex flex-col w-96  p-5 rounded'>
              <div className=' '>
-                 <button onClick={handleCurrentLocation} className='w-full  flex gap-2 items-center font-semibold text-gray-600 hover:text-orange-500'>  
-                    <FaLocationCrosshairs size={20} className='text-gray-500 ' />
+                 <button onClick={handleCurrentLocation} className='w-full  flex gap-2 items-center font-semibold text-orange-500 hover:text-orange-500'>  
+                    <FaLocationCrosshairs size={20} className='text-orange-500 ' />
                     Current Location
                  </button>
              </div>
-             <hr className='w-full h-2 rounded bg-gray-400 my-5'></hr>
+
+
+             <div className=' '>
+                 <button onClick={()=>setToggle2(true)} className='w-full text-center bg-orange-500  gap-2  font-semibold text-white py-1 rounded mt-5 '>  
+                    Set Your Location
+                 </button>
+             </div>
+
+
+             <hr className='w-full h-0.5  bg-gray-400 my-3'></hr>
              <div className='flex items-center'>
              <FaLocationDot className='text-gray-500' size={20} />
-             <p className='text-gray-600 text-sm px-2'>Mumbai ghatkopar west indra nagar golibar road</p>
+             <p className='text-gray-600 text-sm px-2'>{location?location:userInfo.location}</p>
              </div>  
              </div>
+             </div>
+
       </div>
+
+
+
+
+{
+  toggle2&&
+<div className='absolute overflow-auto z-20 py-10 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen  '>
+<div className='relative h-full '>
+<button onClick={()=>setToggle2(false)} className='bg-white rounded-full p-1 mb-2 absolute   -top-0 right-0 translate-y-0'><IoCloseOutline size={20}/></button>
+
+      <div className="max-w-lg mx-auto mt-10 w-full bg-white p-8 rounded-lg shadow-lg">
+<h2 className="text-2xl font-bold mb-6 text-center text-gray-600">
+  Address Form
+</h2>
+<form onSubmit={handleSubmit}>
+
+<div className='flex gap-2'>
+  <div className="mb-4">
+    <label className="block text-sm font-medium text-gray-400 mb-1">
+      City
+    </label>
+    <input
+      type="text"
+      name="city"
+      value={formData.city}
+      onChange={handleChange}
+      placeholder="Enter your city"
+      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gorange-500"
+    />
+  </div>
+  <div className="mb-4">
+    <label className="block text-sm font-medium text-gray-400 mb-1">
+      State
+    </label>
+    <input
+      type="text"
+      name="state"
+      value={formData.state}
+      onChange={handleChange}
+      placeholder="Enter your state"
+      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gorange-500"
+    />
+  </div>
+  </div>
+
+
+  <div className="mb-4">
+    <label className="block text-sm font-medium text-gray-400 mb-1">
+      Pin Code
+    </label>
+    <input
+      type="text"
+      name="pincode"
+      value={formData.pincode}
+      onChange={handleChange}
+      placeholder="Enter your pin code"
+      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gorange-500"
+    />
+  </div>
+  <div className="mb-4">
+    <label className="block text-sm font-medium text-gray-400 mb-1">
+      Country
+    </label>
+    <input
+      type="text"
+      name="country"
+      value={formData.country}
+      onChange={handleChange}
+      placeholder="Enter your country"
+      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gorange-500"
+    />
+  </div>
+
+  <div className="mb-4">
+    <label className="block text-sm font-medium text-gray-400 mb-1">
+      Address
+    </label>
+    <textarea
+      name="address"
+      value={formData.address}
+      onChange={handleChange}
+      placeholder="Enter your address like street, Road etc.."
+      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gorange-500"
+    ></textarea>
+  </div>
+
+  <button
+    type="submit"
+    className="w-full border-2 border-orange-500  hover:bg-orange-500 hover:text-white py-2 rounded-lg hover:bg-gorange-600 focus:outline-none text-gray-600 font-semibold focus:ring-2 focus:ring-gorange-500"
+  >
+    Submit
+  </button>
+</form>
+</div>
+</div>
+</div>
+
+
+
+}
+
+
+</>
+      
 }
 </>
     

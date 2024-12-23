@@ -11,5 +11,5 @@ userRoute.get("/user_info",checkAuthenticationCookie("accessToken"),userInfo)
 userRoute.post("/user_logout",checkAuthenticationCookie("accessToken"),userLogout);
 userRoute.post("/user_otp",generateOtp);
 userRoute.post("/verify_user_otp",verify_otp);
-userRoute.post("/storeAddress",saveUserAddress);
+userRoute.post("/storeAddress",checkAuthenticationCookie("accessToken"),saveUserAddress);
 module.exports=userRoute; 
