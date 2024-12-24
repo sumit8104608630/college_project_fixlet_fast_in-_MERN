@@ -27,10 +27,12 @@ app.use(cookieParser());
 // let's use it
 const userRoute=require("../routes/user.routes.js");
 const serviceRoute = require("../routes/service.routes.js");
+const areaRoute=require("../routes/area.routes.js")
 
 //export this app
 app.use("/user",userRoute);
 app.use("/service",serviceRoute);
+app.use("/area",areaRoute);
 
 
 

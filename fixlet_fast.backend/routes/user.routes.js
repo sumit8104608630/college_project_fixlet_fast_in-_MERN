@@ -3,7 +3,7 @@ const userRoute=express.Router();
 const {checkAuthenticationCookie}=require("../middlewares/authenticate.middleware.js")
 
 // let's require all the function
-const{userRegister,userLogin,userLogout,userInfo,generateOtp,verify_otp,saveUserAddress}=require("../controllers/user.controller.js")
+const{userRegister,userLogin,userLogout,userInfo,generateOtp,verify_otp,saveUserAddress,saveUserCustomAddress}=require("../controllers/user.controller.js")
 //let's create the route for registration and for login
 userRoute.post("/user_register",userRegister);
 userRoute.post("/user_login",userLogin);
@@ -12,4 +12,5 @@ userRoute.post("/user_logout",checkAuthenticationCookie("accessToken"),userLogou
 userRoute.post("/user_otp",generateOtp);
 userRoute.post("/verify_user_otp",verify_otp);
 userRoute.post("/storeAddress",checkAuthenticationCookie("accessToken"),saveUserAddress);
+userRoute.post("/store_custom_address",checkAuthenticationCookie("accessToken"),saveUserCustomAddress);
 module.exports=userRoute; 

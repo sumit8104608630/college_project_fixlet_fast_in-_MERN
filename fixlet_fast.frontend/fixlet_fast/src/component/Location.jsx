@@ -3,18 +3,18 @@ import { FaLocationDot } from "react-icons/fa6";
 import { FaLocationCrosshairs } from "react-icons/fa6";
 import { IoCloseOutline } from "react-icons/io5";
 //import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import { fetchUser } from '../app/Actions/user_action.js';
 
 function Location(props) {
   const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
   const [toggle,setToggle]=useState(false);
   const [toggle2,setToggle2]=useState(false);
-
   const [location,setCompleteLocation]=useState("")
+  const dispatch = useDispatch();
   const [longitude,setLongitude]=useState(null);
   const [latitude,setLatitude]=useState(null);
   const [formData, setFormData] = useState({
-    name: "",
     address: "",
     city: "",
     state: "",
@@ -28,7 +28,8 @@ function Location(props) {
 
 
 
-  console.log(location)
+  //console.log(location)
+  console.log(userInfo.location)
   
   const handleCurrentLocation=async()=>{
     navigator.geolocation.getCurrentPosition(async(position)=>{
@@ -47,10 +48,12 @@ function Location(props) {
       })
       const data=await fetchData.json()
       setCompleteLocation(data.data)
+      if(data.data){
+        setToggle(false)
+      }
     },()=>{
       alert("Unable to get your location please allow the Location")
     })
- 
   }
   console.log(longitude,latitude);
 
@@ -60,10 +63,39 @@ function Location(props) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     console.log("Form Submitted", formData);
+// API call to store the address
+const data= await fetch("http://localhost:8000/user/store_custom_address",{
+  method:"POST",
+  body:JSON.stringify(formData),
+  headers:{
+    "Content-Type":"application/json",
+  },
+  credentials:"include"
+})
+    
+const response=await data.json()
+console.log(response)
+setCompleteLocation(response.data)
+if(response.data){
+  setToggle2(false)
+}
+
   };
+
+  useEffect(()=>{
+    if(location){
+      console.log(location);
+      dispatch(fetchUser());
+    }
+    return()=>{
+      console.log("Component Updated");
+    }
+  },[location]);
+
+
 
 
 
@@ -101,7 +133,7 @@ function Location(props) {
 
              <hr className='w-full h-0.5  bg-gray-400 my-3'></hr>
              <div className='flex items-center'>
-             <FaLocationDot className='text-gray-500' size={20} />
+             <FaLocationDot className='text-gray-500' size={30} />
              <p className='text-gray-600 text-sm px-2'>{location?location:userInfo.location}</p>
              </div>  
              </div>
@@ -195,6 +227,7 @@ function Location(props) {
   </div>
 
   <button
+  
     type="submit"
     className="w-full border-2 border-orange-500  hover:bg-orange-500 hover:text-white py-2 rounded-lg hover:bg-gorange-600 focus:outline-none text-gray-600 font-semibold focus:ring-2 focus:ring-gorange-500"
   >

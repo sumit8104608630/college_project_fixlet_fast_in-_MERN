@@ -10,7 +10,7 @@ const cookie=require("cookie-parser");
 const EmailOtp =require("../model/emailOTP.model.js")
 // nodemailer
 const nodemailer=require("nodemailer")
-
+const Area=require("../model/area.model.js")
 const { createHmac, randomBytes } = require("node:crypto");
 const crypto = require('crypto');
 
@@ -389,14 +389,39 @@ const saveUserAddress=asyncHandler(async(req,res)=>{
     const dataLocation=await (await fetch(`http://www.postalpincode.in/api/pincode/${pinCode}`)).json();
     console.log(dataLocation)
 
-   const currentLocation=`${formatted.neighbourhood},${formatted.city},${dataLocation.PostOffice[0].District},${dataLocation.PostOffice[1].Name},${dataLocation.PostOffice[0].Name},${formatted.postcode}`
+   const currentLocation=`${formatted.neighbourhood},${formatted.city},${dataLocation.PostOffice[0].District},${dataLocation.PostOffice[1].Name},${dataLocation.PostOffice[0].Name},${formatted.postcode},${dataLocation.PostOffice[0].State}`
+
+  //let's check that we are in that state ,city or not
+  const state=dataLocation.PostOffice[0].State;
+  const city=formatted.city
+  const district=dataLocation.PostOffice[0].District;
+
+  const area = await Area.findOne({ state: state.toLowerCase() });
+  if(!area){
+     res.status(404).json({
+      message: "Area not found",
+      success:false
+    });
+  }
+  console.log(area);
+  const city_available=area.city;
+ const isCityAvailable=city_available.some(
+  (item) => item.toLowerCase().trim() === city.toLowerCase() || item.toLowerCase().trim() === district.toLowerCase()
+);
+
+if (!isCityAvailable) {
+  return res.status(404).json({ message: "City or district not found", success: false });
+}
+
     //let save this or update this to the user model by id
     const userAddress=await User.findByIdAndUpdate(
       _id,
       { $set: { location: currentLocation } },
       { new: true } // Return the updated document
   );
+
   //let set the district in req
+
     req.location={
       state:dataLocation.PostOffice[0].State,
       region:dataLocation.PostOffice[0].Region,
@@ -411,6 +436,53 @@ const saveUserAddress=asyncHandler(async(req,res)=>{
   }
 })
 
+// let's store user custom address 
+const saveUserCustomAddress=asyncHandler(async(req,res)=>{
+  try {
+    
+    const {address,city,country,pincode,state}=req.body;
+    if([address,city,country,pincode,state].some(property=>property?.trim()==="")){
+      return new ApiResponse("invalid request",400);
+    }
+    
+    const location=`${address},${city},${pincode},${state},${country}`
+
+    const _id=req.user._id;
+    if(!_id){
+      return new ApiResponse("invalid request",400);
+    }
+
+     //let's check that we are in that state ,city or not
+  const stateCheck=state;
+  const cityCheck=city
+
+
+  const area = await Area.findOne({ state: stateCheck.toLowerCase() });
+  if(!area){
+     res.status(404).json({
+      message: "Area not found",
+      success:false
+    });
+  }
+  console.log(area);
+  const city_available=area.city;
+ const isCityAvailable=city_available.some(
+  (item) => item.toLowerCase().trim() == cityCheck.toLowerCase());
+
+if (!isCityAvailable) {
+  return res.status(404).json({ message: "City or district not found", success: false });
+}
+
+
+
+    const userAdd=await User.findByIdAndUpdate(_id,{$set:{location:location}},{ new: true });
+    res.status(201).json(new ApiResponse(200,location,"user location has been saved"));
+
+  } catch (error) {
+    throw new apiError("some thing went wrong in server",500)
+  }
+})
+
 
  module.exports={
     userRegister,
@@ -419,6 +491,7 @@ const saveUserAddress=asyncHandler(async(req,res)=>{
     userInfo,
     generateOtp,
     verify_otp,
-    saveUserAddress
+    saveUserAddress,
+    saveUserCustomAddress
  }
 

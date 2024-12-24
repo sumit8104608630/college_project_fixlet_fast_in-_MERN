@@ -59,7 +59,10 @@ function Dashbord() {
 
   return (
     <>
-      <main  className={ `pt-28  w-full px-32 ${ link3Toggle?"  overflow-hidden ":""}` }>
+
+
+      <main  className={ ` pt-28  w-full px-32 ${ link3Toggle&&"  overflow-hidden "}` }>
+
 {link3Toggle?
 <div className='fixed z-20 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
   
