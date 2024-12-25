@@ -13,6 +13,7 @@ function Register() {
   const [toggle,setToggle]=useState(false);
   const [toggle2,setToggle2]=useState(false);
   const navigate=useNavigate()
+  const [sendOtp,setSendOtp]=useState(false);
   const [otpInput,setOtpInput]=useState(false);
   const [verified, setVerified]=useState(false);
   const [confirmPasswordInput,setConfirmPassword]=useState("")
@@ -62,13 +63,20 @@ function Register() {
   }
   useEffect(()=>{
     window.scrollTo(0,0)
+    if(formData.email!==""){
+      //console.log("yes")
+      setSendOtp(true)
+    }
 
-  },[])
+  },[formData.email])
 
 
 
   
   const email=formData.email
+  console.log(email)
+  
+
   
 
   const handelSendOtp=async(email)=>{
@@ -131,9 +139,9 @@ function Register() {
         <div className='flex gap-1 flex-col mt-3'>
           <label>Email : </label>
           <div className='flex gap-3'>
-          <input value={formData.email} disabled={verified} onChange={handelInput} className='border-2 w-5/6 focus:outline-none rounded-lg border-gray-300 px-5 py-1 ' type="email" placeholder='email@gmail.com' name="email" required/>
+          <input value={formData.email} disabled={verified} onChange={handelInput} className='border-2 w-5/6 focus:outline-none rounded-lg border-gray-300 px-5 py-1 ' type="email" placeholder='email@gmail.com' name="email" required/>{sendOtp&&<>
           {!verified?
-          <button onClick={()=>handelSendOtp(formData.email)} className='w-1/4 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'> Send OTP</button>:<button onClick={()=>setVerified(false)} className='w-1/4 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'>Change mail</button>}
+          <button onClick={()=>handelSendOtp(formData.email)} className='w-1/4 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'> Send OTP</button>:<button onClick={()=>setVerified(false)} className='w-1/4 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'>Change mail</button>}</>}
           </div>
         </div>
 

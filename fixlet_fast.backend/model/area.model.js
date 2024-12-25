@@ -3,7 +3,8 @@ const mongoose=require("mongoose");
 const areaSchema=mongoose.Schema({
     state:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     city:{
         type:[String],

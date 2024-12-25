@@ -22,7 +22,7 @@ const wallPanel=require("../component/fake_wall_panelData.js");
 const wallPaint =require("../component/fakeWallPainData.js")
 // let's push the data into the service data base 
  
-const inserting_service_data=asyncHandler(async(req,res)=>{
+const inserting_service_data=asyncHandler(async(_,res)=>{
     try {
         const json =[...electricianJson,...plumberJson,...carpenter,...bathroomKitchen,...homeCleaning,...sofaCleaning,...pestControl,...bedPestControl,...ACservice,...chimney,...stove,...refrigerator,...washinMachine,...mixer,...decoration,...wallPanel,...wallPaint];
         const serviceData=await Service.insertMany(json);
@@ -56,7 +56,6 @@ const get_service_data=asyncHandler(async(req,res)=>{
                 })
             }
         }
-
             const data=await Service.find({serviceType:categories});
             if(data.length===0){
                 return res.status(404).json(new ApiResponse(404, "No service data available for the specified category"));
@@ -67,18 +66,6 @@ const get_service_data=asyncHandler(async(req,res)=>{
     }
 })
 
-
-const get_plumber_service_data=asyncHandler(async(req,res)=>{
-    try {
-            const data=await Service.find({serviceType:"plumber"});
-            if(!data){
-                throw new apiError("data is not available",404);
-            }
-            return res.status(200).json(new ApiResponse(200,data,"plumber service data"))
-    } catch (error) {
-        
-    }
-})
 
 module.exports={
     inserting_service_data,
