@@ -63,7 +63,7 @@ function Dashbord() {
 
       <main  className={ ` pt-28  w-full px-32 ${ link3Toggle&&"  overflow-hidden "}` }>
 
-{link3Toggle?
+{link3Toggle&&
 <div className='fixed z-20 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
   
 
@@ -104,14 +104,14 @@ function Dashbord() {
             </div>
             </div>
             </div>
-              </div></div>:""
+              </div></div>
 
 }
 
 
 
 
-{link1Toggle?
+{link1Toggle&&
 <div className='fixed z-20 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
   
   
@@ -186,7 +186,7 @@ function Dashbord() {
             </div>
             </div>
             </div>
-              </div></div>:""
+              </div></div>
 
 }
 

@@ -133,8 +133,8 @@ if(response.data){
 
              <hr className='w-full h-0.5  bg-gray-400 my-3'></hr>
              <div className='flex items-center'>
-             <FaLocationDot className='text-gray-500' size={30} />
-             <p className='text-gray-600 text-sm px-2'>{location?location:userInfo.location}</p>
+             <FaLocationDot className='text-gray-500' size={25} />
+             <p className='text-gray-600 text-sm w-full px-2'>{location?location:userInfo.location}</p>
              </div>  
              </div>
              </div>

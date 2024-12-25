@@ -389,7 +389,7 @@ const saveUserAddress=asyncHandler(async(req,res)=>{
     const dataLocation=await (await fetch(`http://www.postalpincode.in/api/pincode/${pinCode}`)).json();
     console.log(dataLocation)
 
-   const currentLocation=`${formatted.neighbourhood},${formatted.city},${dataLocation.PostOffice[0].District},${dataLocation.PostOffice[1].Name},${dataLocation.PostOffice[0].Name},${formatted.postcode},${dataLocation.PostOffice[0].State}`
+   const currentLocation=`${formatted.neighbourhood},${formatted.city},${dataLocation.PostOffice[0].District},${dataLocation.PostOffice[1].Name?dataLocation.PostOffice[1].Name:""},${dataLocation.PostOffice[0].Name},${formatted.postcode},${dataLocation.PostOffice[0].State}`
 
   //let's check that we are in that state ,city or not
   const state=dataLocation.PostOffice[0].State;
