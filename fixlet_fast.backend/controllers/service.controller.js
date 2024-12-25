@@ -34,10 +34,13 @@ const inserting_service_data=asyncHandler(async(req,res)=>{
     }
 })
 
-const get_electrician_service_data=asyncHandler(async(req,res)=>{
+const get_service_data=asyncHandler(async(req,res)=>{
     try {
         const {state,city,categories}=req.query ;
 
+        if(!state||!city||!categories){
+            return res.status(400).json(new ApiResponse(400,"please provide all the required fields"))
+        }
         
         const area=await Area.findOne({state:state});
         if(!area){
@@ -56,11 +59,11 @@ const get_electrician_service_data=asyncHandler(async(req,res)=>{
 
             const data=await Service.find({serviceType:categories});
             if(data.length===0){
-                throw new apiError("data is not available",404);
+                return res.status(404).json(new ApiResponse(404, "No service data available for the specified category"));
             }
             return res.status(200).json(new ApiResponse(200,data,"electrician service data"))
     } catch (error) {
-       throw new apiError("some thing went wrong in server please try again after some time",404);
+        return res.status(500).json(new ApiResponse(500, "Something went wrong on the server. Please try again later"));
     }
 })
 
@@ -79,6 +82,5 @@ const get_plumber_service_data=asyncHandler(async(req,res)=>{
 
 module.exports={
     inserting_service_data,
-    get_electrician_service_data,
-    get_plumber_service_data
+    get_service_data,
 }

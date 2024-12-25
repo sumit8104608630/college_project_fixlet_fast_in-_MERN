@@ -69,7 +69,7 @@ const checkAuthenticationCookie = (cookieName) => {
       req.user = currentUserDetail;
       next(); // Proceed to the next middleware/route handler
     } catch (error) {
-      console.error("Authentication error:", error.message || error);
+     // console.error("Authentication error:", error.message || error);
       return res.status(500).json({ message: "Internal server error." });
     }
   };
