@@ -32,6 +32,10 @@ const userSchema=mongoose.Schema({
         type:String,
         default:"not provided"
     },
+    city:{
+        type:String,
+        default:"not provided"
+    },
     serviceHistory:[
         {
         type:mongoose.Schema.Types.ObjectId,

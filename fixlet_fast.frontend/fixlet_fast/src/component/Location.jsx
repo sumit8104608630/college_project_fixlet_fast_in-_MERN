@@ -3,6 +3,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { FaLocationCrosshairs } from "react-icons/fa6";
 import { IoCloseOutline } from "react-icons/io5";
 //import axios from 'axios';
+import locationImage from "../assets/staticPhotp/locate.svg"
 import { useSelector,useDispatch } from 'react-redux';
 import { fetchUser } from '../app/Actions/user_action.js';
 
@@ -12,6 +13,7 @@ function Location(props) {
   const [toggle2,setToggle2]=useState(false);
   const [location,setCompleteLocation]=useState("")
   const dispatch = useDispatch();
+  const [not_in_area,setNotInArea]=useState(false);
   const [longitude,setLongitude]=useState(null);
   const [latitude,setLatitude]=useState(null);
   const [formData, setFormData] = useState({
@@ -49,6 +51,7 @@ function Location(props) {
       const data=await fetchData.json()
       setCompleteLocation(data.data)
       if(data.data){
+        setNotInArea(false)
         setToggle(false)
       }
     },()=>{
@@ -81,9 +84,18 @@ console.log(response)
 setCompleteLocation(response.data)
 if(response.data){
   setToggle2(false)
+  setNotInArea(false)
 }
+else{
+  setToggle2(false);
+  setNotInArea(!response.success)
+  setToggle(true);
 
+}
   };
+
+
+  console.log(not_in_area); 
 
   useEffect(()=>{
     if(location){
@@ -113,7 +125,9 @@ if(response.data){
 
   <div className='fixed z-20 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen  '>
     <div className='relative h-max'>
-    <button onClick={()=>setToggle(false)} className='bg-white rounded-full p-1 mb-2 absolute   -top-10 right-0 translate-y-0'><IoCloseOutline size={20}/></button>
+    <button onClick={()=>{setToggle(false)
+    }
+    } className='bg-white rounded-full p-1 mb-2 absolute   -top-10 right-0 translate-y-0'><IoCloseOutline size={20}/></button>
 
          <div className=' bg-white flex flex-col w-96  p-5 rounded'>
              <div className=' '>
@@ -132,9 +146,18 @@ if(response.data){
 
 
              <hr className='w-full h-0.5  bg-gray-400 my-3'></hr>
-             <div className='flex items-center'>
+             <div className='flex items-center'>{not_in_area?
+                          <div className='flex flex-col gap-5 mt-5 items-center justify-center w-full'>
+                          <div className=''><img className='w-72' src={locationImage}></img></div>
+                          <div className="text-center text-gray-700 font-medium p-4">
+                                <span className='text-lg'>We're not there yet, but we'll arrive soon. Thanks for your patience!</span>
+                          </div>
+                        </div>:
+              <>
              <FaLocationDot className='text-gray-500' size={25} />
-             <p className='text-gray-600 text-sm w-full px-2'>{location?location:userInfo.location}</p>
+             <p className='text-gray-600 text-sm w-full px-2'>{location?location:userInfo.location}</p></>
+
+              }
              </div>  
              </div>
              </div>

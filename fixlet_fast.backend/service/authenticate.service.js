@@ -36,7 +36,14 @@ const refreshToken=async(user)=>{
 const getUser=async (token)=>{
     try{
         if(token){
-            const payLoad=await jwt.verify(token,secret);
+            const payLoad= jwt.verify(token,secret);
+            if(!payLoad){
+                return ({
+                    error:"invalid token",
+                    status:401,
+                    success:false
+                })
+            }
             return payLoad
         }
         else{
@@ -44,7 +51,12 @@ const getUser=async (token)=>{
         }
     }
     catch(error){
-        console.log(error);
+        return ({
+            error:"invalid token",
+            status:401,
+            success:false
+        })
+       // console.log(error);
         
     }
 }

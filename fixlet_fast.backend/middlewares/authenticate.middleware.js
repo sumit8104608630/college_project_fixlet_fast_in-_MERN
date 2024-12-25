@@ -1,6 +1,8 @@
-const { getUser } = require("../service/authenticate.service.js");
+const { getUser, refreshToken ,setUser} = require("../service/authenticate.service.js");
+
 // Schema model
 const User = require("../model/user.model.js");
+const { verify } = require("jsonwebtoken");
 
 // Middleware function to authenticate a logged-in user using a cookie
 const checkAuthenticationCookie = (cookieName) => {
@@ -15,6 +17,44 @@ const checkAuthenticationCookie = (cookieName) => {
 
       // Validate the cookie and get the user data
       const user = await getUser(cookie);
+      if(user.error){
+        // let's get cookie of refreshToken
+        const refreshTokenCookie = req.cookies.refresh_token
+        if(!refreshToken){
+          return res.status(401).json({ message: "Unauthorized: No refresh token provided." });
+        }
+        const {id}=await verify(refreshTokenCookie,process.env.REFRESH_TOKEN_SECRET);
+        if(!id){
+          return res.status(401).json({ message: "your token has been expired" });
+        }
+
+       
+        //let fetch user from database 
+        const userFromDB = await User.findById(id).select("-password -salt -salt -refreshToken ");
+
+        const newAccessToken=await setUser(userFromDB);
+        const newRefreshToken=await refreshToken(userFromDB);
+
+        req.user=userFromDB
+
+        res.status(200).cookie('accessToken',newAccessToken,{
+          httpOnly:true,
+          secure:true,
+      }).cookie("refresh_token",newRefreshToken,{
+          httpOnly:true,
+          secure:true,
+      }).json(new ApiResponse(
+          200,
+      
+              loginUser
+          ,
+          "user logged in successfully"
+      ))
+
+        
+ 
+       // const id=refreshToken
+      }
       if (!user || !user.id) {
         return res.status(401).json({ message: "Unauthorized: Invalid or expired token." });
       }

@@ -1,6 +1,7 @@
 const {asyncHandler} =require ("../utils/asyncHandler");
 const {ApiResponse} =require("../utils/apiResponse");
 const {apiError} =require ("../utils/apiError");
+const Area=require("../model/area.model.js")
 const Service=require("../model/srvice.model");
 const electricianJson =require("../component/fakejsonData.js"); // Assuming this is the data you're working with
 const plumberJson =require( "../component/fakeJsonPlumberData.js");
@@ -35,13 +36,31 @@ const inserting_service_data=asyncHandler(async(req,res)=>{
 
 const get_electrician_service_data=asyncHandler(async(req,res)=>{
     try {
-            const data=await Service.find({serviceType:"electrician"});
-            if(!data){
+        const {state,city,categories}=req.query ;
+
+        
+        const area=await Area.findOne({state:state});
+        if(!area){
+            return res.status(404).json(new ApiResponse(404,"area not found"));
+        }
+        else{
+            const cities=area.city
+            if(!cities.includes(city)){
+                return res.status(404).json({
+                    status:404,
+                    message:"city not found",
+                    success:false,
+                })
+            }
+        }
+
+            const data=await Service.find({serviceType:categories});
+            if(data.length===0){
                 throw new apiError("data is not available",404);
             }
             return res.status(200).json(new ApiResponse(200,data,"electrician service data"))
     } catch (error) {
-        
+       throw new apiError("some thing went wrong in server please try again after some time",404);
     }
 })
 
