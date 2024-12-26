@@ -9,7 +9,7 @@ const data = [
         "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734437560/wallLight_khcshl.jpg",
         "subServiceName": "Wall Light Installation",
         "serviceTime": 30,
-        "serviceRatingCount": 1,
+        "serviceRatingCount": 0,
         "price": 200,
         "included": ["Installation of light fixture", "Post-service cleaning"],
         "note": [

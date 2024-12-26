@@ -5,51 +5,49 @@ import { FaStar } from "react-icons/fa";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaRegClock } from "react-icons/fa6";
 import { useSearchParams } from 'react-router';
-import {useSelector} from "react-redux"
+import {useSelector,useDispatch} from "react-redux"
+import { fetchService } from '../app/Actions/service_action';
 
 function ServiceDetailPage() {
+  const {loading,services_data,error}=useSelector(state=>state.service);
+
+  const dispatch=useDispatch();
   const {isLogin,userInfo,isLoading}=useSelector(state=>state.user)
   const [active, setActive] = useState(null);
-  const [data_of_service,setData_of_service]=useState([]);
   const [searchParams]=useSearchParams();
 
   // let collect some information from query params from url to get the perfect data
 
   const city=searchParams.get('city')||"mumbai";
   const categories=searchParams.get('categories');
-  console.log(userInfo)
   const state=userInfo?.state;
 
   useEffect(()=>{
-    const ServiceData=fetch(`http://localhost:8000/service/service_data_get?state=${state}&city=${city}&categories=${categories}`).then(response=>response.json())
-    .then(data=>setData_of_service(data.data))
-  },[city,state,categories])
+    if(state&&city&&categories){
+   dispatch(fetchService({state,city,categories}))
+    }
+  },[city,state,categories,dispatch])
 
-  console.log(data_of_service)
 
 
-  const json = electricianJson;
-  console.log(json);
 
-  console.log(Math.ceil(data_of_service.length / 2))
-
-  return (
+  return (<>{isLoading&&loading?"":
     <div className="gap-5 justify-center mt-20 flex">
       <div className="h-min sticky top-24">
         <h1 className="text-4xl font-semibold w-max mt-5 text-gray-700 mb-5">Electrician</h1>
 
         <div
-          className={`grid h-max w-max grid-cols-${Math.ceil(data_of_service.length<=2 ? 2 :data_of_service.length / 2)} gap-5 border-2 p-5 rounded`}
-          style={{gridTemplateColumns:`repeat(${Math.ceil(data_of_service.length<=2 ? 2 :data_of_service.length / 2)}, 1fr)`}}
+          className={`grid h-max w-max grid-cols-${Math.ceil(services_data.length<=2 ? 2 :services_data.length / 2)} gap-5 border-2 p-5 rounded`}
+          style={{gridTemplateColumns:`repeat(${Math.ceil(services_data.length<=2 ? 2 :services_data.length / 2)}, 1fr)`}}
         >
-          {data_of_service?.map((service) => (
+          {services_data.map((service) => (
             <Link
               to={service.servicePartName}
               smooth={true} // Adding smooth scroll behavior
               offset={-70} // Adjusting scroll position if needed
               duration={500} // Time for the smooth scroll
               onClick={() => setActive(service.serviceName)}
-              key={service.serviceName}
+              key={service._id}
             >
               <div
                 className={`bg-white p-4 w-24 h-full flex flex-col items-center justify-between rounded border-2 border-gray-200 transition-transform transform hover:scale-95 hover:border-gray-500 cursor-pointer ${
@@ -70,15 +68,14 @@ function ServiceDetailPage() {
 
       <div className="scrollbar-thin scrollbar-none scrollbar-track-gray-200">
         <div  className="flex flex-col border-2 rounded w-96 px-5">
-          {data_of_service?.map((service) => (
-            <div id={service.servicePartName} className="py-5" key={service.serviceName}>
+          {services_data.map((service) => (
+            <div id={service.servicePartName} className="py-5" key={service._id}>
               <h1 className="text-gray-700 text-start text-2xl font-bold">{service.serviceName}</h1>
               {service.serviceSubType.map((subService) => (
-                <>
-                <div className="flex gap-5 items-center w-full justify-between py-4" key={subService.subServiceName}>
-                  <button>
+                <div key={subService._id}>
+                <div  className="flex gap-5 items-center w-full justify-between py-4" >
                     <div>
-                      <h2 className="text-lg text-start font-semibold text-gray-600">{subService.subServiceName}</h2>
+                      <h2 className="text-lg text-start font-semibold text    -gray-600">{subService.subServiceName}</h2>
                       <div className="flex items-center gap-2">
                         <FaStar size={12} className="text-yellow-400" />
                         <span>{subService.serviceRatingCount} review</span>
@@ -97,7 +94,6 @@ function ServiceDetailPage() {
                         <button className="text-orange-500">View details</button>
                       </div>
                     </div>
-                  </button>
 
                   <div className="flex flex-col items-center">
                     <img
@@ -123,7 +119,7 @@ function ServiceDetailPage() {
                 </div>
                 <hr className='w-full  bg-gray-400'></hr>
 
-                </>
+                </div>
               ))}
 
             </div>
@@ -133,7 +129,7 @@ function ServiceDetailPage() {
       </div>
 
       <div className="w-96 h-min sticky top-24 border"></div>
-    </div>
+    </div>}</>
   );
 }
 

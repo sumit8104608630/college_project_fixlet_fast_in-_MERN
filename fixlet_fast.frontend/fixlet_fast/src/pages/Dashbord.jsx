@@ -22,7 +22,6 @@ import bathroom from "../assets/togglebutton/clean&pestControll/1728900638112-d3
 import home from "../assets/togglebutton/clean&pestControll/home.webp"
 import sofa_image from"../assets/togglebutton/clean&pestControll/sofa.png";
 import pest from "../assets/togglebutton/clean&pestControll/pest.webp"
-import coboard from"../assets/togglebutton/clean&pestControll/coboard.png"
 import bed from "../assets/togglebutton/clean&pestControll/bed.jpeg"
 import chimney from "../assets/togglebutton/AC&Apliance/chimaney.webp"
 import gas from "../assets/togglebutton/AC&Apliance/Gas.webp"
@@ -37,7 +36,7 @@ function Dashbord() {
   const [link1Toggle,setlink1Toggle]=useState(false);
   const {isLoading,userInfo,isLogin}=useSelector((state)=>state.user);
   
-  const city=userInfo.city
+  const city=userInfo?.city
 
   useEffect(() => {
 

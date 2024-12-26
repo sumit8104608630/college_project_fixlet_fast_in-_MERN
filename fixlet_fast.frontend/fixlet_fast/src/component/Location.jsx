@@ -31,7 +31,6 @@ function Location(props) {
 
 
   //console.log(location)
-  console.log(userInfo.location)
   
   const handleCurrentLocation=async()=>{
     navigator.geolocation.getCurrentPosition(async(position)=>{
@@ -58,7 +57,6 @@ function Location(props) {
       alert("Unable to get your location please allow the Location")
     })
   }
-  console.log(longitude,latitude);
 
 
 
@@ -95,7 +93,6 @@ else{
   };
 
 
-  console.log(not_in_area); 
 
   useEffect(()=>{
     if(location){
