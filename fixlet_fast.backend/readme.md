@@ -29,3 +29,7 @@ Collect service data from the backend and display it in the frontend using Redux
 
 6. User Booking, Cart, and Other Features
 Work on implementing user bookings, cart functionality, and related features. This will involve creating backend APIs for handling service bookings and storing them in the database.
+
+                                                               
+                                                               
+                                                               Sumit Sahrma
