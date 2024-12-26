@@ -416,7 +416,7 @@ if (!isCityAvailable) {
     //let save this or update this to the user model by id
     const userAddress=await User.findByIdAndUpdate(
       _id,
-      { $set: { location: currentLocation,city:district.toLowerCase()} },
+      { $set: { location: currentLocation,state:state.toLowerCase(),city:district.toLowerCase()} },
       { new: true } // Return the updated document
   );
 
@@ -475,7 +475,7 @@ if (!isCityAvailable) {
 
 
 
-    const userAdd=await User.findByIdAndUpdate(_id,{$set:{location:location,city:city.toLowerCase()}},{ new: true });
+    const userAdd=await User.findByIdAndUpdate(_id,{$set:{location:location,state:state.toLowerCase(),city:city.toLowerCase()}},{ new: true });
     res.status(201).json(new ApiResponse(200,location,"user location has been saved"));
 
   } catch (error) {

@@ -29,14 +29,16 @@ import gas from "../assets/togglebutton/AC&Apliance/Gas.webp"
 import refrigerator from "../assets/togglebutton/AC&Apliance/Refirgerator.png"
 import mixer from "../assets/togglebutton/AC&Apliance/mixer.webp"
 import washinMashin from "../assets/togglebutton/AC&Apliance/washing_mashin.jpeg"
+import { useSelector } from 'react-redux'
 
 function Dashbord() {
-
   const [link3Toggle,setlink3Toggle]=useState(false);
   const [link2Toggle,setlink2Toggle]=useState(false);
   const [link1Toggle,setlink1Toggle]=useState(false);
-
+  const {isLoading,userInfo,isLogin}=useSelector((state)=>state.user);
   
+  const city=userInfo.city
+
   useEffect(() => {
 
     if (link3Toggle||link2Toggle||link1Toggle) {
@@ -76,7 +78,7 @@ function Dashbord() {
               <div className='flex  gap-5 mb-5  mt-3'>
               <div className='flex gap-5 '>
               <div className='w-28'>
-            <Link to={"/serviceDetailPage/electrician"} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=electrician`} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={electricity_image} alt="Cleaning" />
               </div>
@@ -85,7 +87,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link to={"/serviceDetailPage/plumber"} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=plumber`} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={plumber} alt="Electrician" />
               </div>
@@ -94,7 +96,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link to={"/serviceDetailPage/carpenter" } className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=carpenter`} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={carpenter} alt="Festival Decoration" />
               </div>
@@ -124,7 +126,7 @@ function Dashbord() {
               <div className='flex gap-5 '>
 
               <div className='w-28'>
-            <Link  className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=acservice`} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={ac_repair} alt="Cleaning" />
               </div>
@@ -133,7 +135,7 @@ function Dashbord() {
             </div>
 
               <div className='w-28'>
-            <Link className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=chimney`} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={chimney} alt="Cleaning" />
               </div>
@@ -142,7 +144,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=gasstoverepair`} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={gas} alt="Electrician" />
               </div>
@@ -158,7 +160,7 @@ function Dashbord() {
 
             <div className='flex gap-5 '>
             <div className='w-28'>
-            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=refrigerator`} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={refrigerator} alt="Festival Decoration" />
               </div>
@@ -167,7 +169,7 @@ function Dashbord() {
           </div>
 
             <div className='w-28'>
-            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=mixergrinder`} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={mixer} alt="Electrician" />
               </div>
@@ -176,7 +178,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=washingmachine`} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={washinMashin} alt="Festival Decoration" />
               </div>
@@ -203,7 +205,7 @@ function Dashbord() {
               <span>Cleaning</span>
               <div className='flex  gap-5 mb-5  mt-3'>
               <div className='w-28'>
-            <Link to={"/serviceDetailPage/bathroom&kitchen"} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=bathroom_kitchen`} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={bathroom} alt="Cleaning" />
               </div>
@@ -212,7 +214,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link to={"/serviceDetailPage/HomeCleaning"} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=fullhome`} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={home} alt="Electrician" />
               </div>
@@ -221,7 +223,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link to={"/serviceDetailPage/sofaCleaning"} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=sofaCleaning`} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={sofa_image} alt="Festival Decoration" />
               </div>
@@ -233,7 +235,7 @@ function Dashbord() {
             <span>Pest Control</span>
               <div className='flex  gap-5  mt-3'>
               <div className='w-28'>
-            <Link to={"/serviceDetailPage/insectPestControl"}  className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=pestcontrol`}  className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={pest} alt="Cleaning" />
               </div>
@@ -244,7 +246,7 @@ function Dashbord() {
 
 
             <div className='w-28'>
-            <Link className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=bedbugcontrol`} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={bed} alt="Festival Decoration" />
               </div>
@@ -270,7 +272,8 @@ function Dashbord() {
           <h1  className='text-4xl w-96  text-start   text-gray-600 font-semibold'>
             Home service at your doorstep
           </h1>
-          <div className='flex flex-col w-full  gap-5 mt-10 p-10 border-1 rounded  border-gray-600 shadow justify-center items-center'>
+          <div className='flex flex-col w-full  gap-5 mt-10 px-10 pt-5 pb-10 border-1 rounded  border-gray-600 shadow justify-center items-center'>
+          <h1 className='text-start w-full text-lg text-gray-600'>What are you looking for?</h1>
             <div className='flex gap-5'>
              <div className='w-28 '>
             <button onClick={()=>setlink2Toggle(true)} className="relative  hover:text-gray-600 group">
@@ -306,7 +309,7 @@ function Dashbord() {
               </div>
             <div className='flex gap-5'>
             <div className='w-28'>
-            <Link to={"/booking_detail/"} className="relative  flex flex-col text-center hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=lightdecoration`} className="relative  flex flex-col text-center hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={festival_decoration} alt="Festival Decoration" />
               </div>
@@ -317,7 +320,7 @@ function Dashbord() {
 
 
           <div className='w-28'>
-            <Link to={"/booking_detail/"} className="relative w-full flex flex-col text-center    hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=wallpanelinstallation`} className="relative w-full flex flex-col text-center    hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={wallPanel} alt="Wall Panel" />
               </div>
@@ -327,7 +330,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link to={"/booking_detail/"} className="relative w-full flex flex-col text-center hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=wallpainting`} className="relative w-full flex flex-col text-center hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={paint} alt="Paint" />
               </div>

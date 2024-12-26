@@ -1,6 +1,6 @@
 const data = [
     {
-      "serviceType": "kitchenPestControl",
+      "serviceType": "pestcontrol",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734769207/kitchen_nimsbv.webp",
       "serviceName": "Kitchen Pest Control",
       "servicePartName": "Kitchen",
@@ -30,7 +30,7 @@ const data = [
       "availability": true
     },
     {
-      "serviceType": "bathroomPestControl",
+      "serviceType": "pestcontrol",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734769204/office_grd6ap.webp",
       "serviceName": "Bathroom Pest Control",
       "servicePartName": "Bathroom",
@@ -60,7 +60,7 @@ const data = [
       "availability": true
     },
     {
-      "serviceType": "officePestControl",
+      "serviceType": "pestcontrol",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734769204/bathroom_thhjkw.jpg",
       "serviceName": "Office Pest Control",
       "servicePartName": "Office",

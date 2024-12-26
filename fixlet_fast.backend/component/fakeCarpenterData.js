@@ -347,7 +347,7 @@ const carpenterData = [
     "reviewCount": 0
   },
   {
-    "serviceType": "plumber",
+    "serviceType": "carpenter",
     "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734344997/service_man_txqrn2.jpg",
     "serviceName": "Book Visit",
     "servicePartName": "Appointment",

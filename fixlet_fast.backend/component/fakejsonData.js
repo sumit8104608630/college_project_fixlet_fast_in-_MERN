@@ -183,7 +183,7 @@ const data = [
     "serviceType": "electrician",
     "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734341010/fan_repair_bzpfhh.jpg",
     "serviceName": "Fan Repair",
-    "servicePartName": "Fan",
+    "servicePartName": "Fan Repair",
     "serviceSubType": [
       {
         "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734442731/fanRepair_zblhvi.jpg",

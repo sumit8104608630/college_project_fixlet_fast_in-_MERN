@@ -1,6 +1,6 @@
 const data = [
     {
-      "serviceType": "furnishedApartmentCleaning",
+      "serviceType": "fullhome",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734709468/furnished_hhleui.webp",
       "serviceName": "Furnished Apartment Cleaning",
       "servicePartName": "Furnished",
@@ -57,7 +57,7 @@ const data = [
       "availability": true
     },
     {
-      "serviceType": "unfurnishedApartmentCleaning",
+      "serviceType": "fullhome",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734709537/un-furnished_lhagm0.webp",
       "serviceName": "Unfurnished Apartment Cleaning",
       "servicePartName": "Unfurnished",
@@ -114,7 +114,7 @@ const data = [
       "availability": true
     },
     {
-      "serviceType": "roomCleaning",
+      "serviceType": "fullhome",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734709592/bookmyroom_hasb41.webp",
       "serviceName": "Book My Room Cleaning",
       "servicePartName": "Room Cleaning",

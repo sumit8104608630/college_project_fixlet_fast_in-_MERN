@@ -36,10 +36,11 @@ const inserting_service_data=asyncHandler(async(_,res)=>{
 
 const get_service_data=asyncHandler(async(req,res)=>{
     try {
-        const {state,city,categories}=req.query ;
+        const { state = "maharashtra", city = "mumbai", categories } = req.query;
 
-        if(!state||!city||!categories){
-            return res.status(400).json(new ApiResponse(400,"please provide all the required fields"))
+
+        if (!categories) {
+            return res.status(400).json(new ApiResponse(400, "Please provide the required category"));
         }
         
         const area=await Area.findOne({state:state});

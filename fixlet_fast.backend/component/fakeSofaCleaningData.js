@@ -57,7 +57,7 @@ const data = [
       "availability": true
     },
     {
-      "serviceType": "carpetCleaning",
+      "serviceType": "sofaCleaning",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734765076/carpeter_nsjklj.webp",
       "serviceName": "Carpet Cleaning",
       "servicePartName": "Carpet",
@@ -96,7 +96,7 @@ const data = [
       "availability": true
     },
     {
-      "serviceType": "mattressCleaning",
+      "serviceType": "sofaCleaning",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734766648/SingleMattress_qyrfpz.jpg",
       "serviceName": "Mattress Cleaning",
       "servicePartName": "Mattress",

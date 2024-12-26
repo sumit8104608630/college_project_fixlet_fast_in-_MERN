@@ -1,15 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-scroll'; // Importing Link from react-scroll
 import electricianJson from "../component/fakejsonData"; // Assuming this is the data you're working with
 import { FaStar } from "react-icons/fa";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaRegClock } from "react-icons/fa6";
+import { useSearchParams } from 'react-router';
+import {useSelector} from "react-redux"
 
 function ServiceDetailPage() {
+  const {isLogin,userInfo,isLoading}=useSelector(state=>state.user)
   const [active, setActive] = useState(null);
+  const [data_of_service,setData_of_service]=useState([]);
+  const [searchParams]=useSearchParams();
+
+  // let collect some information from query params from url to get the perfect data
+
+  const city=searchParams.get('city')||"mumbai";
+  const categories=searchParams.get('categories');
+  console.log(userInfo)
+  const state=userInfo?.state;
+
+  useEffect(()=>{
+    const ServiceData=fetch(`http://localhost:8000/service/service_data_get?state=${state}&city=${city}&categories=${categories}`).then(response=>response.json())
+    .then(data=>setData_of_service(data.data))
+  },[city,state,categories])
+
+  console.log(data_of_service)
+
 
   const json = electricianJson;
-  console.log(Math.ceil(json.length / 2))
+  console.log(json);
+
+  console.log(Math.ceil(data_of_service.length / 2))
 
   return (
     <div className="gap-5 justify-center mt-20 flex">
@@ -17,10 +39,10 @@ function ServiceDetailPage() {
         <h1 className="text-4xl font-semibold w-max mt-5 text-gray-700 mb-5">Electrician</h1>
 
         <div
-          className={`grid h-max w-max grid-cols-${Math.ceil(json.length / 2)} gap-5 border-2 p-5 rounded`}
-          style={{gridTemplateColumns:`repeat(${Math.ceil(json.length / 2)}, 1fr)`}}
+          className={`grid h-max w-max grid-cols-${Math.ceil(data_of_service.length<=2 ? 2 :data_of_service.length / 2)} gap-5 border-2 p-5 rounded`}
+          style={{gridTemplateColumns:`repeat(${Math.ceil(data_of_service.length<=2 ? 2 :data_of_service.length / 2)}, 1fr)`}}
         >
-          {json.map((service) => (
+          {data_of_service?.map((service) => (
             <Link
               to={service.servicePartName}
               smooth={true} // Adding smooth scroll behavior
@@ -48,7 +70,7 @@ function ServiceDetailPage() {
 
       <div className="scrollbar-thin scrollbar-none scrollbar-track-gray-200">
         <div  className="flex flex-col border-2 rounded w-96 px-5">
-          {json.map((service) => (
+          {data_of_service?.map((service) => (
             <div id={service.servicePartName} className="py-5" key={service.serviceName}>
               <h1 className="text-gray-700 text-start text-2xl font-bold">{service.serviceName}</h1>
               {service.serviceSubType.map((subService) => (
