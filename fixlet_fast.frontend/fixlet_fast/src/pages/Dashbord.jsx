@@ -17,7 +17,7 @@ import { Link } from 'react-router'
 import { LuIndianRupee } from "react-icons/lu";
 import plumber from "../assets/togglebutton/electrician/plumber.webp"
 import carpenter from "../assets/togglebutton/electrician/carpenter.webp"
-
+import Loader from "../component/Loader"
 import bathroom from "../assets/togglebutton/clean&pestControll/1728900638112-d33369.webp"
 import home from "../assets/togglebutton/clean&pestControll/home.webp"
 import sofa_image from"../assets/togglebutton/clean&pestControll/sofa.png";
@@ -59,7 +59,7 @@ function Dashbord() {
 
 
   return (
-    <>
+    <>{isLoading?<Loader/>:
 
 
       <main  className={ ` pt-28  w-full px-32 ${ link3Toggle&&"  overflow-hidden "}` }>
@@ -444,6 +444,7 @@ function Dashbord() {
         </div>
 
       </main>
+}
     </>
   )
 }
