@@ -7,6 +7,7 @@ import { FaRegClock } from "react-icons/fa6";
 import { useSearchParams } from 'react-router';
 import {useSelector,useDispatch} from "react-redux"
 import { fetchService } from '../app/Actions/service_action';
+import Loader from "../component/Loader"
 
 function ServiceDetailPage() {
   const {loading,services_data,error}=useSelector(state=>state.service);
@@ -31,7 +32,7 @@ function ServiceDetailPage() {
 
 
 
-  return (<>{isLoading&&loading?"":
+  return (<>{isLoading&&loading?<Loader/>:
     <div className="gap-5 justify-center mt-20 flex">
       <div className="h-min sticky top-24">
         <h1 className="text-4xl font-semibold w-max mt-5 text-gray-700 mb-5">Electrician</h1>
