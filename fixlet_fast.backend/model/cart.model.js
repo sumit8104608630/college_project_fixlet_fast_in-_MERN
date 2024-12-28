@@ -22,8 +22,8 @@ const cartSchema=mongoose.Schema({
         default:1,
     },
     totalPrice:{
-        TYPE:Number,
-        default:0 
+        type:Number,
+         
     }
 }]
 },

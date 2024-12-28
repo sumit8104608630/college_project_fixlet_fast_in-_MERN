@@ -6,9 +6,9 @@ const {ApiResponse}=require("../utils/apiResponse.js")
 //let's require the cart model and service model
 const Cart=require("../model/cart.model.js");
 const Service=require("../model/service.model.js");
-const User =require("../model/user.model.js")
+const User =require("../model/user.model.js") 
 
-// now let create the addTo cart functionality 
+// now let create the addTo cart functionality  
 
 const add_service_to_cart=asyncHandler(async(req,res)=>{
     try {
@@ -16,6 +16,7 @@ const add_service_to_cart=asyncHandler(async(req,res)=>{
         const {serviceId,subServiceId,quantity}=req.body;
 
         const user =await User.findById(userId);
+        
         if(!user) return apiError(res,400,"User not found");
         const service =await Service.findById(serviceId);
         if(!service) return apiError(res,400,"Service not found");
@@ -39,18 +40,24 @@ const add_service_to_cart=asyncHandler(async(req,res)=>{
             })
         }
         else{
-            const product =await cart.products.findIndex((product)=>product._id.toString()===subServiceId.toString());
-            if(product){
-                cart.products[product].quantity+=quantity;
-                cart.products[product].totalPrice = cart.product[product].quantity*subService.price;
+            const productIndex =await cart.products.findIndex((product)=>product.serviceId.toString()===serviceId.toString()&&product.subServiceId.toString()===subServiceId.toString());
+            if(productIndex!==-1){
+                cart.products[productIndex].quantity+=Number(quantity);
+                cart.products[productIndex].totalPrice = cart.products[productIndex].quantity*subService.price;
             }
             else{
                 cart.products.push({
                     serviceId:serviceId,
+                    subServiceId:subServiceId,
+                    quantity:quantity,
+                    totalPrice:quantity*subService.price,
                 })
             }
 
         }
+
+        await cart.save();
+        return res.status(201).json(new ApiResponse(201,cart.products,"data is save in the cart"))
        
 
         
@@ -59,3 +66,59 @@ const add_service_to_cart=asyncHandler(async(req,res)=>{
         return res.status(500).json(new ApiResponse(500,"something went wrong please try again"))
     }
 })
+
+// now let's create the functionality the cancellation  of the service 
+
+const cancel_the_service=asyncHandler(async(req,res)=>{
+    try {
+
+        const userId=req.user._id;
+        const {serviceId,subServiceId}=req.body;
+        const service =await Service.findById(serviceId);
+        const subService =await service.serviceSubType.find((sub)=>sub._id.toString()===subServiceId.toString());
+        if(!serviceId){
+            return res.status(400).json(new ApiResponse(400,"service id is required"));
+        }
+
+        if(!subServiceId){
+            return res.status(400).json(new ApiResponse(400,"sub service id is required"));
+        }
+        const cart = await Cart.findOne({userId:userId});
+        if(!cart){
+            return res.status(404).json(new ApiResponse(404,"cart not found"))
+        } 
+        const productIndex =await cart.products.findIndex((product)=>product.serviceId.toString()===serviceId.toString()&&product.subServiceId.toString()===subServiceId.toString());
+        if(productIndex===-1){
+            return res.status(404).json(new ApiResponse(404,"product not found in the cart"));
+        }
+        const product=cart.products[productIndex];
+        if(product){
+            if(product.quantity===1){
+                cart.products.splice(productIndex,1);
+            }
+            else{
+                if(product.quantity>1){
+                    product.quantity-=1;
+                    product.totalPrice=product.quantity*subService.price;
+                }
+            }
+        }
+        await cart.save();
+        return res.status(200).json(new ApiResponse(200,"service cancelled successfully"))
+        
+    } catch (error) {
+        console.log(error)
+        return apiError("something went wrong in server",500);
+    }
+})
+
+
+
+
+
+// lets export all functionality
+
+module.exports={
+    add_service_to_cart, 
+    cancel_the_service
+}
