@@ -153,6 +153,7 @@ const get_all_cart_services=asyncHandler(async(req,res)=>{
               }
             }
           ]);
+          console.log(await cartServicesGrouped[0].serviceDetails);
       
           return res.status(200).json({
             cartServicesGrouped: cartServicesGrouped
