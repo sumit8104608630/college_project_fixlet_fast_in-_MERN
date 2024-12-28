@@ -7,21 +7,27 @@ import { FaRegClock } from "react-icons/fa6";
 import { useSearchParams } from 'react-router';
 import {useSelector,useDispatch} from "react-redux"
 import { fetchService } from '../app/Actions/service_action';
+import {useLocation} from "react-router-dom"
 import Loader from "../component/Loader"
+import { useNavigate } from 'react-router-dom';
 
-function ServiceDetailPage() {
+
+function ServiceDetailPage(props) {
   const {loading,services_data,error}=useSelector(state=>state.service);
-
   const dispatch=useDispatch();
   const {isLogin,userInfo,isLoading}=useSelector(state=>state.user)
   const [active, setActive] = useState(null);
   const [searchParams]=useSearchParams();
+
 
   // let collect some information from query params from url to get the perfect data
 
   const city=searchParams.get('city')||"mumbai";
   const categories=searchParams.get('categories');
   const state=userInfo?.state;
+  const location = useLocation();
+  const { headLine } = location.state || {}; 
+  console.log(headLine)
 
   useEffect(()=>{
     if(state&&city&&categories){
@@ -31,11 +37,10 @@ function ServiceDetailPage() {
 
 
 
-
   return (<>{isLoading&&loading?<Loader/>:
     <div className="gap-5 justify-center mt-20 flex">
       <div className="h-min sticky top-24">
-        <h1 className="text-4xl font-semibold w-max mt-5 text-gray-700 mb-5">Electrician</h1>
+        <h1 className="text-4xl font-semibold w-96 mt-5 text-gray-700 mb-5">{headLine}</h1>
 
         <div
           className={`grid h-max w-max grid-cols-${Math.ceil(services_data.length<=2 ? 2 :services_data.length / 2)} gap-5 border-2 p-5 rounded`}
