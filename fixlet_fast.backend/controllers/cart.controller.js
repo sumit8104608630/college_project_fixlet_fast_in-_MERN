@@ -113,12 +113,64 @@ const cancel_the_service=asyncHandler(async(req,res)=>{
 })
 
 
+// let's create the functionality get all cart services of particular user Id
+const get_all_cart_services=asyncHandler(async(req,res)=>{
+    try {
+
+        const userId=req.user._id;
+        const user=await User.findById(userId);
+        if(!user){
+            return res.status(404).json(new ApiResponse(404,"user not found"));
+        }
+        const cart =await Cart.findOne({userId:userId});
+        if(!cart){
+            return res.status(404).json(new ApiResponse(404,"cart not found"));
+        }
+        // let's create the array of the object which i want to send to the user or frontend
+        const cartServicesGrouped = await Cart.aggregate([
+            {
+              $unwind: "$products" // Deconstruct the products array
+            },
+            {
+              $group: {
+                _id: "$products.serviceId", // Group by serviceId
+                products: { $push: "$products" } // Collect products under the same serviceId into an array
+              }
+            },
+            {
+              $lookup: {
+                from: "services", // The Service collection
+                localField: "_id", // The serviceId in the Cart's product
+                foreignField: "_id", // The _id in the Service collection
+                as: "serviceDetails" // The result of the lookup
+              }
+            },
+            {
+              $project: {
+                serviceId: "$_id", // Rename _id to serviceId
+                products: 1, // Keep the products array
+                serviceDetails: { $arrayElemAt: ["$serviceDetails", 0] } // Pick the first matching service (assuming 1 service per group)
+              }
+            }
+          ]);
+      
+          return res.status(200).json({
+            cartServicesGrouped: cartServicesGrouped
+          });
+        
+    } catch (error) {
+        console.log(error);
+        return apiError("something went wrong in server",500);
+    }
+})
+
+
 
 
 
 // lets export all functionality
-
 module.exports={
     add_service_to_cart, 
-    cancel_the_service
+    cancel_the_service,
+    get_all_cart_services
 }

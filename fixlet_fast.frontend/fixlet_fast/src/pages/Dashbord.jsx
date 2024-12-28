@@ -77,7 +77,7 @@ function Dashbord() {
               <div className='flex  gap-5 mb-5  mt-3'>
               <div className='flex gap-5 '>
               <div className='w-28'>
-            <Link  to={{pathname:`/serviceDetailPage/service_data_get`,search:`?city=${city}&categories=electrician`}} state={ {headLine: 'Electrician'} } className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+            <Link  to={{pathname:`/serviceDetailPage/service_data_get`,search:`?city=${city||"mumbai"}&categories=electrician`}} state={ {headLine: 'Electrician'} } className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={electricity_image} alt="Cleaning" />
               </div>
@@ -86,7 +86,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=plumber`}   state={{ headLine: 'Plumber' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=plumber`}   state={{ headLine: 'Plumber' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={plumber} alt="Plumber" />
               </div>
@@ -95,7 +95,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=carpenter`} state={{ headLine: 'Carpenter' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=carpenter`} state={{ headLine: 'Carpenter' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={carpenter} alt="Festival Decoration" />
               </div>
@@ -125,7 +125,7 @@ function Dashbord() {
               <div className='flex gap-5 '>
 
               <div className='w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=acservice`} state={{ headLine: 'AC repair & Service' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=acservice`} state={{ headLine: 'AC repair & Service' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={ac_repair} alt="Cleaning" />
               </div>
@@ -134,7 +134,7 @@ function Dashbord() {
             </div>
 
               <div className='w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=chimney`} state={{ headLine: 'Chimney Repair & Service' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=chimney`} state={{ headLine: 'Chimney Repair & Service' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={chimney} alt="Cleaning" />
               </div>
@@ -143,7 +143,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=gasstoverepair`} state={{ headLine: 'Gas Repair & service' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=gasstoverepair`} state={{ headLine: 'Gas Repair & service' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={gas} alt="Electrician" />
               </div>
@@ -159,7 +159,7 @@ function Dashbord() {
 
             <div className='flex gap-5 '>
             <div className='w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=refrigerator`} state={{ headLine: 'Refrigerator Repair ' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=refrigerator`} state={{ headLine: 'Refrigerator Repair ' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={refrigerator} alt="Festival Decoration" />
               </div>
@@ -168,7 +168,7 @@ function Dashbord() {
           </div>
 
             <div className='w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=mixergrinder`} state={{ headLine: 'Mixer & Grinder Repair' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=mixergrinder`} state={{ headLine: 'Mixer & Grinder Repair' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={mixer} alt="Electrician" />
               </div>
@@ -177,7 +177,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=washingmachine`} state={{ headLine: 'Washin Machine Repair' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=washingmachine`} state={{ headLine: 'Washin Machine Repair' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={washinMashin} alt="Festival Decoration" />
               </div>
@@ -204,7 +204,7 @@ function Dashbord() {
               <span>Cleaning</span>
               <div className='flex  gap-5 mb-5  mt-3'>
               <div className='w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=bathroom_kitchen`} state={{ headLine: 'Bathroom & Kitchen Cleaning' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=bathroom_kitchen`} state={{ headLine: 'Bathroom & Kitchen Cleaning' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={bathroom} alt="Cleaning" />
               </div>
@@ -213,7 +213,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=fullhome`} state={{ headLine: 'Full Home Cleaning' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=fullhome`} state={{ headLine: 'Full Home Cleaning' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={home} alt="Electrician" />
               </div>
@@ -222,7 +222,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=sofaCleaning`} state={{ headLine: 'Sofa Cleaning' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=sofaCleaning`} state={{ headLine: 'Sofa Cleaning' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={sofa_image} alt="Festival Decoration" />
               </div>
@@ -234,7 +234,7 @@ function Dashbord() {
             <span>Pest Control</span>
               <div className='flex  gap-5  mt-3'>
               <div className='w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=pestcontrol`} state={{ headLine: 'Insect Pest Control' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=pestcontrol`} state={{ headLine: 'Insect Pest Control' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={pest} alt="Cleaning" />
               </div>
@@ -245,7 +245,7 @@ function Dashbord() {
 
 
             <div className='w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=bedbugcontrol`}state={{ headLine: 'Bed Bugs Control' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=bedbugcontrol`}state={{ headLine: 'Bed Bugs Control' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={bed} alt="Festival Decoration" />
               </div>
@@ -308,7 +308,7 @@ function Dashbord() {
               </div>
             <div className='flex gap-5'>
             <div className='w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=lightdecoration`} state={{ headLine: 'Festival Lights decoration' }} className="relative  flex flex-col text-center hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=lightdecoration`} state={{ headLine: 'Festival Lights decoration' }} className="relative  flex flex-col text-center hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={festival_decoration} alt="Festival Decoration" />
               </div>
@@ -319,7 +319,7 @@ function Dashbord() {
 
 
           <div className='w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=wallpanelinstallation`} state={{ headLine: 'Wall Panel installation' }} className="relative w-full flex flex-col text-center    hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=wallpanelinstallation`} state={{ headLine: 'Wall Panel installation' }} className="relative w-full flex flex-col text-center    hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={wallPanel} alt="Wall Panel" />
               </div>
@@ -329,7 +329,7 @@ function Dashbord() {
             </div>
 
             <div className='w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city}&categories=wallpainting`} state={{ headLine: 'Painting & Water proofing' }} className="relative w-full flex flex-col text-center hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=wallpainting`} state={{ headLine: 'Painting & Water proofing' }} className="relative w-full flex flex-col text-center hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={paint} alt="Paint" />
               </div>
