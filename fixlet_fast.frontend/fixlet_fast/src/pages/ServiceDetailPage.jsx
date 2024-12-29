@@ -92,8 +92,11 @@ function ServiceDetailPage(props) {
                         </div>
                         <div className="flex gap-2 items-center">
                           <FaRegClock size={12} />
-                          <span>{subService.serviceTime>60?(((subService.serviceTime)/60).toFixed()-1+"."+(((subService.serviceTime)/60-1)*60).toFixed()) +" hr":subService.serviceTime+" mins"} </span>
-                        </div>
+                          <span>
+  {subService.serviceTime >= 60 
+    ? `${Math.floor(subService.serviceTime / 60)} hr ${subService.serviceTime % 60>0?subService.serviceTime+" mins" :""} ` 
+    : `${subService.serviceTime} mins`}
+</span>                        </div>
                       </div>
                       <div className="text-start">
                         <button className="text-orange-500">View details</button>
