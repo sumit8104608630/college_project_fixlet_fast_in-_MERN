@@ -7,24 +7,68 @@ const cartSchema=mongoose.Schema({
         ref:"User",
         index:true
     },
+
+
     products:[{
-    serviceId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Service",
-        index:true
-    },
-    subServiceId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true, // SubService is nested; you handle this in the application logic
-      },
-    quantity:{
-        type:Number,
-        default:1,
-    },
-    totalPrice:{
-        type:Number,
-         
-    }
+        serviceId:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Service",
+            index:true
+        },
+        serviceType: {
+            type: String,
+            required: true,
+            unique:true,
+            index: true,
+          },
+        serviceName: {
+            type: String,
+            required: true,
+          },
+     
+        subServices:[{
+            subServiceId: {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true, // SubService is nested; you handle this in the application logic
+              },
+              subServiceName:{
+                type:String,
+                required:true
+              },
+              subServiceImage:{
+                type:String,
+                required:true
+              },
+              serviceTime:{
+        
+              },
+
+              included: {
+                type: [String],
+                required: true,
+                validate: {
+                  validator: (arr) => arr.length > 0,
+                  message: "Included items cannot be empty.",
+                },
+              },
+              note: {
+                type: [String],
+                required: true,
+                validate: {
+                  validator: (arr) => arr.length > 0,
+                  message: "Excluded items cannot be empty.",
+                },
+              },
+            quantity:{
+                type:Number,
+                default:1,
+            },
+            totalPrice:{
+                type:Number,
+                 
+            }
+        }
+        ],
 }]
 },
 {
