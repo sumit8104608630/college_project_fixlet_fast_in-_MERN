@@ -93,7 +93,7 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
                         included: current_subService.included,
                         note: current_subService.note,
                         quantity:Number(quantity),
-                        totalPrice: current_subService.price * current_subService.quantity  // Calculate totalPrice with provided quantity
+                        totalPrice: current_subService.price * Number(quantity)  // Calculate totalPrice with provided quantity
                     }]
                 }]
             });
@@ -109,103 +109,115 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
 
  
 // now let's create the functionality the cancellation  of the service 
-
-const cancel_the_service=asyncHandler(async(req,res)=>{
+const cancel_the_service = asyncHandler(async (req, res) => {
     try {
+        const userId = req.user._id;
+        const { serviceId, subServiceId } = req.body;
 
-        const userId=req.user._id;
-        const {serviceId,subServiceId}=req.body;
-
-        if(!serviceId){
-            return res.status(400).json(new ApiResponse(400,"service id is required"));
+        if (!serviceId) {
+            return res.status(400).json(new ApiResponse(400, "Service ID is required"));
         }
 
-        if(!subServiceId){
-            return res.status(400).json(new ApiResponse(400,"sub service id is required"));
+        if (!subServiceId) {
+            return res.status(400).json(new ApiResponse(400, "Sub-service ID is required"));
         }
-        const service =await Service.findById(serviceId);
-        const subService =await service.serviceSubType.find((sub)=>sub._id.toString()===subServiceId.toString());
 
-
-        const cart = await Cart.findOne({userId:userId});
-        if(!cart){
-            return res.status(404).json(new ApiResponse(404,"cart not found"))
-        } 
-        const productIndex =await cart.products.findIndex((product)=>product.serviceId.toString()===serviceId.toString());
-  
-        const product=cart.products[productIndex];
-        if(product){
-            const subServiceLength=product.subServices.length;
-            if(subServiceLength===1){
-                cart.products.splice(productIndex,1);
-            }
-            else{
-               const subServiceIndex=await product.subServices.findIndex(product=>product.subServiceId.toString()===subServiceId.toString());
-               if (subServiceIndex === -1) {
-                return res.status(404).json(new ApiResponse(404, "Sub-service not found in the cart"));
-            }
-               const currentSubService= await product.subServices[subServiceIndex];
-               if(currentSubService.quantity>1){
-                currentSubService.quantity-=1
-                currentSubService.totalPrice=currentSubService.quantity*subService.price
-               }
-               else{
-                    product.subServices.splice(subServiceIndex,1);
-               }
-            }
-            if (product.subServices.length === 0) {
-                cart.products.splice(productIndex, 1);
-            }
+        const service = await Service.findById(serviceId).lean();
+        if (!service) {
+            return res.status(404).json(new ApiResponse(404, "Service not found"));
         }
-     
-        await cart.save();
-        return res.status(200).json(new ApiResponse(200,"service cancelled successfully"))
-        
+
+        const subService = service.serviceSubType.find(
+            (sub) => sub._id.toString() === subServiceId.toString()
+        );
+        if (!subService) {
+            return res.status(404).json(new ApiResponse(404, "Sub-service not found"));
+        }
+
+        const cart = await Cart.findOne({ userId });
+        if (!cart) {
+            return res.status(404).json(new ApiResponse(404, "Cart not found"));
+        }
+
+        const productIndex = cart.products.findIndex(
+            (product) => product.serviceId.toString() === serviceId.toString()
+        );
+        if (productIndex === -1) {
+            return res.status(404).json(new ApiResponse(404, "Product not found in cart"));
+        }
+
+        const product = cart.products[productIndex];
+
+        const subServiceIndex = product.subServices.findIndex(
+            (sub) => sub.subServiceId.toString() === subServiceId.toString()
+        );
+        if (subServiceIndex === -1) {
+            return res.status(404).json(new ApiResponse(404, "Sub-service not found in product"));
+        }
+
+        const currentSubService = product.subServices[subServiceIndex];
+
+        if (currentSubService.quantity > 1) {
+            currentSubService.quantity -= 1;
+            currentSubService.totalPrice = currentSubService.quantity * subService.price;
+        } else {
+            product.subServices.splice(subServiceIndex, 1);
+        }
+
+        if (product.subServices.length === 0) {
+            cart.products.splice(productIndex, 1);
+        }
+
+        if (cart.products.length === 0) {
+            await Cart.findOneAndDelete({ userId });
+        } else {
+            await cart.save();
+        }
+
+        return res.status(200).json(new ApiResponse(200, "Service cancelled successfully"));
     } catch (error) {
-        console.log(error)
-        return apiError("something went wrong in server",500);
+        console.error(error);
+        return res.status(500).json(new ApiResponse(500, "Something went wrong on the server"));
     }
-})
+});
+
 
 const get_all_cart_services = asyncHandler(async (req, res) => {
     try {
-      const userId = req.user._id;
-  
-      // Check if the user exists
-      const user = await User.findById(userId);
-      if (!user) {
-        return res.status(404).json(new ApiResponse(404, "User not found"));
-      }
-  
-      // Check if the cart exists for the user
-      const cart = await Cart.findOne({ userId });
-      if (!cart) {
-        return res.status(404).json(new ApiResponse(404, "Cart not found"));
-      }
-  
-      // Aggregate to group cart products by serviceId and include subserviceId
-      const cartServicesGrouped = await Cart.aggregate([
-        {
-          $match: { userId } // Filter by the specific user's cart
-        },
-        {
-          $unwind: "$products" // Deconstruct the products array
-        },
-        {
-          $group: {
-            _id: "$products.serviceId", // Group by serviceId
-            products: { $push: "$products" }, // Collect products under the same serviceId
-            subserviceIds: { $addToSet: "$products.subserviceId" } // Collect unique subserviceIds
+        const userId=await req.user._id;
+        if(!userId){
+            return res.status(401).json(new ApiResponse(401, "Unauthorized"));
+        }
+        const cart =await Cart.findOne({userId:userId});
+        if(!cart){
+            return res.status(404).json(new ApiResponse(404, "Cart not found"));
+        }
+        // let make better array of object for frontend for rendering the cart and handling  using aggregation pipeline 
+
+        const group_cart = await Cart.aggregate([
+            { $unwind: "$products" },  // Unwind the products array
+            { $unwind: "$products.subServices" },  // Unwind the subServices array inside each product
+            {
+              $group: {
+                _id: "$products.serviceType",  // Group by serviceType
+                productDetails: {  // Collect product details into an array
+                  $push: {
+                    
+                  serviceName:"$products.serviceName",
+                  serviceId:"$products.serviceId",
+                  subService:"$products.subServices" // Include the subServices details
+                  },
+                },
+                totalService:{$sum:1}
+              }
+            }
+          ]);
+
+          if(!group_cart){
+            return res.status(404).json(new ApiResponse(404, "Cart not found"));
           }
-        },
-      ]);
-  
-      // Return the grouped services
-      return res.status(200).json({
-        status: 200,
-        message: "Cart services fetched successfully",
-        data: cartServicesGrouped
-      });
+          return res.status(200).json(new ApiResponse(200,group_cart,"all data of current cart"));
+          
     } catch (error) {
       console.error(error);
       return res
@@ -214,7 +226,6 @@ const get_all_cart_services = asyncHandler(async (req, res) => {
     }
   });
   
-
 
 
 // lets export all functionality
