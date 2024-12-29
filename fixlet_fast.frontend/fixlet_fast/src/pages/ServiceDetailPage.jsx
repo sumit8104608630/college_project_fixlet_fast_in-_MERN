@@ -27,7 +27,6 @@ function ServiceDetailPage(props) {
   const state=userInfo?.state;
   const location = useLocation();
   const { headLine } = location.state || {}; 
-  console.log(headLine)
 
   useEffect(()=>{
     if(state&&city&&categories){
@@ -93,7 +92,7 @@ function ServiceDetailPage(props) {
                         </div>
                         <div className="flex gap-2 items-center">
                           <FaRegClock size={12} />
-                          <span>{subService.serviceTime>60?(subService.serviceTime/60) +"hr":subService.serviceTime+"mins"} </span>
+                          <span>{subService.serviceTime>60?(((subService.serviceTime)/60).toFixed()-1+"."+(((subService.serviceTime)/60-1)*60).toFixed()) +" hr":subService.serviceTime+" mins"} </span>
                         </div>
                       </div>
                       <div className="text-start">
