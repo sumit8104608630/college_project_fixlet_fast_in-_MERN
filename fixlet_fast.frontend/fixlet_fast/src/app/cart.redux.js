@@ -5,9 +5,9 @@ import {fetchCart} from"./Actions/cart_action.js"
 
 // first we will create th initialState 
 const initialState = {
-    isLoading:true,
+    cartLoading:true,
     cartItems:[],
-    error:null,
+    cartError:null,
 }
 
 const cartSlice=createSlice({
@@ -17,17 +17,17 @@ const cartSlice=createSlice({
     extraReducers:(builder)=>{
         builder
         .addCase(fetchCart.pending,(state)=>{
-            state.isLoading=true;
-            state.error=null;
+            state.cartLoading=true;
+            state.cartError=null;
         })
         .addCase(fetchCart.fulfilled,(state,action)=>{
-            state.isLoading=false;
+            state.cartLoading=false;
             state.cartItems=action.payload;
-            state.error=null
+            state.cartError=null
         })
         .addCase(fetchCart.rejected,(state,action)=>{
-            state.isLoading=false;
-            state.error=action.payload;
+            state.cartLoading=false;
+            state.cartError=action.payload;
         })
     }
 })

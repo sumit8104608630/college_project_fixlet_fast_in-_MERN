@@ -10,11 +10,15 @@ import { CgProfile } from "react-icons/cg";
 import { fetchUser } from '../app/Actions/user_action';
 import { FaShoppingCart } from "react-icons/fa";
 import {logout} from "../app/user.redux"
+import {fetchCart}from "../app/Actions/cart_action.js"
+import Loader from"../component/Loader.jsx"
 
 function Header() {
+const {cartLoading,cartItems,cartError}=useSelector((state)=>state.cart);
+
 const [profileToggle,setProfileToggle]=useState(false)
 const dispatch=useDispatch();
-const [cartCount, setCartCount] = useState(1); // Example cart count
+const [cartCount, setCartCount] = useState(); // Example cart count
 const [isScroll,setIsScroll]=useState(false)
 const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
 const [mapToggle,setMapToggle]=useState(null)
@@ -45,19 +49,22 @@ const handelLogout=()=>{
 
 useEffect(()=>{
   dispatch(fetchUser())
+  dispatch(fetchCart())
   setProfileToggle(false)
   return () => {
     // Cleanup code (optional)
     console.log("Cleanup function called");
   };
-},[isLogin])
+},[isLogin,dispatch])
 
+useEffect(()=>{
+  const singleArray=cartItems?.map((item=>item.productDetails)).flat()
+  setCartCount(singleArray.length)
+},[cartItems])
 
-
-
-  return (
+  return (<>{isLoading?<Loader/>:
     <div className='absolute top-0 z-10'>
-
+{}
       {
         
       <nav className={`fixed w-full ${isScroll ? 'shadow-xl' : 'shadow-none'} items-center`}>
@@ -150,6 +157,8 @@ useEffect(()=>{
     }
 
     </div>
+}
+    </>
   )
 }
 

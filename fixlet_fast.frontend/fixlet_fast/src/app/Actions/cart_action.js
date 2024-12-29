@@ -2,7 +2,9 @@ import {createAsyncThunk} from "@reduxjs/toolkit"
 
 // let create the fetchCart functionality
 
-export const fetchCart=createAsyncThunk(async(_,{rejectWithValue})=>{
+export const fetchCart=createAsyncThunk(
+    "cart/fetchCart",
+    async(_,{rejectWithValue})=>{
     try {
         
         const response=await fetch(`http://localhost:8000/cart/get_all_services_cart`,{
