@@ -31,6 +31,7 @@ function ServiceDetailPage(props) {
   const location = useLocation();
   const { headLine } = location.state || {}; 
 
+
   useEffect(()=>{
     const cart_item=cartItems?.filter(item=>item._id===categories) 
     setFilter_cartItems(cart_item[0]?.productDetails);
@@ -51,7 +52,6 @@ function ServiceDetailPage(props) {
 
   const handleAddServices=async(serviceId,subServiceId)=>{
 
-      console.log(serviceId,subServiceId);
       // let's add the logic here to add the service to the user's cart
       const obj={
         serviceId:serviceId,
