@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-scroll'; // Importing Link from react-scroll
-import electricianJson from "../component/fakejsonData"; // Assuming this is the data you're working with
 import { FaStar } from "react-icons/fa";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaRegClock } from "react-icons/fa6";
@@ -9,16 +8,20 @@ import {useSelector,useDispatch} from "react-redux"
 import { fetchService } from '../app/Actions/service_action';
 import {useLocation} from "react-router-dom"
 import Loader from "../component/Loader"
-import { useNavigate } from 'react-router-dom';
-
+import Promice from '../component/Promise';
+import {fetchCart}from "../app/Actions/cart_action.js"
+import AddButton from '../component/AddButton.jsx';
 
 function ServiceDetailPage(props) {
+  const {cartLoading,cartItems,cartError}=useSelector((state)=>state.cart);
+
   const {loading,services_data,error}=useSelector(state=>state.service);
   const dispatch=useDispatch();
   const {isLogin,userInfo,isLoading}=useSelector(state=>state.user)
   const [active, setActive] = useState(null);
   const [searchParams]=useSearchParams();
-
+  const [filter_cartItems,setFilter_cartItems]=useState([]);
+  
 
   // let collect some information from query params from url to get the perfect data
 
@@ -29,23 +32,58 @@ function ServiceDetailPage(props) {
   const { headLine } = location.state || {}; 
 
   useEffect(()=>{
+    const cart_item=cartItems?.filter(item=>item._id===categories) 
+    setFilter_cartItems(cart_item[0]?.productDetails);
+
+  },[cartItems,categories])
+
+  useEffect(()=>{
     if(state&&city&&categories){
    dispatch(fetchService({state,city,categories}))
     }
+
   },[city,state,categories,dispatch])
 
+  useEffect(()=>{
+    dispatch(fetchCart());
+  },[dispatch])
+  // let's add the add button functionality 
+
+  const handleAddServices=async(serviceId,subServiceId)=>{
+
+      console.log(serviceId,subServiceId);
+      // let's add the logic here to add the service to the user's cart
+      const obj={
+        serviceId:serviceId,
+        subServiceId:subServiceId,
+      }
+
+      const response=await fetch(`http://localhost:8000/cart/cart_of_service`,{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+        },
+        body:JSON.stringify(obj),
+        credentials:"include"
+      });
+      dispatch(fetchCart());
+  }
+
+ 
 
 
-  return (<>{isLoading&&loading?<Loader/>:
+
+  return (<>{isLoading&&loading&&cartItems?<Loader/>:
     <div className="gap-5 justify-center mt-20 flex">
       <div className="h-min sticky top-24">
-        <h1 className="text-4xl font-semibold w-96 mt-5 text-gray-700 mb-5">{headLine}</h1>
+        <h1 className="text-3xl font-semibold w-96 mt-5 text-gray-700 mb-5">{headLine}</h1>
+        {services_data.length<=1&&!loading?<div><Promice/></div>:
 
         <div
           className={`grid h-max w-max grid-cols-${Math.ceil(services_data.length<=2 ? 2 :services_data.length / 2)} gap-5 border-2 p-5 rounded`}
           style={{gridTemplateColumns:`repeat(${Math.ceil(services_data.length<=2 ? 2 :services_data.length / 2)}, 1fr)`}}
         >
-          {services_data.map((service) => (
+          {services_data.map((service) =>(
             <Link
               to={service.servicePartName}
               smooth={true} // Adding smooth scroll behavior
@@ -69,6 +107,7 @@ function ServiceDetailPage(props) {
             </Link>
           ))}
         </div>
+  }
       </div>
 
       <div className="scrollbar-thin scrollbar-none scrollbar-track-gray-200">
@@ -107,17 +146,18 @@ function ServiceDetailPage(props) {
                       alt={subService.subServiceName}
                     />
                     <div>
-                      {subService.serviceRatingCount === 0 ? (
-                        <button className="text-orange-500 border px-5 w-15 rounded text-sm border-orange-400 mt-2 hover:bg-orange-100 font-semibold hover:border-orange-600 hover:text-orange-600">
-                          Add
-                        </button>
-                      ) : (
-                        <div className="flex items-center w-20 border hover:bg-orange-100 border-orange-500 rounded mt-2 justify-between">
-                          <button className="text-sm font-semibold text-orange-500 px-2">+</button>
-                          <span className="text-sm font-semibold text-orange-500">1</span>
-                          <button className="text-sm font-semibold text-orange-500 px-2">-</button>
-                        </div>
-                      )}
+                      {filter_cartItems?.some((item)=>item.serviceId===service._id&&item.subService.subServiceId===subService._id) ? (
+      <div key={subService._id}>
+      {filter_cartItems?.map((item,i)=><AddButton key={i} service={item?.serviceId} subService_id={subService._id} service_id={service._id} subService ={item?.subService}/>)}
+    </div>
+    ) : (
+      <button
+        onClick={() => handleAddServices(service._id, subService._id)}
+        className="text-orange-500 border px-5 w-15 rounded text-sm border-orange-400 mt-2 hover:bg-orange-100 font-semibold hover:border-orange-600 hover:text-orange-600"
+      >
+        Add
+      </button>
+    )}
                     </div>
                   </div>
                   

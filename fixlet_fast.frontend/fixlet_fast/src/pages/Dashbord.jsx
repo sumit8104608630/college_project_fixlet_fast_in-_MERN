@@ -28,18 +28,22 @@ import gas from "../assets/togglebutton/AC&Apliance/Gas.webp"
 import refrigerator from "../assets/togglebutton/AC&Apliance/Refirgerator.png"
 import mixer from "../assets/togglebutton/AC&Apliance/mixer.webp"
 import washinMashin from "../assets/togglebutton/AC&Apliance/washing_mashin.jpeg"
-import { useSelector } from 'react-redux'
+import { useSelector ,useDispatch} from 'react-redux'
+import {fetchCart} from "../app/Actions/cart_action.js"
+
 
 function Dashbord() {
   const [link3Toggle,setlink3Toggle]=useState(false);
   const [link2Toggle,setlink2Toggle]=useState(false);
   const [link1Toggle,setlink1Toggle]=useState(false);
   const {isLoading,userInfo,isLogin}=useSelector((state)=>state.user);
-  
+  const dispatch=useDispatch();
+
   const city=userInfo?.city
 
   useEffect(() => {
-
+    dispatch(fetchCart())
+    window.scroll(0,0)
     if (link3Toggle||link2Toggle||link1Toggle) {
       document.body.style.overflow="hidden"
       
@@ -51,7 +55,7 @@ function Dashbord() {
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [link3Toggle,link2Toggle,link1Toggle]);
+  }, [link3Toggle,link2Toggle,link1Toggle,dispatch,]);
 
 
 

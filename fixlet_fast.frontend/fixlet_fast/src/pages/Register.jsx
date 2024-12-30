@@ -68,6 +68,7 @@ function Register() {
       setSendOtp(true)
     }else{
       setSendOtp(false)
+      setOtpInput(false)
 
     }
 
@@ -85,7 +86,6 @@ function Register() {
   const handelSendOtp=async(email)=>{
     setOtpInput(true);
     try {
-    
       console.log(email)
       const obj={
         email:email
@@ -106,6 +106,8 @@ function Register() {
   }
     const handelverifyOtp=async(otp)=>{
       const email=formData.email;
+      console.log(otp)
+
     const obj={
       email:email,
       otp:otp
@@ -144,7 +146,7 @@ function Register() {
           <div className='flex gap-3'>
           <input value={formData.email} disabled={verified} onChange={handelInput} className='border-2 w-full focus:outline-none rounded-lg border-gray-300 px-5 py-1 ' type="email" placeholder='email@gmail.com' name="email" required/>{sendOtp&&<>
           {!verified?
-          <button onClick={()=>handelSendOtp(formData.email)} className='w-1/4 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'> Send OTP</button>:<button onClick={()=>setVerified(false)} className='w-1/4 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'>Change mail</button>}</>}
+          <button onClick={()=>handelSendOtp(formData.email)} className='w-1/4 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'> Send OTP</button>:<button onClick={()=>setVerified(false)} className='w-1/2 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'><span>Change mail</span></button>}</>}
           </div>
         </div>
 

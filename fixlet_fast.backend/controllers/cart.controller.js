@@ -12,7 +12,8 @@ const User =require("../model/user.model.js")
 const add_service_to_cart = asyncHandler(async (req, res) => {
     try {
         const userId = req.user._id;
-        const { serviceId, subServiceId, quantity } = req.body;
+        const { serviceId, subServiceId } = req.body;
+        const quantity=1
 
         const user = await User.findById(userId);
         if (!user) return apiError(res, 400, "User not found");
@@ -73,7 +74,7 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
                     }]
                 };
 
-                cart.products.push(newService);
+                cart.products.push(newService); 
                 await cart.save();
                 return res.status(200).json(new ApiResponse(200, cart.products, "Product successfully added to the cart"));
             }

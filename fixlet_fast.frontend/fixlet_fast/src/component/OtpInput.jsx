@@ -12,33 +12,36 @@ function OtpInput({ length = 4,email, onclick }) {
 
   const handleChange = (index, e) => {
     const value = e.target.value;
+    console.log(index)
     if (isNaN(value)) return;
 
     const newOtp = [...otp];
     newOtp[index] = value.length > 1 ? value[value.length - 1] : value;
+
     setOtp(newOtp);
-
-    const otpValue = newOtp.join("");
-    if (otpValue.length === length && /^[0-9]+$/.test(otpValue)) onclick(otpValue,email);
-
     
+    if (newOtp.every(digit=>digit!=="")){
+    const otpValue = newOtp.join("");
+     onclick(otpValue,email);
+    }
 
-    if (value && index < length -1 && inputRef.current[index + 1]) {
+    if(value&&index<length-1&&inputRef.current[index + 1]){
       inputRef.current[index + 1].focus();
     }
+    
   };
 
   const handleKeyDown = (index, e) => {
     if (e.key === "Backspace") {
-      const newOtp = [...otp];
-      if (otp[index]) {
-        newOtp[index] = ""; // Clear current input
-        setOtp(newOtp);
-      } else if (index > 0 && inputRef.current[index - 1]) {
-        newOtp[index - 1] = ""; // Clear the previous input
-        setOtp(newOtp);
-        inputRef.current[index - 1].focus();
+      const newOtp=[...otp];
+      if(newOtp[index]){
+        newOtp[index]=""
       }
+      else if(index>0 && inputRef.current[index-1]){
+        inputRef.current[index-1].focus()
+        newOtp[index - 1] = "";
+      }
+      setOtp(newOtp);
     }
   };
 
@@ -62,7 +65,7 @@ function OtpInput({ length = 4,email, onclick }) {
           maxLength={1}
           autoComplete="off"
           inputMode="numeric"
-          className="border text-center border-gray-400 rounded focus:outline-none"
+          className="border h-10 text-center border-gray-400 rounded focus:outline-none"
         />
       ))}
     </div>

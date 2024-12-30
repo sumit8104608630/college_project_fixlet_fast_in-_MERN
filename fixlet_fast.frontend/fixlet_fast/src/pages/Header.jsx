@@ -49,7 +49,6 @@ const handelLogout=()=>{
 
 useEffect(()=>{
   dispatch(fetchUser())
-  dispatch(fetchCart())
   setProfileToggle(false)
   return () => {
     // Cleanup code (optional)
@@ -122,7 +121,7 @@ useEffect(()=>{
 <div className="relative">
       <Link to="/cart">
         <FaShoppingCart size={25} className="text-white font-bold" />
-        {cartCount > 0 && (
+        {cartCount >0 && (
           <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 text-xs font-semibold text-white bg-red-600 rounded-full px-2 py-0.5">
             {cartCount}
           </span>
