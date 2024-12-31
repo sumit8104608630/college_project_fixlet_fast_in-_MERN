@@ -7,79 +7,69 @@ const {ApiResponse}=require("../utils/apiResponse.js")
 const Cart=require("../model/cart.model.js");
 const Service=require("../model/service.model.js");
 const User =require("../model/user.model.js") 
-
-// now let create the addTo cart functionality  
+// Improved error handling using ApiResponse
 const add_service_to_cart = asyncHandler(async (req, res) => {
     try {
         const userId = req.user._id;
         const { serviceId, subServiceId } = req.body;
-        const quantity=1
+        const quantity = 1;
 
         const user = await User.findById(userId);
-        if (!user) return apiError(res, 400, "User not found");
+        if (!user) return res.status(400).json(new ApiResponse(400, "User not found"));
 
         const service = await Service.findById(serviceId);
-        if (!service) return apiError(res, 400, "Service not found");
+        if (!service) return res.status(400).json(new ApiResponse(400, "Service not found"));
 
-        const current_subService = service.serviceSubType.find(sub => sub._id.toString() === subServiceId.toString());
-        if (!current_subService) return  res.status(400).json({
-            status: false,
-        })
+        const currentSubService = service.serviceSubType.find(sub => sub._id.toString() === subServiceId.toString());
+        if (!currentSubService) return res.status(400).json(new ApiResponse(400, "Sub-service not found"));
 
         let cart = await Cart.findOne({ userId });
-
         if (cart) {
-            // Find the service in the cart
             const serviceIndex = cart.products.findIndex(product => product.serviceId.toString() === serviceId.toString());
-
             if (serviceIndex !== -1) {
-                const serviceInCart = cart.products[serviceIndex];  // use serviceInCart instead of overwriting service variable
-
-                // Find the subservice in the cart
+                const serviceInCart = cart.products[serviceIndex];
                 const subServiceIndex = serviceInCart.subServices.findIndex(sub => sub.subServiceId.toString() === subServiceId.toString());
 
                 if (subServiceIndex !== -1) {
                     const subService = serviceInCart.subServices[subServiceIndex];
-                    subService.quantity += Number(quantity);  // Add the quantity to the existing quantity
-                    subService.totalPrice = subService.quantity * current_subService.price;  // Recalculate totalPrice
+                    subService.quantity += quantity;
+                    subService.totalPrice = subService.quantity * currentSubService.price;
                 } else {
                     const newSubService = {
                         subServiceId,
-                        subServiceName: current_subService.subServiceName,
-                        subServiceImage: current_subService.subServiceImage,
-                        included: current_subService.included,
-                        note: current_subService.note,
-                        quantity:Number(quantity),
-                        totalPrice: current_subService.price * Number(quantity)  // Use the provided quantity
+                        subServiceName: currentSubService.subServiceName,
+                        subServiceImage: currentSubService.subServiceImage,
+                        included: currentSubService.included,
+                        note: currentSubService.note,
+                        quantity,
+                        totalPrice: currentSubService.price * quantity
                     };
                     serviceInCart.subServices.push(newSubService);
                 }
 
                 await cart.save();
-                return res.status(200).json(new ApiResponse(200, cart.products, "Product successfully added to the cart"));
+                return res.status(200).json(new ApiResponse(200, cart.products, "Product added to cart"));
             } else {
-                // If service doesn't exist, add it to the cart
                 const newService = {
                     serviceId,
                     serviceType: service.serviceType,
                     serviceName: service.serviceName,
                     subServices: [{
                         subServiceId,
-                        subServiceName: current_subService.subServiceName,
-                        subServiceImage: current_subService.subServiceImage,
-                        included: current_subService.included,
-                        note: current_subService.note,
-                        quantity:Number(quantity),
-                        totalPrice: current_subService.price * Number(quantity)  // Calculate totalPrice with provided quantity
+                        subServiceName: currentSubService.subServiceName,
+                        subServiceImage: currentSubService.subServiceImage,
+                        included: currentSubService.included,
+                        note: currentSubService.note,
+                        quantity,
+                        totalPrice: currentSubService.price * quantity
                     }]
                 };
 
-                cart.products.push(newService); 
+                cart.products.push(newService);
                 await cart.save();
-                return res.status(200).json(new ApiResponse(200, cart.products, "Product successfully added to the cart"));
+                return res.status(200).json(new ApiResponse(200, cart.products, "Product added to cart"));
             }
         } else {
-            // If no cart exists, create a new one
             cart = new Cart({
                 userId,
                 products: [{
@@ -89,18 +79,17 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
                     serviceName: service.serviceName,
                     subServices: [{
                         subServiceId,
-                        subServiceName: current_subService.subServiceName,
-                        subServiceImage: current_subService.subServiceImage,
-                        included: current_subService.included,
-                        note: current_subService.note,
-                        quantity:Number(quantity),
-                        totalPrice: current_subService.price * Number(quantity)  // Calculate totalPrice with provided quantity
+                        subServiceName: currentSubService.subServiceName,
+                        subServiceImage: currentSubService.subServiceImage,
+                        included: currentSubService.included,
+                        note: currentSubService.note,
+                        quantity,
+                        totalPrice: currentSubService.price * quantity
                     }]
                 }]
             });
-
             await cart.save();
-            return res.status(201).json(new ApiResponse(201, cart.products, "Product successfully added to the cart"));
+            return res.status(201).json(new ApiResponse(201, cart.products, "Product added to cart"));
         }
     } catch (error) {
         console.log(error);
