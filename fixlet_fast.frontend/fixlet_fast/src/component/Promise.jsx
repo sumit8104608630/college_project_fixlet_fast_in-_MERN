@@ -5,7 +5,7 @@ import { FaCheck } from "react-icons/fa";
 
 function Promice() {
   return (
-    <div className='relative border-2 w-96 pt-2 px-5  border-b-black border-b-2 rounded-t'>
+    <div className='relative border-2 w-96 pt-2 px-5  border-b-black border-b-2 rounded'>
         <div className='w-full flex  flex-col'>
         <div> <img className='' src={quality}/></div>
         </div>

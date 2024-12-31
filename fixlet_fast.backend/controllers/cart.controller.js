@@ -209,7 +209,8 @@ const get_all_cart_services = asyncHandler(async (req, res) => {
                   subService:"$products.subServices" // Include the subServices details
                   },
                 },
-                totalService:{$sum:1}
+                totalService:{$sum:1},
+                totalPrice:{$sum:"$products.subServices.totalPrice"}
               }
             }
           ]);

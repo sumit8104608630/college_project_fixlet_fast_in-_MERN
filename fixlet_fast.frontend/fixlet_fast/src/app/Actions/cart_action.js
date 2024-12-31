@@ -19,7 +19,7 @@ export const fetchCart=createAsyncThunk(
             const errorData = await response.json();
             return rejectWithValue(errorData.message || "Failed to fetch cart");
           }
-        if(!data){
+        if(!data.data){
             return []
         }
         return data.data;

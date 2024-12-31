@@ -18,6 +18,7 @@ const cartSlice=createSlice({
         builder
         .addCase(fetchCart.pending,(state)=>{
             state.cartLoading=true;
+            state.cartItems=[];
             state.cartError=null;
         })
         .addCase(fetchCart.fulfilled,(state,action)=>{
@@ -27,6 +28,7 @@ const cartSlice=createSlice({
         })
         .addCase(fetchCart.rejected,(state,action)=>{
             state.cartLoading=false;
+            state.cartError=[];
             state.cartError=action.payload;
         })
     }

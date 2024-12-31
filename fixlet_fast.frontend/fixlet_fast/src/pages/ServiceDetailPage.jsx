@@ -8,9 +8,11 @@ import {useSelector,useDispatch} from "react-redux"
 import { fetchService } from '../app/Actions/service_action';
 import {useLocation} from "react-router-dom"
 import Loader from "../component/Loader"
-import Promice from '../component/Promise';
+import Promise from '../component/Promise';
 import {fetchCart}from "../app/Actions/cart_action.js"
 import AddButton from '../component/AddButton.jsx';
+import Cart from '../component/Cart.jsx';
+import emptyCart from "../assets/staticPhotp/emptyCart.svg"
 
 function ServiceDetailPage(props) {
   const {cartLoading,cartItems,cartError}=useSelector((state)=>state.cart);
@@ -34,7 +36,7 @@ function ServiceDetailPage(props) {
 
   useEffect(()=>{
     const cart_item=cartItems?.filter(item=>item._id===categories) 
-    setFilter_cartItems(cart_item[0]?.productDetails);
+    setFilter_cartItems(cart_item[0]?.productDetails||[]);
 
   },[cartItems,categories])
 
@@ -50,37 +52,67 @@ function ServiceDetailPage(props) {
   },[dispatch])
   // let's add the add button functionality 
 
-  const handleAddServices=async(serviceId,subServiceId)=>{
-
-      // let's add the logic here to add the service to the user's cart
-      const obj={
-        serviceId:serviceId,
-        subServiceId:subServiceId,
+    
+      const handleAddServices=async(serviceId,subServiceId)=>{
+          // let's add the logic here to add the service to the user's cart
+try {
+            const obj={
+              serviceId:serviceId,
+              subServiceId:subServiceId,
+            }
+      
+            const response=await fetch(`http://localhost:8000/cart/cart_of_service`,{
+              method:"POST",
+              headers:{
+                "Content-Type":"application/json",
+              },
+              body:JSON.stringify(obj),
+              credentials:"include"
+            });
+            dispatch(fetchCart());
+} catch (error) {
+  console.log(error);
+}
       }
 
-      const response=await fetch(`http://localhost:8000/cart/cart_of_service`,{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json",
-        },
-        body:JSON.stringify(obj),
-        credentials:"include"
-      });
-      dispatch(fetchCart());
+
+        const handleSubServices=async(serviceId,subServiceId)=>{
+      
+  try {
+            // let's add the logic here to add the service to the user's cart
+            const obj={
+              serviceId:serviceId,
+              subServiceId:subServiceId,
+            }
+      
+            const response=await fetch(`http://localhost:8000/cart/reduce_service_cart`,{
+              method:"POST",
+              headers:{
+                "Content-Type":"application/json",
+              },
+              body:JSON.stringify(obj),
+              credentials:"include"
+            });
+            dispatch(fetchCart());
+  } catch (error) {
+      console.log(error);
   }
+  }
+
 
  
 
 
 
   return (<>{isLoading&&loading&&cartItems?<Loader/>:
-    <div className="gap-5 justify-center mt-20 flex">
+    <div className=' flex w-full justify-center'>
+    <div className="gap-5 justify-around w-4/5  mt-20 flex">
       <div className="h-min sticky top-24">
-        <h1 className="text-3xl font-semibold w-96 mt-5 text-gray-700 mb-5">{headLine}</h1>
-        {services_data.length<=1&&!loading?<div><Promice/></div>:
+        <h1 className="text-3xl font-semibold  mt-5 text-gray-700 mb-5">{headLine}</h1>
+        {services_data.length<=1&&!loading?<div><Promise/></div>:
 
         <div
-          className={`grid h-max w-max grid-cols-${Math.ceil(services_data.length<=2 ? 2 :services_data.length / 2)} gap-5 border-2 p-5 rounded`}
+          className={`grid h-max w-max grid-cols-${Math.ceil(services_data.length<=2 ? 2 :services_data.length / 2)} gap-5 border-2 p-5 rounded-lg`}
           style={{gridTemplateColumns:`repeat(${Math.ceil(services_data.length<=2 ? 2 :services_data.length / 2)}, 1fr)`}}
         >
           {services_data.map((service) =>(
@@ -111,7 +143,7 @@ function ServiceDetailPage(props) {
       </div>
 
       <div className="scrollbar-thin scrollbar-none scrollbar-track-gray-200">
-        <div  className="flex flex-col border-2 rounded w-96 px-5">
+        <div  className="flex flex-col border-2 rounded  px-5">
           {services_data.map((service) => (
             <div id={service.servicePartName} className="py-5" key={service._id}>
               <h1 className="text-gray-700 text-start text-2xl font-bold">{service.serviceName}</h1>
@@ -148,7 +180,7 @@ function ServiceDetailPage(props) {
                     <div>
                       {filter_cartItems?.some((item)=>item.serviceId===service._id&&item.subService.subServiceId===subService._id) ? (
       <div key={subService._id}>
-      {filter_cartItems?.map((item,i)=><AddButton key={i} service={item?.serviceId} subService_id={subService._id} service_id={service._id} subService ={item?.subService}/>)}
+      {filter_cartItems?.map((item,i)=><AddButton onClickAdd={handleAddServices} onClickSubtract={handleSubServices} key={i} service={item?.serviceId} subService_id={subService._id} service_id={service._id} subService ={item?.subService}/>)}
     </div>
     ) : (
       <button
@@ -173,8 +205,43 @@ function ServiceDetailPage(props) {
         </div>
       </div>
 
-      <div className="w-96 h-min sticky top-24 border"></div>
-    </div>}</>
+
+<div className='w-96 h-min flex flex-col  gap-3 sticky top-24 '>
+  <div>{filter_cartItems.length>0?
+  <div className='border-2 flex flex-col gap-2 rounded-lg p-2'>
+  <h1 className='text-xl font-semibold px-2 mb-2 text-gray-700'>Cart</h1>
+  <div className="cart-container flex flex-col gap-2 scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-gray-100 scrollbar-thumb-rounded" style={{ maxHeight: '155px', overflowY: 'auto' }}>
+  {filter_cartItems?.map((service)=>
+  <div className='' key={service.subService.subServiceId}>
+          <Cart onClickSubtract={handleSubServices} onClickAdd={handleAddServices}  subServiceName={service.subService.subServiceName} serviceId={service.serviceId} totalPrice={service.subService.totalPrice} quantity={service.subService.quantity} subServiceId={service.subService.subServiceId}  />
+  </div>)
+}
+</div>
+<hr className='bg-gray-500 h-0.5 my-2'/>
+<div>
+  <button className='flex justify-between w-full px-5 py-2 hover:bg-orange-600 bg-orange-500 rounded text-white font-semibold text-lg'>
+    <span className='flex items-center'><FaIndianRupeeSign  />{cartItems?.filter((services)=>services._id===categories)[0]?.totalPrice}</span>
+    <span>View Cart</span>
+  </button>
+</div>
+</div>
+:
+<div className='flex justify-between border-2 items-center px-5 pt-3 border-b-1 border-b-black rounded'>
+  <h1 className='text-lg font-medium text-gray-600'>No item in your cart</h1>
+  <div>
+  <img className='w-36' src={emptyCart} />
+  </div>
+
+  </div>}
+</div>
+<div>
+{services_data.length>=1&&!loading&&<div><Promise/></div>}
+</div>
+</div>
+</div>
+</div>
+    
+    }</>
   );
 }
 

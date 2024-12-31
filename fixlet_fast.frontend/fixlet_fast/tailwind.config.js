@@ -18,6 +18,6 @@ export default {
     },
   },
   plugins: [
-    require('tailwind-scrollbar'), // Scrollbar plugin
+    require('tailwind-scrollbar'), // Make sure the plugin is installed and included
   ],
 };
