@@ -46,13 +46,24 @@ function ServiceDetailPage(props) {
     dispatch(fetchCart());
   }, [dispatch]);
 
-  const handleAddServices = async (serviceId, subServiceId) => {
+
+
+  // lets create update filter_cartItems by add button and subtract button
+  const update_cart=(serviceId,subServiceId,subService,quantity,price)=>{
+    console.log(serviceId,subServiceId,subService,quantity,price);
+  }
+
+
+
+
+
+  const handleAddServices = async (serviceId, subServiceId,subService,price) => {
     try {
       const obj = {
         serviceId: serviceId,
         subServiceId: subServiceId,
       };
-
+      update_cart(serviceId,subServiceId,subService,1,price);
       const response = await fetch(`http://localhost:8000/cart/cart_of_service`, {
         method: "POST",
         headers: {
@@ -61,7 +72,6 @@ function ServiceDetailPage(props) {
         body: JSON.stringify(obj),
         credentials: "include",
       });
-      dispatch(fetchCart());
     } catch (error) {
       console.log(error);
     }
@@ -82,7 +92,6 @@ function ServiceDetailPage(props) {
         body: JSON.stringify(obj),
         credentials: "include",
       });
-      dispatch(fetchCart());
     } catch (error) {
       console.log(error);
     }
@@ -185,7 +194,7 @@ function ServiceDetailPage(props) {
                                 </div>
                               ) : (
                                 <button
-                                  onClick={() => handleAddServices(service._id, subService._id)}
+                                  onClick={() => handleAddServices(service._id, subService._id,subService,subService.price)}
                                   className="text-orange-500 border px-5 w-15 rounded text-sm border-orange-400 mt-2 hover:bg-orange-100 font-semibold hover:border-orange-600 hover:text-orange-600"
                                 >
                                   Add
