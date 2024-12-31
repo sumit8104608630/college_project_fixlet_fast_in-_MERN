@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-scroll'; // Importing Link from react-scroll
 import { FaStar } from "react-icons/fa";
 import { FaIndianRupeeSign } from "react-icons/fa6";
@@ -46,7 +46,7 @@ function ServiceDetailPage(props) {
     dispatch(fetchCart());
   }, [dispatch]);
 
-  const handleAddServices = useCallback(async (serviceId, subServiceId) => {
+  const handleAddServices = async (serviceId, subServiceId) => {
     try {
       const obj = {
         serviceId: serviceId,
@@ -65,9 +65,9 @@ function ServiceDetailPage(props) {
     } catch (error) {
       console.log(error);
     }
-  }, [dispatch]);
+  };
 
-  const handleSubServices = useCallback(async (serviceId, subServiceId) => {
+  const handleSubServices = async (serviceId, subServiceId) => {
     try {
       const obj = {
         serviceId: serviceId,
@@ -86,7 +86,7 @@ function ServiceDetailPage(props) {
     } catch (error) {
       console.log(error);
     }
-  }, [dispatch]);
+  };
 
   return (
     <>

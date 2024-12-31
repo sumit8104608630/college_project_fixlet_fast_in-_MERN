@@ -14,7 +14,7 @@ function Cart(props) {
         <div><span>{subServiceName}</span></div>
         <div>
             <div>    
-                <span className='flex justify-center items-center'><FaIndianRupeeSign/> {totalPrice}</span>
+                <span className='flex justify-center items-center'><FaIndianRupeeSign  /> {totalPrice}</span>
             </div>
             <div className={`flex items-center w-20 border bg-orange-100 border-orange-500 rounded mt-2 justify-between`}>
                 <button  onClick={() => onClickAdd(serviceId, subServiceId)} className="text-sm font-semibold text-orange-500 hover:bg-orange-300 hover:text-white px-2">+</button>
