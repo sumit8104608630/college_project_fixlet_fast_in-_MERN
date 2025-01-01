@@ -46,24 +46,49 @@ function ServiceDetailPage(props) {
     dispatch(fetchCart());
   }, [dispatch]);
 
-
+console.log(services_data)
 
   // lets create update filter_cartItems by add button and subtract button
-  const update_cart=(serviceId,subServiceId,subService,quantity,price)=>{
-    console.log(serviceId,subServiceId,subService,quantity,price);
+  const update_cart=(serviceId,subServiceId,subService,quantity)=>{
+    console.log(serviceId,subServiceId,subService,quantity);
+    const new_cart=services_data?.filter(((item)=>{
+      if(item._id===serviceId){
+        return item;
+      }
+  }))
+  const filter_subService=new_cart[0]?.serviceSubType?.filter(item=>item._id===subServiceId);
+
+if(filter_cartItems.length>0){
+
+  
+setFilter_cartItems((prev)=>
+  prev?.map((item)=>{
+    if(item.serviceId===serviceId&&subServiceId===item.subService.subServiceId){
+      console.log(item)
+      return{...item,subService:{...item.subService,quantity:item.subService.quantity+quantity,totalPrice:(item.subService.totalPrice/item.subService.quantity)*(item.subService.quantity+quantity)}}
+}
+  
+return item;
+  }));
+
+}
+
+else{
+  console.log("sumit")
+}
+
   }
 
+  console.log(filter_cartItems)
 
 
-
-
-  const handleAddServices = async (serviceId, subServiceId,subService,price) => {
+  const handleAddServices = async (serviceId,subServiceId,subService) => {
     try {
       const obj = {
         serviceId: serviceId,
         subServiceId: subServiceId,
       };
-      update_cart(serviceId,subServiceId,subService,1,price);
+      update_cart(serviceId,subServiceId,subService,1);
       const response = await fetch(`http://localhost:8000/cart/cart_of_service`, {
         method: "POST",
         headers: {
@@ -77,12 +102,13 @@ function ServiceDetailPage(props) {
     }
   };
 
-  const handleSubServices = async (serviceId, subServiceId) => {
+  const handleSubServices = async (serviceId, subServiceId,subService) => {
     try {
       const obj = {
         serviceId: serviceId,
         subServiceId: subServiceId,
       };
+      update_cart(serviceId,subServiceId,subService,-1);
 
       const response = await fetch(`http://localhost:8000/cart/reduce_service_cart`, {
         method: "POST",
@@ -183,6 +209,8 @@ function ServiceDetailPage(props) {
                                   {filter_cartItems?.map((item, i) => (
                                     <MemoizedButton
                                       onClickAdd={handleAddServices}
+                                      price={subService.price}
+                                      subservice={subService}
                                       onClickSubtract={handleSubServices}
                                       key={i}
                                       service={item?.serviceId}
@@ -213,7 +241,7 @@ function ServiceDetailPage(props) {
 
             <div className='w-96 h-min flex flex-col gap-3 sticky top-24'>
               <div>
-                {filter_cartItems.length > 0 ? (
+                {filter_cartItems?.length > 0 ? (
                   <div className='border-2 flex flex-col gap-2 rounded-lg p-2'>
                     <h1 className='text-xl font-semibold px-2 mb-2 text-gray-700'>Cart</h1>
                     <div className="cart-container flex flex-col gap-2 scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-gray-100 scrollbar-thumb-rounded" style={{ maxHeight: '155px', overflowY: 'auto' }}>
