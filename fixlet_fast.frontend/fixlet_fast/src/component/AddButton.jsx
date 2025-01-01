@@ -14,7 +14,6 @@ function AddButton(props) {
     const price=props.price
     const subservice=props.subservice;
 
-console.log(props)
 
     
      

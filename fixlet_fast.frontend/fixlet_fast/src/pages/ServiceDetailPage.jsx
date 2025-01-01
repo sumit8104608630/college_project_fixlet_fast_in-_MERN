@@ -50,45 +50,90 @@ console.log(services_data)
 
   // lets create update filter_cartItems by add button and subtract button
   const update_cart=(serviceId,subServiceId,subService,quantity)=>{
-    console.log(serviceId,subServiceId,subService,quantity);
-    const new_cart=services_data?.filter(((item)=>{
-      if(item._id===serviceId){
-        return item;
-      }
-  }))
-  const filter_subService=new_cart[0]?.serviceSubType?.filter(item=>item._id===subServiceId);
+  
+  const filterCart=filter_cartItems.filter(item=>item.serviceId==serviceId&&item.subService.subServiceId==subServiceId);
+  const obj_inside=filterCart.length>0?{...filterCart[0]}:{} 
 
-if(filter_cartItems.length>0){
-
+  if(obj_inside.subService.quantity)
   
 setFilter_cartItems((prev)=>
   prev?.map((item)=>{
     if(item.serviceId===serviceId&&subServiceId===item.subService.subServiceId){
       console.log(item)
       return{...item,subService:{...item.subService,quantity:item.subService.quantity+quantity,totalPrice:(item.subService.totalPrice/item.subService.quantity)*(item.subService.quantity+quantity)}}
+   
 }
-  
+
 return item;
   }));
-
 }
+console.log(filter_cartItems)
 
-else{
-  console.log("sumit")
-}
 
+
+
+const update_addObj=(serviceId,subServiceId,subService,quantity)=>{
+  const new_cart=services_data?.filter(((item)=>{
+    if(item._id===serviceId){
+      return item;
+    }
+}))
+const filter_subService=new_cart[0]?.serviceSubType?.filter(item=>item._id===subServiceId);
+const new_obj={
+  serviceName:"",
+  serviceId:serviceId,
+  subService:{
+    _id:"",
+    subServiceName:filter_subService[0]?.subServiceName,
+    subServiceImage:filter_subService[0]?.subServiceImage,
+    subServiceId:subServiceId,
+    quantity:quantity,
+    note:filter_subService[0]?.note,
+    included:filter_subService[0]?.included,
+    totalPrice:filter_subService[0]?.price
   }
+}
+setFilter_cartItems((prev) => {
+  const existingItem = prev.find((item) => item.serviceId === serviceId && item.subService.subServiceId === subServiceId);
+  if (existingItem) {
+    // Item exists, so we update the quantity and price
+    return prev.map((item) => {
+      if (item.serviceId === serviceId && item.subService.subServiceId === subServiceId) {
+        return {
+          ...item,
+          subService: {
+            ...item.subService,
+            quantity: item.subService.quantity,
+            totalPrice: item.subService.totalPrice * (item.subService.quantity + quantity) / item.subService.quantity
+          }
+        };
+      }
+      return item;
+    });
+  } else {
+    // Item doesn't exist, so we add it
+    return [...prev, new_obj];
+  }
+});
+}
 
-  console.log(filter_cartItems)
+const remove_obj=(serviceId,subServiceId,subService,quantity)=>{
+  const filterCart=filter_cartItems.filter(item=>item.serviceId==serviceId&&item.subService.subServiceId==subServiceId);
+  const obj_inside=filterCart.length>0?{...filterCart[0]}:{} 
+
+  setFilter_cartItems((prev)=>(
+    prev.filter(item=>item.serviceId!==serviceId||item.subService.subServiceId!==subServiceId)
+  ))
+}
 
 
   const handleAddServices = async (serviceId,subServiceId,subService) => {
     try {
+
       const obj = {
         serviceId: serviceId,
         subServiceId: subServiceId,
       };
-      update_cart(serviceId,subServiceId,subService,1);
       const response = await fetch(`http://localhost:8000/cart/cart_of_service`, {
         method: "POST",
         headers: {
@@ -97,6 +142,28 @@ else{
         body: JSON.stringify(obj),
         credentials: "include",
       });
+
+const filterCart=filter_cartItems.filter(item=>item.serviceId==serviceId&&item.subService.subServiceId==subServiceId);
+const obj_inside=filterCart.length>0?{...filterCart[0]}:{} 
+function isEmpty(obj_inside) {
+  return Object.keys(obj_inside).length === 0;
+}
+      if(isEmpty(obj_inside)){
+        return  update_addObj(serviceId,subServiceId,subService,1)
+      }
+      if(!isEmpty(obj_inside)&&obj_inside.subService.quantity>=1){
+        return update_cart(serviceId,subServiceId,subService,1);
+      }
+    
+
+
+      const new_cart=services_data?.filter(((item)=>{
+        if(item._id===serviceId){
+          return item;
+        }
+    }))
+    
+
     } catch (error) {
       console.log(error);
     }
@@ -108,7 +175,6 @@ else{
         serviceId: serviceId,
         subServiceId: subServiceId,
       };
-      update_cart(serviceId,subServiceId,subService,-1);
 
       const response = await fetch(`http://localhost:8000/cart/reduce_service_cart`, {
         method: "POST",
@@ -118,6 +184,19 @@ else{
         body: JSON.stringify(obj),
         credentials: "include",
       });
+
+const filterCart=filter_cartItems.filter(item=>item.serviceId==serviceId&&item.subService.subServiceId==subServiceId);
+const obj_inside=filterCart.length>0?{...filterCart[0]}:{} 
+function isEmpty(obj_inside) {
+  return Object.keys(obj_inside).length === 0;
+}
+
+      if(!isEmpty(obj_inside)&&obj_inside.subService.quantity>1){
+       return update_cart(serviceId,subServiceId,subService,-1);
+      }
+      else{
+      return  remove_obj(serviceId,subServiceId,subService)      }
+
     } catch (error) {
       console.log(error);
     }
