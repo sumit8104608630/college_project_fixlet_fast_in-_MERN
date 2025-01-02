@@ -16,12 +16,11 @@ const cartSchema=mongoose.Schema({
             index:true
         },
         serviceType: {
-            type: String,
-            required: true,
-            unique:true,
-            index: true,
-          },
-        serviceName: {
+          type: String,
+          required: [true, "Service Type is required"],
+        },
+      
+        serviceName: {  
             type: String,
             required: true,
           },
@@ -40,7 +39,8 @@ const cartSchema=mongoose.Schema({
                 required:true
               },
               serviceTime:{
-        
+                type: Number,
+                required: true,
               },
 
               included: {

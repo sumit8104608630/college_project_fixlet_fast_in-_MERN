@@ -8,6 +8,7 @@ const Cart=require("../model/cart.model.js");
 const Service=require("../model/service.model.js");
 const User =require("../model/user.model.js") 
 // Improved error handling using ApiResponse
+
 const add_service_to_cart = asyncHandler(async (req, res) => {
     try {
         const userId = req.user._id;
@@ -18,18 +19,23 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
         if (!user) return res.status(400).json(new ApiResponse(400, "User not found"));
 
         const service = await Service.findById(serviceId);
-        if (!service) return res.status(400).json(new ApiResponse(400, "Service not found"));
+        if (!service) return res.status(400).json(new ApiResponse(400, "Service not found")); 
+
+        if (!service.serviceType) {
+            return res.status(400).json(new ApiResponse(400, "Service Type is missing"));
+        }
+        console.log(service)
 
         const currentSubService = service.serviceSubType.find(sub => sub._id.toString() === subServiceId.toString());
         if (!currentSubService) return res.status(400).json(new ApiResponse(400, "Sub-service not found"));
 
         let cart = await Cart.findOne({ userId });
         if (cart) {
-            const serviceIndex = cart.products.findIndex(product => product.serviceId.toString() === serviceId.toString());
+            const serviceIndex = cart.products.findIndex(product => product.serviceId.equals(serviceId));
             if (serviceIndex !== -1) {
                 const serviceInCart = cart.products[serviceIndex];
                 const subServiceIndex = serviceInCart.subServices.findIndex(sub => sub.subServiceId.toString() === subServiceId.toString());
-
+ 
                 if (subServiceIndex !== -1) {
                     const subService = serviceInCart.subServices[subServiceIndex];
                     subService.quantity += quantity;
@@ -39,6 +45,7 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
                         subServiceId,
                         subServiceName: currentSubService.subServiceName,
                         subServiceImage: currentSubService.subServiceImage,
+                        serviceTime:currentSubService.serviceTime,
                         included: currentSubService.included,
                         note: currentSubService.note,
                         quantity,
@@ -58,6 +65,7 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
                         subServiceId,
                         subServiceName: currentSubService.subServiceName,
                         subServiceImage: currentSubService.subServiceImage,
+                        serviceTime:currentSubService.serviceTime,
                         included: currentSubService.included,
                         note: currentSubService.note,
                         quantity,
@@ -81,6 +89,7 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
                         subServiceId,
                         subServiceName: currentSubService.subServiceName,
                         subServiceImage: currentSubService.subServiceImage,
+                        serviceTime:currentSubService.serviceTime,
                         included: currentSubService.included,
                         note: currentSubService.note,
                         quantity,
@@ -185,6 +194,7 @@ const get_all_cart_services = asyncHandler(async (req, res) => {
         // let make better array of object for frontend for rendering the cart and handling  using aggregation pipeline 
 
         const group_cart = await Cart.aggregate([
+            { $match: { userId: userId } },
             { $unwind: "$products" },  // Unwind the products array
             { $unwind: "$products.subServices" },  // Unwind the subServices array inside each product
             {
