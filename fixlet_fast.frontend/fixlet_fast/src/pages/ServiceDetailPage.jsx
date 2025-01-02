@@ -91,12 +91,7 @@ const update_addObj=(serviceId,subServiceId,subService,quantity,price)=>{
     }
 }))
 
-setCartItems((prev)=>prev.map((item)=>{
-  if( item._id === categories){
-    return{...item,totalPrice:item.totalPrice+price}
-  }
-  return item
-}))
+
 
 const filter_subService=new_cart[0]?.serviceSubType?.filter(item=>item._id===subServiceId);
 const new_obj={
@@ -136,7 +131,14 @@ setFilter_cartItems((prev) => {
   }
 });
 
-
+if(cartItems.length>0){
+  setCartItems((prev)=>prev.map((item)=>{
+    if( item._id === categories){
+      return{...item,totalPrice:price}
+    }
+    return item
+  }))
+  }
 
 
 }
@@ -150,7 +152,6 @@ const remove_obj=(serviceId,subServiceId,price)=>{
   setFilter_cartItems((prev)=>(
     prev.filter(item=>item.serviceId!==serviceId||item.subService.subServiceId!==subServiceId)
   ))
-
   setCartItems((prev) => 
     prev.map((item) => {
       if (item._id === categories) {
