@@ -24,7 +24,6 @@ function ServiceDetailPage(props) {
   const [active, setActive] = useState(null);
   const [searchParams] = useSearchParams();
   const [filter_cartItems, setFilter_cartItems] = useState([]);
-
   const city = searchParams.get('city') || "mumbai";
   const categories = searchParams.get('categories');
   const state = userInfo?.state;
@@ -36,38 +35,33 @@ function ServiceDetailPage(props) {
     setFilter_cartItems(cart_item[0]?.productDetails || []);
   }, [cartItems, categories]);
 
+
   useEffect(() => {
     if (state && city && categories) {
       dispatch(fetchService({ state, city, categories }));
     }
   }, [city, state, categories, dispatch]);
 
+
   useEffect(() => {
     dispatch(fetchCart());
   }, [dispatch]);
 
-console.log(services_data)
+
 
   // lets create update filter_cartItems by add button and subtract button
   const update_cart=(serviceId,subServiceId,subService,quantity)=>{
-  
   const filterCart=filter_cartItems.filter(item=>item.serviceId==serviceId&&item.subService.subServiceId==subServiceId);
   const obj_inside=filterCart.length>0?{...filterCart[0]}:{} 
-
   if(obj_inside.subService.quantity)
-  
 setFilter_cartItems((prev)=>
   prev?.map((item)=>{
     if(item.serviceId===serviceId&&subServiceId===item.subService.subServiceId){
-      console.log(item)
       return{...item,subService:{...item.subService,quantity:item.subService.quantity+quantity,totalPrice:(item.subService.totalPrice/item.subService.quantity)*(item.subService.quantity+quantity)}}
-   
 }
-
 return item;
   }));
 }
-console.log(filter_cartItems)
 
 
 
@@ -117,10 +111,12 @@ setFilter_cartItems((prev) => {
 });
 }
 
-const remove_obj=(serviceId,subServiceId,subService,quantity)=>{
+
+
+
+const remove_obj=(serviceId,subServiceId)=>{
   const filterCart=filter_cartItems.filter(item=>item.serviceId==serviceId&&item.subService.subServiceId==subServiceId);
   const obj_inside=filterCart.length>0?{...filterCart[0]}:{} 
-
   setFilter_cartItems((prev)=>(
     prev.filter(item=>item.serviceId!==serviceId||item.subService.subServiceId!==subServiceId)
   ))
@@ -129,7 +125,6 @@ const remove_obj=(serviceId,subServiceId,subService,quantity)=>{
 
   const handleAddServices = async (serviceId,subServiceId,subService) => {
     try {
-
       const obj = {
         serviceId: serviceId,
         subServiceId: subServiceId,
@@ -142,7 +137,6 @@ const remove_obj=(serviceId,subServiceId,subService,quantity)=>{
         body: JSON.stringify(obj),
         credentials: "include",
       });
-
 const filterCart=filter_cartItems.filter(item=>item.serviceId==serviceId&&item.subService.subServiceId==subServiceId);
 const obj_inside=filterCart.length>0?{...filterCart[0]}:{} 
 function isEmpty(obj_inside) {
@@ -154,20 +148,17 @@ function isEmpty(obj_inside) {
       if(!isEmpty(obj_inside)&&obj_inside.subService.quantity>=1){
         return update_cart(serviceId,subServiceId,subService,1);
       }
-    
-
-
       const new_cart=services_data?.filter(((item)=>{
         if(item._id===serviceId){
           return item;
         }
     }))
-    
-
     } catch (error) {
       console.log(error);
     }
   };
+
+
 
   const handleSubServices = async (serviceId, subServiceId,subService) => {
     try {
@@ -184,23 +175,22 @@ function isEmpty(obj_inside) {
         body: JSON.stringify(obj),
         credentials: "include",
       });
-
 const filterCart=filter_cartItems.filter(item=>item.serviceId==serviceId&&item.subService.subServiceId==subServiceId);
 const obj_inside=filterCart.length>0?{...filterCart[0]}:{} 
 function isEmpty(obj_inside) {
   return Object.keys(obj_inside).length === 0;
 }
-
       if(!isEmpty(obj_inside)&&obj_inside.subService.quantity>1){
        return update_cart(serviceId,subServiceId,subService,-1);
       }
       else{
-      return  remove_obj(serviceId,subServiceId,subService)      }
-
+      return  remove_obj(serviceId,subServiceId)      }
     } catch (error) {
       console.log(error);
     }
   };
+
+
 
   return (
     <>
@@ -324,7 +314,7 @@ function isEmpty(obj_inside) {
                   <div className='border-2 flex flex-col gap-2 rounded-lg p-2'>
                     <h1 className='text-xl font-semibold px-2 mb-2 text-gray-700'>Cart</h1>
                     <div className="cart-container flex flex-col gap-2 scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-gray-100 scrollbar-thumb-rounded" style={{ maxHeight: '155px', overflowY: 'auto' }}>
-                      {filter_cartItems?.map((service) =>
+                      {[...filter_cartItems].reverse().map((service) =>
                         <div key={service.subService.subServiceId}>
                           <CartMemo
                             onClickSubtract={handleSubServices}
