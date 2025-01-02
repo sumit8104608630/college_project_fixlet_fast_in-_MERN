@@ -194,21 +194,19 @@ const get_all_cart_services = asyncHandler(async (req, res) => {
         // let make better array of object for frontend for rendering the cart and handling  using aggregation pipeline 
 
         const group_cart = await Cart.aggregate([
-            { $match: { userId: userId } },
-            { $unwind: "$products" },  // Unwind the products array
-            { $unwind: "$products.subServices" },  // Unwind the subServices array inside each product
-            {
-              $group: {
-                _id: "$products.serviceType",  // Group by serviceType
+                {$match:{userId:userId}},
+                {$unwind:'$products'},
+                {$unwind:'$products.subServices'},
+                {$group:{
+                _id:'$products.serviceType',
                 productDetails: {  // Collect product details into an array
                   $push: {
-                    
-                  serviceName:"$products.serviceName",
-                  serviceId:"$products.serviceId",
-                  subService:"$products.subServices" // Include the subServices details
-                  },
+                    serviceName: "$products.serviceName",
+                    serviceId: "$products.serviceId",
+                    subService: "$products.subServices",
                 },
-                totalService:{$sum:1},
+            },
+                totalService:{ $sum:1 },
                 totalPrice:{$sum:"$products.subServices.totalPrice"}
               }
             }
