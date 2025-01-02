@@ -140,8 +140,6 @@ if(cartItems.length>0){
   }));
   }
   else{
-    console.log(price)
-    console.log(cartItems)
     setCartItems((prev)=>
       
         [...prev,{totalPrice:price}]
@@ -403,7 +401,7 @@ function isEmpty(obj_inside) {
                 )}
               </div>
               <div>
-                {services_data.length >= 1 && !loading && <div><Promise /></div>}
+                {services_data.length > 1 && !loading && <div><Promise /></div>}
               </div>
             </div>
           </div>
