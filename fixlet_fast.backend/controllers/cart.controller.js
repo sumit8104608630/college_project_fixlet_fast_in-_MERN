@@ -24,7 +24,6 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
         if (!service.serviceType) {
             return res.status(400).json(new ApiResponse(400, "Service Type is missing"));
         }
-        console.log(service)
 
         const currentSubService = service.serviceSubType.find(sub => sub._id.toString() === subServiceId.toString());
         if (!currentSubService) return res.status(400).json(new ApiResponse(400, "Sub-service not found"));

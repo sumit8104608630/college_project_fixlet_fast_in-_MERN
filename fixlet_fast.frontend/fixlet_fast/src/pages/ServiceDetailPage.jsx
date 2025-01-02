@@ -68,7 +68,7 @@ if(quantity===-1){
     if( item._id === categories){
       return{...item,totalPrice:item.totalPrice-price}
     }
-    return item
+    return {...item,totalPrice:item.totalPrice-price}
   }));
 }
 else{
@@ -76,7 +76,7 @@ else{
     if( item._id === categories){
       return{...item,totalPrice:item.totalPrice+price}
     }
-    return item
+    return {...item,totalPrice:item.totalPrice+price}
   }));
 }
 }
@@ -134,17 +134,17 @@ setFilter_cartItems((prev) => {
 if(cartItems.length>0){
   setCartItems((prev)=>prev.map((item)=>{
     if( item._id === categories){
-      return{...item,totalPrice:price}
+      return{...item,totalPrice:item.totalPrice+price}
     }
-    return item
-  }))
+    return {...item,totalPrice:item.totalPrice+price}
+  }));
   }
   else{
     console.log(price)
     console.log(cartItems)
     setCartItems((prev)=>
       
-        [{totalPrice:price}]
+        [...prev,{totalPrice:price}]
       
     
   )
@@ -163,10 +163,12 @@ const remove_obj=(serviceId,subServiceId,price)=>{
   setCartItems((prev) => 
     prev.map((item) => {
       if (item._id === categories) {
-        ;
+        
         return { ...item, totalPrice: item?.totalPrice - price };
       }
-      return item;
+      else{
+        return {...item,totalPrice:item?.totalPrice-price};
+      }
     })
   );
   
