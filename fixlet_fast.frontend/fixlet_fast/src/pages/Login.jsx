@@ -22,7 +22,6 @@ function Login() {
     email: "",
     password: "",
   });
-console.log(userInfo)
   const handleInput = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });

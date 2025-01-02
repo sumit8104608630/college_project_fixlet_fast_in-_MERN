@@ -15,7 +15,8 @@ import Cart from '../component/Cart.jsx';
 import emptyCart from "../assets/staticPhotp/emptyCart.svg";
 
 function ServiceDetailPage(props) {
-  const cartItems = useSelector((state) => state.cart.cartItems, shallowEqual);
+  const cart = useSelector((state) => state.cart.cartItems, shallowEqual);
+  const [cartItems,setCartItems]=useState([])
   const MemoizedButton = React.memo(AddButton);
   const CartMemo = React.memo(Cart);
   const { loading, services_data, error } = useSelector(state => state.service);
@@ -31,9 +32,10 @@ function ServiceDetailPage(props) {
   const { headLine } = location.state || {};
 
   useEffect(() => {
-    const cart_item = cartItems?.filter(item => item._id === categories);
+    setCartItems(cart)
+    const cart_item = cart?.filter(item => item._id === categories);
     setFilter_cartItems(cart_item[0]?.productDetails || []);
-  }, [cartItems, categories]);
+  }, [cart, categories]);
 
 
   useEffect(() => {
@@ -50,7 +52,7 @@ function ServiceDetailPage(props) {
 
 
   // lets create update filter_cartItems by add button and subtract button
-  const update_cart=(serviceId,subServiceId,subService,quantity)=>{
+  const update_cart=(serviceId,subServiceId,subService,quantity,price)=>{
   const filterCart=filter_cartItems.filter(item=>item.serviceId==serviceId&&item.subService.subServiceId==subServiceId);
   const obj_inside=filterCart.length>0?{...filterCart[0]}:{} 
   if(obj_inside.subService.quantity)
@@ -61,17 +63,41 @@ setFilter_cartItems((prev)=>
 }
 return item;
   }));
+if(quantity===-1){
+  setCartItems((prev)=>prev.map((item)=>{
+    if( item._id === categories){
+      return{...item,totalPrice:item.totalPrice-price}
+    }
+    return item
+  }));
+}
+else{
+  setCartItems((prev)=>prev.map((item)=>{
+    if( item._id === categories){
+      return{...item,totalPrice:item.totalPrice+price}
+    }
+    return item
+  }));
+}
 }
 
 
 
 
-const update_addObj=(serviceId,subServiceId,subService,quantity)=>{
+const update_addObj=(serviceId,subServiceId,subService,quantity,price)=>{
   const new_cart=services_data?.filter(((item)=>{
     if(item._id===serviceId){
       return item;
     }
 }))
+
+setCartItems((prev)=>prev.map((item)=>{
+  if( item._id === categories){
+    return{...item,totalPrice:item.totalPrice+price}
+  }
+  return item
+}))
+
 const filter_subService=new_cart[0]?.serviceSubType?.filter(item=>item._id===subServiceId);
 const new_obj={
   serviceName:"",
@@ -109,21 +135,36 @@ setFilter_cartItems((prev) => {
     return [...prev, new_obj];
   }
 });
+
+
+
+
 }
 
 
 
 
-const remove_obj=(serviceId,subServiceId)=>{
+const remove_obj=(serviceId,subServiceId,price)=>{
   const filterCart=filter_cartItems.filter(item=>item.serviceId==serviceId&&item.subService.subServiceId==subServiceId);
   const obj_inside=filterCart.length>0?{...filterCart[0]}:{} 
   setFilter_cartItems((prev)=>(
     prev.filter(item=>item.serviceId!==serviceId||item.subService.subServiceId!==subServiceId)
   ))
+
+  setCartItems((prev) => 
+    prev.map((item) => {
+      if (item._id === categories) {
+        ;
+        return { ...item, totalPrice: item?.totalPrice - price };
+      }
+      return item;
+    })
+  );
+  
 }
 
 
-  const handleAddServices = async (serviceId,subServiceId,subService) => {
+  const handleAddServices = async (serviceId,subServiceId,subService,price) => {
     try {
       const obj = {
         serviceId: serviceId,
@@ -143,10 +184,10 @@ function isEmpty(obj_inside) {
   return Object.keys(obj_inside).length === 0;
 }
       if(isEmpty(obj_inside)){
-        return  update_addObj(serviceId,subServiceId,subService,1)
+        return  update_addObj(serviceId,subServiceId,subService,1,price)
       }
       if(!isEmpty(obj_inside)&&obj_inside.subService.quantity>=1){
-        return update_cart(serviceId,subServiceId,subService,1);
+        return update_cart(serviceId,subServiceId,subService,1,price);
       }
       const new_cart=services_data?.filter(((item)=>{
         if(item._id===serviceId){
@@ -160,7 +201,7 @@ function isEmpty(obj_inside) {
 
 
 
-  const handleSubServices = async (serviceId, subServiceId,subService) => {
+  const handleSubServices = async (serviceId, subServiceId,subService,price) => {
     try {
       const obj = {
         serviceId: serviceId,
@@ -181,10 +222,11 @@ function isEmpty(obj_inside) {
   return Object.keys(obj_inside).length === 0;
 }
       if(!isEmpty(obj_inside)&&obj_inside.subService.quantity>1){
-       return update_cart(serviceId,subServiceId,subService,-1);
+       return update_cart(serviceId,subServiceId,subService,-1,price);
       }
       else{
-      return  remove_obj(serviceId,subServiceId)      }
+      return  remove_obj(serviceId,subServiceId,price)   
+       }
     } catch (error) {
       console.log(error);
     }
@@ -321,6 +363,7 @@ function isEmpty(obj_inside) {
                             onClickAdd={handleAddServices}
                             subServiceName={service.subService.subServiceName}
                             serviceId={service.serviceId}
+                            price={service.subService.totalPrice/service.subService.quantity}
                             totalPrice={service.subService.totalPrice}
                             quantity={service.subService.quantity}
                             subServiceId={service.subService.subServiceId}
