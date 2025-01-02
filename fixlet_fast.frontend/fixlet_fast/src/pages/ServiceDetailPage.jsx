@@ -16,7 +16,7 @@ import emptyCart from "../assets/staticPhotp/emptyCart.svg";
 
 function ServiceDetailPage(props) {
   const cart = useSelector((state) => state.cart.cartItems, shallowEqual);
-  const [cartItems,setCartItems]=useState([])
+  const [cartItems,setCartItems]=useState([{}])
   const MemoizedButton = React.memo(AddButton);
   const CartMemo = React.memo(Cart);
   const { loading, services_data, error } = useSelector(state => state.service);
@@ -139,8 +139,16 @@ if(cartItems.length>0){
     return item
   }))
   }
-
-
+  else{
+    console.log(price)
+    console.log(cartItems)
+    setCartItems((prev)=>
+      
+        [{totalPrice:price}]
+      
+    
+  )
+  }
 }
 
 
@@ -377,7 +385,7 @@ function isEmpty(obj_inside) {
                       <button className='flex justify-between w-full px-5 py-2 hover:bg-orange-600 bg-orange-500 rounded text-white font-semibold text-lg'>
                         <span className='flex items-center'>
                           <FaIndianRupeeSign />
-                          {cartItems?.filter((services) => services._id === categories)[0]?.totalPrice}
+                          {cartItems?.filter((services) => services._id === categories)[0]?.totalPrice||cartItems[0].totalPrice}
                         </span>
                         <span>View Cart</span>
                       </button>
