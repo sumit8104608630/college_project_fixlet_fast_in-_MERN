@@ -14,6 +14,8 @@ import AddButton from '../component/AddButton.jsx';
 import Cart from '../component/Cart.jsx';
 import emptyCart from "../assets/staticPhotp/emptyCart.svg";
 import ServiceDetail from './ServiceDetail.jsx';
+import { currentContext } from '../component/Context.jsx';
+import { useContext } from 'react';
 
 function ServiceDetailPage(props) {
   const cart = useSelector((state) => state.cart.cartItems, shallowEqual);
@@ -32,6 +34,7 @@ function ServiceDetailPage(props) {
   const location = useLocation();
   const { headLine } = location.state || {};
   const [showService,setShowService]=useState(false);
+  const Context=useContext(currentContext);
 
 
   // let's create the view detail functionality 
@@ -39,12 +42,18 @@ function ServiceDetailPage(props) {
     setShowService(true)
   }
 
+  useEffect(()=>{
+    Context.setCartShow(false)
+    return ()=>{
+      Context.setCartShow(true)
+    }
+  })
 
   useEffect(() => {
     setCartItems(cart)
     const cart_item = cart?.filter(item => item._id === categories);
     setFilter_cartItems(cart_item[0]?.productDetails || []);
-  }, [cart, categories]);
+  }, [cart, categories,Context]);
 
 
   useEffect(() => {

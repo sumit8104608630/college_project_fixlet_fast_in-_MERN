@@ -10,12 +10,14 @@ import { CgProfile } from "react-icons/cg";
 import { fetchUser } from '../app/Actions/user_action';
 import { FaShoppingCart } from "react-icons/fa";
 import {logout} from "../app/user.redux"
-import {fetchCart}from "../app/Actions/cart_action.js"
 import Loader from"../component/Loader.jsx"
+import { currentContext } from '../component/Context.jsx';
+import { useContext } from 'react';
+
 
 function Header() {
 const {cartLoading,cartItems,cartError}=useSelector((state)=>state.cart);
-
+const cartShow=useContext(currentContext)
 const [profileToggle,setProfileToggle]=useState(false)
 const dispatch=useDispatch();
 const [cartCount, setCartCount] = useState(); // Example cart count
@@ -31,6 +33,7 @@ window.addEventListener("scroll",()=>{
     }
 })
 
+console.log(cartShow)
 
 const handelLogout=()=>{
    axios.post('http://localhost:8000/user/user_logout',{},{
@@ -118,6 +121,7 @@ useEffect(()=>{
 }
 {userInfo?
 <div className='flex items-center gap-5'>
+  {cartShow.cartShow&&
 <div className="relative">
       <Link to="/cart">
         <FaShoppingCart size={25} className="text-white font-bold" />
@@ -128,6 +132,7 @@ useEffect(()=>{
         )}
       </Link>
     </div>
+}
   <div className='relative'>
     
   <button onClick={() => setProfileToggle(prev => !prev)}>

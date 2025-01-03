@@ -18,6 +18,7 @@ import About from './pages/About.jsx'
 import Native from './pages/Native.jsx'
 import store from './app/store.js'
 import Contact from './pages/Contact.jsx'
+import { ContextProvider } from './component/Context.jsx'
 
 
 const route=createBrowserRouter([
