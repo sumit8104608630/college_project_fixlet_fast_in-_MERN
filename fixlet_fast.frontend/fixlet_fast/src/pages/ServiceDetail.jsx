@@ -1,5 +1,4 @@
 import React from 'react'
-import json from "../component/fakejsonData.js"
 
 function ServiceDetail() {
 
@@ -7,7 +6,7 @@ function ServiceDetail() {
 
   return (
     <div>
-      
+      <h1 >serviceDetail</h1>
     </div>
   )
 }

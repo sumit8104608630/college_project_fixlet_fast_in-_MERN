@@ -13,6 +13,7 @@ import { fetchCart } from "../app/Actions/cart_action.js";
 import AddButton from '../component/AddButton.jsx';
 import Cart from '../component/Cart.jsx';
 import emptyCart from "../assets/staticPhotp/emptyCart.svg";
+import ServiceDetail from './ServiceDetail.jsx';
 
 function ServiceDetailPage(props) {
   const cart = useSelector((state) => state.cart.cartItems, shallowEqual);
@@ -30,6 +31,14 @@ function ServiceDetailPage(props) {
   const state = userInfo?.state;
   const location = useLocation();
   const { headLine } = location.state || {};
+  const [showService,setShowService]=useState(false);
+
+
+  // let's create the view detail functionality 
+  const handleViewDetail=()=>{
+    setShowService(true)
+  }
+
 
   useEffect(() => {
     setCartItems(cart)
@@ -313,7 +322,8 @@ function isEmpty(obj_inside) {
                               </div>
                             </div>
                             <div className="text-start">
-                              <button className="text-orange-500">View details</button>
+                              <button onClick={()=>handleViewDetail()} className="text-orange-500">View details</button>
+                              {showService&&<ServiceDetail/>}
                             </div>
                           </div>
 
