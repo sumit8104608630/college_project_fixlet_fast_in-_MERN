@@ -335,7 +335,7 @@ function isEmpty(obj_inside) {
                             </div>
                             <div className="text-start">
                               <button onClick={()=>handleViewDetail()} className="text-orange-500">View details</button>
-                              {showService&&<ServiceDetail/>}
+                              {showService&&<ServiceDetail service_id={service._id} subServiceId={subService._id} subservice={subService} />}
                             </div>
                           </div>
 
