@@ -1,7 +1,5 @@
 
 import React from 'react'
-import {useDispatch} from "react-redux"
-import { fetchCart } from '../app/Actions/cart_action';
 
 function AddButton(props) {
     const serviceId=props.service;

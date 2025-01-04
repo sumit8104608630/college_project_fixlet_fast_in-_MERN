@@ -47,7 +47,7 @@ function ServiceDetailPage(props) {
     return ()=>{
       Context.setCartShow(true)
     }
-  })
+  },[Context])
 
   useEffect(() => {
     setCartItems(cart)
@@ -81,12 +81,15 @@ setFilter_cartItems((prev)=>
 }
 return item;
   }));
+
+
+
+if(cartItems[0]._id===categories){
 if(quantity===-1){
   setCartItems((prev)=>prev.map((item)=>{
     if( item._id === categories){
       return{...item,totalPrice:item.totalPrice-price}
     }
-    return {...item,totalPrice:item.totalPrice-price}
   }));
 }
 else{
@@ -94,8 +97,8 @@ else{
     if( item._id === categories){
       return{...item,totalPrice:item.totalPrice+price}
     }
-    return {...item,totalPrice:item.totalPrice+price}
   }));
+}
 }
 }
 
@@ -108,8 +111,6 @@ const update_addObj=(serviceId,subServiceId,subService,quantity,price)=>{
       return item;
     }
 }))
-
-
 
 const filter_subService=new_cart[0]?.serviceSubType?.filter(item=>item._id===subServiceId);
 const new_obj={
@@ -149,22 +150,28 @@ setFilter_cartItems((prev) => {
   }
 });
 
+// console.log(cartItems)
+// console.log(price)
 if(cartItems.length>0){
+if(cartItems[0]._id===categories){
+
   setCartItems((prev)=>prev.map((item)=>{
     if( item._id === categories){
       return{...item,totalPrice:item.totalPrice+price}
     }
-    return {...item,totalPrice:item.totalPrice+price}
   }));
-  }
+}
   else{
     setCartItems((prev)=>
-      
-        [...prev,{totalPrice:price}]
-      
-    
+        [{_id:categories,totalPrice:+price}]
   )
   }
+}
+ else{
+  setCartItems((prev)=>
+    [{_id:categories,totalPrice:+price}]
+    )
+ }
 }
 
 
@@ -176,19 +183,15 @@ const remove_obj=(serviceId,subServiceId,price)=>{
   setFilter_cartItems((prev)=>(
     prev.filter(item=>item.serviceId!==serviceId||item.subService.subServiceId!==subServiceId)
   ))
-  setCartItems((prev) => 
-    prev.map((item) => {
-      if (item._id === categories) {
-        
-        return { ...item, totalPrice: item?.totalPrice - price };
-      }
-      else{
-        return {...item,totalPrice:item?.totalPrice-price};
-      }
-    })
-  );
-  
+  if(cartItems[0]._id===categories)
+{
+  setCartItems((prev)=>prev.map((item)=>{
+    if( item._id === categories){
+      return{...item,totalPrice:item.totalPrice-price}
+    }
+  }));
 }
+} 
 
 
   const handleAddServices = async (serviceId,subServiceId,subService,price) => {
@@ -404,7 +407,7 @@ function isEmpty(obj_inside) {
                       <button className='flex justify-between w-full px-5 py-2 hover:bg-orange-600 bg-orange-500 rounded text-white font-semibold text-lg'>
                         <span className='flex items-center'>
                           <FaIndianRupeeSign />
-                          {cartItems?.filter((services) => services._id === categories)[0]?.totalPrice||cartItems[0].totalPrice}
+                          {cartItems?.filter((services) => services._id === categories)[0]?.totalPrice}
                         </span>
                         <span>View Cart</span>
                       </button>
