@@ -269,7 +269,7 @@ function isEmpty(obj_inside) {
       {isLoading && loading && cartItems ? (
         <Loader />
       ) : (
-        <div className='flex w-full justify-center'>
+        <div className={`flex w-full justify-center `}>
           <div className="gap-5 justify-around w-4/5 mt-20 flex">
             <div className="h-min sticky top-24">
               <h1 className="text-3xl font-semibold mt-5 text-gray-700 mb-5">{headLine}</h1>
@@ -307,7 +307,7 @@ function isEmpty(obj_inside) {
               )}
             </div>
 
-            <div className="scrollbar-thin scrollbar-none scrollbar-track-gray-200">
+            <div className={`scrollbar-thin scrollbar-none  ${showService&&"overflow-hidden"}  scrollbar-track-gray-200`}>
               <div className="flex flex-col border-2 rounded px-5">
                 {services_data.map((service) => (
                   <div id={service.servicePartName} className="py-5" key={service._id}>
