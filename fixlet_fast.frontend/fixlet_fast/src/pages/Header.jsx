@@ -33,7 +33,6 @@ window.addEventListener("scroll",()=>{
     }
 })
 
-console.log(cartShow)
 
 const handelLogout=()=>{
    axios.post('http://localhost:8000/user/user_logout',{},{
@@ -106,13 +105,13 @@ useEffect(()=>{
           <div className='flex gap-5'>
 
             <div>
-            <NavLink className={({isActive})=>`${isActive?"text-orange-500 border-orange-500 border-2 font-semibold text-xl bg-white px-5 py-1 rounded":"text-white text-xl font-semibold border-2 px-5 py-1 rounded border-white"} hover:text-orange-500 hover:border-orange-500  hover:bg-white`} to={"/login"}>
+            <NavLink className={({isActive})=>`${isActive?"text-orange-500 border-orange-500 border-2 font-semibold text-xl bg-white px-5 py-1 rounded-full":"text-white text-xl font-semibold border-2 px-5 py-1 rounded-full border-white"} hover:text-orange-500 hover:border-orange-500  hover:bg-white`} to={"/login"}>
               Login
             </NavLink>
             </div>
 
             <div>
-            <NavLink className={({isActive})=>`${isActive?"text-orange-500 border-orange-500 font-semibold text-xl border-2 bg-white px-5 py-1 rounded":"text-white text-xl font-semibold border-2 px-5 py-1 rounded border-white"} hover:text-orange-500 hover:border-orange-500  hover:bg-white`} to={"/register"}>
+            <NavLink className={({isActive})=>`${isActive?"text-orange-500 border-orange-500 font-semibold text-xl border-2 bg-white px-5 py-1 rounded-full":"text-white text-xl font-semibold border-2 px-5 py-1 rounded-full border-white"} hover:text-orange-500 hover:border-orange-500  hover:bg-white`} to={"/register"}>
               Sign Up
             </NavLink>
             </div>

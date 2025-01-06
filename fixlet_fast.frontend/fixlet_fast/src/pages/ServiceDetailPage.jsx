@@ -16,6 +16,8 @@ import emptyCart from "../assets/staticPhotp/emptyCart.svg";
 import ServiceDetail from './ServiceDetail.jsx';
 import { currentContext } from '../component/Context.jsx';
 import { useContext } from 'react';
+import { IoCloseOutline } from "react-icons/io5";
+
 
 function ServiceDetailPage(props) {
   const cart = useSelector((state) => state.cart.cartItems, shallowEqual);
@@ -33,13 +35,14 @@ function ServiceDetailPage(props) {
   const state = userInfo?.state;
   const location = useLocation();
   const { headLine } = location.state || {};
-  const [showService,setShowService]=useState(false);
+  const [showService,setShowService]=useState(null);
   const Context=useContext(currentContext);
 
 
   // let's create the view detail functionality 
-  const handleViewDetail=()=>{
-    setShowService(true)
+  const handleViewDetail=(serviceId,subServiceId,subservice)=>{
+    setShowService({serviceId:serviceId,subServiceId:subServiceId,subservice})
+  return
   }
 
   useEffect(()=>{
@@ -113,6 +116,7 @@ const update_addObj=(serviceId,subServiceId,subService,quantity,price)=>{
 }))
 
 const filter_subService=new_cart[0]?.serviceSubType?.filter(item=>item._id===subServiceId);
+console.log(filter_subService)
 const new_obj={
   serviceName:"",
   serviceId:serviceId,
@@ -196,6 +200,7 @@ const remove_obj=(serviceId,subServiceId,price)=>{
 
   const handleAddServices = async (serviceId,subServiceId,subService,price) => {
     try {
+      console.log(serviceId)
       const obj = {
         serviceId: serviceId,
         subServiceId: subServiceId,
@@ -334,8 +339,13 @@ function isEmpty(obj_inside) {
                               </div>
                             </div>
                             <div className="text-start">
-                              <button onClick={()=>handleViewDetail()} className="text-orange-500">View details</button>
-                              {showService&&<ServiceDetail service_id={service._id} subServiceId={subService._id} subservice={subService} />}
+                              <button onClick={()=>handleViewDetail(service._id,subService._id,subService)} className="text-orange-500">View details</button>
+                              {showService&&<div className='fixed z-20 bg-black bg-opacity-5 left-0 top-0 justify-center items-center  flex flex-col  w-full h-screen '>
+                                <div className=' w-1/3  flex-col flex  items-end '>
+
+                                    <button  onClick={()=>setShowService(false)} className='bg-white rounded-full p-1 mb-2  translate-y-0'><IoCloseOutline size={20}/></button>
+                                  <div className='overflow-auto rounded-xl h-12/3 bg-white py-5'>
+                              <ServiceDetail  onSubButton={handleSubServices} onAddButton={handleAddServices}  filter_cartItems={filter_cartItems} dataDetail={showService} /></div></div></div>}
                             </div>
                           </div>
 
