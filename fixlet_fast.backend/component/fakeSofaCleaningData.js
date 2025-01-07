@@ -1,6 +1,7 @@
 const data = [
     {
       "serviceType": "sofaCleaning",
+      "serviceTypeName": "Sofa cleaning",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734765079/sofa_ay62bk.jpg",
       "serviceName": "Sofa Cleaning",
       "servicePartName": "Sofa",
@@ -58,6 +59,7 @@ const data = [
     },
     {
       "serviceType": "sofaCleaning",
+      "serviceTypeName": "Sofa cleaning",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734765076/carpeter_nsjklj.webp",
       "serviceName": "Carpet Cleaning",
       "servicePartName": "Carpet",
@@ -97,6 +99,7 @@ const data = [
     },
     {
       "serviceType": "sofaCleaning",
+      "serviceTypeName": "Sofa cleaning",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734766648/SingleMattress_qyrfpz.jpg",
       "serviceName": "Mattress Cleaning",
       "servicePartName": "Mattress",

@@ -1,6 +1,7 @@
 const acServiceData = [
     {
       "serviceType": "acservice",
+      "serviceTypeName": "Ac service",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734773822/acService_f0vcsg.webp",
       "serviceName": "AC Service",
       "servicePartName": "AC",
@@ -39,6 +40,7 @@ const acServiceData = [
     },
     {
       "serviceType": "acservice",
+      "serviceTypeName": "Ac service",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734773819/refil_gas__ptfup3.webp",
       "serviceName": "AC Repair & Gas Refill",
       "servicePartName": "Gas",
@@ -77,6 +79,7 @@ const acServiceData = [
     },
     {
       "serviceType": "acservice",
+      "serviceTypeName": "Ac service",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734773818/installation_apb8fs.webp",
       "serviceName": "AC Installation & Uninstallation",
       "servicePartName": "installation&uninstallation",

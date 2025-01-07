@@ -19,6 +19,10 @@ const cartSchema=mongoose.Schema({
           type: String,
           required: [true, "Service Type is required"],
         },
+        serviceTypeName:{
+          type:String,
+          required:[true,"Service Name is required"]
+        },
       
         serviceName: {  
             type: String,

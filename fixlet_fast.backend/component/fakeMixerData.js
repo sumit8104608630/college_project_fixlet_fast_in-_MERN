@@ -2,6 +2,7 @@ const mixerGrinderData = [
     // Mixer Grinder Repair
     {
       "serviceType": "mixergrinder",
+      "serviceTypeName": "Mixer Grinder",
       "serviceImage": "",
       "serviceName": "Mixer Grinder",
       "servicePartName": "Repair",

@@ -1,6 +1,7 @@
 const chimneyServiceData = [
     {
       "serviceType": "chimney",
+      "serviceTypeName": "Chimney cleaning",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734779086/chimneyCleaning.._z4gbec.webp",
       "serviceName": "Chimney Cleaning",
       "servicePartName": "Chimney",
@@ -30,6 +31,7 @@ const chimneyServiceData = [
     },
     {
       "serviceType": "chimney",
+      "serviceTypeName": "Chimney cleaning",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734779088/chimneyCleaning_apwzyw.webp",
       "serviceName": "Chimney Repair",
       "servicePartName": "Repair",
@@ -60,6 +62,7 @@ const chimneyServiceData = [
     },
     {
       "serviceType": "chimney",
+      "serviceTypeName": "Chimney cleaning",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734779084/chimneyInstallation_socey2.jpg",
       "serviceName": "Chimney Installation",
       "servicePartName": "Installation",

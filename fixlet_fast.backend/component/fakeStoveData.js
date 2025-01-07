@@ -1,6 +1,7 @@
 const forgasStoveData = [
     {
       "serviceType": "gasstoverepair",
+      "serviceTypeName": "Gas stove",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734782685/stoveRepair_mcmhbt.jpg",
       "serviceName": "Stove Cleaning",
       "servicePartName": "Cleaning",
@@ -30,6 +31,7 @@ const forgasStoveData = [
     },
     {
       "serviceType": "gasstoverepair",
+      "serviceTypeName": "Gas stove",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734782685/stoveRepair_mcmhbt.jpg",
       "serviceName": "Stove Repair",
       "servicePartName": "Repair",

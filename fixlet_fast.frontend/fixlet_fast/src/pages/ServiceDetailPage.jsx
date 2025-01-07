@@ -341,11 +341,15 @@ function isEmpty(obj_inside) {
                             <div className="text-start">
                               <button onClick={()=>handleViewDetail(service._id,subService._id,subService)} className="text-orange-500">View details</button>
                               {showService&&<div className='fixed z-20 bg-black bg-opacity-5 left-0 top-0 justify-center items-center  flex flex-col  w-full h-screen '>
-                                <div className=' w-1/3  flex-col flex  items-end '>
+                                <div  className=' w-1/3  flex-col flex  items-end '>
 
                                     <button  onClick={()=>setShowService(false)} className='bg-white rounded-full p-1 mb-2  translate-y-0'><IoCloseOutline size={20}/></button>
-                                  <div className='overflow-auto rounded-xl h-12/3 bg-white py-5'>
-                              <ServiceDetail  onSubButton={handleSubServices} onAddButton={handleAddServices}  filter_cartItems={filter_cartItems} dataDetail={showService} /></div></div></div>}
+
+                                  <div className=' w-full rounded-xl  custom-scrollbar  bg-white py-5'>
+                                    <div className="overflow-auto custom-scrollbar h-96">
+                              <ServiceDetail  onSubButton={handleSubServices} onAddButton={handleAddServices}  filter_cartItems={filter_cartItems} dataDetail={showService} /></div>
+                              </div>
+                              </div></div>}
                             </div>
                           </div>
 
@@ -396,7 +400,7 @@ function isEmpty(obj_inside) {
                 {filter_cartItems?.length > 0 ? (
                   <div className='border-2 flex flex-col gap-2 rounded-lg p-2'>
                     <h1 className='text-xl font-semibold px-2 mb-2 text-gray-700'>Cart</h1>
-                    <div className="cart-container flex flex-col gap-2 scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-gray-100 scrollbar-thumb-rounded" style={{ maxHeight: '155px', overflowY: 'auto' }}>
+                    <div className="cart-container flex flex-col gap-2 custom-cartScroll  " style={{ maxHeight: '155px', overflowY: 'auto' }}>
                       {[...filter_cartItems].reverse().map((service) =>
                         <div key={service.subService.subServiceId}>
                           <CartMemo

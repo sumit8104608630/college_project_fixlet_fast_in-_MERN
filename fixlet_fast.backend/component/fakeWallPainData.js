@@ -1,6 +1,7 @@
 const wallPaintingData = [
     {
       "serviceType": "wallpainting",
+      "serviceTypeName": "Panting & Water proofing",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734856481/subfullhome_qvsd5o.jpg",
       "serviceName": "Full Home Painting",
       "servicePartName": "full",
@@ -44,6 +45,7 @@ const wallPaintingData = [
     },
     {
       "serviceType": "wallpainting",
+      "serviceTypeName": "Panting & Water proofing",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734856479/subwall_fhqdio.jpg",
       "serviceName": "Room Wall Painting",
       "servicePartName": "room",

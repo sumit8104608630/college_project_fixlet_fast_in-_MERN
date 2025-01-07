@@ -1,6 +1,7 @@
 const data = [
     {
       "serviceType": "plumber",
+      "serviceTypeName": "Plumber",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734592060/pipe_e7rrxh.webp",
       "serviceName": "Water Pipe",
       "servicePartName": "Pipes",
@@ -37,6 +38,7 @@ const data = [
     },
     {
       "serviceType": "plumber",
+      "serviceTypeName": "Plumber",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734592253/shover_rzjnis.webp",
       "serviceName": "Shower",
       "servicePartName": "Shower",
@@ -73,6 +75,7 @@ const data = [
     },
     {
       "serviceType": "plumber",
+      "serviceTypeName": "Plumber",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734592395/Toilet_knfecx.webp",
       "serviceName": "Toilet",
       "servicePartName": "Toilet",
@@ -157,6 +160,7 @@ const data = [
     },
     {
       "serviceType": "plumber",
+      "serviceTypeName": "Plumber",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734592466/waterTank_uzpqa6.webp",
       "serviceName": "Water Tank",
       "servicePartName": "WaterTank",
@@ -217,6 +221,7 @@ const data = [
     },
     {
       "serviceType": "plumber",
+      "serviceTypeName": "Plumber",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734592562/Grooting_ywcmcq.webp",
       "serviceName": "Grouting",
       "servicePartName": "Tiles",
@@ -253,6 +258,7 @@ const data = [
     },
     {
         "serviceType": "plumber",
+        "serviceTypeName": "Plumber",
         "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734344997/service_man_txqrn2.jpg",
         "serviceName": "Book Visit",
         "servicePartName": "Appointment",

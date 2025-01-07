@@ -1,6 +1,7 @@
 const data = [
     {
       "serviceType": "washingmachine",
+            "serviceTypeName": "Washing Machine repair",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734847196/repair_pihhd0.webp",
       "serviceName": "Repair",
       "servicePartName": "Repair",
@@ -61,6 +62,7 @@ const data = [
   
     {
       "serviceType": "washingmachine",
+            "serviceTypeName": "Washing Machine repair",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734847193/installation_nl8qr4.webp",
       "serviceName": "Installation",
       "servicePartName": "Installation",
@@ -86,6 +88,7 @@ const data = [
    
     {
       "serviceType": "washingmachine",
+            "serviceTypeName": "Washing Machine repair",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734847638/uninstallaytion_w67xxz.webp",
       "serviceName": "Uninstallation",
       "servicePartName": "Uninstallation",

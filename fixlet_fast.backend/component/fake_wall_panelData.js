@@ -1,6 +1,7 @@
 const wallPanelInstallationData = [
     {
-      "serviceType": "wallpanelinstallation",
+      "serviceType": "wallpanel",
+      "serviceTypeName": "Wall panel",
       "serviceImage": "",
       "serviceName": "Wall Panel Installation",
       "servicePartName": "Installation",

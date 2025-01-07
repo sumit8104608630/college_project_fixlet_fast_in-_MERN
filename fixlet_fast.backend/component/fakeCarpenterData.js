@@ -1,6 +1,7 @@
 const carpenterData = [
   {
     "serviceType": "carpenter",
+    "serviceTypeName": "Carpenter",
     "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734686193/window_awo4ui.webp",
     "serviceName": "Window & Curtain",
     "servicePartName": "Windows",
@@ -97,6 +98,7 @@ const carpenterData = [
   },
   {
     "serviceType": "carpenter",
+    "serviceTypeName": "Carpenter",
     "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734686281/bed_elefko.webp",
     "serviceName": "Bed",
     "servicePartName": "Bed",
@@ -133,6 +135,7 @@ const carpenterData = [
   },
   {
     "serviceType": "carpenter",
+    "serviceTypeName": "Carpenter",
     "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734686453/cupboard_e8gux0.webp",
     "serviceName": "Cupboard & Drawer",
     "servicePartName": "Cupboard",
@@ -193,6 +196,7 @@ const carpenterData = [
   },
   {
     "serviceType": "carpenter",
+    "serviceTypeName": "Carpenter",
     "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734686452/door_vivacl.webp",
     "serviceName": "Door",
     "servicePartName": "Door",
@@ -276,6 +280,7 @@ const carpenterData = [
   },
   {
     "serviceType": "carpenter",
+    "serviceTypeName": "Carpenter",
     "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734686451/drillHang_ookeju.webp",
     "serviceName": "Drill & Hanging",
     "servicePartName": "Drill & Hang",
@@ -348,6 +353,7 @@ const carpenterData = [
   },
   {
     "serviceType": "carpenter",
+    "serviceTypeName": "Carpenter",
     "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734344997/service_man_txqrn2.jpg",
     "serviceName": "Book Visit",
     "servicePartName": "Appointment",

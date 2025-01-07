@@ -20,7 +20,6 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
 
         const service = await Service.findById(serviceId);
         if (!service) return res.status(400).json(new ApiResponse(400, "Service not found")); 
-
         if (!service.serviceType) {
             return res.status(400).json(new ApiResponse(400, "Service Type is missing"));
         }
@@ -59,6 +58,7 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
                 const newService = {
                     serviceId,
                     serviceType: service.serviceType,
+                    serviceTypeName:service.serviceTypeName,
                     serviceName: service.serviceName,
                     subServices: [{
                         subServiceId,
@@ -82,6 +82,7 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
                 products: [{
                     serviceId,
                     serviceType: service.serviceType,
+                    serviceTypeName:service.serviceTypeName,
                     serviceImage: service.serviceImage,
                     serviceName: service.serviceName,
                     subServices: [{
@@ -198,6 +199,8 @@ const get_all_cart_services = asyncHandler(async (req, res) => {
                 {$unwind:'$products.subServices'},
                 {$group:{
                 _id:'$products.serviceType',
+                serviceTypeName:{$first:"$products.serviceTypeName"},
+
                 productDetails: {  // Collect product details into an array
                   $push: {
                     serviceName: "$products.serviceName",

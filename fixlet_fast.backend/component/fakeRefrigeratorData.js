@@ -2,6 +2,7 @@ const data = [
     // Existing services
     {
       "serviceType": "refrigerator",
+      "serviceTypeName": "Refrigerator",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734786198/singleDoor_jed0qu.webp",
       "serviceName": "Single Door Refrigerator",
       "servicePartName": "Single Door Refrigerator",
@@ -49,6 +50,7 @@ const data = [
     },
     {
       "serviceType": "refrigerator",
+      "serviceTypeName": "Refrigerator",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734786207/doubleDoor_xnmcdu.webp",
       "serviceName": "Double Door Refrigerator",
       "servicePartName": "Double Door Refrigerator",
@@ -96,6 +98,7 @@ const data = [
     },
     {
       "serviceType": "refrigerator",
+      "serviceTypeName": "Refrigerator",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734786206/small_k7pwzg.jpg",
       "serviceName": "Mini Refrigerator",
       "servicePartName": "Mini Refrigerator",

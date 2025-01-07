@@ -1,6 +1,7 @@
 const data = [
     {
       "serviceType": "bathroom&kitchen",
+      "serviceTypeName": "Bathroom & kitchen cleaning",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734340451/bathroom_kitchen_cleaning.jpg",
       "serviceName": "Bathroom Cleaning",
       "servicePartName": "Bathroom",
@@ -35,6 +36,7 @@ const data = [
     },
     {
       "serviceType": "bathroom&kitchen",
+      "serviceTypeName": "Bathroom & kitchen cleaning",
       "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734340451/bathroom_kitchen_cleaning.jpg",
       "serviceName": "Kitchen Cleaning",
       "servicePartName": "Kitchen",

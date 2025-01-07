@@ -1,6 +1,7 @@
 const data = [
   {
     "serviceType": "electrician",
+    "serviceTypeName":"Electrician",
     "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734340451/light_k3dqxe.jpg",
     "serviceName": "Light Installation",
     "servicePartName": "Light",
@@ -96,6 +97,7 @@ const data = [
   },
   {
     "serviceType": "electrician",
+    "serviceTypeName":"Electrician",
     "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734340546/fan_eq3g9n.jpg",
     "serviceName": "Fan Installation",
     "servicePartName": "Fan",
@@ -197,6 +199,7 @@ const data = [
   },
   {
     "serviceType": "electrician",
+    "serviceTypeName":"Electrician",
     "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734340652/switch_pxaszz.jpg",
     "serviceName": "Switchboard Installation",
     "servicePartName": "Switchboard",
@@ -288,6 +291,7 @@ const data = [
   },
   {
     "serviceType": "electrician",
+    "serviceTypeName":"Electrician",
     "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734341010/fan_repair_bzpfhh.jpg",
     "serviceName": "Fan Repair",
     "servicePartName": "Fan Repair",
@@ -353,6 +357,7 @@ const data = [
   },
   {
     "serviceType": "electrician",
+    "serviceTypeName":"Electrician",
     "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734341550/wiring_xwftz7.jpg",
     "serviceName": "Wiring Installation",
     "servicePartName": "Wiring",
@@ -404,6 +409,7 @@ const data = [
   },
   {
     "serviceType": "electrician",
+    "serviceTypeName":"Electrician",
     "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734344997/service_man_txqrn2.jpg",
     "serviceName": "Book Visit",
     "servicePartName": "Appointment",

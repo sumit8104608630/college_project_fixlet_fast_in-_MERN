@@ -1,6 +1,7 @@
 const lightDecorationData = [
     {
       "serviceType": "lightdecoration",
+      "serviceTypeName": "Festival Light Decoration",
       "serviceImage": "https://your-image-url.com/light-decoration.jpg",
       "serviceName": "Light Decoration",
       "servicePartName": "Decoration",

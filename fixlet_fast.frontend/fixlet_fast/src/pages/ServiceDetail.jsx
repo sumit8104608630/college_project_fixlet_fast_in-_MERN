@@ -6,25 +6,73 @@ import { FaStar } from "react-icons/fa";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaRegClock } from "react-icons/fa6";
 import { useEffect,useState } from "react";
-import { useSelector ,shallowEqual} from 'react-redux';
-
 function ServiceDetail(props) {
-const cart = useSelector((state) => state.cart.cartItems, shallowEqual);
 const MemoizedButton = React.memo(AddButton);
 const [filter_cartItems,setFilter_cartItems] = useState([]);
 const showDetail=props.dataDetail;
 const subService=showDetail.subservice;
-const subServiceId=showDetail.subservice_id;
 const serviceId=showDetail.serviceId
-const service=props.service;
-const onAddButton=props.onAddButton
+const onAddButton=props.onAddButton;
+const [cartLoading,setCartLoading]=useState(true)
+
 
 useEffect(()=>{
 setFilter_cartItems(props.filter_cartItems)
 },[props.filter_cartItems])
 
+useEffect(()=>{
+if(filter_cartItems.length>0||cartLoading){
+  setCartLoading(false)
+}
+},[filter_cartItems.length,cartLoading])
+
   return (<>
-        <h1 className='' ></h1>
+  {cartLoading?
+<div className=' flex justify-center items-center h-full'>
+<div className="relative flex flex-col items-center">
+        <svg
+          version="1.1"
+          viewBox="0 0 64 64"
+          width="2em"
+          height="2em"
+          xmlns="http://www.w3.org/2000/svg"
+          className="animate-spin"
+        >
+          <circle
+            className="stroke-gradient"
+            cx="32"
+            cy="32"
+            r="28"
+            fill="none"
+            stroke="url(#spinner-gradient)"
+            strokeWidth="8"
+          />
+          <path
+            className="stroke-current text-orange-500"
+            d="M32,4 A28 28,0,0,0,32,60"
+            fill="none"
+            strokeWidth="8"
+            strokeLinecap="round"
+          />
+          <defs>
+            <linearGradient
+              id="spinner-gradient"
+              gradientUnits="userSpaceOnUse"
+              x1="32"
+              y1="0"
+              x2="32"
+              y2="64"
+            >
+              <stop offset="0.1" stopColor="currentColor" stopOpacity="0" />
+              <stop offset="0.9" stopColor="currentColor" stopOpacity="1" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div className="mt-2 text-center text-orange-500 text-sm font-medium">Please wait</div>
+      </div>
+  </div>
+  :
+    <>
         <div>
           <div className='px-5'>
             {
@@ -107,7 +155,8 @@ setFilter_cartItems(props.filter_cartItems)
             }
             </ul>
         </div>
-      
+        </>
+}
     </>
   )
 }

@@ -56,6 +56,10 @@ const serviceSchema = mongoose.Schema({
     unique:true,
     index: true,
   },
+  serviceTypeName:{
+    type:String,
+    required:true,
+  },
   serviceArea:{
     type:[String],
     default:["mumbai","patna","agra","pune"]

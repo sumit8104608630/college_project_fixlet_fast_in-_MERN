@@ -1,6 +1,7 @@
 const data = [
     {
       "serviceType": "bedbugcontrol",
+      "serviceTypeName": "Bed bug control",
       "serviceImage": "",
       "serviceName": "Bed Bug Control",
       "servicePartName": "Bed Bug",

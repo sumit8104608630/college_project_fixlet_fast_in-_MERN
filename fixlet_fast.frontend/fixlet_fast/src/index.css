@@ -4,7 +4,7 @@
 
 @layer utilities {
     .custom-scrollbar::-webkit-scrollbar {
-      width: 8px; /* Width of the scrollbar */
+      width: 4px; /* Width of the scrollbar */
     }
   
     .custom-scrollbar::-webkit-scrollbar-track {
@@ -17,6 +17,25 @@
     }
   
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #555; /* Darker color on hover */
+    }
+  }
+
+  @layer utilities {
+    .custom-cartScroll::-webkit-scrollbar {
+      width: 4px; /* Width of the scrollbar */
+    }
+  
+    .custom-cartScroll::-webkit-scrollbar-track {
+      background: #f1f1f1; /* Track color */
+    }
+  
+    .custom-cartScroll::-webkit-scrollbar-thumb {
+      background: #f97316; /* Scrollbar color */
+      border-radius: 4px; /* Round corners */
+    }
+  
+    .custom-cartScroll::-webkit-scrollbar-thumb:hover {
       background: #555; /* Darker color on hover */
     }
   }
