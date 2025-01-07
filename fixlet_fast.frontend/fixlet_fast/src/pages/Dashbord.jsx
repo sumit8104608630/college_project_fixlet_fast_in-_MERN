@@ -323,7 +323,7 @@ function Dashbord() {
 
 
           <div className='w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=wallpanelinstallation`} state={{ headLine: 'Wall Panel installation' }} className="relative w-full flex flex-col text-center    hover:text-gray-600 group">
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=wallpanel`} state={{ headLine: 'Wall Panel installation' }} className="relative w-full flex flex-col text-center    hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-14" src={wallPanel} alt="Wall Panel" />
               </div>

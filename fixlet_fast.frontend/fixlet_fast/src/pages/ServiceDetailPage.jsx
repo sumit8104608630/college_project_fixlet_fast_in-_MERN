@@ -45,6 +45,8 @@ function ServiceDetailPage(props) {
   return
   }
 
+ 
+  console.log(cartItems[0]?._id)
   useEffect(()=>{
     Context.setCartShow(false)
     return ()=>{
@@ -90,14 +92,14 @@ return item;
 if(cartItems[0]._id===categories){
 if(quantity===-1){
   setCartItems((prev)=>prev.map((item)=>{
-    if( item._id === categories){
+    if( item?._id === categories){
       return{...item,totalPrice:item.totalPrice-price}
     }
   }));
 }
 else{
   setCartItems((prev)=>prev.map((item)=>{
-    if( item._id === categories){
+    if( item?._id === categories){
       return{...item,totalPrice:item.totalPrice+price}
     }
   }));
@@ -160,7 +162,7 @@ if(cartItems.length>0){
 if(cartItems[0]._id===categories){
 
   setCartItems((prev)=>prev.map((item)=>{
-    if( item._id === categories){
+    if( item?._id === categories){
       return{...item,totalPrice:item.totalPrice+price}
     }
   }));
@@ -190,7 +192,7 @@ const remove_obj=(serviceId,subServiceId,price)=>{
   if(cartItems[0]._id===categories)
 {
   setCartItems((prev)=>prev.map((item)=>{
-    if( item._id === categories){
+    if( item?._id === categories){
       return{...item,totalPrice:item.totalPrice-price}
     }
   }));
@@ -421,7 +423,7 @@ function isEmpty(obj_inside) {
                       <button className='flex justify-between w-full px-5 py-2 hover:bg-orange-600 bg-orange-500 rounded text-white font-semibold text-lg'>
                         <span className='flex items-center'>
                           <FaIndianRupeeSign />
-                          {cartItems?.filter((services) => services._id === categories)[0]?.totalPrice}
+                          {cartItems?.filter((services) => services?._id === categories)[0]?.totalPrice}
                         </span>
                         <span>View Cart</span>
                       </button>

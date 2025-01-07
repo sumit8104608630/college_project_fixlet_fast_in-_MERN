@@ -92,9 +92,11 @@ const route=createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <ContextProvider>
     <Provider store={store}>
     <RouterProvider router={route}>
     </RouterProvider>
     </Provider>
+    </ContextProvider>
   </StrictMode>,
 )
