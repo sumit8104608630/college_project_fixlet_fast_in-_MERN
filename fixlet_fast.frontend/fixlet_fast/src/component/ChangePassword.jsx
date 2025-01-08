@@ -5,7 +5,8 @@ import { NavLink } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { fetchUser } from '../app/Actions/user_action';
 import Cookies from "js-cookie"
-
+import OtpInput from "../component/OtpInput.jsx"
+ 
 
 function ChangePassword() {
   const dispatch=useDispatch()
@@ -17,6 +18,7 @@ function ChangePassword() {
     const [formData,setData]=useState({});
     const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
 const [buttonToggle,setButtonToggle]=useState(false)
+
     useEffect(()=>{
       dispatch(fetchUser())
     },[dispatch])
@@ -140,7 +142,9 @@ useEffect(()=>{
                 onChange={onChange}
                 required
               />
-              
+              <div className='pb-2'>
+              <OtpInput/>
+              </div>
               <button
                 type="submit"
                 className="w-full p-2 bg-black text-white rounded hover:bg-gray-800"

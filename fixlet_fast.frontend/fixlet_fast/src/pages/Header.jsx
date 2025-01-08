@@ -14,7 +14,6 @@ import Loader from"../component/Loader.jsx"
 import { currentContext } from '../component/Context.jsx';
 import { useContext } from 'react';
 
-
 function Header() {
 const {cartLoading,cartItems,cartError}=useSelector((state)=>state.cart);
 const cartShow=useContext(currentContext)
@@ -24,6 +23,7 @@ const [cartCount, setCartCount] = useState(); // Example cart count
 const [isScroll,setIsScroll]=useState(false)
 const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
 const [mapToggle,setMapToggle]=useState(null)
+
 
 window.addEventListener("scroll",()=>{
   setIsScroll(true)
