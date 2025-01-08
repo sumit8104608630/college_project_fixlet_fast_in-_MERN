@@ -179,7 +179,8 @@ client.connect();
     };
   
     try {
-      await transporter.sendMail(mailOptions);
+    const very=  await transporter.sendMail(mailOptions);
+    console.log(very);
       res.status(201).json(new ApiResponse(200, 'OTP sent successfully'));
     } catch (err) {
       res.status(500).json(new apiError('Error sending email', 500));
@@ -480,6 +481,26 @@ if (!isCityAvailable) {
 
   } catch (error) {
     throw new apiError("some thing went wrong in server",500)
+  }
+})
+
+// let's write controller for changing password
+const changePassword=asyncHandler(async(req,res)=>{
+  try {
+    const {email}=req.user;
+    if(!email){
+      return new ApiResponse("invalid request",400);
+    }
+    const user=await User.findOne({email:email});
+    if(!email){
+      throw new apiError("some thing went wrong in server",500)
+        }
+    // let send and set the otp in database
+    
+
+    
+  } catch (error) {
+      throw new apiError("some thing went wrong in server",500)
   }
 })
 

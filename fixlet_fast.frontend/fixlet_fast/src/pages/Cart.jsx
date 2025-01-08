@@ -48,7 +48,6 @@ function Cart() {
                           </div>
                           <div >
                           <Link to={'/'} className='px-5 py-2 text-xl font-semibold text-gray-700 hover:bg-gray-100 bg-white border-2  rounded-lg'>Explore service</Link>
-
                           </div>
                         </div>
                         :

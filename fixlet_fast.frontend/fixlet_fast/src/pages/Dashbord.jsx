@@ -9,8 +9,6 @@ import { FaStar } from "react-icons/fa6";
 import Addvertice from '../component/Addvertice'
 import AC_service_image from "../assets/book_image/AC_img.webp"
 import sofa from "../assets/Add/pexels-martinpechy-1866149.jpg"
-import decoration_img from "../assets/book_image/decoration_book_img.avif"
-import bathRoom_img from "../assets/book_image/bathRoom_img.webp"
 import { IoCloseOutline } from "react-icons/io5";
 import electricity_image from "../assets/togglebutton/electrician/electricity.webp"
 import { Link } from 'react-router'
@@ -30,6 +28,12 @@ import mixer from "../assets/togglebutton/AC&Apliance/mixer.webp"
 import washinMashin from "../assets/togglebutton/AC&Apliance/washing_mashin.jpeg"
 import { useSelector ,useDispatch} from 'react-redux'
 import {fetchCart} from "../app/Actions/cart_action.js"
+import QuickAccess from '../component/QuickAcces.jsx'
+import { IoIosArrowDropleft } from "react-icons/io";
+import { IoIosArrowDropright } from "react-icons/io";
+import { useRef } from 'react'
+
+
 
 
 function Dashbord() {
@@ -38,7 +42,7 @@ function Dashbord() {
   const [link1Toggle,setlink1Toggle]=useState(false);
   const {isLoading,userInfo,isLogin}=useSelector((state)=>state.user);
   const dispatch=useDispatch();
-
+  const scrollContainRef=useRef(null);
   const city=userInfo?.city
 
   useEffect(() => {
@@ -58,6 +62,19 @@ function Dashbord() {
   }, [link3Toggle,link2Toggle,link1Toggle,dispatch,]);
 
 
+  const scrollLeft=()=>{
+    scrollContainRef.current.scrollBy({
+      left: -900,
+      behavior: 'smooth',
+    })
+  }
+  const scrollRight=()=>{
+    scrollContainRef.current.scrollBy({
+      left:900,
+      behavior: 'smooth',
+    })
+  }
+
 
 
 
@@ -66,10 +83,10 @@ function Dashbord() {
     <>{isLoading?<Loader/>:
 
 
-      <main  className={ ` pt-28  w-full px-32 ${ link3Toggle&&"  overflow-hidden "}` }>
+      <main  className={ `custom-dashBoardScroll   pt-28   w-full px-32 ${ link3Toggle&&"  overflow-hidden "}` }>
 
 {link3Toggle&&
-<div className='fixed z-20 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
+<div className='fixed z-20  justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
   
 
   
@@ -353,24 +370,13 @@ function Dashbord() {
           <Addvertice/>
         </div>
 
-
-        <div className='flex justify-between mt-20 '>
-
-
-            <div className='flex flex-col h-48 rounded w-72 justify-end bg-cover' style={{ backgroundImage: `url(${decoration_img})` }}>
-              <p className='px-5 text-2xl font-semibold text-white  my-auto'>Home & Lights Decoration</p>
-              <Link><h1 className='w-full h-12 px-5 flex items-center bg-gray-600 text-xl font-semibold bg-opacity-35 text-white hover:bg-opacity-50 hover:bg-gray-600'>Book now</h1></Link>
-            </div>
-
-             <div className='flex flex-col h-48 rounded w-72 justify-end bg-cover' style={{ backgroundImage: `url(${AC_service_image})` }}>
-              <Link><h1 className='w-full h-12 px-5 flex items-center bg-gray-600 text-xl font-semibold bg-opacity-35 text-white hover:bg-opacity-50 hover:bg-gray-600'>Book now</h1></Link>
-            </div>
-
-            <div className='flex flex-col h-48 rounded w-72 justify-end bg-cover' style={{ backgroundImage: `url(${bathRoom_img})` }}>
-              <Link><h1 className='w-full h-12 px-5 flex items-center bg-gray-600 text-xl font-semibold bg-opacity-35 text-white hover:bg-opacity-50 hover:bg-gray-600'>Book now</h1></Link>
-            </div>
-
-        </div>
+<div className='relative mt-20 gap-5 flex items-center'>
+<button onClick={scrollLeft} className='h-max' ><IoIosArrowDropleft className='text-orange-500' size={50}/></button>
+        <div ref={scrollContainRef} className='w-full  overflow-auto custom-dashBoardScroll'>
+          <QuickAccess/>
+          </div>
+<button onClick={scrollRight} className='h-max'><IoIosArrowDropright className='text-orange-500' size={50}/></button>
+</div>
 
 
         <div className='flex mt-20 py-10 px-10  bg-amber-100'>

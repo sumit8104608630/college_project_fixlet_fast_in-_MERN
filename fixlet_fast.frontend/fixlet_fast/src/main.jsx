@@ -19,13 +19,29 @@ import Native from './pages/Native.jsx'
 import store from './app/store.js'
 import Contact from './pages/Contact.jsx'
 import { ContextProvider } from './component/Context.jsx'
+import Account from './component/Account.jsx'
+import ChangePassword from './component/ChangePassword.jsx'
 
 
 const route=createBrowserRouter([
   {
     path:"*",
-  element:<ErrorPage/>
+  element:<ErrorPage/>,
+
   },
+  {
+    path: "/helpCenter",
+    element: <HelpCenter />,
+  },
+  {
+    path: "/account",
+    element: <Account />,
+  },
+  {
+    path: "/changePassword",
+    element: <ChangePassword/>,
+  }
+,
   {
     path:"/",
     element:<LayOut/>,
@@ -85,7 +101,8 @@ const route=createBrowserRouter([
         }
       
     ]
-  }
+  },
+
 ])
 
 

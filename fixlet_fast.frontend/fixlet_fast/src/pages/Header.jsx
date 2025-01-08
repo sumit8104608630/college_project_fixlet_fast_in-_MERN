@@ -72,24 +72,24 @@ useEffect(()=>{
         <div className='flex justify-between  px-10 items-center py-2 bg-orange-500'>
           <div>
             <Link to={"/"}>  
-              <img className='w-14' src={logo} alt='logo'></img>
+              <img className='w-12' src={logo} alt='logo'></img>
             </Link>
           </div>
 
           <div>
             <ul className='flex  items-center text-white text-2xl gap-8 font-semibold'>
               <li>
-                <NavLink to="/" className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid after:w-full after:left-0 after:translate-x-0" : "after:left-1/2 after:translate-x-[-50%]"} hover:text-white after:content-[''] after:absolute after:bottom-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:translate-x-0 hover:after:w-full`}>
+                <NavLink to="/" className={({ isActive }) => `relative text-lg text-white ${isActive ? "decoration-solid after:w-full after:left-0 after:translate-x-0" : "after:left-1/2 after:translate-x-[-50%]"} hover:text-white after:content-[''] after:absolute after:bottom-0 after:h-[2px] after:rounded py-1 after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:translate-x-0 hover:after:w-full`}>
                   Home
                 </NavLink>
               </li>
               <li>
-              <NavLink className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid after:w-full after:left-0 after:translate-x-0" : "after:left-1/2 after:translate-x-[-50%]"} hover:text-white after:content-[''] after:absolute after:bottom-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:translate-x-0 hover:after:w-full`} to="/about">
+              <NavLink className={({ isActive }) => `relative text-lg text-white ${isActive ? "decoration-solid after:w-full after:left-0 after:translate-x-0" : "after:left-1/2 after:translate-x-[-50%]"} hover:text-white after:content-[''] after:absolute after:bottom-0 after:h-[2px] after:rounded py-1 after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:translate-x-0 hover:after:w-full`} to="/about">
                   About
                 </NavLink>
               </li>
               <li>
-              <NavLink className={({ isActive }) => `relative text-white ${isActive ? "decoration-solid after:w-full after:left-0 after:translate-x-0" : "after:left-1/2 after:translate-x-[-50%]"} hover:text-white after:content-[''] after:absolute after:bottom-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:translate-x-0 hover:after:w-full`}to="/store">
+              <NavLink className={({ isActive }) => `relative text-lg text-white ${isActive ? "decoration-solid after:w-full after:left-0 after:translate-x-0" : "after:left-1/2 after:translate-x-[-50%]"} hover:text-white after:content-[''] after:absolute after:bottom-0 after:h-[2px] after:rounded py-1 after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:translate-x-0 hover:after:w-full`}to="/store">
                    Store
               </NavLink>
               </li>
@@ -105,13 +105,13 @@ useEffect(()=>{
           <div className='flex gap-5'>
 
             <div>
-            <NavLink className={({isActive})=>`${isActive?"text-orange-500 border-orange-500 border-2 font-semibold text-xl bg-white px-5 py-1 rounded-full":"text-white text-xl font-semibold border-2 px-5 py-1 rounded-full border-white"} hover:text-orange-500 hover:border-orange-500  hover:bg-white`} to={"/login"}>
+            <NavLink className={({isActive})=>`${isActive?"text-orange-500 border-orange-500 border-2 font-semibold text-lg bg-white px-5 py-1 rounded-full":"text-white text-lg font-semibold border-2 px-5 py-1 rounded-full border-white"} hover:text-orange-500 hover:border-orange-500  hover:bg-white`} to={"/login"}>
               Login
             </NavLink>
             </div>
 
             <div>
-            <NavLink className={({isActive})=>`${isActive?"text-orange-500 border-orange-500 font-semibold text-xl border-2 bg-white px-5 py-1 rounded-full":"text-white text-xl font-semibold border-2 px-5 py-1 rounded-full border-white"} hover:text-orange-500 hover:border-orange-500  hover:bg-white`} to={"/register"}>
+            <NavLink className={({isActive})=>`${isActive?"text-orange-500 border-orange-500 font-semibold text-lg border-2 bg-white px-5 py-1 rounded-full":"text-white text-lg font-semibold border-2 px-5 py-1 rounded-full border-white"} hover:text-orange-500 hover:border-orange-500  hover:bg-white`} to={"/register"}>
               Sign Up
             </NavLink>
             </div>
@@ -141,7 +141,7 @@ useEffect(()=>{
     <div className='absolute top-full left-1/2 transform -translate-x-1/2 bg-gray-100 w-max rounded shadow-md'>
       <ul className='flex flex-col gap-2 px-4 py-2'>
         <li>
-          <Link>Help Center</Link>
+          <Link to={`/helpCenter`}>Help Center</Link>
         </li>
         <li>
           <Link to={"/booking_page"}>My Booking</Link>

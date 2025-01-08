@@ -39,3 +39,14 @@
       background: #555; /* Darker color on hover */
     }
   }
+
+  @layer utilities {
+    .custom-dashBoardScroll::-webkit-scrollbar {
+      width: 0; /* Width of the scrollbar */
+      height: 0;
+    }
+  
+
+  }
+
+  
