@@ -6,18 +6,23 @@ import { useSelector,useDispatch } from 'react-redux';
 import { fetchUser } from '../app/Actions/user_action';
 import Cookies from "js-cookie"
 import OtpInput from "../component/OtpInput.jsx"
+import {logout} from "../app/user.redux"
+import { Axios } from 'axios';
  
 
 function ChangePassword() {
   const dispatch=useDispatch()
+  const axios=new Axios()
     const [step, setStep] = useState(1); // Steps: 1 = Email Input, 2 = OTP Input, 3 = Change Password
     const [email, setEmail] = useState("");
-    const [otp, setOtp] = useState("");
+    const [fullName, setFullName] = useState("");
+
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [formData,setData]=useState({});
     const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
 const [buttonToggle,setButtonToggle]=useState(false)
+const [toggle,setToggle]=useState(false)
 
     useEffect(()=>{
       dispatch(fetchUser())
@@ -27,6 +32,7 @@ const [buttonToggle,setButtonToggle]=useState(false)
     const onChange=(e)=>{
       const {name,value}=e.target;
       setEmail(e.target.value)
+      setFullName(e.target.value);
       setData({...formData,[name]:value});
     }
 
@@ -54,8 +60,9 @@ const [buttonToggle,setButtonToggle]=useState(false)
       const data=await response.json();
       console.log(data)
       if(data.statusCode===200){
-      //  setStep(2);
+        setToggle(true)
       }
+     
      // Simulate sending OTP
    
     };
@@ -63,19 +70,12 @@ const [buttonToggle,setButtonToggle]=useState(false)
 useEffect(()=>{
   if(email.length==0){
     setButtonToggle(false)
+    setToggle(false)
   }
+
 },[email])
 
-    const handleOtpSubmit = (e) => {
-      e.preventDefault();
-      // Simulate OTP verification
-      if (otp === "123456") {
-        alert("OTP verified!");
-        setStep(3);
-      } else {
-        alert("Invalid OTP. Please try again.");
-      }
-    }; 
+  
     const handelLogout=()=>{
       axios.post('http://localhost:8000/user/user_logout',{},{
        withCredentials:true
@@ -99,6 +99,32 @@ useEffect(()=>{
       alert("Password changed successfully!");
       setStep(1); // Reset form
     };
+
+
+    const handelverifyOtp=async(otp)=>{
+      const email=formData.email;
+      console.log(otp)
+
+    const obj={
+      email:email,
+      otp:otp
+    }
+    const response=await fetch('http://localhost:8000/user/verify_user_otp',{
+      method:'POST',
+      body:JSON.stringify(obj),
+      headers:{
+        'Content-Type':'application/json',
+
+      },
+      credentials: 'include'
+    })
+    const responseData=await response.json();
+    console.log(responseData)
+    if(responseData.statusCode===200 && responseData.success){
+       setStep(3);
+    }
+
+  }
   return (
 <>{isLoading?<></>:
       <div className='min-h-screen  bg-gray-100 '>
@@ -120,7 +146,7 @@ useEffect(()=>{
                 </NavLink>
               </li>
               <li>
-              <button className={`relative text-white text-lg after:left-1/2 after:translate-x-[-50%] py-2 hover:text-white after:content-[''] after:absolute after:bottom-0 after:h-[2px] after:rounded after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:translate-x-0 hover:after:w-full`}to="/store">
+              <button onClick={handelLogout} className={`relative text-white text-lg after:left-1/2 after:translate-x-[-50%] py-2 hover:text-white after:content-[''] after:absolute after:bottom-0 after:h-[2px] after:rounded after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:translate-x-0 hover:after:w-full`}to="/store">
                    Logout-{userInfo?.fullName}
               </button>
 
@@ -142,9 +168,11 @@ useEffect(()=>{
                 onChange={onChange}
                 required
               />
+              {toggle&&
               <div className='pb-2'>
-              <OtpInput/>
+              <OtpInput length={4} email={formData.email} onclick={handelverifyOtp} />
               </div>
+}
               <button
                 type="submit"
                 className="w-full p-2 bg-black text-white rounded hover:bg-gray-800"
@@ -156,36 +184,19 @@ useEffect(()=>{
             </form>
           )}
   
-          {step === 2 && (
-            <form onSubmit={handleOtpSubmit}>
-              <h2 className="text-xl font-semibold mb-4">Enter OTP</h2>
-              <input
-                type="text"
-                className="w-full p-2 mb-4 border border-gray-400 rounded focus:outline-none"
-                placeholder="Enter the OTP sent to your email"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                required
-              />
-              <button
-                type="submit"
-                className="w-full p-2 bg-black text-white rounded hover:bg-gray-800"
-              >
-                Verify OTP
-              </button>
-            </form>
-          )}
+   
   
           {step === 3 && (
             <form onSubmit={handlePasswordSubmit}>
               <h2 className="text-xl font-semibold mb-4">Change Password</h2>
               <input
+              
               name='fullName'
                 type="text"
                 className="w-full p-2 mb-4 border border-gray-400 rounded focus:outline-none"
-                placeholder="Enter new password"
-                value={fullName}
-                onChange={(e) => setPassword(e.target.value)}
+                placeholder=""
+                value={fullName?fullName:userInfo?.fullName}
+                onChange={(e) => onChange(e.target.value)}
                 required
               />
               <input
