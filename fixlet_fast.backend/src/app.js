@@ -22,7 +22,7 @@ app.use(cookieParser());
 //let's use authentication middleWare
 
 
-
+ 
 // let's get the user route and use some url path as middleware for the user route 
 // let's use it
 const userRoute=require("../routes/user.routes.js");

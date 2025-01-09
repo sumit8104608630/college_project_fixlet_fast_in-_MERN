@@ -79,6 +79,8 @@ userSchema.pre('save',async function(next){
     next()
 })
 
+
+
 // let's create function 
 // IMP Don't ever use arrow function whenever you dealing with this key word
 userSchema.static("matchPasswordGenerateToken",async function(email,password){
@@ -104,6 +106,27 @@ try {
     throw new Error(error.message);
 }
 })
+
+userSchema.static("matchPassword",async function (email,password) {
+    try {
+        const user=await this.findOne({email:email});
+        if(!user){
+            throw new Error("User not found");
+        }
+        const salt=user.salt;
+        const hashAlgorithm=createHmac("sha256",salt).update(password).digest("hex");
+        if(hashAlgorithm!==user.password){
+           return  false;
+        }
+        else{
+            return true;
+        }
+    } catch (error) {
+        throw new Error(error.message);
+
+    }
+})
+
 
 
 

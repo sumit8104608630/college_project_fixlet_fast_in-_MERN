@@ -21,6 +21,7 @@ import Contact from './pages/Contact.jsx'
 import { ContextProvider } from './component/Context.jsx'
 import Account from './component/Account.jsx'
 import ChangePassword from './component/ChangePassword.jsx'
+import ChangeEmail from './component/ChangeEmail.jsx'
 
 
 const route=createBrowserRouter([
@@ -40,6 +41,10 @@ const route=createBrowserRouter([
   {
     path: "/changePassword",
     element: <ChangePassword/>,
+  },
+  {
+    path: "/changeEmail",
+    element: <ChangeEmail/>,
   }
 ,
   {

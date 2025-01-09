@@ -13,6 +13,7 @@ import {logout} from "../app/user.redux"
 import Loader from"../component/Loader.jsx"
 import { currentContext } from '../component/Context.jsx';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router';
 
 function Header() {
 const {cartLoading,cartItems,cartError}=useSelector((state)=>state.cart);
@@ -22,7 +23,8 @@ const dispatch=useDispatch();
 const [cartCount, setCartCount] = useState(); // Example cart count
 const [isScroll,setIsScroll]=useState(false)
 const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
-const [mapToggle,setMapToggle]=useState(null)
+const [mapToggle,setMapToggle]=useState(null);
+
 
 
 window.addEventListener("scroll",()=>{
@@ -34,13 +36,14 @@ window.addEventListener("scroll",()=>{
 })
 
 
-const handelLogout=()=>{
+const handelLogout=(e)=>{
+  e.preventDefault()
    axios.post('http://localhost:8000/user/user_logout',{},{
     withCredentials:true
   }).then((response)=>{
     if(response.status===200){
     Cookies.remove('accessToken')
-    Cookies.remove('refresh_token')
+    Cookies.remove('refresh_token');
     dispatch(logout())
     }
     else{
@@ -63,9 +66,8 @@ useEffect(()=>{
   setCartCount(singleArray.length)
 },[cartItems])
 
-  return (<>{isLoading?<Loader/>:
+  return (<>{
     <div className='absolute top-0 z-10'>
-{}
       {
         
       <nav className={`fixed w-full ${isScroll ? 'shadow-xl' : 'shadow-none'} items-center`}>

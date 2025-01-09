@@ -7,32 +7,38 @@ import { fetchUser } from '../app/Actions/user_action';
 import Cookies from "js-cookie"
 import OtpInput from "../component/OtpInput.jsx"
 import {logout} from "../app/user.redux"
-import { Axios } from 'axios';
+import  axios  from 'axios';
+import { FaRegCircleCheck } from "react-icons/fa6";
+import { useNavigate } from 'react-router';
  
 
 function ChangePassword() {
   const dispatch=useDispatch()
-  const axios=new Axios()
-    const [step, setStep] = useState(1); // Steps: 1 = Email Input, 2 = OTP Input, 3 = Change Password
-    const [email, setEmail] = useState("");
-    const [fullName, setFullName] = useState("");
+  const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
+const navigate = useNavigate();
 
+    const [step, setStep] = useState(false); 
+const [toggleVerify,setToggleVerify]=useState(false)
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [formData,setData]=useState({});
-    const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
+    const [formData,setData]=useState({
+      email:"",
+      fullName:"",
+      password:"",
+    });
 const [buttonToggle,setButtonToggle]=useState(false)
 const [toggle,setToggle]=useState(false)
 
     useEffect(()=>{
+      setData({...formData,fullName:userInfo?.fullName||""})
       dispatch(fetchUser())
-    },[dispatch])
+    },[dispatch,userInfo?.fullName,])
 
 
     const onChange=(e)=>{
+      e.preventDefault()
       const {name,value}=e.target;
-      setEmail(e.target.value)
-      setFullName(e.target.value);
+     
       setData({...formData,[name]:value});
     }
 
@@ -41,7 +47,7 @@ const [toggle,setToggle]=useState(false)
       e.preventDefault();
       // let send the otp
       console.log(formData)
-      if(email.length>0){
+      if(formData.email.length>0){
       setButtonToggle(true)
       }
       const response=await fetch(`http://localhost:8000/user/user_otp`,
@@ -68,15 +74,16 @@ const [toggle,setToggle]=useState(false)
     };
   
 useEffect(()=>{
-  if(email.length==0){
+  if(formData.email.length==0){
     setButtonToggle(false)
     setToggle(false)
   }
 
-},[email])
+},[formData.email])
 
   
-    const handelLogout=()=>{
+    const handelLogout=(e)=>{
+      e.preventDefault()
       axios.post('http://localhost:8000/user/user_logout',{},{
        withCredentials:true
      }).then((response)=>{
@@ -84,24 +91,47 @@ useEffect(()=>{
        Cookies.remove('accessToken')
        Cookies.remove('refresh_token')
        dispatch(logout())
+       navigate("/"); // Redirect to the home page
+
        }
        else{
          console.log("logout failed")
        }
      })
    }
-    const handlePasswordSubmit = (e) => {
+    const handlePasswordSubmit = async(e) => {
       e.preventDefault();
-      if (password !== confirmPassword) {
+      if (formData.password !== confirmPassword) {
         alert("Passwords do not match.");
         return;
       }
+      const obj={
+        email:formData.email,
+        fullName:formData.fullName,
+        password:formData.password
+      }
+      console.log(obj)
+     const response =await fetch('http://localhost:8000/user/change_password',    {
+      method: 'POST',
+      body:JSON.stringify(obj),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials:"include"
+    },);
+     const data= response
+     console.log(data)
+     if(data.statusCode===201){
       alert("Password changed successfully!");
       setStep(1); // Reset form
+     }
+      
     };
 
 
     const handelverifyOtp=async(otp)=>{
+      setToggle(false)
+      setToggleVerify(true);
       const email=formData.email;
       console.log(otp)
 
@@ -121,7 +151,7 @@ useEffect(()=>{
     const responseData=await response.json();
     console.log(responseData)
     if(responseData.statusCode===200 && responseData.success){
-       setStep(3);
+       setStep(true);
     }
 
   }
@@ -156,7 +186,7 @@ useEffect(()=>{
         </nav >
         <div className="flex items-center justify-center w-full px-4  text-black">
         <div className=" max-w-md p-6 w-full mt-56 bg-white border border-gray-300 rounded shadow-md">
-          {step === 1 && (
+          {step === false && (
             <form onSubmit={handleEmailSubmit}>
               <h2 className="text-xl font-semibold mb-4">Enter Your Email</h2>
               <input
@@ -164,15 +194,21 @@ useEffect(()=>{
                 type="email"
                 className="w-full p-2 mb-4 border border-gray-400 rounded focus:outline-none"
                 placeholder="Enter your email"
-                value={email}
+                value={formData.email}
                 onChange={onChange}
                 required
               />
               {toggle&&
               <div className='pb-2'>
               <OtpInput length={4} email={formData.email} onclick={handelverifyOtp} />
-              </div>
-}
+              </div>}{
+              toggleVerify&&
+                   <div
+                   className="w-full p-2 bg-white text-black rounded hover:bg-gray-800"
+                 ><FaRegCircleCheck/>
+                 </div>}
+           
+
               <button
                 type="submit"
                 className="w-full p-2 bg-black text-white rounded hover:bg-gray-800"
@@ -186,7 +222,7 @@ useEffect(()=>{
   
    
   
-          {step === 3 && (
+          {step === true && (
             <form onSubmit={handlePasswordSubmit}>
               <h2 className="text-xl font-semibold mb-4">Change Password</h2>
               <input
@@ -195,27 +231,29 @@ useEffect(()=>{
                 type="text"
                 className="w-full p-2 mb-4 border border-gray-400 rounded focus:outline-none"
                 placeholder=""
-                value={fullName?fullName:userInfo?.fullName}
-                onChange={(e) => onChange(e.target.value)}
+                value={formData.fullName}
+                onChange={onChange}
                 required
               />
               <input
+              name='password'
                 type="password"
                 className="w-full p-2 mb-4 border border-gray-400 rounded focus:outline-none"
                 placeholder="Enter new password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
+                value={formData.password}
+                onChange={onChange}                required
               />
               <input
+              name='confirmPassword'
                 type="password"
                 className="w-full p-2 mb-4 border border-gray-400 rounded focus:outline-none"
                 placeholder="Confirm new password"
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e)=>setConfirmPassword(e.target.value)}
                 required
               />
               <button
+              
                 type="submit"
                 className="w-full p-2 bg-black text-white rounded hover:bg-gray-800"
               >

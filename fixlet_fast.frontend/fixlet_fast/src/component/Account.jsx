@@ -17,7 +17,7 @@ function Account() {
           <h1 className='font-semibold text-2xl mb-4'>All topics</h1>
           <ul>
            <Link to={`/changePassword`} className='flex border-b-2 justify-between items-center'> <li className='py-2 flex items-center '> <span className='text-base  text-gray-700 px-5 py-1'>Change Password</span></li><span><IoIosArrowForward className='text-gray-500' size={20}/></span></Link>
-           <Link className='flex border-b-2 justify-between items-center'> <li className='py-2 flex items-center '> <span className='text-base  text-gray-700 px-5 py-1'>Change Email</span></li><span><IoIosArrowForward className='text-gray-500' size={20}/></span></Link>
+           <Link to={'/changeEmail'} className='flex border-b-2 justify-between items-center'> <li className='py-2 flex items-center '> <span className='text-base  text-gray-700 px-5 py-1'>Change Email</span></li><span><IoIosArrowForward className='text-gray-500' size={20}/></span></Link>
            <Link className='flex justify-between items-center'> <li className='pt-2 flex items-center '> <span className='text-base  text-gray-700 px-5 pt-1'>Payment History</span></li><span><IoIosArrowForward className='text-gray-500' size={20}/></span></Link>
           </ul>
         </div>

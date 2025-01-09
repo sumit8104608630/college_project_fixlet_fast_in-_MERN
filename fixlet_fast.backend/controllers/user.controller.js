@@ -485,22 +485,89 @@ if (!isCityAvailable) {
 })
 
 // let's write controller for changing password
-const changePassword=asyncHandler(async(req,res)=>{
-  try {
-    const {email}=req.user;
-    if(!email){
-      return new ApiResponse("invalid request",400);
-    }
-    const user=await User.findOne({email:email});
-    if(!email){
-      throw new apiError("some thing went wrong in server",500)
-        }
-    // let send and set the otp in database
-    
+const changePassword = asyncHandler(async (req, res) => {
+  try { 
+    const { email, fullName, password } = req.body;
 
+    // Check if any required field is missing
+    if ([email, fullName, password].some(item => item === "")) {
+      return res.status(400).json(new ApiResponse("Invalid request: Missing required fields", 400));
+    }
+
+    // Find user in the database
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.status(404).json(new ApiResponse("User not found", 404));
+    }
+
+    // Generate salt and hash the password
+    const salt = randomBytes(16).toString().trim();
+    const hashAlgorithm = createHmac("sha256", salt).update(password).digest("hex");
+
+    // Update the user's password and fullName
+    await User.findOneAndUpdate({ email: email }, { 
+      $set: { fullName: fullName, password: hashAlgorithm, salt: salt } 
+    });
+
+    // Return success response
+    return res.status(200).json(new ApiResponse("Password changed successfully", 200));
+
+  } catch (error) {
+    // Log the error for debugging
+    console.error(error);
+    return res.status(500).json(new ApiResponse("Something went wrong in the server", 500));
+  }
+});
+
+const checkPassword=asyncHandler(async(req,res)=>{
+ try {
+  const {password}=req.body;
+  const {email}=req.user;
+
+  if(!password){
+    return res.status(400).json(new ApiResponse("Invalid request: Missing required fields", 400))
+  } 
+  const user=await User.findOne({email:email});
+  if(!user){
+    return res.status(404).json(new ApiResponse("User not found",404));
+  }
+  const matchPassword=await User.matchPassword(email,password);
+  if(!matchPassword){
+
+    return res.status(401).json(new ApiResponse("incorrect password",401))
+
+  }
+  return res.status(201).json(new ApiResponse(201,matchPassword,"password verified"))
+
+  
+ } catch (error) {
+  throw new apiError("some thing went wrong in server",500)
+}
+})
+  
+
+
+const changeEmail=asyncHandler(async(req,res)=>{
+  try {
+    const {password,newEmail}=req.body;
+    const {email}=req.user;
+    const user=await User.findOne({email:email});
+    if(!user){
+      return res.status(404).json(new ApiResponse("User not found",404));
+    }
+    const matchPassword=await User.matchPassword(email,password);
+    if(!matchPassword){
+
+      return res.status(401).json(new ApiResponse("incorrect password",401))
+
+    }else{
+    await User.findOneAndUpdate({email:email},{$set:{email:newEmail}})
+    return res.status(200).json(new ApiResponse(200,"","Email changed successfully"))
+    } 
     
   } catch (error) {
-      throw new apiError("some thing went wrong in server",500)
+    console.log(error);
+    throw new apiError("some thing went wrong in server",500)
   }
 })
 
@@ -508,11 +575,14 @@ const changePassword=asyncHandler(async(req,res)=>{
  module.exports={
     userRegister,
     userLogin,
-    userLogout,
+    userLogout, 
     userInfo,
     generateOtp,
     verify_otp,
     saveUserAddress,
-    saveUserCustomAddress
+    saveUserCustomAddress,
+    changePassword,
+    changeEmail,
+    checkPassword
  }
 
