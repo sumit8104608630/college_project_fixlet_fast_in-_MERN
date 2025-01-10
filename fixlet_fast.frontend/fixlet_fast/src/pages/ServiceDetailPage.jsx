@@ -35,19 +35,31 @@ function ServiceDetailPage(props) {
   const state = userInfo?.state;
   const location = useLocation();
   const { headLine } = location.state || {};
-  const [showService,setShowService]=useState(null);
+
+  const [localState, setLocalState] = useState(() => ({
+    serviceId: location.state?.serviceId,
+    subServiceId: location.state?.subServiceId,
+}));  const [showService,setShowService]=useState(null);
   const Context=useContext(currentContext);
 
 
   // let's create the view detail functionality 
-  const handleViewDetail=(serviceId,subServiceId,subservice)=>{
-    setShowService({serviceId:serviceId,subServiceId:subServiceId,subservice})
+  const handleViewDetail=(serviceId,subServiceId)=>{
+const newCart=services_data?.filter(item=>item._id==serviceId)
+const newSubService=newCart[0]?.serviceSubType?.filter(item=>item._id== subServiceId)?.[0];
+    setShowService({serviceId:serviceId,subServiceId:subServiceId,subservice:newSubService})
+   // setLocalState(prevState => ({ ...prevState, serviceId: undefined, subServiceId: undefined }));
   return
   }
 
+  
+
+
  
-  console.log(cartItems[0]?._id)
   useEffect(()=>{
+    // if(localState.serviceId!==undefined&&localState.subServiceId!==undefined){
+    //   handleViewDetail(localState.serviceId, localState.subServiceId)
+    // }
     Context.setCartShow(false)
     return ()=>{
       Context.setCartShow(true)
@@ -118,7 +130,6 @@ const update_addObj=(serviceId,subServiceId,subService,quantity,price)=>{
 }))
 
 const filter_subService=new_cart[0]?.serviceSubType?.filter(item=>item._id===subServiceId);
-console.log(filter_subService)
 const new_obj={
   serviceName:"",
   serviceId:serviceId,
@@ -202,7 +213,6 @@ const remove_obj=(serviceId,subServiceId,price)=>{
 
   const handleAddServices = async (serviceId,subServiceId,subService,price) => {
     try {
-      console.log(serviceId)
       const obj = {
         serviceId: serviceId,
         subServiceId: subServiceId,

@@ -396,21 +396,20 @@ function Dashbord() {
 
         <div className='flex justify-between  '>
         <div className='w-72'>
-            <Link>
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=carpenter`} state={{ service: 'Carpenter',/*serviceId:"677cf1a98a8d59822675b7e2",subServiceId:"677cf1a98a8d59822675b7e4" */}}>
             <div className='flex flex-col h-48 rounded w-72 justify-end bg-cover' style={{ backgroundImage: `url(${AC_service_image})` }}>
             </div>
             <div>
-            <p className=' text-lg font-semibold text-gray-600  my-auto'>Save electricity bill </p>
+            <p className=' text-lg font-semibold text-gray-600  my-auto'>Drill & hang (wall decor)</p>
             <span className='flex items-center text-gray-600'><FaStar /> 4.8 (4.5M)</span>
             <span className='flex items-center'>
-            <LuIndianRupee/>150
+            <LuIndianRupee/>100
             </span>
             </div>
             </Link>
             </div>
 
             
-
             <div className='w-72'>
             <Link>
             <div className='flex flex-col h-48 rounded w-72 justify-end bg-cover' style={{ backgroundImage: `url(${AC_service_image})` }}>
@@ -426,7 +425,7 @@ function Dashbord() {
             </div>
 
             <div className='w-72'>
-            <Link>
+            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=wallpainting`} state={{ headLine: 'Painting & Water proofing' }}>
             <div className='flex flex-col h-48 rounded w-72 justify-end bg-cover' style={{ backgroundImage: `url(${AC_service_image})` }}>
             </div>
             <div>

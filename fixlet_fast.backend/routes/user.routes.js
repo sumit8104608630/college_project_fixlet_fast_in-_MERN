@@ -13,7 +13,7 @@ userRoute.post("/user_otp",generateOtp);
 userRoute.post("/verify_user_otp",verify_otp);
 userRoute.post("/storeAddress",checkAuthenticationCookie("accessToken"),saveUserAddress);
 userRoute.post("/store_custom_address",checkAuthenticationCookie("accessToken"),saveUserCustomAddress);
-userRoute.post("/change_password",checkAuthenticationCookie("accessToken"),changePassword)
+userRoute.post("/change_password",changePassword)
 userRoute.post("/changeEmail",checkAuthenticationCookie("accessToken"),changeEmail)
 userRoute.post("/check_password",checkAuthenticationCookie("accessToken"),checkPassword)
 module.exports=userRoute; 

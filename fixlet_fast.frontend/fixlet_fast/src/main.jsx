@@ -22,13 +22,17 @@ import { ContextProvider } from './component/Context.jsx'
 import Account from './component/Account.jsx'
 import ChangePassword from './component/ChangePassword.jsx'
 import ChangeEmail from './component/ChangeEmail.jsx'
+import ForgotPassword from './component/ForgotPassword.jsx'
 
 
 const route=createBrowserRouter([
   {
     path:"*",
   element:<ErrorPage/>,
-
+  },
+  {
+    path:"/login/forgotpassword",
+    element:<ForgotPassword/>
   },
   {
     path: "/helpCenter",

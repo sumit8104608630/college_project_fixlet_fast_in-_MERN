@@ -315,7 +315,11 @@ const userLogin=asyncHandler(async(req,res)=>{
         ))
     }
     catch(error){
-        console.log(error);
+        return res.status(401).json({
+          statusCode:401,
+          message:"incorrect password",
+          error:error.message
+        });
     }
 });
 
@@ -490,7 +494,7 @@ const changePassword = asyncHandler(async (req, res) => {
     const { email, fullName, password } = req.body;
 
     // Check if any required field is missing
-    if ([email, fullName, password].some(item => item === "")) {
+    if ([email, password].some(item => item === "")) {
       return res.status(400).json(new ApiResponse("Invalid request: Missing required fields", 400));
     }
 
@@ -510,7 +514,7 @@ const changePassword = asyncHandler(async (req, res) => {
     });
 
     // Return success response
-    return res.status(200).json(new ApiResponse("Password changed successfully", 200));
+    return res.status(200).json(new ApiResponse(200,"","Password changed successfully"));
 
   } catch (error) {
     // Log the error for debugging
@@ -518,7 +522,7 @@ const changePassword = asyncHandler(async (req, res) => {
     return res.status(500).json(new ApiResponse("Something went wrong in the server", 500));
   }
 });
-
+ 
 const checkPassword=asyncHandler(async(req,res)=>{
  try {
   const {password}=req.body;

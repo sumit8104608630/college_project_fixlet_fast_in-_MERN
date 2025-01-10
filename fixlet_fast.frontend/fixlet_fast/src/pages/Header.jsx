@@ -62,6 +62,7 @@ useEffect(()=>{
 },[isLogin,dispatch])
 
 useEffect(()=>{
+  setProfileToggle(false)
   const singleArray=cartItems?.map((item=>item.productDetails)).flat()
   setCartCount(singleArray.length)
 },[cartItems])

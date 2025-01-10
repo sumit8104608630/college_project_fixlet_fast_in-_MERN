@@ -67,6 +67,20 @@ const get_service_data=asyncHandler(async(req,res)=>{
     }
 })
 
+// let's write the functionality for quick installation
+
+// const get_quick_installation=asyncHandler((req,res)=>{
+//     try {
+
+//         const 
+        
+        
+//     } catch (error) {
+//         console.log(error.message)
+//         throw new apiError("some thing wnt wrong",error);
+//     }
+// })
+
 
 module.exports={
     inserting_service_data,

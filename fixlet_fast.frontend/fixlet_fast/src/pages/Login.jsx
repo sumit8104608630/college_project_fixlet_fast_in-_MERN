@@ -3,6 +3,7 @@ import MyImage from "../assets/undraw_secure_login_pdn4 (2).svg";
 import { IoMdEyeOff } from "react-icons/io";
 import { IoEye } from "react-icons/io5";
 import { useNavigate } from "react-router";
+import { Link } from 'react-router';
   import { useDispatch, useSelector } from 'react-redux';
   import { fetchUser } from '../app/Actions/user_action.js';
 
@@ -14,7 +15,7 @@ function Login() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+  const [errorMessage,setError]=useState("");
   // Get the authentication state from Redux
   const { isLogIn, userInfo, isLoading } = useSelector((state) => state.user);
   const [data,setData]=useState({})
@@ -42,7 +43,11 @@ function Login() {
       const datas = await respond.json();
       console.log(datas)
       setData(datas)
-
+      if(datas.statusCode==401){
+        setError("Invalid Email or Password")
+          
+        
+      }
       
     } catch (error) {
       console.log("Error during login:", error);
@@ -75,7 +80,7 @@ useEffect(() => {
 
   return (
     <div className='w-full justify-center flex'>
-    <div className='    w-max md:w-1/2 shadow-gray-300 bg-gray-50 shadow-lg p-5 rounded-lg mb-36 mt-36 '>
+    <div className='    w-max md:w-1/2 shadow-gray-300 bg-gray-50 shadow-lg p-5 rounded-lg mb-36 mt-52 '>
     <div className='flex gap-8'>
       <div className='hidden md:block'>
         <img  src={MyImage} alt='background image' />
@@ -110,7 +115,9 @@ useEffect(() => {
               </button>
             </div>
           </div>
-
+          {errorMessage!==""&&
+             <p className='flex justify-between'> <span className='text-red-500 text-xs'>{errorMessage}</span> <Link to={"forgotpassword"}><span className='text-xs text-red-500' >Forgot password</span></Link></p>
+}
           <div className='mt-5'>
             <input
               className='px-5 py-2 bg-orange-500 text-white font-semibold rounded-lg w-full'
