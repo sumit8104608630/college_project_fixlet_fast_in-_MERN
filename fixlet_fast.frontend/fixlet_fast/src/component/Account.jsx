@@ -8,7 +8,7 @@ function Account() {
   return (
     <main className='flex justify-center py-10 h-screen  bg-gray-100'>
       <div className='w-1/3 '>
-        <Link to={"/"}>
+        <Link to={"/helpCenter"}>
         <FaArrowLeftLong className='' size={30}/>
         </Link>
         <h1 className='text-3xl mt-10 font-bold text-gray-800 mb-5'>How can we help you?</h1>
