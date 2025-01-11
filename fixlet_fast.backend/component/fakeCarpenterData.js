@@ -334,7 +334,7 @@ const carpenterData = [
         ],
       },
       {
-        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734598702/safety_gate_installation_s3wkjz.webp",
+        "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734688728/dooraccessory_hwbmma.webp",
         "subServiceName": "Safety Gate Installation",
         "serviceTime": 120,
         "serviceRatingCount": 0,

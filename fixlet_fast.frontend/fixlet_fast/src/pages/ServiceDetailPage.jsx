@@ -4,7 +4,7 @@ import { FaStar } from "react-icons/fa";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaRegClock } from "react-icons/fa6";
 import { useSearchParams } from 'react-router';
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { useSelector, useDispatch, shallowEqual, connect } from "react-redux";
 import { fetchService } from '../app/Actions/service_action';
 import { useLocation } from "react-router-dom";
 import Loader from "../component/Loader";
@@ -35,7 +35,6 @@ function ServiceDetailPage(props) {
   const state = userInfo?.state;
   const location = useLocation();
   const { headLine } = location.state || {};
-
   const [localState, setLocalState] = useState(() => ({
     serviceId: location.state?.serviceId,
     subServiceId: location.state?.subServiceId,
@@ -45,21 +44,18 @@ function ServiceDetailPage(props) {
 
   // let's create the view detail functionality 
   const handleViewDetail=(serviceId,subServiceId)=>{
-const newCart=services_data?.filter(item=>item._id==serviceId)
-const newSubService=newCart[0]?.serviceSubType?.filter(item=>item._id== subServiceId)?.[0];
-    setShowService({serviceId:serviceId,subServiceId:subServiceId,subservice:newSubService})
-   // setLocalState(prevState => ({ ...prevState, serviceId: undefined, subServiceId: undefined }));
-  return
+  const newCart = services_data?.filter(item => item._id === serviceId);
+const newSubService = newCart?.[0]?.serviceSubType?.find(item => item._id === subServiceId);
+return setShowService({serviceId:serviceId,subServiceId:subServiceId,subservice:newSubService})
+  
   }
 
-  
+
 
 
  
   useEffect(()=>{
-    // if(localState.serviceId!==undefined&&localState.subServiceId!==undefined){
-    //   handleViewDetail(localState.serviceId, localState.subServiceId)
-    // }
+
     Context.setCartShow(false)
     return ()=>{
       Context.setCartShow(true)
@@ -283,7 +279,7 @@ function isEmpty(obj_inside) {
 
   return (
     <>
-      {isLoading && loading && cartItems ? (
+      {  loading  ? (
         <Loader />
       ) : (
         <div className={`flex w-full justify-center `}>

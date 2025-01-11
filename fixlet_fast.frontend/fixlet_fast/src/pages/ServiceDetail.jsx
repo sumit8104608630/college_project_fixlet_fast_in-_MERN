@@ -6,14 +6,16 @@ import { FaStar } from "react-icons/fa";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaRegClock } from "react-icons/fa6";
 import { useEffect,useState } from "react";
+import { useSelector } from 'react-redux';
 function ServiceDetail(props) {
 const MemoizedButton = React.memo(AddButton);
 const [filter_cartItems,setFilter_cartItems] = useState([]);
-const showDetail=props.dataDetail;
+const showDetail=props?.dataDetail;
 const subService=showDetail?.subservice;
 const serviceId=showDetail?.serviceId
 const onAddButton=props.onAddButton;
 const [cartLoading,setCartLoading]=useState(true)
+const { loading, services_data, error } = useSelector(state => state.service);
 
 
 useEffect(()=>{
@@ -27,7 +29,7 @@ if(filter_cartItems.length>0||cartLoading){
 },[filter_cartItems.length,cartLoading])
 
   return (<>
-  {cartLoading?
+  {cartLoading||loading?
 <div className=' flex justify-center items-center h-full'>
 <div className="relative flex flex-col items-center">
         <svg

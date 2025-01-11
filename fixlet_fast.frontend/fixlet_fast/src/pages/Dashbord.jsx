@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import  { useState,useEffect } from 'react'
 import ac_repair from "../assets/button_image/ac_repair.webp"
 import cleaning from "../assets/button_image/cleaning.webp"
 import electresian from "../assets/button_image/electresian.webp"
@@ -11,7 +11,7 @@ import AC_service_image from "../assets/book_image/AC_img.webp"
 import sofa from "../assets/Add/pexels-martinpechy-1866149.jpg"
 import { IoCloseOutline } from "react-icons/io5";
 import electricity_image from "../assets/togglebutton/electrician/electricity.webp"
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { LuIndianRupee } from "react-icons/lu";
 import plumber from "../assets/togglebutton/electrician/plumber.webp"
 import carpenter from "../assets/togglebutton/electrician/carpenter.webp"
@@ -32,18 +32,21 @@ import QuickAccess from '../component/QuickAcces.jsx'
 import { IoIosArrowDropleft } from "react-icons/io";
 import { IoIosArrowDropright } from "react-icons/io";
 import { useRef } from 'react'
-
+import { useContext } from 'react'
+import { currentContext } from '../component/Context.jsx';
 
 
 
 function Dashbord() {
+  const navigate=useNavigate();
   const [link3Toggle,setlink3Toggle]=useState(false);
   const [link2Toggle,setlink2Toggle]=useState(false);
   const [link1Toggle,setlink1Toggle]=useState(false);
-  const {isLoading,userInfo,isLogin}=useSelector((state)=>state.user);
+  const {isLoading,userInfo}=useSelector((state)=>state.user);
   const dispatch=useDispatch();
   const scrollContainRef=useRef(null);
   const city=userInfo?.city
+  const Context=useContext(currentContext);
 
   useEffect(() => {
     dispatch(fetchCart())
@@ -62,6 +65,7 @@ function Dashbord() {
   }, [link3Toggle,link2Toggle,link1Toggle,dispatch,]);
 
 
+
   const scrollLeft=()=>{
     scrollContainRef.current.scrollBy({
       left: -900,
@@ -75,7 +79,10 @@ function Dashbord() {
     })
   }
 
-
+const toogleRender=()=>{
+  Context.setPartValue("Drill & Hang")
+  navigate(`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=carpenter`)
+}
 
 
 
@@ -383,11 +390,11 @@ function Dashbord() {
           <div className='w-full flex flex-col justify-between ' >
             <div className=''>
             <span className='text-xl px-5 w-max rounded py-2  text-white bg-green-700 '>Decorate your Home</span>
-            <p className='text-4xl font-semibold text-gray-600  py-5'>Transform your living space with our premium selection of sofas and home essentials, designed for comfort and style</p>
+            <p className='text-3xl font-normal text-gray-600  py-5'>Transform your living space with our premium selection of sofas and home essentials, designed for comfort and style</p>
             </div>
             <Link > <span className=' bg-black py-2 font-bold  text-white  rounded px-10'>By now</span></Link>
           </div>
-          <div className=' w-full flex  justify-end'><img  className='rounded w-96 ' src={sofa}></img></div>
+          <div className=' w-full flex  justify-end'><img  className='rounded w-80 ' src={sofa}></img></div>
         </div>
 
 
@@ -396,7 +403,7 @@ function Dashbord() {
 
         <div className='flex justify-between  '>
         <div className='w-72'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=carpenter`} state={{ service: 'Carpenter',/*serviceId:"677cf1a98a8d59822675b7e2",subServiceId:"677cf1a98a8d59822675b7e4" */}}>
+            <button onClick={toogleRender}>
             <div className='flex flex-col h-48 rounded w-72 justify-end bg-cover' style={{ backgroundImage: `url(${AC_service_image})` }}>
             </div>
             <div>
@@ -406,7 +413,7 @@ function Dashbord() {
             <LuIndianRupee/>100
             </span>
             </div>
-            </Link>
+            </button>
             </div>
 
             
@@ -441,15 +448,15 @@ function Dashbord() {
         </div>
 
 
-        <div className='flex mt-20 py-10 px-10  bg-amber-100'>
+        <div className='flex mt-20 py-10 px-10 rounded  bg-amber-100'>
           <div className='w-full flex flex-col justify-between ' >
             <div className=''>
             <span className='text-xl px-5 w-max rounded py-2  text-white bg-green-700 '>Decorate your Home</span>
-            <p className='text-4xl font-semibold text-gray-600  py-5'>Transform your living space with our premium selection of sofas and home essentials, designed for comfort and style</p>
+            <p className='text-3xl font-normal text-gray-600  py-5'>Transform your living space with our premium selection of sofas and home essentials, designed for comfort and style</p>
             </div>
             <Link > <span className=' bg-black py-2 font-bold  text-white  rounded px-10'>By now</span></Link>
           </div>
-          <div className=' w-full flex  justify-end'><img  className='rounded w-96 ' src={sofa}></img></div>
+          <div className=' w-full flex  justify-end'><img  className='rounded w-80 ' src={sofa}></img></div>
         </div>
 
       </main>
