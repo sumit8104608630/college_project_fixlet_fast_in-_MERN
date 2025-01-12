@@ -30,7 +30,7 @@ export const fetchCart=createAsyncThunk(
     }
 })
 
-export const fetchCheckOut=()=>{
+export const fetchCheckOut=createAsyncThunk(
     // let create the fetchCheckOut functionality
     "cart/cartCheckOut",
     async(_,{rejectWithValue})=>{
@@ -53,4 +53,4 @@ export const fetchCheckOut=()=>{
     
 
     }
-}
+)

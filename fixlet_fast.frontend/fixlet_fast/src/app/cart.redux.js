@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {fetchCart} from"./Actions/cart_action.js"
+import {fetchCart,fetchCheckOut} from"./Actions/cart_action.js"
 
 // let create the slice for the cart functionality
 
@@ -34,21 +34,21 @@ const cartSlice=createSlice({
             state.cartError=[];
             state.cartError=action.payload;
         })
-        // .addCase(fetchCheckOut.pending,(state)=>{
-        //     state.checkOutItemLoading=true;
-        //     state.checkOutItem={};
-        //     state.checkOutItemError=null;
-        // })
-        // .addCase(fetchCheckOut.fulfilled,(state,action)=>{
-        //     state.checkOutItemLoading=false;
-        //     state.checkOutItem=action.payload;
-        //     state.checkOutItemError=null
-        // })
-        // .addCase(fetchCheckOut.rejected,(state,action)=>{
-        //     state.checkOutItemLoading=false;
-        //     state.checkOutItem={};
-        //     state.checkOutItemError=action.payload;
-        // })
+        .addCase(fetchCheckOut.pending,(state)=>{
+            state.checkOutItemLoading=true;
+            state.checkOutItem=[];
+            state.checkOutItemError=null;
+        })
+        .addCase(fetchCheckOut.fulfilled,(state,action)=>{
+            state.checkOutItemLoading=false;
+            state.checkOutItem=action.payload;
+            state.checkOutItemError=null
+        })
+        .addCase(fetchCheckOut.rejected,(state,action)=>{
+            state.checkOutItemLoading=false;
+            state.checkOutItem={};
+            state.checkOutItemError=action.payload;
+        })
     }
 })
 

@@ -27,6 +27,7 @@ export const authenticationSlice=createSlice({
         .addCase(fetchUser.pending,(state)=>{
             state.isLoading=true
             state.error=null;
+            
         })
         .addCase(fetchUser.fulfilled,(state,action)=>{
             state.isLogin=true

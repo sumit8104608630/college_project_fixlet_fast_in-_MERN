@@ -180,6 +180,7 @@ const cancel_the_service = asyncHandler(async (req, res) => {
         console.error(error);
         return res.status(500).json(new ApiResponse(500, "Something went wrong on the server"));
     }
+    
 });
 
 
@@ -216,6 +217,7 @@ const get_all_cart_services = asyncHandler(async (req, res) => {
                 totalPrice: { $sum: '$products.subServices.totalPrice' },
               },
             },
+            { $sort: { totalQuantity: -1 } },
           ]);
           
           // Add `orderId` after the aggregation
@@ -242,7 +244,7 @@ const get_all_cart_services = asyncHandler(async (req, res) => {
   // sub service type
   const checkout_filter=asyncHandler(async(req,res)=>{
 try {
-    const categories= req.body;
+    const { state = "maharashtra", city = "mumbai", categories } = req.query;
     const userId=req.user._id
     console.log(categories);
 

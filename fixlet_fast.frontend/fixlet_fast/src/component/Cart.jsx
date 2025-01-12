@@ -1,7 +1,9 @@
 import React from 'react'
 import { FaIndianRupeeSign } from "react-icons/fa6";
+import Loader from "../component/Loader"
 
 function Cart(props) {
+  
     const subServiceName=props.subServiceName
     const totalPrice=props.totalPrice
     const onClickAdd=props.onClickAdd

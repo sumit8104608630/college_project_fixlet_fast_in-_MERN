@@ -88,7 +88,7 @@ console.log(cartItems)
     </>
     <div className='flex w-full gap-2 my-5'>
       <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=${item._id}`} className='px-5 py-2 text-xl font-semibold text-gray-700 hover:bg-gray-100 bg-white border-2  rounded-lg'>Add Service</Link>
-      <button className='px-5 py-2 text-xl font-semibold text-white bg-orange-500 rounded-lg'>Checkout</button>
+      <Link to={`/check_out/city=${city||"mumbai"}&orderId=${item.orderId}`} className='px-5 py-2 text-xl font-semibold text-white bg-orange-500 rounded-lg'>Checkout</Link>
     </div>
     </div>
     
