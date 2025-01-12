@@ -7,7 +7,10 @@ import {fetchCart} from"./Actions/cart_action.js"
 const initialState = {
     cartLoading:true,
     cartItems:[],
+    checkOutItem:{},
     cartError:null,
+    checkOutItemLoading:true,
+    checkOutItemError:null,
 }
 
 const cartSlice=createSlice({
@@ -31,6 +34,21 @@ const cartSlice=createSlice({
             state.cartError=[];
             state.cartError=action.payload;
         })
+        // .addCase(fetchCheckOut.pending,(state)=>{
+        //     state.checkOutItemLoading=true;
+        //     state.checkOutItem={};
+        //     state.checkOutItemError=null;
+        // })
+        // .addCase(fetchCheckOut.fulfilled,(state,action)=>{
+        //     state.checkOutItemLoading=false;
+        //     state.checkOutItem=action.payload;
+        //     state.checkOutItemError=null
+        // })
+        // .addCase(fetchCheckOut.rejected,(state,action)=>{
+        //     state.checkOutItemLoading=false;
+        //     state.checkOutItem={};
+        //     state.checkOutItemError=action.payload;
+        // })
     }
 })
 

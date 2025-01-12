@@ -9,16 +9,19 @@ import { currentContext } from '../component/Context.jsx';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import emptyCart from "../assets/staticPhotp/emptyCart.svg";
+import Loader from "../component/Loader"
+
+
 
 function Cart() {
   const dispatch=useDispatch();
   const [cartEmpty,setCartEmpty]=useState(false)
-  const [cart,setSart]=useState([]);
+ // const [cart,setSart]=useState([]);
   const footerShow=useContext(currentContext)
   const {cartLoading,cartItems,cartError}=useSelector((state)=>state.cart);
-  const {isLoading,userInfo,isLogin}=useSelector((state)=>state.user);
+  const {isLoading,userInfo}=useSelector((state)=>state.user);
   const city=userInfo?.city
-
+console.log(cartItems)
   useEffect(()=>{
     footerShow.setFooterShow(false)
     dispatch(fetchCart());
@@ -35,7 +38,7 @@ function Cart() {
     }
   },[cartItems])
   console.log(cartItems)
-  return (<>{cartLoading?<>loading...</>:
+  return (<>{cartLoading?<><Loader/></>:
     <main className=' pt-28  flex flex-col   items-center w-full px-32'>
       {cartEmpty?
       <div className='flex justify-between gap-5  flex-col items-center px-5 pt-3 '>

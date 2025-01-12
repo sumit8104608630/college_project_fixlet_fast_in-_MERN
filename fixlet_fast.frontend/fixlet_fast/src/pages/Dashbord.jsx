@@ -5,14 +5,11 @@ import electresian from "../assets/button_image/electresian.webp"
 import festival_decoration from "../assets/button_image/festival_decoration.webp"
 import paint from "../assets/button_image/paint.webp"
 import wallPanel from "../assets/button_image/wallPanel.jpeg"
-import { FaStar } from "react-icons/fa6";
 import Addvertice from '../component/Addvertice'
-import AC_service_image from "../assets/book_image/AC_img.webp"
 import sofa from "../assets/Add/pexels-martinpechy-1866149.jpg"
 import { IoCloseOutline } from "react-icons/io5";
 import electricity_image from "../assets/togglebutton/electrician/electricity.webp"
 import { Link, useNavigate } from 'react-router'
-import { LuIndianRupee } from "react-icons/lu";
 import plumber from "../assets/togglebutton/electrician/plumber.webp"
 import carpenter from "../assets/togglebutton/electrician/carpenter.webp"
 import Loader from "../component/Loader"
@@ -36,7 +33,6 @@ import { useContext } from 'react'
 import { currentContext } from '../component/Context.jsx';
 
 
-
 function Dashbord() {
   const navigate=useNavigate();
   const [link3Toggle,setlink3Toggle]=useState(false);
@@ -47,9 +43,16 @@ function Dashbord() {
   const scrollContainRef=useRef(null);
   const city=userInfo?.city
   const Context=useContext(currentContext);
+    const {cartLoading,}=useSelector((state)=>state.cart);
+  
+    useEffect(()=>{
+      dispatch(fetchCart())
+      return ()=>{
+
+      }
+    },[dispatch])
 
   useEffect(() => {
-    dispatch(fetchCart())
     window.scroll(0,0)
     if (link3Toggle||link2Toggle||link1Toggle) {
       document.body.style.overflow="hidden"
@@ -87,7 +90,7 @@ const toogleRender=()=>{
 
 
   return (
-    <>{isLoading?<Loader/>:
+    <>{isLoading||cartLoading?<Loader/>:
 
 
       <main  className={ `custom-dashBoardScroll   pt-28   w-full px-32 ${ link3Toggle&&"  overflow-hidden "}` }>
@@ -386,7 +389,7 @@ const toogleRender=()=>{
 </div>
 
 
-        <div className='flex mt-20 py-10 px-10  bg-amber-100'>
+        <div className='flex mt-20 py-10 px-10  rounded bg-amber-100'>
           <div className='w-full flex flex-col justify-between ' >
             <div className=''>
             <span className='text-xl px-5 w-max rounded py-2  text-white bg-green-700 '>Decorate your Home</span>
@@ -399,65 +402,6 @@ const toogleRender=()=>{
 
 
 
-        <h1 className='mt-20 text-2xl font-semibold mb-5'>Quick Home Installation</h1>
-
-        <div className='flex justify-between  '>
-        <div className='w-72'>
-            <button onClick={toogleRender}>
-            <div className='flex flex-col h-48 rounded w-72 justify-end bg-cover' style={{ backgroundImage: `url(${AC_service_image})` }}>
-            </div>
-            <div>
-            <p className=' text-lg font-semibold text-gray-600  my-auto'>Drill & hang (wall decor)</p>
-            <span className='flex items-center text-gray-600'><FaStar /> 4.8 (4.5M)</span>
-            <span className='flex items-center'>
-            <LuIndianRupee/>100
-            </span>
-            </div>
-            </button>
-            </div>
-
-            
-            <div className='w-72'>
-            <Link>
-            <div className='flex flex-col h-48 rounded w-72 justify-end bg-cover' style={{ backgroundImage: `url(${AC_service_image})` }}>
-            </div>
-            <div>
-            <p className=' text-lg font-semibold text-gray-600  my-auto'>Save electricity bill </p>
-            <span className='flex items-center text-gray-600'><FaStar /> 4.8 (4.5M)</span>
-            <span className='flex items-center'>
-            <LuIndianRupee/>150
-            </span>
-            </div>
-            </Link>
-            </div>
-
-            <div className='w-72'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=wallpainting`} state={{ headLine: 'Painting & Water proofing' }}>
-            <div className='flex flex-col h-48 rounded w-72 justify-end bg-cover' style={{ backgroundImage: `url(${AC_service_image})` }}>
-            </div>
-            <div>
-            <p className=' text-lg font-semibold text-gray-600  my-auto'>Save electricity bill </p>
-            <span className='flex items-center text-gray-600'><FaStar /> 4.8 (4.5M)</span>
-            <span className='flex items-center'>
-            <LuIndianRupee/>150
-            </span>
-            </div>
-            </Link>
-            </div>
-
-        </div>
-
-
-        <div className='flex mt-20 py-10 px-10 rounded  bg-amber-100'>
-          <div className='w-full flex flex-col justify-between ' >
-            <div className=''>
-            <span className='text-xl px-5 w-max rounded py-2  text-white bg-green-700 '>Decorate your Home</span>
-            <p className='text-3xl font-normal text-gray-600  py-5'>Transform your living space with our premium selection of sofas and home essentials, designed for comfort and style</p>
-            </div>
-            <Link > <span className=' bg-black py-2 font-bold  text-white  rounded px-10'>By now</span></Link>
-          </div>
-          <div className=' w-full flex  justify-end'><img  className='rounded w-80 ' src={sofa}></img></div>
-        </div>
 
       </main>
 }

@@ -6,8 +6,10 @@ const {ApiResponse}=require("../utils/apiResponse.js")
 //let's require the cart model and service model
 const Cart=require("../model/cart.model.js");
 const Service=require("../model/service.model.js");
+const { ObjectId } = require('mongodb');
 const User =require("../model/user.model.js") 
 // Improved error handling using ApiResponse
+
 
 const add_service_to_cart = asyncHandler(async (req, res) => {
     try {
@@ -192,28 +194,35 @@ const get_all_cart_services = asyncHandler(async (req, res) => {
             return res.status(404).json(new ApiResponse(404, "Cart not found"));
         }
         // let make better array of object for frontend for rendering the cart and handling  using aggregation pipeline 
-
         const group_cart = await Cart.aggregate([
-                {$match:{userId:userId}},
-                {$unwind:'$products'},
-                {$unwind:'$products.subServices'},
-                {$group:{
-                _id:'$products.serviceType',
-                serviceTypeName:{$first:"$products.serviceTypeName"},
-
-                productDetails: {  // Collect product details into an array
+            { $match: { userId: userId } },
+            { $unwind: '$products' },
+            { $unwind: '$products.subServices' },
+            {
+              $group: {
+                _id: '$products.serviceType',
+                serviceTypeName: { $first: '$products.serviceTypeName' },
+                orderId:{$first:`$products._id`},
+                productDetails: {
+                  // Collect product details into an array
                   $push: {
-                    serviceName: "$products.serviceName",
-                    serviceId: "$products.serviceId",
-                    subService: "$products.subServices",
+                    serviceName: '$products.serviceName',
+                    serviceId: '$products.serviceId',
+                    subService: '$products.subServices',
+                  },
                 },
+                totalQuantity: { $sum: '$products.subServices.quantity' },
+                totalService: { $sum: 1 },
+                totalPrice: { $sum: '$products.subServices.totalPrice' },
+              },
             },
-                totalQuantity:{$sum:"$products.subServices.quantity"},
-                totalService:{ $sum:1 },
-                totalPrice:{$sum:"$products.subServices.totalPrice"}
-              }
-            }
           ]);
+          
+          // Add `orderId` after the aggregation
+     
+          
+      
+          
 
           if(!group_cart){
             return res.status(404).json(new ApiResponse(404, "Cart not found"));
@@ -228,11 +237,37 @@ const get_all_cart_services = asyncHandler(async (req, res) => {
     }
   });
   
+  // let's create the checkout functionality to filter particular
+  // service type and sub service type and calculate the total price and quantity of the service type and
+  // sub service type
+  const checkout_filter=asyncHandler(async(req,res)=>{
+try {
+    const categories= req.body;
+    const userId=req.user._id
+    console.log(categories);
+
+    const cart_checkout=await Cart.findOne({userId:userId});
+    const product=await cart_checkout.products.filter(item=>item.serviceType==categories.categories);
+    
+
+    if(!cart_checkout){
+        return res.status(404).json(new ApiResponse(404, "Cart not found"));
+    }
+    return res.status(200).json(product);
+    
+} catch (error) {
+    console.log(error)
+    throw new apiError("something went wrong")
+}
+  })
+  
+
 
 
 // lets export all functionality
 module.exports={
     add_service_to_cart, 
     cancel_the_service,
-    get_all_cart_services
+    get_all_cart_services,
+    checkout_filter
 }

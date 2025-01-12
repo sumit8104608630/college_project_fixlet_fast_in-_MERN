@@ -84,7 +84,7 @@ const route=createBrowserRouter([
         element:<ServiceDetailPage/>
       },
       {
-        path:"/booking_detail/:id",
+        path:"/check_out/:service_name",
         element:<BookingPage/>
       },
       {

@@ -3,7 +3,7 @@ import { Link } from 'react-scroll'; // Importing Link from react-scroll
 import { FaStar } from "react-icons/fa";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaRegClock } from "react-icons/fa6";
-import { useSearchParams } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 import { useSelector, useDispatch, shallowEqual, connect } from "react-redux";
 import { fetchService } from '../app/Actions/service_action';
 import { useLocation } from "react-router-dom";
@@ -20,6 +20,7 @@ import { IoCloseOutline } from "react-icons/io5";
 
 
 function ServiceDetailPage(props) {
+  
   const cart = useSelector((state) => state.cart.cartItems, shallowEqual);
   const [cartItems,setCartItems]=useState([{}])
   const MemoizedButton = React.memo(AddButton);
@@ -34,6 +35,7 @@ function ServiceDetailPage(props) {
   const categories = searchParams.get('categories');
   const state = userInfo?.state;
   const location = useLocation();
+  const navigate =useNavigate()
   const { headLine } = location.state || {};
   const [localState, setLocalState] = useState(() => ({
     serviceId: location.state?.serviceId,
@@ -275,6 +277,9 @@ function isEmpty(obj_inside) {
     }
   };
 
+  const handleCheckOut=()=>{
+    navigate(`/check_out/${categories}`)
+  }
 
 
   return (
@@ -284,14 +289,13 @@ function isEmpty(obj_inside) {
       ) : (
         <div className={`flex w-full justify-center `}>
           <div className="gap-5 justify-around w-4/5 mt-20 flex">
-            <div className="h-min sticky top-24">
+            <div className="h-min sticky top-20">
               <h1 className="text-3xl font-semibold mt-5 text-gray-700 mb-5">{headLine}</h1>
               {services_data.length <= 1 && !loading ? (
                 <div><Promise /></div>
               ) : (
                 <div
-                  className={`grid h-max w-max grid-cols-${Math.ceil(services_data.length <= 2 ? 2 : services_data.length / 2)} gap-5 border-2 p-5 rounded-lg`}
-                  style={{ gridTemplateColumns: `repeat(${Math.ceil(services_data.length <= 2 ? 2 : services_data.length / 2)}, 1fr)` }}
+                  className={`grid h-max w-max grid-cols-${Math.ceil(services_data.length <= 2 ? 2 : services_data.length / 2)} gap-5 border-2 p-5 rounded-lg`} style={{ gridTemplateColumns: `repeat(${Math.ceil(services_data.length <= 2 ? 2 : services_data.length >2?3:services_data.length/2)}, 1fr)` } }
                 >
                   {services_data.map((service) => (
                     <Link
@@ -312,7 +316,7 @@ function isEmpty(obj_inside) {
                           alt={service.serviceName}
                           className="w-full h-auto object-cover rounded"
                         />
-                        <h2 className="text-center text-sm text-gray-600 font-semibold mt-4">{service.serviceName}</h2>
+                        <h2 className="text-center text-sm text-gray-600 font-semibold ">{service.serviceName}</h2>
                       </div>
                     </Link>
                   ))}
@@ -426,7 +430,8 @@ function isEmpty(obj_inside) {
                     </div>
                     <hr className='bg-gray-500 h-0.5 my-2' />
                     <div>
-                      <button className='flex justify-between w-full px-5 py-2 hover:bg-orange-600 bg-orange-500 rounded text-white font-semibold text-lg'>
+                      <button onClick={handleCheckOut} className='flex justify-between w-full px-5 py-2 hover:bg-orange-600 bg-orange-500 rounded text-white font-semibold text-lg'>
+                      
                         <span className='flex items-center'>
                           <FaIndianRupeeSign />
                           {cartItems?.filter((services) => services?._id === categories)[0]?.totalPrice}

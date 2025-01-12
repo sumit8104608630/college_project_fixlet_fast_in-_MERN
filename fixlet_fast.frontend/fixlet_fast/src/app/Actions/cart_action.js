@@ -29,3 +29,28 @@ export const fetchCart=createAsyncThunk(
         return rejectWithValue(error.message)
     }
 })
+
+export const fetchCheckOut=()=>{
+    // let create the fetchCheckOut functionality
+    "cart/cartCheckOut",
+    async(_,{rejectWithValue})=>{
+        try {
+            const response=await fetch(`http://localhost:8000/cart/cart_checkout_filter`,{
+                method:'GET',
+                headers:{
+                    'Content-Type':'application/json',
+                },
+                credentials:"include"
+            } )
+            const data=await response.json();
+            if(!data.statusCode===200){
+                return rejectWithValue(data.data || "Failed to fetch cart");
+            }
+    }
+        catch (error) {
+            console.log(error)
+        }
+    
+
+    }
+}
