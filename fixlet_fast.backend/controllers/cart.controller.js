@@ -39,13 +39,14 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
                 if (subServiceIndex !== -1) {
                     const subService = serviceInCart.subServices[subServiceIndex];
                     subService.quantity += quantity;
+                    subService.serviceTime = Number(currentSubService.serviceTime)*Number(subService.quantity);
                     subService.totalPrice = subService.quantity * currentSubService.price;
                 } else {
                     const newSubService = {
-                        subServiceId,
+                        subServiceId, 
                         subServiceName: currentSubService.subServiceName,
                         subServiceImage: currentSubService.subServiceImage,
-                        serviceTime:currentSubService.serviceTime,
+                        serviceTime:Number(currentSubService.serviceTime)*quantity,
                         included: currentSubService.included,
                         note: currentSubService.note,
                         quantity,
@@ -66,7 +67,7 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
                         subServiceId,
                         subServiceName: currentSubService.subServiceName,
                         subServiceImage: currentSubService.subServiceImage,
-                        serviceTime:currentSubService.serviceTime,
+                        serviceTime:Number(currentSubService.serviceTime)*quantity,
                         included: currentSubService.included,
                         note: currentSubService.note,
                         quantity,
@@ -91,7 +92,7 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
                         subServiceId,
                         subServiceName: currentSubService.subServiceName,
                         subServiceImage: currentSubService.subServiceImage,
-                        serviceTime:currentSubService.serviceTime,
+                        serviceTime:Number(currentSubService.serviceTime)*quantity,
                         included: currentSubService.included,
                         note: currentSubService.note,
                         quantity,
@@ -159,6 +160,7 @@ const cancel_the_service = asyncHandler(async (req, res) => {
         const currentSubService = product.subServices[subServiceIndex];
 
         if (currentSubService.quantity > 1) {
+            currentSubService.serviceTime=Number(currentSubService.serviceTime)/Number(currentSubService.quantity)
             currentSubService.quantity -= 1;
             currentSubService.totalPrice = currentSubService.quantity * subService.price;
         } else {
@@ -244,9 +246,8 @@ const get_all_cart_services = asyncHandler(async (req, res) => {
   // sub service type
   const checkout_filter=asyncHandler(async(req,res)=>{
 try {
-    const { state = "maharashtra", city = "mumbai", orderId } = req.query;
+    const { state = "maharashtra", city = "mumbai", categories } = req.query;
     const userId=req.user._id
-    console.log(orderId);
     const user=await User.findById(userId);
     if(!user){
         return res.status(404).json(new ApiResponse(404, "User not found"));
@@ -255,8 +256,36 @@ try {
     if(!cart){
         return res.status(404).json(new ApiResponse(404, "Cart not found"));
     }
-    const product= await cart.products.filter(item=>item._id.toString()===orderId)
 
+         
+    const group_cart = await Cart.aggregate([
+        { $match: { userId: userId } },
+        { $unwind: '$products' },
+        { $unwind: '$products.subServices' },
+        {
+          $group: {
+            _id: '$products.serviceType',
+            serviceTypeName: { $first: '$products.serviceTypeName' },
+            orderId:{$first:`$products._id`},
+            productDetails: {
+              // Collect product details into an array
+              $push: {
+                serviceName: '$products.serviceName',
+                serviceId: '$products.serviceId',
+                subService: '$products.subServices',
+              },
+            },
+            totalQuantity: { $sum: '$products.subServices.quantity' },
+            totalService: { $sum: 1 },
+            totalTime:{$sum:'$products.subServices.serviceTime'},
+            totalPrice: { $sum: '$products.subServices.totalPrice' },
+          },
+        },
+        { $sort: { totalQuantity: -1 } },
+      ]);
+
+    
+const product=await group_cart.filter(item=>item._id===categories)
     return res.status(200).json(new ApiResponse(200,product,"success"));
     
 } catch (error) {

@@ -33,9 +33,9 @@ export const fetchCart=createAsyncThunk(
 export const fetchCheckOut=createAsyncThunk(
     // let create the fetchCheckOut functionality
     "cart/cartCheckOut",
-    async(_,{rejectWithValue})=>{
+    async({state,city,categories},{rejectWithValue})=>{
         try {
-            const response=await fetch(`http://localhost:8000/cart/cart_checkout_filter?state=${state}&city=${city}&orderId=${orderId}`,{
+            const response=await fetch(`http://localhost:8000/cart/cart_checkout_filter?state=${state}&city=${city}&categories=${categories}`,{
                 method:'GET',
                 headers:{
                     'Content-Type':'application/json',
@@ -46,6 +46,7 @@ export const fetchCheckOut=createAsyncThunk(
             if(!data.statusCode===200){
                 return rejectWithValue(data.data || "Failed to fetch cart");
             }
+            return data.data[0];
     }
         catch (error) {
             console.log(error)

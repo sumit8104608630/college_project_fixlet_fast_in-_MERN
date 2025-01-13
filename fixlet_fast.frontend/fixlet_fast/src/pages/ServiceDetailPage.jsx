@@ -275,8 +275,8 @@ function isEmpty(obj_inside) {
     }
   };
 
-  const handleCheckOut=(orderId)=>{
-    navigate(`/check_out/city=${city||"mumbai"}&orderId=${orderId}`)
+  const handleCheckOut=(categories)=>{
+    navigate(`/check_out/?city=${city||"mumbai"}&categories=${categories}`)
   }
 
 
@@ -428,7 +428,7 @@ function isEmpty(obj_inside) {
                     </div>
                     <hr className='bg-gray-500 h-0.5 my-2' />
                     <div>
-                      <button onClick={()=>handleCheckOut(cartItems?.filter((services) => services?._id === categories)[0]?.orderId)} className='flex justify-between w-full px-5 py-2 hover:bg-orange-600 bg-orange-500 rounded text-white font-semibold text-lg'>
+                      <button onClick={()=>handleCheckOut( categories)} className='flex justify-between w-full px-5 py-2 hover:bg-orange-600 bg-orange-500 rounded text-white font-semibold text-lg'>
                       
                         <span className='flex items-center'>
                           <FaIndianRupeeSign />

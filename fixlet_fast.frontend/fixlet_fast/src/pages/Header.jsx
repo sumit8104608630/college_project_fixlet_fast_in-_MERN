@@ -124,7 +124,7 @@ useEffect(()=>{
             
           </div>:null
 }
-{userInfo?
+{userInfo&&Show.checkout?
 <div className='flex items-center gap-5'>
   {Show.cartShow&&
 <div className="relative">
