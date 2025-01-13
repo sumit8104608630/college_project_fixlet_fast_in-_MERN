@@ -276,7 +276,7 @@ function isEmpty(obj_inside) {
   };
 
   const handleCheckOut=(orderId)=>{
-    navigate(`/check_out/city=${city||"mumbai"}?&&orderId=${orderId}`)
+    navigate(`/check_out/city=${city||"mumbai"}&orderId=${orderId}`)
   }
 
 

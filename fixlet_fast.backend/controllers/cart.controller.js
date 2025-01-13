@@ -244,18 +244,20 @@ const get_all_cart_services = asyncHandler(async (req, res) => {
   // sub service type
   const checkout_filter=asyncHandler(async(req,res)=>{
 try {
-    const { state = "maharashtra", city = "mumbai", categories } = req.query;
+    const { state = "maharashtra", city = "mumbai", orderId } = req.query;
     const userId=req.user._id
-    console.log(categories);
-
-    const cart_checkout=await Cart.findOne({userId:userId});
-    const product=await cart_checkout.products.filter(item=>item.serviceType==categories.categories);
-    
-
-    if(!cart_checkout){
+    console.log(orderId);
+    const user=await User.findById(userId);
+    if(!user){
+        return res.status(404).json(new ApiResponse(404, "User not found"));
+    }
+    const cart=await Cart.findOne({userId:userId});
+    if(!cart){
         return res.status(404).json(new ApiResponse(404, "Cart not found"));
     }
-    return res.status(200).json(product);
+    const product= await cart.products.filter(item=>item._id.toString()===orderId)
+
+    return res.status(200).json(new ApiResponse(200,product,"success"));
     
 } catch (error) {
     console.log(error)

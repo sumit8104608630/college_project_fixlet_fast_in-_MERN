@@ -35,7 +35,7 @@ export const fetchCheckOut=createAsyncThunk(
     "cart/cartCheckOut",
     async(_,{rejectWithValue})=>{
         try {
-            const response=await fetch(`http://localhost:8000/cart/cart_checkout_filter`,{
+            const response=await fetch(`http://localhost:8000/cart/cart_checkout_filter?state=${state}&city=${city}&orderId=${orderId}`,{
                 method:'GET',
                 headers:{
                     'Content-Type':'application/json',

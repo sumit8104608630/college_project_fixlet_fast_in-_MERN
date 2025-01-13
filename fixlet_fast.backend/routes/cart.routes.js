@@ -11,7 +11,7 @@ const {checkAuthenticationCookie}=require("../middlewares/authenticate.middlewar
 cartRoute.post("/cart_of_service",checkAuthenticationCookie("accessToken"),add_service_to_cart);
 cartRoute.post("/reduce_service_cart",checkAuthenticationCookie("accessToken"),cancel_the_service);
 cartRoute.get("/get_all_services_cart",checkAuthenticationCookie("accessToken"),get_all_cart_services);
-cartRoute.post("/cart_checkout_filter",checkAuthenticationCookie("accessToken"),checkout_filter);
+cartRoute.get("/cart_checkout_filter",checkAuthenticationCookie("accessToken"),checkout_filter);
 
 //let's export the module         
 module.exports=cartRoute         
