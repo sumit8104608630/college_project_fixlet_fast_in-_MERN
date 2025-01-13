@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router';
 
 function Header() {
 const {cartLoading,cartItems,cartError}=useSelector((state)=>state.cart);
-const cartShow=useContext(currentContext)
+const Show=useContext(currentContext)
 const [profileToggle,setProfileToggle]=useState(false)
 const dispatch=useDispatch();
 const [cartCount, setCartCount] = useState(); // Example cart count
@@ -73,6 +73,7 @@ useEffect(()=>{
         
       <nav className={`fixed w-full ${isScroll ? 'shadow-xl' : 'shadow-none'} items-center`}>
         <div className='flex justify-between  px-10 items-center py-2 bg-orange-500'>
+          <div className='flex items-center gap-20'>
           <div>
             <Link to={"/"}>  
               <img className='w-12' src={logo} alt='logo'></img>
@@ -98,11 +99,13 @@ useEffect(()=>{
               </li>
             </ul>
           </div>
-          
+          </div>
+          {Show.checkout&&
           <div className="flex gap-5">
            {userInfo?<Location />:""}
            <SearchBar/>
             </div>
+}
 
 { !userInfo?
           <div className='flex gap-5'>
@@ -123,7 +126,7 @@ useEffect(()=>{
 }
 {userInfo?
 <div className='flex items-center gap-5'>
-  {cartShow.cartShow&&
+  {Show.cartShow&&
 <div className="relative">
       <Link to="/cart">
         <FaShoppingCart size={25} className="text-white font-bold" />

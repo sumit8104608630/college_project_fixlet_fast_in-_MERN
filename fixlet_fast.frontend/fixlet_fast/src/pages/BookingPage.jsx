@@ -6,13 +6,23 @@ import { IoIosMail } from "react-icons/io";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoTime } from "react-icons/io5";
 import { MdPayments } from "react-icons/md";
-
+import { useContext } from 'react';
+import { currentContext } from '../component/Context.jsx';
 
 
 
 function BookingPage() {
   const [searchParams] = useSearchParams();
   const {isLoading,userInfo}=useSelector((state)=>state.user);
+    const Context=useContext(currentContext);
+
+    useEffect(()=>{
+      Context.setCheckout(false)
+      return()=>{
+        Context.setCheckout(true)
+      }
+    },[Context])
+  
 console.log(userInfo)
   return (
     <main className='pt-28 w-full flex justify-center px-20'>
