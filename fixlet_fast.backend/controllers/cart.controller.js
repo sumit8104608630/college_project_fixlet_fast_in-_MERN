@@ -160,7 +160,8 @@ const cancel_the_service = asyncHandler(async (req, res) => {
         const currentSubService = product.subServices[subServiceIndex];
 
         if (currentSubService.quantity > 1) {
-            currentSubService.serviceTime=Number(currentSubService.serviceTime)/Number(currentSubService.quantity)
+            currentSubService.serviceTime=Number(currentSubService.serviceTime)-Number(currentSubService.serviceTime)/Number(currentSubService.quantity)
+
             currentSubService.quantity -= 1;
             currentSubService.totalPrice = currentSubService.quantity * subService.price;
         } else {
@@ -284,6 +285,7 @@ try {
         { $sort: { totalQuantity: -1 } },
       ]);
 
+      
     
 const product=await group_cart.filter(item=>item._id===categories)
     return res.status(200).json(new ApiResponse(200,product,"success"));

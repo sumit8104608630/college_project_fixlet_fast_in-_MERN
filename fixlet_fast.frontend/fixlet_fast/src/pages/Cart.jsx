@@ -21,7 +21,6 @@ function Cart() {
   const {cartLoading,cartItems,cartError}=useSelector((state)=>state.cart);
   const {isLoading,userInfo}=useSelector((state)=>state.user);
   const city=userInfo?.city
-console.log(cartItems)
   useEffect(()=>{
     footerShow.setFooterShow(false)
     dispatch(fetchCart());
@@ -37,7 +36,6 @@ console.log(cartItems)
       setCartEmpty(false)
     }
   },[cartItems])
-  console.log(cartItems)
   return (<>{cartLoading?<><Loader/></>:
     <main className=' pt-28  flex flex-col   items-center w-full px-32'>
       {cartEmpty?

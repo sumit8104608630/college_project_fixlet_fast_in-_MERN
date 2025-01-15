@@ -68,7 +68,6 @@ return setShowService({serviceId:serviceId,subServiceId:subServiceId,subservice:
     setFilter_cartItems(cart_item[0]?.productDetails || []);
   }, [cart, categories,Context]);
 
-
   useEffect(() => {
     if (state && city && categories) {
       dispatch(fetchService({ state, city, categories }));

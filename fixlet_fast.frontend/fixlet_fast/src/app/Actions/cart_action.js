@@ -46,6 +46,9 @@ export const fetchCheckOut=createAsyncThunk(
             if(!data.statusCode===200){
                 return rejectWithValue(data.data || "Failed to fetch cart");
             }
+            if(data?.statusCode===404){
+                return false
+            }
             return data.data[0];
     }
         catch (error) {
