@@ -57,16 +57,16 @@ return setShowService({serviceId:serviceId,subServiceId:subServiceId,subservice:
  
   useEffect(()=>{
 
-    if(!userInfo){
-      navigate('/login')
-    }
+    // if(!userInfo){
+    //   navigate('/login')
+    // }
 
 
     Context.setCartShow(false)
     return ()=>{
       Context.setCartShow(true)
     }
-  },[Context])
+  },[Context,navigate,userInfo])
 
   useEffect(() => {
     setCartItems(cart)

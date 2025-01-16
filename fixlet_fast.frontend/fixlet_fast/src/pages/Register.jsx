@@ -1,4 +1,4 @@
-import React ,{useEffect, useState} from 'react'
+import React ,{useEffect, useRef, useState} from 'react'
 import {IoMdEyeOff}from "react-icons/io"
 import { IoEye } from "react-icons/io5";
 import { useSelector } from 'react-redux';
@@ -17,7 +17,9 @@ function Register() {
   const [sendOtp,setSendOtp]=useState(false);
   const [otpInput,setOtpInput]=useState(false);
   const [verified, setVerified]=useState(false);
-  const [confirmPasswordInput,setConfirmPassword]=useState("")
+  const [errorMessage,setError]=useState("");
+  const emailInput=useRef(null)
+  const [confirmPasswordInput,setConfirmPassword]=useState()
   const [formData,setFormData]=useState({
     fullName:"",
     email:"",
@@ -66,6 +68,7 @@ function Register() {
     window.scrollTo(0,0)
     if(formData.email.length>0){
       //console.log("yes")
+      setError(false)
       setSendOtp(true)
     }else{
       setSendOtp(false)
@@ -129,7 +132,10 @@ function Register() {
     }
 
   }
-
+const handleEmailVerifiedMessage=()=>{
+  setError("Please verify email")
+  emailInput.current.focus()
+}
 
 
 
@@ -145,10 +151,12 @@ function Register() {
         <div className='flex gap-1 flex-col mt-3'>
           <label>Email : </label>
           <div className='flex gap-3'>
-          <input value={formData.email} disabled={verified} onChange={handelInput} className='border-2 w-full focus:outline-none rounded-lg border-gray-300 px-5 py-1 ' type="email" placeholder='email@gmail.com' name="email" required/>{sendOtp&&<>
+          <input value={formData.email} ref={emailInput} disabled={verified} onChange={handelInput} className='border-2 w-full focus:outline-none rounded-lg border-gray-300 px-5 py-1 ' type="email" placeholder='email@gmail.com' name="email" required/>
+          {sendOtp&&<>
           {!verified?
           <button onClick={()=>handelSendOtp(formData.email)} className='w-1/4 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'> Send OTP</button>:<button onClick={()=>setVerified(false)} className='w-1/2 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'><span>Change mail</span></button>}</>}
           </div>
+          {errorMessage&&<span className='text-red-500 text-xs font-medium'>{errorMessage}</span>}
         </div>
 
         <div className='flex w-full gap-1 flex-col mt-3'>
@@ -176,12 +184,12 @@ function Register() {
           <button type='button' className='text-xl text-center ' onClick={()=>setToggle2(prev=>!prev)}>{toggle2?<IoEye />:<IoMdEyeOff />}</button>
           </div>
         </div>
-        <div className='mt-5 '>
+        <div className='mt-5 relative'>
           {
-            verified?
+            !verified&&<div onClick={handleEmailVerifiedMessage} className='w-full bg-gray-100 rounded-lg bg-opacity-50 h-full absolute'></div>}
           <input  className='px-5 py-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg w-full' value={"Register"} type='submit'/>
-          :""
-}
+          
+
         </div>
       </form>
     </div>

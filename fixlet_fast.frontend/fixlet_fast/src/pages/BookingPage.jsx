@@ -19,7 +19,7 @@ function BookingPage() {
   const [searchParams] = useSearchParams();
   const dispatch=useDispatch()
   const [emptyCart,setEmpty]=useState(false);
-  const {checkOutItemLoading,checkOutItem,checkOutItemError}=useSelector((state)=>state.cart);
+  const {checkOutItemLoading,checkOutItem}=useSelector((state)=>state.cart);
   const [allItem,setAllItem]=useState({})
   const {isLoading,userInfo}=useSelector((state)=>state.user);
     const Context=useContext(currentContext);
@@ -27,6 +27,8 @@ function BookingPage() {
     const categories = searchParams.get('categories');  
     const state = userInfo?.state;
     const footerShow=useContext(currentContext);
+    const [visitationFee,setVisitationFee]=useState(70);
+    const [taxFee,setTaxFee]=useState(80)
 
     
     useEffect(()=>{
@@ -35,6 +37,7 @@ function BookingPage() {
       Context.setCheckout(false)
       return()=>{
         Context.setCheckout(true)
+        footerShow.setFooterShow(true)
       }
     },[Context,city,state,dispatch,categories,footerShow])
 
@@ -103,7 +106,7 @@ const update_cart = (serviceId, subServiceId, subService, quantity, price,time) 
           serviceId: serviceId,
           subServiceId: subServiceId,
         };
-        const response = await fetch(`${apiUrl}/cart/cart_of_service`, {
+        await fetch(`${apiUrl}/cart/cart_of_service`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -149,7 +152,6 @@ const update_cart = (serviceId, subServiceId, subService, quantity, price,time) 
     }
      
     useEffect(() => {
-      console.log(checkOutItem)
       if (allItem.productDetails?.length===0 ) {
         setEmpty(true);
       }
@@ -164,7 +166,7 @@ const update_cart = (serviceId, subServiceId, subService, quantity, price,time) 
         subServiceId: subServiceId,
       };
 
-      const response = await fetch(`{${apiUrl}/cart/reduce_service_cart`, {
+        await fetch(`${apiUrl}/cart/reduce_service_cart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -199,7 +201,7 @@ function isEmpty(obj_inside) {
     <main className='pt-24 w-full flex justify-center px-20'>
       <div className='w-4/5 flex justify-between gap-5'>
         <div className='w-full px-2 flex flex-col gap-5'>
-          <div className='bg-green-200 px-5 rounded-lg py-4'><p className=' text-center text-green-800 font-medium text-xs'>You're saving total ₹60 on this order! .</p></div>
+          <div className='bg-green-200 px-5 rounded-lg py-4'><p className=' text-center text-green-800 font-medium text-xs'>{`You'`} re saving total ₹60 on this order! .</p></div>
 
 
           <div className='border bg-gray-50 rounded-lg pb-2 flex flex-col'>
@@ -268,12 +270,12 @@ function isEmpty(obj_inside) {
             <h1 className='px-5 py-2 text-lg font-medium text-gray-700'>Payment summary</h1>
             <ul className='flex gap-2 flex-col px-4 mt-2'>
               <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>total item</span><span className=' decoration-dotted'>{allItem?.totalPrice}</span></li>
-              <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>Visitation Fee</span><span className=' decoration-dotted'>70</span></li>
-              <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>Tax & Fee</span><span className=' decoration-dotted'>2250</span></li>
+              <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>Visitation Fee</span><span className=' decoration-dotted'>{visitationFee}</span></li>
+              <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>Tax & Fee</span><span className=' decoration-dotted'>{taxFee}</span></li>
             </ul> 
             <hr className='h-0.5 bg-gray-500 my-2'/>
             <div className='px-4'>
-              <p className='flex justify-between px-2 text-lg font-medium py-2 text-gray-800'><span>Total Price</span><span>1200</span></p>
+              <p className='flex justify-between px-2 text-lg font-medium py-2 text-gray-800'><span>Total Price</span><span>{allItem?.totalPrice+visitationFee+taxFee||0}</span></p>
             </div>
           </div>
         </div>

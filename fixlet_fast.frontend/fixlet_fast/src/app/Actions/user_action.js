@@ -15,7 +15,6 @@ export const fetchUser=createAsyncThunk(
                 throw new Error("User not found");
             }
             const userData=await userResponse.json()
-            console.log(userData.statusCode)
             return userData.data
         }
         catch(error){

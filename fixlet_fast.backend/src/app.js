@@ -29,7 +29,8 @@ const userRoute=require("../routes/user.routes.js");
 const serviceRoute = require("../routes/service.routes.js");
 const areaRoute=require("../routes/area.routes.js")
 const cartRoute=require("../routes/cart.routes.js");
-const globalRoute=require("../routes/global.routes.js")
+const globalRoute=require("../routes/global.routes.js");
+const storeRoute=require("../routes/store.routes.js")
 
 
 
@@ -38,7 +39,8 @@ app.use("/user",userRoute);
 app.use("/service",serviceRoute);
 app.use("/area",areaRoute);
 app.use("/cart",cartRoute);
-app.use("/global",globalRoute)
+app.use("/global",globalRoute);
+app.use("/store",storeRoute);
 
 
 
