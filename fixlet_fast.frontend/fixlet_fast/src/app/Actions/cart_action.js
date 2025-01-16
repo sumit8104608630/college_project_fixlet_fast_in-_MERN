@@ -1,4 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit"
+const apiUrl = import.meta.env.VITE_BACKEND_API_URL
 
 // let create the fetchCart functionality
 
@@ -6,8 +7,7 @@ export const fetchCart=createAsyncThunk(
     "cart/fetchCart",
     async(_,{rejectWithValue})=>{
     try {
-        
-        const response=await fetch(`http://localhost:8000/cart/get_all_services_cart`,{
+        const response=await fetch(`${apiUrl}/cart/get_all_services_cart`,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json',
@@ -15,6 +15,10 @@ export const fetchCart=createAsyncThunk(
             credentials:"include"
         });
         const data=await response.json();
+        console.log(data)
+        if(data.statusCode==401){
+            return []
+        }
         if (!response.ok) {
             const errorData = await response.json();
             return rejectWithValue(errorData.message || "Failed to fetch cart");
@@ -35,7 +39,7 @@ export const fetchCheckOut=createAsyncThunk(
     "cart/cartCheckOut",
     async({state,city,categories},{rejectWithValue})=>{
         try {
-            const response=await fetch(`http://localhost:8000/cart/cart_checkout_filter?state=${state}&city=${city}&categories=${categories}`,{
+            const response=await fetch(`${apiUrl}/cart/cart_checkout_filter?state=${state}&city=${city}&categories=${categories}`,{
                 method:'GET',
                 headers:{
                     'Content-Type':'application/json',

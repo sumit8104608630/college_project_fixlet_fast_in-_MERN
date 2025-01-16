@@ -11,6 +11,7 @@ import  axios  from 'axios';
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { useNavigate } from 'react-router';
 import { FaArrowLeftLong } from "react-icons/fa6";
+const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
 function ForgotPassword() {
@@ -52,7 +53,7 @@ const [toggle,setToggle]=useState(false)
       if(formData.email.length>0){
       setButtonToggle(true)
       }
-      const response=await fetch(`http://localhost:8000/user/user_otp`,
+      const response=await fetch(`${apiUrl}/user/user_otp`,
         {
           method: 'POST',
           body:JSON.stringify(formData),
@@ -102,7 +103,7 @@ useEffect(()=>{
         password:formData.password
       }
       console.log(obj)
-     const response =await fetch('http://localhost:8000/user/change_password',    {
+     const response =await fetch(`${apiUrl}/user/change_password`,    {
       method: 'POST',
       body:JSON.stringify(obj),
       headers: {
@@ -129,7 +130,7 @@ useEffect(()=>{
       email:email,
       otp:otp
     }
-    const response=await fetch('http://localhost:8000/user/verify_user_otp',{
+    const response=await fetch(`${apiUrl}/user/verify_user_otp`,{
       method:'POST',
       body:JSON.stringify(obj),
       headers:{

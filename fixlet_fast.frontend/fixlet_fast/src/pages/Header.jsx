@@ -14,6 +14,9 @@ import Loader from"../component/Loader.jsx"
 import { currentContext } from '../component/Context.jsx';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router';
+const apiUrl=import.meta.env.VITE_BACKEND_API_URL
+
+
 
 function Header() {
 const {cartLoading,cartItems,cartError}=useSelector((state)=>state.cart);
@@ -38,7 +41,7 @@ window.addEventListener("scroll",()=>{
 
 const handelLogout=(e)=>{
   e.preventDefault()
-   axios.post('http://localhost:8000/user/user_logout',{},{
+   axios.post( `${apiUrl}/user/user_logout`,{},{
     withCredentials:true
   }).then((response)=>{
     if(response.status===200){

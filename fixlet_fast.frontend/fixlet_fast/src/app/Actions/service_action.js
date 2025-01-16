@@ -1,5 +1,5 @@
     import {createAsyncThunk} from "@reduxjs/toolkit"
-
+    const apiUrl=import.meta.env.VITE_BACKEND_API_URL
     // let create action thunk for the fetching service for the frontend
 
     export const fetchService =createAsyncThunk(
@@ -8,7 +8,7 @@
 
             try {
 
-            const response = await fetch(`http://localhost:8000/service/service_data_get?state=${state}&city=${city}&categories=${categories}`,{
+            const response = await fetch(`${apiUrl}/service/service_data_get?state=${state}&city=${city}&categories=${categories}`,{
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

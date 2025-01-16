@@ -9,7 +9,7 @@ import Addvertice from '../component/Addvertice'
 import sofa from "../assets/Add/pexels-martinpechy-1866149.jpg"
 import { IoCloseOutline } from "react-icons/io5";
 import electricity_image from "../assets/togglebutton/electrician/electricity.webp"
-import { Link, useNavigate } from 'react-router'
+import { data, Link, useNavigate } from 'react-router'
 import plumber from "../assets/togglebutton/electrician/plumber.webp"
 import carpenter from "../assets/togglebutton/electrician/carpenter.webp"
 import Loader from "../component/Loader"
@@ -31,6 +31,8 @@ import { IoIosArrowDropright } from "react-icons/io";
 import { useRef } from 'react'
 import { useContext } from 'react'
 import { currentContext } from '../component/Context.jsx';
+import axios from 'axios'
+const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
 function Dashbord() {
@@ -42,13 +44,17 @@ function Dashbord() {
   const dispatch=useDispatch();
   const scrollContainRef=useRef(null);
   const city=userInfo?.city
+  
   const Context=useContext(currentContext);
     const {cartLoading,}=useSelector((state)=>state.cart);
+    const [user_globally,setUser_globally]=useState(0)
   
     useEffect(()=>{
+const user_count=axios.get(`${apiUrl}/global/user_count`).then(response=>response.data).then(data=>{
+  setUser_globally(data.data.totalUser)
+})
       dispatch(fetchCart())
       return ()=>{
-
       }
     },[dispatch])
 
@@ -374,7 +380,7 @@ const toogleRender=()=>{
           </div>
           <div className='flex justify-between w-full mt-5 px-5'>
                 <div className='flex flex-col items-center'><span className='text-xl font-semibold'>4.8</span><h1 className='text-gray-600 text-sm'>Service Rating</h1></div> 
-                <div className='flex flex-col items-center'><span className='text-xl font-semibold'>12 M</span><h1 className='text-gray-600 text-sm'>Customer Globally</h1></div> 
+                <div className='flex flex-col items-center'><span className='text-xl font-semibold'>{user_globally}</span><h1 className='text-gray-600 text-sm'>Customer Globally</h1></div> 
               </div>
         </div>
           <Addvertice/>

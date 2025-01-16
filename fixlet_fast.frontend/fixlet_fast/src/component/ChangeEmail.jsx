@@ -2,6 +2,7 @@ import React ,{useState,useEffect} from 'react'
 import { FaArrowLeftLong } from "react-icons/fa6";
 import OtpInput from './OtpInput';
 import axios from "axios"
+const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 import { Link } from 'react-router'
 function ChangeEmail() {
@@ -24,7 +25,7 @@ function ChangeEmail() {
         e.preventDefault()
         const obj={password:form.password};
         console.log(obj);
-        const response=await axios.post("http://localhost:8000/user/check_password",obj,{withCredentials:true})
+        const response=await axios.post(`${apiUrl}/user/check_password`,obj,{withCredentials:true})
         if(response.status===201){
             setToggle2(false)
 
@@ -44,7 +45,7 @@ function ChangeEmail() {
         if(form.newEmail.length>0){
         setButtonToggle(true)
         }
-        const response=await fetch(`http://localhost:8000/user/user_otp`,
+        const response=await fetch(`${apiUrl}/user/user_otp`,
           {
             method: 'POST',
             body:JSON.stringify(obj),
@@ -80,7 +81,7 @@ function ChangeEmail() {
         email:email,
         otp:otp
       }
-      const response=await fetch('http://localhost:8000/user/verify_user_otp',{
+      const response=await fetch(`${apiUrl}/user/verify_user_otp`,{
         method:'POST',
         body:JSON.stringify(obj),
         headers:{
@@ -105,7 +106,7 @@ function ChangeEmail() {
     newEmail:form.newEmail,
     password:form.password,
  }
- const response=await axios.post("http://localhost:8000/user/changeEmail",obj,{withCredentials:true});
+ const response=await axios.post(`${apiUrl}/user/changeEmail`,obj,{withCredentials:true});
  console.log(response)
  if(response.data.statusCode===200){
     alert(response.data.message)

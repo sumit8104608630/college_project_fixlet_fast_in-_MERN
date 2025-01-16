@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import { Link } from 'react-router';
   import { useDispatch, useSelector } from 'react-redux';
   import { fetchUser } from '../app/Actions/user_action.js';
+  const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 function Login() {
 
@@ -31,7 +32,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const respond = await fetch('http://localhost:8000/user/user_login', {
+      const respond = await fetch(`${apiUrl}/user/user_login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

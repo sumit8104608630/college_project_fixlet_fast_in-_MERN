@@ -12,7 +12,7 @@ const checkAuthenticationCookie = (cookieName) => {
 
       // Check if the cookie exists
       if (!cookie) {
-        return res.status(401).json({ message: "Unauthorized: No cookie provided." });
+        return res.status(401).json({ message: "Unauthorized: No cookie provided.",statusCode:401 });
       }
 
       // Validate the cookie and get the user data

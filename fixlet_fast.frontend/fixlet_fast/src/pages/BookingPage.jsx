@@ -12,7 +12,7 @@ import {fetchCheckOut} from "../app/Actions/cart_action.js"
 import Loader from "../component/Loader.jsx"
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import EmptyCartItem from '../component/EmptyCartItem.jsx';
-
+const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
 function BookingPage() {
@@ -77,7 +77,7 @@ const update_cart = (serviceId, subServiceId, subService, quantity, price,time) 
     if(quantity===-1){
       setAllItem((prev)=>{
         
-          return{...prev,totalPrice:prev.totalPrice-price,totalQuantity:prev.totalQuantity+quantity,totalTime:prev.totalTime-time}
+          return{...prev,totalPrice:prev.totalPrice-price,totalQuantity:prev.totalQuantity-quantity,totalTime:prev.totalTime-time}
         
       });
     }
@@ -103,7 +103,7 @@ const update_cart = (serviceId, subServiceId, subService, quantity, price,time) 
           serviceId: serviceId,
           subServiceId: subServiceId,
         };
-        const response = await fetch(`http://localhost:8000/cart/cart_of_service`, {
+        const response = await fetch(`${apiUrl}/cart/cart_of_service`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -164,7 +164,7 @@ const update_cart = (serviceId, subServiceId, subService, quantity, price,time) 
         subServiceId: subServiceId,
       };
 
-      const response = await fetch(`http://localhost:8000/cart/reduce_service_cart`, {
+      const response = await fetch(`{${apiUrl}/cart/reduce_service_cart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -194,7 +194,7 @@ function isEmpty(obj_inside) {
 
   
   
-  return (<>{checkOutItemLoading?<><Loader/></>:emptyCart||!checkOutItem?<EmptyCartItem/>:
+  return (<>{checkOutItemLoading?<><Loader/></>:emptyCart||!checkOutItem?<EmptyCartItem city={city} categories={categories} />:
 
     <main className='pt-24 w-full flex justify-center px-20'>
       <div className='w-4/5 flex justify-between gap-5'>

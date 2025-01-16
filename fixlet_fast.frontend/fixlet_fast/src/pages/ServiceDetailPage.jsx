@@ -44,6 +44,7 @@ function ServiceDetailPage(props) {
   const Context=useContext(currentContext);
 
 
+
   // let's create the view detail functionality 
   const handleViewDetail=(serviceId,subServiceId)=>{
   const newCart = services_data?.filter(item => item._id === serviceId);
@@ -55,6 +56,11 @@ return setShowService({serviceId:serviceId,subServiceId:subServiceId,subservice:
 
  
   useEffect(()=>{
+
+    if(!userInfo){
+      navigate('/login')
+    }
+
 
     Context.setCartShow(false)
     return ()=>{

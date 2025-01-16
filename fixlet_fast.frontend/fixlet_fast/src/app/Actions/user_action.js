@@ -1,12 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios"
+
+const apiUrl = import.meta.env.VITE_BACKEND_API_URL
 
 
 export const fetchUser=createAsyncThunk(
     'user/fetchUser',
     async (_,{rejectWithValue})=>{
         try{
-            const userResponse = await fetch("http://localhost:8000/user/user_info", {
+            const userResponse = await fetch(`${apiUrl}/user/user_info`, {
         method: 'GET',
         credentials: 'include'
       });
@@ -14,6 +15,7 @@ export const fetchUser=createAsyncThunk(
                 throw new Error("User not found");
             }
             const userData=await userResponse.json()
+            console.log(userData.statusCode)
             return userData.data
         }
         catch(error){
