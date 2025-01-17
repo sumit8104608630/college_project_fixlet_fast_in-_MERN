@@ -6,17 +6,21 @@ import { RiAccountCircleFill } from "react-icons/ri";
 import { FaBookReader } from "react-icons/fa";
 import { AiFillSafetyCertificate } from "react-icons/ai";
 import { GiAutoRepair } from "react-icons/gi";
-
-
+import { useNavigate } from 'react-router';
 
 
 function HelpCenter() {
+  const navigate = useNavigate();
+
+  const handleBackFunctionality=()=>{
+    navigate(-1);
+  }
   return (
     <main className='flex justify-center py-10 h-screen  bg-gray-100'>
       <div className='w-1/3 '>
-        <Link to={"/"}>
+        <button onClick={handleBackFunctionality} >
         <FaArrowLeftLong className='' size={30}/>
-        </Link>
+        </button>
         <h1 className='text-3xl mt-10 font-bold text-gray-800 mb-5'>How can we help you?</h1>
 
         <div className='bg-white px-4 py-8  rounded'  >

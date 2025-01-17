@@ -19,8 +19,15 @@ try {
 
 const get_all_store_data=asyncHandler(async(req,res)=>{
     try {
+        const { state = "maharashtra", city = "mumbai" } = req.query;
+        console.log(state,city)
 
-        
+    const all_product=await Product.find();
+    console.log(all_product) 
+    if(!all_product){
+        return res.json({message:"no product found"})
+    }    
+    return res.status(200).json(new ApiResponse(200,all_product,"success"))   
         
     } catch (error) {
         console.log(error);
@@ -29,5 +36,6 @@ const get_all_store_data=asyncHandler(async(req,res)=>{
 })
 
 module.exports={
-    set_all_product
+    set_all_product,
+    get_all_store_data
 }

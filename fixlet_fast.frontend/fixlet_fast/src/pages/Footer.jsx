@@ -32,7 +32,7 @@ function Footer() {
       <div className='flex flex-col px-5 py-10'>
       <h1 className='text-xl font-semibold text-gray-700 mb-5'>For customer</h1>
       <ul className='flex flex-col gap-3'>
-        <li><a href='#' className='text-gray-700 text-lg hover:underline'>Feed back</a></li>
+        <li><Link to={"/feedback"} className='text-gray-700 text-lg hover:underline'>Feed back</Link></li>
         <li><a href='#' className='text-gray-700 text-lg hover:underline'> Customer policy</a></li>
         <li><a href='#' className='text-gray-700 text-lg hover:underline'>Service near you</a></li>
         <li><Link className='text-gray-700 text-lg hover:underline' to={"/contact"}>Contact</Link></li>

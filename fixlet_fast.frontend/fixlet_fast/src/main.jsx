@@ -15,7 +15,7 @@ import Cart from './pages/Cart.jsx'
 import BookingPage from './pages/BookingPage.jsx'
 import PaymentHistory from './pages/PaymentHistory.jsx'
 import About from './pages/About.jsx'
-import Native from './pages/Native.jsx'
+import Store from './pages/Store.jsx'
 import store from './app/store.js'
 import Contact from './pages/Contact.jsx'
 import { ContextProvider } from './component/Context.jsx'
@@ -23,6 +23,7 @@ import Account from './component/Account.jsx'
 import ChangePassword from './component/ChangePassword.jsx'
 import ChangeEmail from './component/ChangeEmail.jsx'
 import ForgotPassword from './component/ForgotPassword.jsx'
+import Feedback from './pages/Feedback.jsx'
 
 
 const route=createBrowserRouter([
@@ -96,18 +97,22 @@ const route=createBrowserRouter([
         element:<About/>
       },
       {
-        path:"/store",
-        element:<Native/>
+        path:"/store/:store",
+        element:<Store/>
       },
       {
         path:"/contact",
         element:<Contact/>
       },
       
-        {
-          path:"/booking_page:id",
-          element:<Contact/>
-        }
+      {
+        path:"/booking_page:id",
+        element:<Contact/>
+      },
+      {
+        path:"/feedback",
+        element:<Feedback/>
+      }
       
     ]
   },

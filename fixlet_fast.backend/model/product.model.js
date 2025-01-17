@@ -10,6 +10,12 @@ const subProductSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    description:{
+      type:String,
+      required: true
+    },
+    include:[String],
+    note:[String],
     productRatingCount: {
       type: Number,
       default: 0,
@@ -36,13 +42,13 @@ const subProductSchema = mongoose.Schema(
 
 const productSchema = mongoose.Schema(
   {
-    ProductType: {
+    productType: {
       type: String,
       required: true,
       unique: true,
       index: true,
     },
-    ProductTypeName: {
+    productTypeName: {
       type: String,
       required: true,
     },
@@ -55,10 +61,6 @@ const productSchema = mongoose.Schema(
       type: String,
     },
     productName: {
-      type: String,
-      required: true,
-    },
-    servicePartName: {
       type: String,
       required: true,
     },

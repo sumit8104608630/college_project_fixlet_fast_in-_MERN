@@ -27,7 +27,7 @@ const [cartCount, setCartCount] = useState(); // Example cart count
 const [isScroll,setIsScroll]=useState(false)
 const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
 const [mapToggle,setMapToggle]=useState(null);
-
+const city=userInfo?.city
 
 
 window.addEventListener("scroll",()=>{
@@ -96,7 +96,8 @@ useEffect(()=>{
                 </NavLink>
               </li>
               <li>
-              <NavLink className={({ isActive }) => `relative text-lg text-white ${isActive ? "decoration-solid after:w-full after:left-0 after:translate-x-0" : "after:left-1/2 after:translate-x-[-50%]"} hover:text-white after:content-[''] after:absolute after:bottom-0 after:h-[2px] after:rounded py-1 after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:translate-x-0 hover:after:w-full`}to="/store">
+              <NavLink  className={({ isActive }) => `relative text-lg text-white ${isActive ? "decoration-solid after:w-full after:left-0 after:translate-x-0" : "after:left-1/2 after:translate-x-[-50%]"} hover:text-white after:content-[''] after:absolute after:bottom-0 after:h-[2px] after:rounded py-1 after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:translate-x-0 hover:after:w-full`}
+                 to={`/store/store_name?city=${city||"mumbai"}`}  state={{ headLine: 'Store' }} >
                    Store
               </NavLink>
               </li>
