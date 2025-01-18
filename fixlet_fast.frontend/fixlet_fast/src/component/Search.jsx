@@ -8,6 +8,7 @@ function SearchBar() {
     "Plumber...",
     "Carpenter...",
     "AC service...",
+    "Full cleaning..."
   ];
 
   useEffect(() => {

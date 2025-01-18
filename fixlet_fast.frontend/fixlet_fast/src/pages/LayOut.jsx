@@ -15,7 +15,7 @@ const footerShow=useContext(currentContext)
     <div>
     
       <Header/>
-        <div className="custom-dashBoardScroll">
+        <div className="custom-dashBoardScroll w-full">
           <Outlet/>
         </div>
      { footerShow.footerShow&&<Footer/> }

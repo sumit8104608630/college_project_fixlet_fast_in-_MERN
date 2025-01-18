@@ -73,8 +73,8 @@ function QuickAcces() {
     <div className='flex w-max gap-11  overflow-auto justify-between  '>
 
     <div className=" rounded z-0 overflow-hidden ">
-<Link className='group h-48  w-72 ' to={`/serviceDetailPage/service_data_get?city=${city || "mumbai"}&categories=lightdecoration`}  state={{ headLine: 'AC repair & Service' }} >
-<div className="relative flex flex-col h-48 rounded w-72 justify-end overflow-hidden">
+<Link className='group h-40  w-80 ' to={`/serviceDetailPage/service_data_get?city=${city || "mumbai"}&categories=lightdecoration`}  state={{ headLine: 'AC repair & Service' }} >
+<div className="relative flex flex-col h-40 rounded w-80 justify-end overflow-hidden">
 <div className="absolute z-10 inset-0   bg-cover  transform transition-transform duration-300 scale-100 group-hover:scale-110" style={{ backgroundImage: `url(${decoration_img})` }}>
 </div>
 <div className='relative z-10  flex items-center bg-opacity-60 bg-black w-40 h-full font-semibold text-white  my-auto'><p className='px-2 text-base'>Create a Magical Ambiance with Perfect Light Decorations</p></div>
@@ -83,8 +83,8 @@ function QuickAcces() {
 </div>
 
 <div className=" rounded  overflow-hidden z-0 ">
-<Link className='group h-48  w-72 ' to={`/serviceDetailPage/service_data_get?city=${city || "mumbai"}&categories=acservice`}  state={{ headLine: 'AC repair & Service' }} >
-<div className="relative flex flex-col h-48 rounded w-72 justify-end overflow-hidden">
+<Link className='group h-40  w-80 ' to={`/serviceDetailPage/service_data_get?city=${city || "mumbai"}&categories=acservice`}  state={{ headLine: 'AC repair & Service' }} >
+<div className="relative flex flex-col h-40 rounded w-80 justify-end overflow-hidden">
 <div className="absolute z-10 inset-0   bg-cover  transform transition-transform duration-300 scale-100 group-hover:scale-110" style={{ backgroundImage: `url(${AC_service_image})` }}>
 </div>
 <div className='relative z-10  flex items-center bg-opacity-60 bg-black w-40 h-full font-semibold text-white  my-auto'><p className='px-2 text-base'>Save Energy, Save Money  Book Your Service Now!</p></div>
@@ -94,8 +94,8 @@ function QuickAcces() {
 
 
 <div className=" rounded  overflow-hidden z-0 ">
-<Link className='group h-48  w-72 ' to={`/serviceDetailPage/service_data_get?city=${city || "mumbai"}&categories=bathroom_kitchen`}  state={{ headLine: 'AC repair & Service' }} >
-<div className="relative flex flex-col h-48 rounded w-72 justify-end overflow-hidden">
+<Link className='group h-40  w-80 ' to={`/serviceDetailPage/service_data_get?city=${city || "mumbai"}&categories=bathroom_kitchen`}  state={{ headLine: 'AC repair & Service' }} >
+<div className="relative flex flex-col h-40 rounded w-80 justify-end overflow-hidden">
 <div className="absolute z-10 inset-0   bg-cover  transform transition-transform duration-300 scale-100 group-hover:scale-110" style={{ backgroundImage: `url(${bathRoom_img})` }}>
 </div>
 <div className='relative z-10  flex items-center bg-opacity-60 bg-black w-40 h-full font-semibold text-white  my-auto'><p className='px-2 text-base'>Save Energy, Save Money  Book Your Service Now!</p></div>
@@ -108,8 +108,8 @@ function QuickAcces() {
 
 
     <div className=" rounded z-0 overflow-hidden ">
-<Link className='group h-48  w-72 ' to={`/serviceDetailPage/service_data_get?city=${city || "mumbai"}&categories=wallpanel`}  state={{ headLine: 'AC repair & Service' }} >
-<div className="relative flex flex-col h-48 rounded w-72 justify-end overflow-hidden">
+<Link className='group h-40  w-80 ' to={`/serviceDetailPage/service_data_get?city=${city || "mumbai"}&categories=wallpanel`}  state={{ headLine: 'AC repair & Service' }} >
+<div className="relative flex flex-col h-40 rounded w-80 justify-end overflow-hidden">
 <div className="absolute z-10 inset-0   bg-cover  transform transition-transform duration-300 scale-100 group-hover:scale-110" style={{ backgroundImage: `url(${wallPanel})` }}>
 </div>
 <div className='relative z-10  flex items-center bg-opacity-60 bg-black w-40 h-full font-semibold text-white  my-auto'><p className='px-2 text-base'>Upgrade Your Interior with Premium Wall Panels</p></div>
@@ -118,8 +118,8 @@ function QuickAcces() {
 </div>
 
 <div className=" rounded  overflow-hidden z-0 ">
-<button className='group h-48  w-72 ' onClick={()=>setLinkToggle(true)}>
-<div className="relative flex flex-col h-48 rounded w-72 justify-end overflow-hidden">
+<button className='group h-40  w-80 ' onClick={()=>setLinkToggle(true)}>
+<div className="relative flex flex-col h-40 rounded w-80 justify-end overflow-hidden">
 <div className="absolute z-10 inset-0   bg-cover  transform transition-transform duration-300 scale-100 group-hover:scale-110" style={{ backgroundImage: `url(${home_apliance})` }}>
 </div>
 <div className='relative z-10  flex items-center bg-opacity-60 bg-black w-40 h-full font-semibold text-white  my-auto'><p className='px-2 text-base text-start'>Fast, Efficient, & Affordable Home Appliance Repair Services</p></div>
@@ -129,8 +129,8 @@ function QuickAcces() {
 
 
 <div className=" rounded  overflow-hidden z-0 ">
-<Link className='group h-48  w-72 ' to={`/serviceDetailPage/service_data_get?city=${city || "mumbai"}&categories=bathroom_kitchen`}  state={{ headLine: 'AC repair & Service' }} >
-<div className="relative flex flex-col h-48 rounded w-72 justify-end overflow-hidden">
+<Link className='group h-40  w-80 ' to={`/serviceDetailPage/service_data_get?city=${city || "mumbai"}&categories=bathroom_kitchen`}  state={{ headLine: 'AC repair & Service' }} >
+<div className="relative flex flex-col h-40 rounded w-80 justify-end overflow-hidden">
 <div className="absolute z-10 inset-0   bg-cover  transform transition-transform duration-300 scale-100 group-hover:scale-110" style={{ backgroundImage: `url(${store})` }}>
 </div>
 <div className='relative z-10  flex items-center bg-opacity-60 bg-black w-40 h-full font-semibold text-white  my-auto'><p className='px-2 text-base'> Upgrade Your Living Space with Our Exclusive Furniture Collection</p></div>

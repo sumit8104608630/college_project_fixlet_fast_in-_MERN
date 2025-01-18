@@ -10,7 +10,7 @@ import play from "../assets/Google_Play_Store_badge_EN.svg.png"
 
 function Footer() {
   return (
-    <div className='bg-gray-200 mt-10'>
+    <div className='bg-gray-200  xl:block hidden mt-10'>
     <div className=' flex flex-col px-56 pt-14 '>
          <div className='mb-10'>      
           <img className='w-56' src={logo}/>

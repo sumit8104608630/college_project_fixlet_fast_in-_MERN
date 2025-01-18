@@ -49,4 +49,21 @@
 
   }
 
+  @layer utilities {
+    .custom-ResponsiveScrollbar::-webkit-scrollbar {
+      width: 4px; /* Width of the scrollbar */
+    }
   
+    .custom-ResponsiveScrollbar::-webkit-scrollbar-track {
+      background: #f1f1f1; /* Track color */
+    }
+  
+    .custom-ResponsiveScrollbar::-webkit-scrollbar-thumb {
+      background: #888; /* Scrollbar color */
+      border-radius: 4px; /* Round corners */
+    }
+  
+    .custom-ResponsiveScrollbar::-webkit-scrollbar-thumb:hover {
+      background: #555; /* Darker color on hover */
+    }
+  }

@@ -99,10 +99,10 @@ const toogleRender=()=>{
     <>{isLoading||cartLoading?<Loader/>:
 
 
-      <main  className={ `custom-dashBoardScroll   pt-28   w-full px-32 ${ link3Toggle&&"  overflow-hidden "}` }>
+      <main  className={ `custom-dashBoardScroll  pt-0 xl:pt-28    w-full xl:px-32 ${ link3Toggle&&"  overflow-hidden "}` }>
 
 {link3Toggle&&
-<div className='fixed z-20  justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
+<div className='fixed z-20 px-5 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
   
 
   
@@ -113,30 +113,30 @@ const toogleRender=()=>{
               <h1 className='mb-5 font-semibold text-lg'>Electrician, Plumber & Carpenter</h1>
               <div className='flex  gap-5 mb-5  mt-3'>
               <div className='flex gap-5 '>
-              <div className='w-28'>
+              <div className='w-22'>
             <Link  to={{pathname:`/serviceDetailPage/service_data_get`,search:`?city=${city||"mumbai"}&categories=electrician`}} state={ {headLine: 'Electrician'} } className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={electricity_image} alt="Cleaning" />
+                <img className="md:w-11 w-32 h-11" src={electricity_image} alt="Cleaning" />
               </div>
-                <span className='text-sm'>Electrician</span>
+                <span className='text-xs mt-1'>Electrician</span>
             </Link>
             </div>
 
-            <div className='w-28'>
+            <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=plumber`}   state={{ headLine: 'Plumber' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={plumber} alt="Plumber" />
+                <img className="md:w-11 w-32 h-11" src={plumber} alt="Plumber" />
               </div>
-                <span className='text-sm'>Plumber</span>
+                <span className='text-xs mt-1'>Plumber</span>
             </Link>
             </div>
 
-            <div className='w-28'>
+            <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=carpenter`} state={{ headLine: 'Carpenter' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={carpenter} alt="Festival Decoration" />
+                <img className="md:w-11 w-32 h-11" src={carpenter} alt="Festival Decoration" />
               </div>
-              <span className='text-sm'>Carpenter</span>
+              <span className='text-xs mt-1'>Carpenter</span>
             </Link>
           </div>
             </div>
@@ -150,7 +150,7 @@ const toogleRender=()=>{
 
 
 {link1Toggle&&
-<div className='fixed z-20 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
+<div className='fixed z-20 px-5 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
   
   
       <div className=' border-1 rounded   backdrop-blur-lg bg-opacity-10 '>
@@ -161,30 +161,30 @@ const toogleRender=()=>{
               <div className='flex flex-col  gap-5 mb-5  mt-3'>
               <div className='flex gap-5 '>
 
-              <div className='w-28'>
+              <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=acservice`} state={{ headLine: 'AC repair & Service' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={ac_repair} alt="Cleaning" />
+                <img className="md:w-11 w-32 h-11" src={ac_repair} alt="Cleaning" />
               </div>
-                <span className='text-sm'>AC repair & Service</span>
+                <span className='text-xs mt-1'>AC repair & Service</span>
             </Link>
             </div>
 
-              <div className='w-28'>
+              <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=chimney`} state={{ headLine: 'Chimney Repair & Service' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={chimney} alt="Cleaning" />
+                <img className="md:w-11 w-32 h-11" src={chimney} alt="Cleaning" />
               </div>
-                <span className='text-sm'>Chimney Repair & Service</span>
+                <span className='text-xs mt-1'>Chimney Repair & Service</span>
             </Link>
             </div>
 
-            <div className='w-28'>
+            <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=gasstoverepair`} state={{ headLine: 'Gas Repair & service' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={gas} alt="Electrician" />
+                <img className="md:w-11 w-32 h-11" src={gas} alt="Electrician" />
               </div>
-                <span className='text-sm'>Gas Repair & service</span>
+                <span className='text-xs mt-1'>Gas Repair & service</span>
             </Link>
             </div>
          
@@ -195,30 +195,30 @@ const toogleRender=()=>{
 
 
             <div className='flex gap-5 '>
-            <div className='w-28'>
+            <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=refrigerator`} state={{ headLine: 'Refrigerator Repair ' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={refrigerator} alt="Festival Decoration" />
+                <img className="md:w-11 w-32 h-11" src={refrigerator} alt="Festival Decoration" />
               </div>
-              <span className='text-sm'>Refrigerator Repair </span>
+              <span className='text-xs mt-1'>Refrigerator Repair </span>
             </Link>
           </div>
 
-            <div className='w-28'>
+            <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=mixergrinder`} state={{ headLine: 'Mixer & Grinder Repair' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={mixer} alt="Electrician" />
+                <img className="md:w-11 w-32 h-11" src={mixer} alt="Electrician" />
               </div>
-                <span className='text-sm'>Mixer & Grinder Repair</span>
+                <span className='text-xs mt-1'>Mixer & Grinder Repair</span>
             </Link>
             </div>
 
-            <div className='w-28'>
+            <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=washingmachine`} state={{ headLine: 'Washin Machine Repair' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={washinMashin} alt="Festival Decoration" />
+                <img className="md:w-11 w-32 h-11" src={washinMashin} alt="Festival Decoration" />
               </div>
-              <span className='text-sm'>Washin Machine Repair </span>
+              <span className='text-xs mt-1'>Washin Machine Repair </span>
             </Link>
           </div>
             </div>
@@ -231,7 +231,7 @@ const toogleRender=()=>{
 
 
 {link2Toggle?
-  <div className='fixed z-20 bg-opacity-50 left-0 top-0 justify-center items-center bg-black flex w-full h-screen '>
+  <div className='fixed z-20 px-5 bg-opacity-50 left-0 top-0 justify-center items-center bg-black flex w-full h-screen '>
   <div className=' border-1 rounded    backdrop-blur-lg bg-opacity-10 '>
       <button onClick={()=>setlink2Toggle(false)} className='bg-white rounded-full p-1 mb-2 absolute right-0  -top-10 translate-y-0'><IoCloseOutline size={20}/></button>
 
@@ -240,53 +240,53 @@ const toogleRender=()=>{
               <h1 className='mb-5 font-semibold text-lg'>Cleaning & Pest pest control</h1>
               <span>Cleaning</span>
               <div className='flex  gap-5 mb-5  mt-3'>
-              <div className='w-28'>
+              <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=bathroom_kitchen`} state={{ headLine: 'Bathroom & Kitchen Cleaning' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={bathroom} alt="Cleaning" />
+                <img className="w-32 md:md:w-11 w-32 md:11 h-11" src={bathroom} alt="Cleaning" />
               </div>
-                <span className='text-sm'>Bathroom & Kitchen Cleaning</span>
+                <span className='text-xs mt-1'>Bathroom & Kitchen Cleaning</span>
             </Link>
             </div>
 
-            <div className='w-28'>
+            <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=fullhome`} state={{ headLine: 'Full Home Cleaning' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={home} alt="Electrician" />
+                <img className="w-32 md:md:w-11 w-32 h-11" src={home} alt="Electrician" />
               </div>
-                <span className='text-sm'>Full Home Cleaning</span>
+                <span className='text-xs mt-1'>Full Home Cleaning</span>
             </Link>
             </div>
 
-            <div className='w-28'>
+            <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=sofaCleaning`} state={{ headLine: 'Sofa Cleaning' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={sofa_image} alt="Festival Decoration" />
+                <img className="w-32 md:md:w-11 w-32 h-11" src={sofa_image} alt="Festival Decoration" />
               </div>
-              <span className='text-sm'>Sofa Cleaning</span>
+              <span className='text-xs mt-1'>Sofa Cleaning</span>
             </Link>
           </div>
             </div>
 
             <span>Pest Control</span>
               <div className='flex  gap-5  mt-3'>
-              <div className='w-28'>
+              <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=pestcontrol`} state={{ headLine: 'Insect Pest Control' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={pest} alt="Cleaning" />
+                <img className="md:w-11 w-32 h-11" src={pest} alt="Cleaning" />
               </div>
-                <span className='text-sm'>Insect Pest Control</span>
+                <span className='text-xs mt-1'>Insect Pest Control</span>
             </Link>
             </div>
 
 
 
-            <div className='w-28'>
+            <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=bedbugcontrol`}state={{ headLine: 'Bed Bugs Control' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={bed} alt="Festival Decoration" />
+                <img className="md:w-11 w-32 h-11" src={bed} alt="Festival Decoration" />
               </div>
-              <span className='text-sm'>Bed Bugs Control</span>
+              <span className='text-xs mt-1'>Bed Bugs Control</span>
             </Link>
           </div>
             </div>
@@ -305,73 +305,73 @@ const toogleRender=()=>{
         <div className=' flex w-full items-center justify-between'>
 
           <div className='flex  flex-col '>
-          <h1  className='text-4xl w-96  text-start   text-gray-600 font-semibold'>
+          <h1  className='text-4xl w-96  text-start  xl:block hidden  text-gray-600 font-semibold'>
             Home service at your doorstep
           </h1>
-          <div className='flex flex-col w-full  gap-5 mt-10 px-10 pt-5 pb-10 border-1 rounded  border-gray-600 shadow justify-center items-center'>
-          <h1 className='text-start w-full text-lg text-gray-600'>What are you looking for?</h1>
+          <div className='flex flex-col w-full  gap-5 mt-10 px-5 md:px-10 pt-5 pb-10 border-1 xl:rounded   xl:border-gray-600 xl:shadow justify-center items-center'>
+          <h1 className='text-start w-full  xl:block hidden text-lg text-gray-600'>What are you looking for?</h1>
             <div className='flex gap-5'>
-             <div className='w-28 '>
+             <div className='w-22 '>
             <button onClick={()=>setlink2Toggle(true)} className="relative  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={cleaning} alt="AC Repair" />
+                <img className="md:w-11 w-32 h-11" src={cleaning} alt="AC Repair" />
                </div>
                 <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
-                <span className='text-sm'>Cleaning & pest control</span>
+                <span className='text-xs mt-1'>Cleaning & pest control</span>
             </button>
             </div>
 
-            <div className='w-28'>
+            <div className='w-22'>
             <button onClick={()=>setlink1Toggle(true)} className="relative hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={ac_repair} alt="Cleaning" />
+                <img className="md:w-11 w-32 h-11" src={ac_repair} alt="Cleaning" />
               </div>
                 <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
-                <span className='text-sm'>AC & Appliance Repair</span>
+                <span className='text-xs mt-1'>AC & Appliance Repair</span>
             </button>
             </div>
 
-            <div  className='w-28'>
+            <div  className='  w-28'>
             <button onClick={()=>!link2Toggle?setlink3Toggle(true):setlink3Toggle(false )} className="relative  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={electresian} alt="Electrician" />
+                <img className="md:w-11 w-32 h-11" src={electresian} alt="Electrician" />
               </div>
                 <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
-                <span className='text-sm'>Electrician,Plumber & Carpenter</span>
+                <span className='text-xs mt-1'>Electrician,Plumber & Carpenter</span>
             </button>
             </div>
 
   
               </div>
             <div className='flex gap-5'>
-            <div className='w-28'>
+            <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=lightdecoration`} state={{ headLine: 'Festival Lights decoration' }} className="relative  flex flex-col text-center hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={festival_decoration} alt="Festival Decoration" />
+                <img className="md:w-11 w-32 h-11" src={festival_decoration} alt="Festival Decoration" />
               </div>
               <span className="absolute left-1/2 bottom-0 h-[2px] w-0  bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
-              <span className='text-sm'>Festival Lights decoration</span>
+              <span className='text-xs mt-1'>Festival Lights decoration</span>
             </Link>
           </div>
 
 
-          <div className='w-28'>
+          <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=wallpanel`} state={{ headLine: 'Wall Panel installation' }} className="relative w-full flex flex-col text-center    hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={wallPanel} alt="Wall Panel" />
+                <img className="md:w-11 w-32 h-11" src={wallPanel} alt="Wall Panel" />
               </div>
               <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
-              <span className='text-sm'>Wall Panel installation</span>
+              <span className='text-xs mt-1'>Wall Panel installation</span>
             </Link>
             </div>
 
-            <div className='w-28'>
+            <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=wallpainting`} state={{ headLine: 'Painting & Water proofing' }} className="relative w-full flex flex-col text-center hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-14" src={paint} alt="Paint" />
+                <img className="md:w-11 w-32 h-11" src={paint} alt="Paint" />
               </div>
               <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
-              <span className='text-sm'>Painting & Water proofing</span>
+              <span className='text-xs mt-1'>Painting & Water proofing</span>
             </Link>
             </div>
   
@@ -386,26 +386,26 @@ const toogleRender=()=>{
           <Addvertice/>
         </div>
 
-<div className='relative mt-20 gap-5 flex items-center'>
-<button onClick={scrollLeft} className='h-max' ><IoIosArrowDropleft className='text-orange-500' size={50}/></button>
-        <div ref={scrollContainRef} className='w-full  overflow-auto custom-dashBoardScroll'>
+<div className='relative mt-20 gap-5 flex px-8  items-center'>
+<button onClick={scrollLeft} className=' xl:block hidden h-max' ><IoIosArrowDropleft className='text-orange-500' size={50}/></button>
+        <div ref={scrollContainRef} className='w-full custom-ResponsiveScrollbar overflow-auto custom-dashBoardScroll'>
           <QuickAccess/>
           </div>
-<button onClick={scrollRight} className='h-max'><IoIosArrowDropright className='text-orange-500' size={50}/></button>
+<button onClick={scrollRight} className=' xl:block hidden h-max'><IoIosArrowDropright className='text-orange-500' size={50}/></button>
 </div>
 
-
-        <div className='flex mt-20 py-10 px-10  rounded bg-amber-100'>
-          <div className='w-full flex flex-col justify-between ' >
+<div className='px-2'>
+        <div className='flex mt-14 py-5  md:px-10 px-5 w-full rounded bg-amber-100'>
+          <div className=' flex flex-col justify-between ' >
             <div className=''>
-            <span className='text-xl px-5 w-max rounded py-2  text-white bg-green-700 '>Decorate your Home</span>
-            <p className='text-3xl font-normal text-gray-600  py-5'>Transform your living space with our premium selection of sofas and home essentials, designed for comfort and style</p>
+            <span className='md:text-xl text-base px-3 md:px-5 w-max rounded py-1 md:py-2  text-white bg-green-700 '>Decorate your Home</span>
+            <p className='text-xs mt-1 md:text-3xl font-normal text-gray-600  py-5'>Transform your living space with our premium selection of sofas and home essentials, designed for comfort and style</p>
             </div>
-            <Link > <span className=' bg-black py-2 font-bold  text-white  rounded px-10'>By now</span></Link>
+            <Link > <span className='text-xs  bg-black py-2 font-bold  text-white  rounded px-5 md:px-10'>By now</span></Link>
           </div>
-          <div className=' w-full flex  justify-end'><img  className='rounded w-80 ' src={sofa}></img></div>
+          <div className='  flex  justify-end'><img  className='rounded  w-80 h-32 md:w-80 ' src={sofa}></img></div>
         </div>
-
+</div>
 
 
 
