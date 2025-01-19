@@ -113,7 +113,7 @@ else{
     <div>
         <button onClick={handleToggle}  className=' bg-white flex items-center px-2 py-2 rounded-lg'>
       <FaLocationDot className='text-gray-500' size={20} />
-    <p className='  text-gray-600 text-sm w-96 text-ellipsis overflow-hidden whitespace-nowrap px-2'>{location?location:userInfo.location}</p>
+    <p className='  text-gray-600 text-sm w-96 text-ellipsis overflow-hidden whitespace-nowrap px-2'>{location?location:userInfo?.location}</p>
     <FaLocationCrosshairs size={20} className='text-gray-500' />
     </button>
   </div>

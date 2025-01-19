@@ -7,6 +7,8 @@ import { useNavigate, useSearchParams } from 'react-router';
 import { useSelector, useDispatch, shallowEqual, connect } from "react-redux";
 import { fetchService } from '../app/Actions/service_action';
 import { useLocation } from "react-router-dom";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import { IoMenu } from "react-icons/io5";
 import Loader from "../component/Loader";
 import Promise from '../component/Promise';
 import { fetchCart } from "../app/Actions/cart_action.js";
@@ -20,7 +22,7 @@ import { IoCloseOutline } from "react-icons/io5";
 
 
 function ServiceDetailPage(props) {
-  
+  const screenWidth = window.innerWidth;
   const cart = useSelector((state) => state.cart.cartItems, shallowEqual);
   const [cartItems,setCartItems]=useState([{}])
   const MemoizedButton = React.memo(AddButton);
@@ -35,7 +37,8 @@ function ServiceDetailPage(props) {
   const categories = searchParams.get('categories');
   const state = userInfo?.state;
   const location = useLocation();
-  const navigate =useNavigate()
+  const navigate =useNavigate();
+  const [showMenu,setShowMenu]=useState(false)
   const { headLine } = location.state || {};
   const [localState, setLocalState] = useState(() => ({
     serviceId: location.state?.serviceId,
@@ -56,6 +59,8 @@ return setShowService({serviceId:serviceId,subServiceId:subServiceId,subservice:
 
  
   useEffect(()=>{
+    setShowMenu(true)
+    Context.setShowHeader(false)
 
     // if(!userInfo){
     //   navigate('/login')
@@ -64,6 +69,8 @@ return setShowService({serviceId:serviceId,subServiceId:subServiceId,subservice:
 
     Context.setCartShow(false)
     return ()=>{
+      Context.setShowHeader(true)
+
       Context.setCartShow(true)
     }
   },[Context,navigate,userInfo])
@@ -285,20 +292,89 @@ function isEmpty(obj_inside) {
   }
 
 
+  const handle_back=()=>{
+    navigate(-1)
+  }
+
+  const handleClickMenu=(service)=>{
+    setActive(service.serviceName)
+    setShowMenu(true)
+  }
+
+
+
   return (
     <>
       {  loading  ? (
         <Loader />
       ) : (
-        <div className={`flex w-full justify-center `}>
-          <div className="gap-5 justify-around w-4/5 mt-20 flex">
-            <div className="h-min sticky top-20">
-              <h1 className="text-3xl font-semibold mt-5 text-gray-700 mb-5">{headLine}</h1>
+<>
+
+{showMenu&&
+<div className='fixed z-10 bg-white w-full'>
+        <div className='xl:hidden justify-between flex py-3 px-5'>
+        <div> 
+      <button onClick={handle_back} to={"/"}>
+    <FaArrowLeftLong className='' size={25}/>
+    </button></div>
+        <div>
+          <button onClick={()=>setShowMenu(false)}>
+            <p className='flex bg-black rounded-lg gap-1 px-2 py-0.5 items-center'><IoMenu className='text-white'/><spn className="text-white text-sm">Menu</spn></p>
+          </button>
+        </div>
+      </div>
+      </div>
+}
+        <div className={`flex  w-full pt-10 justify-center md:justify-around`}>
+        
+          <div className="gap-5 md:justify-around  w-full px-2 md:w-4/5  md:flex-row md:mt-14 md:flex flex-col md:items-start items-center">
+
+          <div className='md:hidden sticky top-0  block'>
+          {!showMenu&&
+            <div className="h-min pb-5 flex flex-col justify-center items-center bg-white   md:top-20">
+              <h1 className="md:text-3xl text-xl font-semibold mt-5 text-gray-700 mb-5">{headLine}</h1>
               {services_data.length <= 1 && !loading ? (
                 <div><Promise /></div>
               ) : (
                 <div
-                  className={`grid h-max w-max grid-cols-${Math.ceil(services_data.length <= 2 ? 2 : services_data.length / 2)} gap-5 border-2 p-5 rounded-lg`} style={{ gridTemplateColumns: `repeat(${Math.ceil(services_data.length <= 2 ? 2 : services_data.length >2?3:services_data.length/2)}, 1fr)` } }
+                  className={`grid h-max w-max grid-cols-${Math.ceil(services_data.length <= 2 ? 2 : services_data.length / 2)} gap-5 md:border-2 md:p-5  rounded-lg`} style={{ gridTemplateColumns: `repeat(${Math.ceil(services_data.length <= 2 ? 2 : services_data.length >2?3:services_data.length/2)}, 1fr)` } }
+                >
+                  {services_data.map((service) => (
+                    <Link
+                      to={service.servicePartName}
+                      smooth={true}
+                      offset={-580}
+                      duration={500}
+                      onClick={()=>handleClickMenu(service)}
+                      key={service._id}
+                    >
+                      <div
+                        className={`bg-white p-4 w-24 h-full flex flex-col items-center justify-between rounded border-2 border-gray-200 transition-transform transform hover:scale-95 hover:border-gray-500 gap-2 cursor-pointer ${
+                          service.serviceName === active && "border-2 border-gray-500"
+                        }`}
+                      >
+                        <img
+                          src={service.serviceImage}
+                          alt={service.serviceName}
+                          className="md:w-full h-auto w-14 object-cover rounded"
+                        />
+                        <h2 className="text-center text-xs md:text-sm text-gray-600 font-semibold ">{service.serviceName}</h2>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+}
+</div>
+
+<div className="h-min md:flex hidden pb-5  flex-col justify-center items-center bg-white sticky top-0   md:top-24">
+              <h1 className="md:text-3xl w-full px-2 text-xl font-semibold mt-5 text-gray-700 mb-5">{headLine}</h1>
+              {services_data.length <= 1 && !loading ? (
+                <div><Promise /></div>
+              ) : (
+                <div
+                  className={`grid h-max w-max grid-cols-${Math.ceil(services_data.length <= 2 ? 2 : services_data.length / 2)} gap-5 md:border-2 md:p-5  rounded-lg`} style={{ gridTemplateColumns: `repeat(${Math.ceil(services_data.length <= 2 ? 2 : services_data.length >2?3:services_data.length/2)}, 1fr)` } }
                 >
                   {services_data.map((service) => (
                     <Link
@@ -306,20 +382,20 @@ function isEmpty(obj_inside) {
                       smooth={true}
                       offset={-70}
                       duration={500}
-                      onClick={() => setActive(service.serviceName)}
+                      onClick={()=>handleClickMenu(service)}
                       key={service._id}
                     >
                       <div
-                        className={`bg-white p-4 w-24 h-full flex flex-col items-center justify-between rounded border-2 border-gray-200 transition-transform transform hover:scale-95 hover:border-gray-500 cursor-pointer ${
+                        className={`bg-white p-4 w-24 h-full flex flex-col items-center justify-between rounded border-2 border-gray-200 transition-transform transform hover:scale-95 hover:border-gray-500 gap-2 cursor-pointer ${
                           service.serviceName === active && "border-2 border-gray-500"
                         }`}
                       >
                         <img
                           src={service.serviceImage}
                           alt={service.serviceName}
-                          className="w-full h-auto object-cover rounded"
+                          className="md:w-full h-auto w-14 object-cover rounded"
                         />
-                        <h2 className="text-center text-sm text-gray-600 font-semibold ">{service.serviceName}</h2>
+                        <h2 className="text-center text-xs md:text-sm text-gray-600 font-semibold ">{service.serviceName}</h2>
                       </div>
                     </Link>
                   ))}
@@ -327,8 +403,11 @@ function isEmpty(obj_inside) {
               )}
             </div>
 
+
+
+
             <div className={`scrollbar-thin scrollbar-none  ${showService&&"overflow-hidden"}  scrollbar-track-gray-200`}>
-              <div className="flex flex-col border-2 rounded px-5">
+              <div className="flex flex-col md:border-2 md:rounded px-2">
                 {services_data.map((service) => (
                   <div id={service.servicePartName} className="py-5" key={service._id}>
                     <h1 className="text-gray-700 text-start text-2xl font-bold">{service.serviceName}</h1>
@@ -410,7 +489,9 @@ function isEmpty(obj_inside) {
               </div>
             </div>
 
-            <div className='w-96 h-min flex flex-col gap-3 sticky top-24'>
+
+{
+            <div className='w-96 md:flex  hidden h-min  flex-col gap-3 sticky top-24'>
               <div>
                 {filter_cartItems?.length > 0 ? (
                   <div className='border-2 flex flex-col gap-2 rounded-lg p-2'>
@@ -456,11 +537,30 @@ function isEmpty(obj_inside) {
                 {services_data.length > 1 && !loading && <div><Promise /></div>}
               </div>
             </div>
-          </div>
+
+      }
+
+          </div >
+          {filter_cartItems?.length > 0 &&
+      <div className='flex md:hidden border px-3 fixed bottom-0 bg-white w-full py-2 rounded-t-lg justify-between'>
+
+<span className='flex items-center '>
+                        <FaIndianRupeeSign />
+                        {cartItems?.filter((services) => services?._id === categories)[0]?.totalPrice}
+                      </span>
+<button onClick={()=>handleCheckOut( categories)} className='flex justify-between  px-4 py-2 hover:bg-orange-600 bg-orange-500 rounded text-white font-semibold text-lg'>
+                      
+                     
+                      <span>View Cart</span>
+                    </button>
+
+      </div>
+     }
         </div>
+        </>
       )}
     </>
-  );
+);
 }
 
 export default ServiceDetailPage;

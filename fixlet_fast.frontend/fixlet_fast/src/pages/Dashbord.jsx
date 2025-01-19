@@ -99,7 +99,12 @@ const toogleRender=()=>{
     <>{isLoading||cartLoading?<Loader/>:
 
 
-      <main  className={ `custom-dashBoardScroll  pt-0 xl:pt-28    w-full xl:px-32 ${ link3Toggle&&"  overflow-hidden "}` }>
+      <main  className={ `custom-dashBoardScroll  pt-20 xl:pt-28    w-full xl:px-32 ${ link3Toggle&&"  overflow-hidden "}` }>
+
+
+
+
+        
 
 {link3Toggle&&
 <div className='fixed z-20 px-5 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
@@ -273,7 +278,7 @@ const toogleRender=()=>{
               <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=pestcontrol`} state={{ headLine: 'Insect Pest Control' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="md:w-11 w-32 h-11" src={pest} alt="Cleaning" />
+                <img className="w-11  h-11" src={pest} alt="Cleaning" />
               </div>
                 <span className='text-xs mt-1'>Insect Pest Control</span>
             </Link>
@@ -284,7 +289,7 @@ const toogleRender=()=>{
             <div className='w-22'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=bedbugcontrol`}state={{ headLine: 'Bed Bugs Control' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="md:w-11 w-32 h-11" src={bed} alt="Festival Decoration" />
+                <img className="w-11  h-11" src={bed} alt="Festival Decoration" />
               </div>
               <span className='text-xs mt-1'>Bed Bugs Control</span>
             </Link>
@@ -311,7 +316,7 @@ const toogleRender=()=>{
           <div className='flex flex-col w-full  gap-5 mt-10 px-5 md:px-10 pt-5 pb-10 border-1 xl:rounded   xl:border-gray-600 xl:shadow justify-center items-center'>
           <h1 className='text-start w-full  xl:block hidden text-lg text-gray-600'>What are you looking for?</h1>
             <div className='flex gap-5'>
-             <div className='w-22 '>
+             <div className='w-22 md:w-28 '>
             <button onClick={()=>setlink2Toggle(true)} className="relative  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="md:w-11 w-32 h-11" src={cleaning} alt="AC Repair" />
@@ -321,7 +326,7 @@ const toogleRender=()=>{
             </button>
             </div>
 
-            <div className='w-22'>
+            <div className='w-22 md:w-28'>
             <button onClick={()=>setlink1Toggle(true)} className="relative hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="md:w-11 w-32 h-11" src={ac_repair} alt="Cleaning" />
@@ -331,7 +336,7 @@ const toogleRender=()=>{
             </button>
             </div>
 
-            <div  className='  w-28'>
+            <div  className='  w-22 md:w-28'>
             <button onClick={()=>!link2Toggle?setlink3Toggle(true):setlink3Toggle(false )} className="relative  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="md:w-11 w-32 h-11" src={electresian} alt="Electrician" />
@@ -344,7 +349,7 @@ const toogleRender=()=>{
   
               </div>
             <div className='flex gap-5'>
-            <div className='w-22'>
+            <div className='w-22 md:w-28'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=lightdecoration`} state={{ headLine: 'Festival Lights decoration' }} className="relative  flex flex-col text-center hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="md:w-11 w-32 h-11" src={festival_decoration} alt="Festival Decoration" />
@@ -355,7 +360,7 @@ const toogleRender=()=>{
           </div>
 
 
-          <div className='w-22'>
+          <div className='w-22 md:w-28'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=wallpanel`} state={{ headLine: 'Wall Panel installation' }} className="relative w-full flex flex-col text-center    hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="md:w-11 w-32 h-11" src={wallPanel} alt="Wall Panel" />
@@ -365,7 +370,7 @@ const toogleRender=()=>{
             </Link>
             </div>
 
-            <div className='w-22'>
+            <div className='w-22 md:w-28'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=wallpainting`} state={{ headLine: 'Painting & Water proofing' }} className="relative w-full flex flex-col text-center hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="md:w-11 w-32 h-11" src={paint} alt="Paint" />
@@ -378,15 +383,15 @@ const toogleRender=()=>{
               </div>
 
           </div>
-          <div className='flex justify-between w-full mt-5 px-5'>
-                <div className='flex flex-col items-center'><span className='text-xl font-semibold'>4.8</span><h1 className='text-gray-600 text-sm'>Service Rating</h1></div> 
-                <div className='flex flex-col items-center'><span className='text-xl font-semibold'>{user_globally}</span><h1 className='text-gray-600 text-sm'>Customer Globally</h1></div> 
+          <div className='flex justify-between w-full  md:mt-5 px-5'>
+                <div className='flex flex-col items-center'><span className='md:text-xl text-base  font-semibold'>4.8</span><h1 className='text-gray-600 text-sm'>Service Rating</h1></div> 
+                <div className='flex flex-col items-center'><span className='md:text-xl text-base  font-semibold'>{user_globally}</span><h1 className='text-gray-600 text-sm'>Customer Globally</h1></div> 
               </div>
         </div>
           <Addvertice/>
         </div>
 
-<div className='relative mt-20 gap-5 flex px-8  items-center'>
+<div className='relative mt-20 gap-5 flex px-8 md:px-0  items-center'>
 <button onClick={scrollLeft} className=' xl:block hidden h-max' ><IoIosArrowDropleft className='text-orange-500' size={50}/></button>
         <div ref={scrollContainRef} className='w-full custom-ResponsiveScrollbar overflow-auto custom-dashBoardScroll'>
           <QuickAccess/>
@@ -399,11 +404,11 @@ const toogleRender=()=>{
           <div className=' flex flex-col justify-between ' >
             <div className=''>
             <span className='md:text-xl text-base px-3 md:px-5 w-max rounded py-1 md:py-2  text-white bg-green-700 '>Decorate your Home</span>
-            <p className='text-xs mt-1 md:text-3xl font-normal text-gray-600  py-5'>Transform your living space with our premium selection of sofas and home essentials, designed for comfort and style</p>
+            <p className='text-xs mt-1 md:text-2xl font-normal text-gray-600  py-5'>Transform your living space with our premium selection of sofas and home essentials, designed for comfort and style</p>
             </div>
-            <Link > <span className='text-xs  bg-black py-2 font-bold  text-white  rounded px-5 md:px-10'>By now</span></Link>
+            <Link > <span className='text-xs md:text-xl  bg-black py-2 font-bold  text-white  rounded px-5 md:px-10'>By now</span></Link>
           </div>
-          <div className='  flex  justify-end'><img  className='rounded  w-80 h-32 md:w-80 ' src={sofa}></img></div>
+          <div className='  flex  justify-end'><img  className='rounded  w-80 md:h-auto h-32 md:w-96 ' src={sofa}></img></div>
         </div>
 </div>
 
