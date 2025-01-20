@@ -2,13 +2,61 @@ import React from "react";
 
 const Spinner = () => {
   return (
-    <div className='w-full h-screen  fixed top-0 z-20 bg-white'>
-    <div className="flex items-center justify-center h-screen ">
-      <div className="relative flex flex-col  items-center">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)"><stop offset="0" stop-color="#FF5C00"></stop><stop offset=".3" stop-color="#FF5C00" stop-opacity=".9"></stop><stop offset=".6" stop-color="#FF5C00" stop-opacity=".6"></stop><stop offset=".8" stop-color="#FF5C00" stop-opacity=".3"></stop><stop offset="1" stop-color="#FF5C00" stop-opacity="0"></stop></radialGradient><circle transform-origin="center" fill="none" stroke="url(#a12)" stroke-width="12" stroke-linecap="round" stroke-dasharray="200 1000" strokeDashoffset="0" cx="100" cy="100" r="70"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="1" values="360;0" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></circle><circle transform-origin="center" fill="none" opacity=".2" stroke="#F97316" stroke-width="12" stroke-linecap="round" cx="100" cy="100" r="70"></circle></svg>
-        <div className="mt-2 md:text-base text-xs text-center text-orange-500 font-medium">Please wait</div>
+    <div className="w-full h-screen fixed top-0 z-20 bg-white">
+      <div className="flex items-center justify-center h-screen">
+        <div className="relative flex flex-col items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 200 200"
+            className="w-16 h-16 md:w-20 md:h-20"
+          >
+            <radialGradient id="a12" cx="0.66" fx="0.66" cy="0.3125" fy="0.3125" gradientTransform="scale(1.5)">
+              <stop offset="0" stopColor="#FF5C00" />
+              <stop offset="0.3" stopColor="#FF5C00" stopOpacity="0.9" />
+              <stop offset="0.6" stopColor="#FF5C00" stopOpacity="0.6" />
+              <stop offset="0.8" stopColor="#FF5C00" stopOpacity="0.3" />
+              <stop offset="1" stopColor="#FF5C00" stopOpacity="0" />
+            </radialGradient>
+            <circle
+              transformOrigin="center"
+              fill="none"
+              stroke="url(#a12)"
+              strokeWidth="12"
+              strokeLinecap="round"
+              strokeDasharray="200 1000"
+              strokeDashoffset="0"
+              cx="100"
+              cy="100"
+              r="70"
+            >
+              <animateTransform
+                type="rotate"
+                attributeName="transform"
+                calcMode="spline"
+                dur="1s"
+                values="360;0"
+                keyTimes="0;1"
+                keySplines="0 0 1 1"
+                repeatCount="indefinite"
+              />
+            </circle>
+            <circle
+              transformOrigin="center"
+              fill="none"
+              opacity="0.2"
+              stroke="#F97316"
+              strokeWidth="12"
+              strokeLinecap="round"
+              cx="100"
+              cy="100"
+              r="70"
+            />
+          </svg>
+          <div className="mt-4 md:text-base text-sm text-center text-orange-500 font-medium">
+            Please wait
+          </div>
+        </div>
       </div>
-    </div>
     </div>
   );
 };

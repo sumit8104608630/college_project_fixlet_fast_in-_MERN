@@ -118,7 +118,7 @@ const toogleRender=()=>{
               <h1 className='mb-5 font-semibold text-lg'>Electrician, Plumber & Carpenter</h1>
               <div className='flex  gap-5 mb-5  mt-3'>
               <div className='flex gap-5 '>
-              <div className='w-22'>
+              <div className='md:w-24'>
             <Link  to={{pathname:`/serviceDetailPage/service_data_get`,search:`?city=${city||"mumbai"}&categories=electrician`}} state={ {headLine: 'Electrician'} } className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="md:w-11 w-32 h-11" src={electricity_image} alt="Cleaning" />
@@ -127,7 +127,7 @@ const toogleRender=()=>{
             </Link>
             </div>
 
-            <div className='w-22'>
+            <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=plumber`}   state={{ headLine: 'Plumber' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="md:w-11 w-32 h-11" src={plumber} alt="Plumber" />
@@ -136,7 +136,7 @@ const toogleRender=()=>{
             </Link>
             </div>
 
-            <div className='w-22'>
+            <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=carpenter`} state={{ headLine: 'Carpenter' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="md:w-11 w-32 h-11" src={carpenter} alt="Festival Decoration" />
@@ -166,7 +166,7 @@ const toogleRender=()=>{
               <div className='flex flex-col  gap-5 mb-5  mt-3'>
               <div className='flex gap-5 '>
 
-              <div className='w-22'>
+              <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=acservice`} state={{ headLine: 'AC repair & Service' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="md:w-11 w-32 h-11" src={ac_repair} alt="Cleaning" />
@@ -175,7 +175,7 @@ const toogleRender=()=>{
             </Link>
             </div>
 
-              <div className='w-22'>
+              <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=chimney`} state={{ headLine: 'Chimney Repair & Service' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="md:w-11 w-32 h-11" src={chimney} alt="Cleaning" />
@@ -184,7 +184,7 @@ const toogleRender=()=>{
             </Link>
             </div>
 
-            <div className='w-22'>
+            <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=gasstoverepair`} state={{ headLine: 'Gas Repair & service' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="md:w-11 w-32 h-11" src={gas} alt="Electrician" />
@@ -200,7 +200,7 @@ const toogleRender=()=>{
 
 
             <div className='flex gap-5 '>
-            <div className='w-22'>
+            <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=refrigerator`} state={{ headLine: 'Refrigerator Repair ' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="md:w-11 w-32 h-11" src={refrigerator} alt="Festival Decoration" />
@@ -209,7 +209,7 @@ const toogleRender=()=>{
             </Link>
           </div>
 
-            <div className='w-22'>
+            <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=mixergrinder`} state={{ headLine: 'Mixer & Grinder Repair' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="md:w-11 w-32 h-11" src={mixer} alt="Electrician" />
@@ -218,7 +218,7 @@ const toogleRender=()=>{
             </Link>
             </div>
 
-            <div className='w-22'>
+            <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=washingmachine`} state={{ headLine: 'Washin Machine Repair' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="md:w-11 w-32 h-11" src={washinMashin} alt="Festival Decoration" />
@@ -245,28 +245,28 @@ const toogleRender=()=>{
               <h1 className='mb-5 font-semibold text-lg'>Cleaning & Pest pest control</h1>
               <span>Cleaning</span>
               <div className='flex  gap-5 mb-5  mt-3'>
-              <div className='w-22'>
+              <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=bathroom_kitchen`} state={{ headLine: 'Bathroom & Kitchen Cleaning' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-32 md:md:w-11 w-32 md:11 h-11" src={bathroom} alt="Cleaning" />
+                <img className=" md:w-11 w-32 md:11 h-11" src={bathroom} alt="Cleaning" />
               </div>
                 <span className='text-xs mt-1'>Bathroom & Kitchen Cleaning</span>
             </Link>
             </div>
 
-            <div className='w-22'>
+            <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=fullhome`} state={{ headLine: 'Full Home Cleaning' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-32 md:md:w-11 w-32 h-11" src={home} alt="Electrician" />
+                <img className=" md:md:w-11 w-32 h-11" src={home} alt="Electrician" />
               </div>
                 <span className='text-xs mt-1'>Full Home Cleaning</span>
             </Link>
             </div>
 
-            <div className='w-22'>
+            <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=sofaCleaning`} state={{ headLine: 'Sofa Cleaning' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-32 md:md:w-11 w-32 h-11" src={sofa_image} alt="Festival Decoration" />
+                <img className=" md:md:w-11 w-32 h-11" src={sofa_image} alt="Festival Decoration" />
               </div>
               <span className='text-xs mt-1'>Sofa Cleaning</span>
             </Link>
@@ -275,7 +275,7 @@ const toogleRender=()=>{
 
             <span>Pest Control</span>
               <div className='flex  gap-5  mt-3'>
-              <div className='w-22'>
+              <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=pestcontrol`} state={{ headLine: 'Insect Pest Control' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-11  h-11" src={pest} alt="Cleaning" />
@@ -286,7 +286,7 @@ const toogleRender=()=>{
 
 
 
-            <div className='w-22'>
+            <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=bedbugcontrol`}state={{ headLine: 'Bed Bugs Control' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
               <div className="bg-gray-100 px-8 rounded py-3">
                 <img className="w-11  h-11" src={bed} alt="Festival Decoration" />

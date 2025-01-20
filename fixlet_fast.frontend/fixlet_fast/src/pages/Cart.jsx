@@ -43,7 +43,7 @@ function Cart() {
     }
   },[cartItems]) 
   return (<>{cartLoading?<><Loader/></>:
-    <main className=' pt-20 md:pt-28  flex flex-col   items-center w-full md:px-32'>
+    <main className=' md:pt-28  flex flex-col   items-center w-full md:px-32'>
       <div className='w-full bg-white shadow-sm fixed top-0 px-5 py-5 '>
      <Link to={"/"}>
             <FaArrowLeftLong className='' size={25}/>

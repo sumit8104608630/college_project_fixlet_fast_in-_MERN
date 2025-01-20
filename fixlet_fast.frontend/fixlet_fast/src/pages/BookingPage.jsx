@@ -221,7 +221,7 @@ function isEmpty(obj_inside) {
           </div>
           <hr className=' my-2 bg-gray-500'/>
 
-          <div className=' flex items-center gap-4 px-3 py-4 ' >
+          <div className=' flex items-center gap-4 px-2 py-4 ' >
             <div className='flex flex-col w-full' >
               <div className='flex items-center gap-2'>
             <div><IoTime className='text-gray-600 ' size={25}/></div><p>Slot</p>
@@ -231,7 +231,7 @@ function isEmpty(obj_inside) {
           </div>
           </div>
           </div>
-          <hr className=' myt-2  bg-gray-500'/>
+          <hr className=' mt-2  bg-gray-500'/>
           <div className='relative'>
           <div className='absolute w-full h-full bg-opacity-50 top-0 rounded-b bg-gray-400 '></div>
           <div className='flex  items-center gap-4 px-3 py-4 ' >
