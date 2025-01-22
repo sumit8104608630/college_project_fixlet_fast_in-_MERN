@@ -12,12 +12,15 @@ import {fetchCheckOut} from "../app/Actions/cart_action.js"
 import Loader from "../component/Loader.jsx"
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import EmptyCartItem from '../component/EmptyCartItem.jsx';
+import { IoCloseOutline } from "react-icons/io5";
+import axios from 'axios';
 const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
 function BookingPage() {
   const [searchParams] = useSearchParams();
   const dispatch=useDispatch()
+  const [timeEditToggle,setTimeEditToggle]=useState(false)
   const [emptyCart,setEmpty]=useState(false);
   const {checkOutItemLoading,checkOutItem}=useSelector((state)=>state.cart);
   const [allItem,setAllItem]=useState({})
@@ -29,11 +32,29 @@ function BookingPage() {
     const footerShow=useContext(currentContext);
     const [visitationFee,setVisitationFee]=useState(70);
     const [taxFee,setTaxFee]=useState(80)
+    const [slotToggle,setSlotToggle]=useState(false);
+    const [timeToggle,setTimeToggle]=useState(false)
+    const today = new Date();
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const [time,setTime]=useState([])
+    const [loading,setLoading]=useState(true);
+    const [date,setDate]=useState({
+      day:"",
+      date:"",
+      time:""
+    });
+    
+
+    
+    // Get current day and date
+    const currentDay = daysOfWeek[today.getDay()];
+    const currentDate = today.getDate();
+    ;
 
     
     useEffect(()=>{
       Context.setShowHeader(false)
-
+      setTimeEditToggle(false)
       footerShow.setFooterShow(false)
       dispatch(fetchCheckOut({state,city,categories}));
       Context.setCheckout(false)
@@ -194,15 +215,187 @@ function isEmpty(obj_inside) {
     }
   };
 
+
+  const handleSlot=()=>{
+
+    setSlotToggle(true)
+
+  }
     
 
 
 
+  const getCurrentAndFutureDates = () => {
+    const today = new Date();
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    
+    // Get current day and date
+
+    
+    // Generate next few dates
+    let futureDates = [];
+    for (let i = 0; i <daysOfWeek.length; i++) {
+      const nextDate = new Date(today);
+      nextDate.setDate(today.getDate() + i);  // Add i days to the current date
+      const futureDay = daysOfWeek[nextDate.getDay()]; // Get day of the week
+      const futureDate = nextDate.getDate(); // Get the date of the month
+      futureDates.push({ day: futureDay, date: futureDate });
+    }
+    
+    return futureDates;
+  };
+
   
+
+
+  const [timeSlots, setTimeSlots] = useState(() => {
+    const futureDates = getCurrentAndFutureDates();
+    return futureDates.map((date) => ({
+      day: date.day,
+      date: date.date,
+      times: ["09:00 AM", "10:00 AM", "11:00 AM"],
+    }));
+  });
+
+// Log timeSlots when it updates
+
+
+
+const handleSelectDate=async(day,date)=>{
+  setDate(prev=>({...prev,day:day,date:date}))
+setLoading(true)
+  console.log(day)
+  const response=await axios.get(`http://localhost:8000/time/get_time?day=${day}`);
+  const data=await response.data;
+  setTimeToggle(true);
+  setTime(data.data.times)
+  if(data.statusCode===200){
+    setLoading(false)
+  }
+  
+}
+
+const handleSelectTime=(time)=>{
+
+  setDate(prev=>({...prev,time:time}));
+  console.log(date)
+  setSlotToggle(false);
+  setTimeEditToggle(true)
+
+
+}
+
+
+
   
   return (<>{checkOutItemLoading?<><Loader/></>:emptyCart||!checkOutItem?<EmptyCartItem city={city} categories={categories} />:
 
     <main className='md:pt-24 pt-5 w-full flex  justify-center  md:px-20'>
+
+{slotToggle&&
+      <div className='fixed  z-20 px-5 bg-opacity-50 left-0 top-0 justify-center items-center bg-black flex w-full h-screen '>
+              <div className=' border-1 rounded  md:w-1/2   backdrop-blur-lg bg-opacity-10 '>
+                  <button onClick={()=>setSlotToggle(false)} className='bg-white rounded-full p-1 mb-2 absolute right-0  -top-10 translate-y-0'><IoCloseOutline size={20}/></button>
+                  <div className='rounded border-gray-600  shadow p-5 bg-white'>
+
+
+                    <div>
+                      <div>
+                        <h1 className='text-lg font-semibold'>When should the professional arrive?</h1>
+                        <p className='text-gray-700 text-base'>{`Service will take approx. ${allItem?.totalTime > 60 ?allItem?.totalTime / 60 +"hr" : `${allItem?.totalTime} mins`}`}</p>
+                      
+                               <div className='grid grid-cols-2 md:grid-cols-4 md:h-max h-40 overflow-auto custom-scrollbar w-full mt-5 gap-5 '>{
+                            timeSlots?.map((time)=>{
+                              return(                    
+                                  <button key={time.date} onClick={()=>handleSelectDate(time.day,time.date)} className={`flex  ${date.day===time.day?"bg-orange-50":""} flex-col gap-1 justify-center items-center border-2 hover:bg-orange-50 px-4 py-1 rounded`}>
+                                  <span className='md:text-lg text-base font-semibold'>{time.day}</span>
+                                  <span className='md:text-sm text-base'>{time.date} </span>
+                                  </button>
+                              )
+                            })
+                          }</div>
+                        
+                      </div>
+                      {timeToggle&&
+                      <>
+                      <hr className='my-5 h-0.5 bg-gray-500'></hr>
+                      <h1 className='mb-5'>Time available :</h1>
+                      <div className=''>
+                        {loading?<div className="relative flex flex-col items-center">
+        <svg
+          version="1.1"
+          viewBox="0 0 64 64"
+          width="2em"
+          height="2em"
+          xmlns="http://www.w3.org/2000/svg"
+          className="animate-spin"
+        >
+          <circle
+            className="stroke-gradient"
+            cx="32"
+            cy="32"
+            r="28"
+            fill="none"
+            stroke="url(#spinner-gradient)"
+            strokeWidth="8"
+          />
+          <path
+            className="stroke-current text-orange-500"
+            d="M32,4 A28 28,0,0,0,32,60"
+            fill="none"
+            strokeWidth="8"
+            strokeLinecap="round"
+          />
+          <defs>
+            <linearGradient
+              id="spinner-gradient"
+              gradientUnits="userSpaceOnUse"
+              x1="32"
+              y1="0"
+              x2="32"
+              y2="64"
+            >
+              <stop offset="0.1" stopColor="currentColor" stopOpacity="0" />
+              <stop offset="0.9" stopColor="currentColor" stopOpacity="1" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div className="mt-2 text-center text-orange-500 text-sm font-medium">Please wait</div>
+      </div>:
+                      
+                          <ul className="grid grid-cols-2 md:grid-cols-4 md:h-max custom-scrollbar h-36 overflow-auto gap-4">
+ {time?.map((time, index) => {
+   return (
+     <button
+       key={index}
+       onClick={() => handleSelectTime(time)}
+       className="flex flex-col gap-1 justify-center items-center border-2 hover:bg-orange-50 px-4 py-1 rounded"
+     >
+       <span className="md:text-lg text-base font-semibold">{time}</span>
+     </button>
+   );
+ })}
+</ul>
+}
+                          
+                      </div>
+                      </>
+}
+                      <div></div>
+                    </div>
+
+                      
+                  </div>
+              </div>
+      </div>
+}
+
+
+
+
+
+
+
       <div className='w-4/5 hidden md:flex justify-between gap-5'>
         <div className='w-full px-2 flex flex-col gap-5'>
           <div className='bg-green-200 px-5 rounded-lg py-4'><p className=' text-center text-green-800 font-medium text-xs'>{`You'`} re saving total ₹60 on this order! .</p></div>
@@ -223,20 +416,34 @@ function isEmpty(obj_inside) {
 
           <div className=' flex items-center gap-4 px-2 py-4 ' >
             <div className='flex flex-col w-full' >
-              <div className='flex items-center gap-2'>
-            <div><IoTime className='text-gray-600 ' size={25}/></div><p>Slot</p>
+              <div className='flex justify-between items-center gap-2 pr-2'>
+                <div className='flex items-center gap-2'>
+            <div><IoTime className='text-gray-600 ' size={25}/></div><p className='flex'>{`${date.day}: ${date.date} Time: ${date.time}`}</p></div>
+            {timeEditToggle&&
+            <button onClick={()=>setSlotToggle(true)} className='px-5 py-2 bg-gray-100 rounded-lg border-2 border-gray-400 hover:bg-gray-200 font-semibold'>Edit</button>
+            }
               </div>
-            <div className='pt-2'>
-          <button className='text-base font-semibold w-full rounded py-2 hover:bg-orange-600 text-white bg-orange-500'> Select Slot  </button>
+              {!timeEditToggle&&
+            <div className='pt-2'>       
+          <button onClick={handleSlot} className='text-base font-semibold w-full rounded py-2 hover:bg-orange-600 text-white bg-orange-500'> Select Slot  </button>  
           </div>
+          }
           </div>
           </div>
           <hr className=' mt-2  bg-gray-500'/>
           <div className='relative'>
+            {!timeEditToggle&&
           <div className='absolute w-full h-full bg-opacity-50 top-0 rounded-b bg-gray-400 '></div>
+
+            }
           <div className='flex  items-center gap-4 px-3 py-4 ' >
             <div><MdPayments className='text-gray-600 ' size={25}/></div><p>Payment method</p>
           </div>
+          {timeEditToggle&&
+          <div className='pt-2 px-2 pb-2'>       
+          <button onClick={handleSlot} className='text-base font-semibold w-full rounded py-2 hover:bg-orange-600 text-white bg-orange-500'> Select Slot  </button>  
+          </div>
+}
           </div>
           </div>
           
@@ -353,7 +560,7 @@ function isEmpty(obj_inside) {
           <div>
             <div className='flex items-center px-2'><p className='text-xs '>{userInfo?.location}</p><span className='text-orange-500 border-2 px-2 py-1 rounded-lg border-gray-400'>Edit</span></div>
             <div>
-              <button className='w-full py-2 rounded-lg font-semibold text-base text-white mt-2 bg-orange-500'>Select Slot</button>
+              <button onClick={handleSlot} className='w-full py-2 rounded-lg font-semibold text-base text-white mt-2 bg-orange-500'>Select Slot</button>
             </div>
           </div>
 

@@ -45,6 +45,7 @@ function ServiceDetailPage(props) {
     subServiceId: location.state?.subServiceId,
 }));  const [showService,setShowService]=useState(null);
   const Context=useContext(currentContext);
+  const {scrollTo} = location.state || {}
 
 
 
@@ -56,6 +57,18 @@ return setShowService({serviceId:serviceId,subServiceId:subServiceId,subservice:
   
   }
 
+  useEffect(()=>{
+    if (scrollTo&&!loading) {
+      
+      const element = document.getElementById(scrollTo);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+ 
+  },[scrollTo,loading])
+
+  
 
  
   useEffect(()=>{

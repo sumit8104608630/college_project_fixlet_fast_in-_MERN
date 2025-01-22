@@ -44,8 +44,10 @@ const no_of_user_globally=asyncHandler(async(req,res)=>{
             $group: {
               _id: "$serviceType",               // Group by serviceType
               serviceTypeName:{$first:"$serviceTypeName"},
+              serviceType:{$first:"$serviceType"},
               services: {
                 $push: {
+                  servicePartName:"$servicePartName",
                   serviceName: "$serviceName",
                   serviceImage: "$serviceImage",
                 },

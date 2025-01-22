@@ -50,7 +50,7 @@ function Dashbord() {
     const [user_globally,setUser_globally]=useState(0)
   
     useEffect(()=>{
-const user_count=axios.get(`${apiUrl}/global/user_count`).then(response=>response.data).then(data=>{
+axios.get(`${apiUrl}/global/user_count`).then(response=>response.data).then(data=>{
   setUser_globally(data.data.totalUser)
 })
       dispatch(fetchCart())
@@ -399,8 +399,8 @@ const toogleRender=()=>{
 <button onClick={scrollRight} className=' xl:block hidden h-max'><IoIosArrowDropright className='text-orange-500' size={50}/></button>
 </div>
 
-<div className='px-2'>
-        <div className='flex mt-14 py-5  md:px-10 px-5 w-full rounded bg-amber-100'>
+<div className='px-2 '>
+        <div className='flex mt-14 md:py-10  md:px-5 px-5 w-full rounded bg-amber-100'>
           <div className=' flex flex-col justify-between ' >
             <div className=''>
             <span className='md:text-xl text-base px-3 md:px-5 w-max rounded py-1 md:py-2  text-white bg-green-700 '>Decorate your Home</span>

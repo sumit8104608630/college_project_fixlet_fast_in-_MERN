@@ -43,11 +43,9 @@ function SearchBar() {
   useEffect(()=>{
     axios.get(`http://localhost:8000/global/search?query=${key}`).then((Response)=>{
       setSearchResults(Response.data)
-      console.log(Response.data)
     })
   },[key])
 
- console.log(searchResults) 
   return (
     <div className="relative">
     <div className="flex items-center bg-white border border-gray-300 rounded-lg shadow-sm">
@@ -70,17 +68,19 @@ function SearchBar() {
       </div>
       {showFilter&&
       <div className="absolute bg-white border-2 w-full rounded-lg mt-2 px-2 py-1">
-        <ul>
+        <ul style={{ maxHeight: '300px', overflowY: 'auto' }} className="custom-scrollbar">
           {searchResults.length>0&&<>
           {searchResults?.map((item)=>{
             return(<ul key={item._id}>
               <li>
-              <Link className="font-semibold text-xl "><span>{item?.serviceTypeName}</span></Link>
+              <Link 
+               to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=${item.serviceType}`} state={{ headLine:  `${item?.serviceTypeName}` }}
+              className="font-semibold text-xl "><span>{item?.serviceTypeName}</span></Link>
               <hr className="h-0.5 bg-gray-400 mt-1"></hr>
                 <ul className="my-3 flex flex-col gap-2">
                   {item.services?.map((serviceItem)=>{
                     return(<li className="flex hover:bg-gray-100 px-2 py-2 text-base font-medium text-gray-900" key={serviceItem.serviceName}><Link
-                      to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=${item.serviceType}`} state={{ headLine: 'Bathroom & Kitchen Cleaning' }}
+                      to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=${item.serviceType}`} state={{ headLine:  `${item?.serviceTypeName}`, scrollTo:`${serviceItem.servicePartName}` }}
                       className="flex justify-between w-full items-center"><span>{serviceItem.serviceName}</span><img className="w-14" src={serviceItem.serviceImage}/></Link></li>)
                   })
           }</ul>

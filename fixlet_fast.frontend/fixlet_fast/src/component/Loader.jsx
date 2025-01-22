@@ -5,53 +5,44 @@ const Spinner = () => {
     <div className="w-full h-screen fixed top-0 z-20 bg-white">
       <div className="flex items-center justify-center h-screen">
         <div className="relative flex flex-col items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 200 200"
-            className="w-16 h-16 md:w-20 md:h-20"
-          >
-            <radialGradient id="a12" cx="0.66" fx="0.66" cy="0.3125" fy="0.3125" gradientTransform="scale(1.5)">
-              <stop offset="0" stopColor="#FF5C00" />
-              <stop offset="0.3" stopColor="#FF5C00" stopOpacity="0.9" />
-              <stop offset="0.6" stopColor="#FF5C00" stopOpacity="0.6" />
-              <stop offset="0.8" stopColor="#FF5C00" stopOpacity="0.3" />
-              <stop offset="1" stopColor="#FF5C00" stopOpacity="0" />
-            </radialGradient>
-            <circle
-              transformOrigin="center"
-              fill="none"
-              stroke="url(#a12)"
-              strokeWidth="12"
-              strokeLinecap="round"
-              strokeDasharray="200 1000"
-              strokeDashoffset="0"
-              cx="100"
-              cy="100"
-              r="70"
+        <svg
+          version="1.1"
+          viewBox="0 0 64 64"
+          width="2em"
+          height="2em"
+          xmlns="http://www.w3.org/2000/svg"
+          className="animate-spin"
+        >
+          <circle
+            className="stroke-gradient"
+            cx="32"
+            cy="32"
+            r="28"
+            fill="none"
+            stroke="url(#spinner-gradient)"
+            strokeWidth="8"
+          />
+          <path
+            className="stroke-current text-orange-500"
+            d="M32,4 A28 28,0,0,0,32,60"
+            fill="none"
+            strokeWidth="8"
+            strokeLinecap="round"
+          />
+          <defs>
+            <linearGradient
+              id="spinner-gradient"
+              gradientUnits="userSpaceOnUse"
+              x1="32"
+              y1="0"
+              x2="32"
+              y2="64"
             >
-              <animateTransform
-                type="rotate"
-                attributeName="transform"
-                calcMode="spline"
-                dur="1s"
-                values="360;0"
-                keyTimes="0;1"
-                keySplines="0 0 1 1"
-                repeatCount="indefinite"
-              />
-            </circle>
-            <circle
-              transformOrigin="center"
-              fill="none"
-              opacity="0.2"
-              stroke="#F97316"
-              strokeWidth="12"
-              strokeLinecap="round"
-              cx="100"
-              cy="100"
-              r="70"
-            />
-          </svg>
+              <stop offset="0.1" stopColor="currentColor" stopOpacity="0" />
+              <stop offset="0.9" stopColor="currentColor" stopOpacity="1" />
+            </linearGradient>
+          </defs>
+        </svg>
           <div className="mt-4 md:text-base text-sm text-center text-orange-500 font-medium">
             Please wait
           </div>
