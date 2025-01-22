@@ -19,6 +19,7 @@ import ServiceDetail from './ServiceDetail.jsx';
 import { currentContext } from '../component/Context.jsx';
 import { useContext } from 'react';
 import { IoCloseOutline } from "react-icons/io5";
+import {get_offers} from "../app/Actions/offers_action"
 
 
 function ServiceDetailPage(props) {
@@ -28,6 +29,7 @@ function ServiceDetailPage(props) {
   const MemoizedButton = React.memo(AddButton);
   const CartMemo = React.memo(Cart);
   const { loading, services_data, error } = useSelector(state => state.service);
+  const [all_service,setAllService]=useState([]);
   const dispatch = useDispatch();
   const { isLogin, userInfo, isLoading } = useSelector(state => state.user);
   const [active, setActive] = useState(null);
@@ -40,6 +42,8 @@ function ServiceDetailPage(props) {
   const navigate =useNavigate();
   const [showMenu,setShowMenu]=useState(false)
   const { headLine } = location.state || {};
+  const { offerLoading, offersData, offerError } = useSelector(state => state.offers);
+  const [offers,setOffers]=useState([])
   const [localState, setLocalState] = useState(() => ({
     serviceId: location.state?.serviceId,
     subServiceId: location.state?.subServiceId,
@@ -47,15 +51,36 @@ function ServiceDetailPage(props) {
   const Context=useContext(currentContext);
   const {scrollTo} = location.state || {}
 
-
+  useEffect(()=>{
+    if(!loading){
+      setAllService(services_data)
+    }
+  },[loading,services_data])
+  
 
   // let's create the view detail functionality 
   const handleViewDetail=(serviceId,subServiceId)=>{
-  const newCart = services_data?.filter(item => item._id === serviceId);
+  const newCart = all_service?.filter(item => item._id === serviceId);
 const newSubService = newCart?.[0]?.serviceSubType?.find(item => item._id === subServiceId);
 return setShowService({serviceId:serviceId,subServiceId:subServiceId,subservice:newSubService})
   
   }
+  useEffect(()=>{
+    dispatch(get_offers())
+},[dispatch])
+
+
+// useEffect(()=>{
+//   setAllService((prev)=>prev.map(item=>{}))
+//  })
+
+useEffect(() => {
+  if(!offerLoading){
+    const filter_offer=offersData?.filter(item=>item._id===categories)[0];
+  setOffers(filter_offer?.offersDetails)
+  }
+},[offersData,offerLoading,categories])
+
 
   useEffect(()=>{
     if (scrollTo&&!loading) {
@@ -92,7 +117,7 @@ return setShowService({serviceId:serviceId,subServiceId:subServiceId,subservice:
     setCartItems(cart)
     const cart_item = cart?.filter(item => item._id === categories);
     setFilter_cartItems(cart_item[0]?.productDetails || []);
-  }, [cart, categories,Context]);
+  }, [cart,categories,Context]);
 
   useEffect(() => {
     if (state && city && categories) {
@@ -109,6 +134,8 @@ return setShowService({serviceId:serviceId,subServiceId:subServiceId,subservice:
 
   // lets create update filter_cartItems by add button and subtract button
   const update_cart=(serviceId,subServiceId,subService,quantity,price)=>{
+    console.log(cartItems)
+
   const filterCart=filter_cartItems.filter(item=>item.serviceId==serviceId&&item.subService.subServiceId==subServiceId);
   const obj_inside=filterCart.length>0?{...filterCart[0]}:{} 
   if(obj_inside.subService.quantity)
@@ -120,31 +147,45 @@ setFilter_cartItems((prev)=>
 return item;
   }));
 
-
-
-if(cartItems[0]._id===categories){
-if(quantity===-1){
-  setCartItems((prev)=>prev.map((item)=>{
+  cartItems.map((item)=>{
     if( item?._id === categories){
-      return{...item,totalPrice:item.totalPrice-price}
+      console.log(item)
     }
-  }));
+  })
+
+
+
+  console.log(cartItems)
+if(quantity===-1){
+  setCartItems((prev) => 
+    (prev.map((item) => {
+      if (item?._id === categories) {
+        return { ...item, totalPrice: item.totalPrice - price }; 
+      }
+      return item; 
+    })
+  ));
 }
 else{
-  setCartItems((prev)=>prev.map((item)=>{
-    if( item?._id === categories){
-      return{...item,totalPrice:item.totalPrice+price}
-    }
-  }));
+  setCartItems((prev) => 
+    (prev.map((item) => {
+      if (item?._id === categories) {
+        return { ...item, totalPrice: item.totalPrice + price }; 
+      }
+      return item; 
+    })
+  ));
 }
-}
+
 }
 
 
 
 
 const update_addObj=(serviceId,subServiceId,subService,quantity,price)=>{
-  const new_cart=services_data?.filter(((item)=>{
+
+  console.log()
+  const new_cart=all_service?.filter(((item)=>{
     if(item._id===serviceId){
       return item;
     }
@@ -191,12 +232,13 @@ setFilter_cartItems((prev) => {
 // console.log(cartItems)
 // console.log(price)
 if(cartItems.length>0){
-if(cartItems[0]._id===categories){
+if(cartItems.some(cartItems=>cartItems._id===categories)){
 
   setCartItems((prev)=>prev.map((item)=>{
     if( item?._id === categories){
       return{...item,totalPrice:item.totalPrice+price}
     }
+    return item
   }));
 }
   else{
@@ -257,7 +299,7 @@ function isEmpty(obj_inside) {
       if(!isEmpty(obj_inside)&&obj_inside.subService.quantity>=1){
         return update_cart(serviceId,subServiceId,subService,1,price);
       }
-      const new_cart=services_data?.filter(((item)=>{
+      const new_cart=all_service?.filter(((item)=>{
         if(item._id===serviceId){
           return item;
         }
@@ -318,7 +360,7 @@ function isEmpty(obj_inside) {
 
   return (
     <>
-      {  loading  ? (
+      {  loading &&offerLoading ? (
         <Loader />
       ) : (
 <>
@@ -332,7 +374,7 @@ function isEmpty(obj_inside) {
     </button></div>
         <div>
           <button onClick={()=>setShowMenu(false)}>
-            <p className='flex bg-black rounded-lg gap-1 px-2 py-0.5 items-center'><IoMenu className='text-white'/><spn className="text-white text-sm">Menu</spn></p>
+            <p className='flex bg-black rounded-lg gap-1 px-2 py-0.5 items-center'><IoMenu className='text-white'/><span className="text-white text-sm">Menu</span></p>
           </button>
         </div>
       </div>
@@ -346,13 +388,13 @@ function isEmpty(obj_inside) {
           {!showMenu&&
             <div className="h-min pb-5 flex flex-col justify-center items-center bg-white   md:top-20">
               <h1 className="md:text-3xl text-xl font-semibold mt-5 text-gray-700 mb-5">{headLine}</h1>
-              {services_data.length <= 1 && !loading ? (
+              {all_service?.length <= 1 && !loading ? (
                 <div><Promise /></div>
               ) : (
                 <div
-                  className={`grid h-max w-max grid-cols-${Math.ceil(services_data.length <= 2 ? 2 : services_data.length / 2)} gap-5 md:border-2 md:p-5  rounded-lg`} style={{ gridTemplateColumns: `repeat(${Math.ceil(services_data.length <= 2 ? 2 : services_data.length >2?3:services_data.length/2)}, 1fr)` } }
+                  className={`grid h-max w-max grid-cols-${Math.ceil(all_service?.length <= 2 ? 2 : all_service?.length / 2)} gap-5 md:border-2 md:p-5  rounded-lg`} style={{ gridTemplateColumns: `repeat(${Math.ceil(all_service?.length <= 2 ? 2 : all_service?.length >2?3:all_service?.length/2)}, 1fr)` } }
                 >
-                  {services_data.map((service) => (
+                  {all_service?.map((service) => (
                     <Link
                       to={service.servicePartName}
                       smooth={true}
@@ -383,13 +425,13 @@ function isEmpty(obj_inside) {
 
 <div className="h-min md:flex hidden pb-5  flex-col justify-center items-center bg-white sticky top-0   md:top-24">
               <h1 className="md:text-3xl w-full px-2 text-xl font-semibold mt-5 text-gray-700 mb-5">{headLine}</h1>
-              {services_data.length <= 1 && !loading ? (
+              {all_service?.length <= 1 && !loading ? (
                 <div><Promise /></div>
               ) : (
                 <div
-                  className={`grid h-max w-max grid-cols-${Math.ceil(services_data.length <= 2 ? 2 : services_data.length / 2)} gap-5 md:border-2 md:p-5  rounded-lg`} style={{ gridTemplateColumns: `repeat(${Math.ceil(services_data.length <= 2 ? 2 : services_data.length >2?3:services_data.length/2)}, 1fr)` } }
+                  className={`grid h-max w-max grid-cols-${Math.ceil(all_service?.length <= 2 ? 2 : all_service?.length / 2)} gap-5 md:border-2 md:p-5  rounded-lg`} style={{ gridTemplateColumns: `repeat(${Math.ceil(all_service?.length <= 2 ? 2 : all_service?.length >2?3:all_service?.length/2)}, 1fr)` } }
                 >
-                  {services_data.map((service) => (
+                  {all_service?.map((service) => (
                     <Link
                       to={service.servicePartName}
                       smooth={true}
@@ -421,7 +463,7 @@ function isEmpty(obj_inside) {
 
             <div className={`scrollbar-thin scrollbar-none  ${showService&&"overflow-hidden"}  scrollbar-track-gray-200`}>
               <div className="flex flex-col md:border-2 md:rounded px-2">
-                {services_data.map((service) => (
+                {all_service?.map((service) => (
                   <div id={service.servicePartName} className="py-5" key={service._id}>
                     <h1 className="text-gray-700 text-start text-2xl font-bold">{service.serviceName}</h1>
                     {service.serviceSubType.map((subService) => (
@@ -547,7 +589,7 @@ function isEmpty(obj_inside) {
                 )}
               </div>
               <div>
-                {services_data.length > 1 && !loading && <div><Promise /></div>}
+                {all_service?.length > 1 && !loading && <div><Promise /></div>}
               </div>
             </div>
 

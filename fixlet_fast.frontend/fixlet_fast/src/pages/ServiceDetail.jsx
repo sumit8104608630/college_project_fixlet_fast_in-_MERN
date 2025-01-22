@@ -7,6 +7,8 @@ import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaRegClock } from "react-icons/fa6";
 import { useEffect,useState } from "react";
 import { useSelector } from 'react-redux';
+
+
 function ServiceDetail(props) {
 const MemoizedButton = React.memo(AddButton);
 const [filter_cartItems,setFilter_cartItems] = useState([]);
@@ -21,6 +23,8 @@ const { loading, services_data, error } = useSelector(state => state.service);
 useEffect(()=>{
 setFilter_cartItems(props.filter_cartItems)
 },[props.filter_cartItems])
+
+
 
 useEffect(()=>{
 if(filter_cartItems.length>0||cartLoading){

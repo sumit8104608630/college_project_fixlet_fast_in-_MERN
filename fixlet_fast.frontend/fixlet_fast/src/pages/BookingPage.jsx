@@ -14,6 +14,7 @@ import { FaIndianRupeeSign } from "react-icons/fa6";
 import EmptyCartItem from '../component/EmptyCartItem.jsx';
 import { IoCloseOutline } from "react-icons/io5";
 import axios from 'axios';
+import { LuIndianRupee } from "react-icons/lu";
 const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
@@ -30,7 +31,7 @@ function BookingPage() {
     const categories = searchParams.get('categories');  
     const state = userInfo?.state;
     const footerShow=useContext(currentContext);
-    const [visitationFee,setVisitationFee]=useState(70);
+    const [visitationFee,setVisitationFee]=useState(0);
     const [taxFee,setTaxFee]=useState(80)
     const [slotToggle,setSlotToggle]=useState(false);
     const [timeToggle,setTimeToggle]=useState(false)
@@ -51,13 +52,26 @@ function BookingPage() {
     const currentDate = today.getDate();
     ;
 
-    
+    useEffect(()=>{
+      axios.get(`${apiUrl}/tax/get_tax_fee?totalPrice=${allItem?.totalPrice}`,{
+        withCredentials: true, 
+      }).then((response)=>{
+        setTaxFee(response.data.data)
+      })
+    })
+
     useEffect(()=>{
       Context.setShowHeader(false)
       setTimeEditToggle(false)
       footerShow.setFooterShow(false)
       dispatch(fetchCheckOut({state,city,categories}));
       Context.setCheckout(false)
+      console.log(categories)
+      axios.get(`${apiUrl}/visit/get_visit_fee?type=${categories}`,{
+        withCredentials: true, 
+      }).then((response)=>{
+        setVisitationFee(response.data.data.price)
+      })
       return()=>{
         Context.setShowHeader(true)
 
@@ -265,7 +279,9 @@ const handleSelectDate=async(day,date)=>{
   setDate(prev=>({...prev,day:day,date:date}))
 setLoading(true)
   console.log(day)
-  const response=await axios.get(`http://localhost:8000/time/get_time?day=${day}`);
+  const response=await axios.get(`${apiUrl}/time/get_time?day=${day}`,{
+    withCredentials: true, 
+  });
   const data=await response.data;
   setTimeToggle(true);
   setTime(data.data.times)
@@ -281,10 +297,11 @@ const handleSelectTime=(time)=>{
   console.log(date)
   setSlotToggle(false);
   setTimeEditToggle(true)
-
-
 }
 
+const handlePay=()=>{
+  
+}
 
 
   
@@ -433,7 +450,7 @@ const handleSelectTime=(time)=>{
           <hr className=' mt-2  bg-gray-500'/>
           <div className='relative'>
             {!timeEditToggle&&
-          <div className='absolute w-full h-full bg-opacity-50 top-0 rounded-b bg-gray-400 '></div>
+          <div className='absolute w-full h-full opacity-60 top-0 rounded-b bg-gray-200 '></div>
 
             }
           <div className='flex  items-center gap-4 px-3 py-4 ' >
@@ -441,7 +458,7 @@ const handleSelectTime=(time)=>{
           </div>
           {timeEditToggle&&
           <div className='pt-2 px-2 pb-2'>       
-          <button onClick={handleSlot} className='text-base font-semibold w-full rounded py-2 hover:bg-orange-600 text-white bg-orange-500'> Select Slot  </button>  
+          <button onClick={handlePay} className='text-base font-semibold w-full rounded py-2 hover:bg-orange-600 text-white bg-orange-500'> Proceed to pay  </button>  
           </div>
 }
           </div>
@@ -468,7 +485,7 @@ const handleSelectTime=(time)=>{
                         <div><span>{item?.subService.subServiceName}</span></div>
                         <div>
                             <div>    
-                                <span className='flex justify-center items-center'><FaIndianRupeeSign  /> {item?.subService.totalPrice}</span>
+                                <span className='flex justify-center items-center'><FaIndianRupeeSign size={15} className='text-gray-800' /> {item?.subService.totalPrice}</span>
                             </div>
                             <div className={`flex items-center w-20 border bg-orange-100 border-orange-500 rounded mt-2 justify-between`}>
                             <button  onClick={() => handleAddServices(item.serviceId, item?.subService.subServiceId,item?.subService,(item?.subService.totalPrice/item?.subService.quantity),(item?.subService.serviceTime/item?.subService.quantity))} className="text-sm font-semibold text-orange-500 hover:bg-orange-300 hover:text-white px-2">+</button>
@@ -490,13 +507,13 @@ const handleSelectTime=(time)=>{
           <div className='rounded-lg border'>
             <h1 className='px-5 py-2 text-lg font-medium text-gray-700'>Payment summary</h1>
             <ul className='flex gap-2 flex-col px-4 mt-2'>
-              <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>total item</span><span className=' decoration-dotted'>{allItem?.totalPrice}</span></li>
-              <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>Visitation Fee</span><span className=' decoration-dotted'>{visitationFee}</span></li>
-              <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>Tax & Fee</span><span className=' decoration-dotted'>{taxFee}</span></li>
+              <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>total item</span><span className='flex items-center decoration-dotted'><LuIndianRupee className='text-gray-800' size={12} />{allItem?.totalPrice}</span></li>
+              <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>Visitation Fee</span><span className='flex items-center decoration-dotted'><LuIndianRupee className='text-gray-800' size={12} />{visitationFee}</span></li>
+              <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>Tax & Fee</span><span className='flex items-center decoration-dotted'><LuIndianRupee className='text-gray-800' size={12} />{taxFee}</span></li>
             </ul> 
             <hr className='h-0.5 bg-gray-500 my-2'/>
             <div className='px-4'>
-              <p className='flex justify-between px-2 text-lg font-medium py-2 text-gray-800'><span>Total Price</span><span>{allItem?.totalPrice+visitationFee+taxFee||0}</span></p>
+              <p className='flex justify-between px-2 text-lg font-medium py-2 text-gray-800'><span>Total Price</span><span className='flex items-center'><LuIndianRupee className='text-gray-800' size={15} />{allItem?.totalPrice+visitationFee+taxFee||0}</span></p>
             </div>
           </div>
         </div>

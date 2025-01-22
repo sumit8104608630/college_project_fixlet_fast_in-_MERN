@@ -32,7 +32,9 @@ const cartRoute=require("../routes/cart.routes.js");
 const globalRoute=require("../routes/global.routes.js");
 const storeRoute=require("../routes/store.routes.js")
 const timeRoute=require("../routes/time.routes.js")
-
+const visitRoute=require("../routes/visitation.routes.js")
+const taxRoute=require("../routes/tax.routes.js")
+const offersRoute=require("../routes/offers.routes.js")
 
 //export this app
 app.use("/user",userRoute);
@@ -42,6 +44,9 @@ app.use("/cart",cartRoute);
 app.use("/global",globalRoute);
 app.use("/store",storeRoute);
 app.use("/time",timeRoute);
+app.use("/visit",visitRoute);
+app.use("/tax",taxRoute);
+app.use("/offer",offersRoute)
 
 
 
