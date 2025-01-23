@@ -400,7 +400,7 @@ const toogleRender=()=>{
 </div>
 
 <div className='px-2 '>
-        <div className='flex mt-14 md:py-10  md:px-5 px-5 w-full rounded bg-amber-100'>
+        <div className='flex mt-14 md:py-10 py-5  md:px-5 px-5 w-full rounded bg-amber-100'>
           <div className=' flex flex-col justify-between ' >
             <div className=''>
             <span className='md:text-xl text-base px-3 md:px-5 w-max rounded py-1 md:py-2  text-white bg-green-700 '>Decorate your Home</span>

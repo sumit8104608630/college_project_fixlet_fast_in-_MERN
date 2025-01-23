@@ -83,7 +83,7 @@ useEffect(() => {
 
 
   useEffect(()=>{
-    if (scrollTo&&!loading) {
+    if (scrollTo&&!loading&&all_service) {
       
       const element = document.getElementById(scrollTo);
       if (element) {
@@ -91,7 +91,7 @@ useEffect(() => {
       }
     }
  
-  },[scrollTo,loading])
+  },[scrollTo,loading,all_service])
 
   
 
@@ -130,11 +130,33 @@ useEffect(() => {
     dispatch(fetchCart());
   }, [dispatch]);
 
+  useEffect(()=>{
+    if(!offerLoading&&offers&&all_service&&!loading){
+      console.log("yes")
+      setAllService((prevService)=>{
+
+      return prevService?.map(service=>{
+          if(service._id===offers[0]?.serviceId){
+            let new_subservice=service.serviceSubType?.map(subservice=>{
+              if(subservice._id===offers[0]?.subServiceId)
+              {
+                return {...subservice,price:subservice.price-offers[0]?.price}
+              }
+              return subservice
+            })
+            return { ...service, serviceSubType: new_subservice };
+          }
+          return service;
+        })
+      })
+ 
+    }
+  },[offers,offerLoading,loading])
+
 
 
   // lets create update filter_cartItems by add button and subtract button
   const update_cart=(serviceId,subServiceId,subService,quantity,price)=>{
-    console.log(cartItems)
 
   const filterCart=filter_cartItems.filter(item=>item.serviceId==serviceId&&item.subService.subServiceId==subServiceId);
   const obj_inside=filterCart.length>0?{...filterCart[0]}:{} 
@@ -186,12 +208,12 @@ const update_addObj=(serviceId,subServiceId,subService,quantity,price)=>{
 
   console.log()
   const new_cart=all_service?.filter(((item)=>{
-    if(item._id===serviceId){
+    if(item?._id===serviceId){
       return item;
     }
 }))
 
-const filter_subService=new_cart[0]?.serviceSubType?.filter(item=>item._id===subServiceId);
+const filter_subService=new_cart[0]?.serviceSubType?.filter(item=>item?._id===subServiceId);
 const new_obj={
   serviceName:"",
   serviceId:serviceId,
@@ -207,7 +229,7 @@ const new_obj={
   }
 }
 setFilter_cartItems((prev) => {
-  const existingItem = prev.find((item) => item.serviceId === serviceId && item.subService.subServiceId === subServiceId);
+  const existingItem = prev.find((item) => item?.serviceId === serviceId && item?.subService.subServiceId === subServiceId);
   if (existingItem) {
     // Item exists, so we update the quantity and price
     return prev.map((item) => {
@@ -232,7 +254,8 @@ setFilter_cartItems((prev) => {
 // console.log(cartItems)
 // console.log(price)
 if(cartItems.length>0){
-if(cartItems.some(cartItems=>cartItems._id===categories)){
+  console.log(cartItems)
+if(cartItems.some(cartItems=>cartItems?._id===categories)){
 
   setCartItems((prev)=>prev.map((item)=>{
     if( item?._id === categories){
@@ -242,16 +265,13 @@ if(cartItems.some(cartItems=>cartItems._id===categories)){
   }));
 }
   else{
+    console.log(price)
     setCartItems((prev)=>
         [{_id:categories,totalPrice:+price}]
   )
   }
 }
- else{
-  setCartItems((prev)=>
-    [{_id:categories,totalPrice:+price}]
-    )
- }
+
 }
 
 
@@ -263,7 +283,7 @@ const remove_obj=(serviceId,subServiceId,price)=>{
   setFilter_cartItems((prev)=>(
     prev.filter(item=>item.serviceId!==serviceId||item.subService.subServiceId!==subServiceId)
   ))
-  if(cartItems[0]._id===categories)
+  if(cartItems.some(cartItems=>cartItems?._id===categories))
 {
   setCartItems((prev)=>prev.map((item)=>{
     if( item?._id === categories){
@@ -476,9 +496,18 @@ function isEmpty(obj_inside) {
                               <span>{subService.serviceRatingCount} review</span>
                             </div>
                             <div className="flex items-center gap-4">
-                              <div className="flex items-center">
+                              <div className="flex gap-2 items-center">
+                              <del className='flex items-center'>
+                              <FaIndianRupeeSign size={12} />
+
+                                  {
+                                      offers?.some(item=>item.serviceId===service._id&&item.subServiceId===subService._id)?offers[0].price:""}
+                                  </del>
+                            <div className='flex items-center'>
                                 <FaIndianRupeeSign size={12} />
                                 <span>{subService.price}</span>
+                                </div>
+                         
                               </div>
                               <div className="flex gap-2 items-center">
                                 <FaRegClock size={12} />

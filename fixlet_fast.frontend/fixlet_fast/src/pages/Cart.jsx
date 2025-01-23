@@ -63,7 +63,7 @@ function Cart() {
                           </div>
                         </div>
                         :
-      <div className='w-full md:w-max'>
+      <div className='w-full md:w-1/2'>
               <div className='flex px-2 md:px-0 gap-4 items-center justify-start w-full mb-5'>
                 <IoCart size={50} className='text-orange-500' />
                 <h1 className='text-3xl text-gray-700 font-bold'>Your Cart</h1>
