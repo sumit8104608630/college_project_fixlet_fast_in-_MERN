@@ -61,30 +61,7 @@ function BookingPage() {
     
 
 
-    console.log(allItem)
-
-    useEffect(()=>{
-      if(!offerLoading&&offers&&allItem&&!loading){
-        console.log("yes")
-        setAllItem((prevService)=>{
-  
-        return prevService?.map(service=>{
-            if(service._id===offers[0]?.serviceId){
-              let new_subservice=service.serviceSubType?.map(subservice=>{
-                if(subservice._id===offers[0]?.subServiceId)
-                {
-                  return {...subservice,price:subservice.price-offers[0]?.price}
-                }
-                return subservice
-              })
-              return { ...service, productDetails: new_subservice };
-            }
-            return service;
-          })
-        })
-   
-      }
-    },[offerLoading,loading,offers])
+console.log(offers)
 
 
 
@@ -112,7 +89,7 @@ function BookingPage() {
       axios.get(`${apiUrl}/visit/get_visit_fee?type=${categories}`,{
         withCredentials: true, 
       }).then((response)=>{
-        setVisitationFee(response.data.data.price)
+        setVisitationFee(response.data.data?.price)
       })
       return()=>{
         Context.setShowHeader(true)
@@ -457,7 +434,7 @@ const handlePay=()=>{
 
       <div className='w-4/5 hidden md:flex justify-between gap-5'>
         <div className='w-full px-2 flex flex-col gap-5'>
-          <div className='bg-green-200 px-5 rounded-lg py-4'><p className=' text-center text-green-800 font-medium text-xs'>{`You'`} re saving total ₹60 on this order! .</p></div>
+          <div className='bg-green-200 px-5 rounded-lg py-4'><p className=' text-center text-green-800 font-medium text-xs'>{`You'`} {offers[0]?.offerDescription}</p></div>
 
 
           <div className='border bg-gray-50 rounded-lg  flex flex-col'>
