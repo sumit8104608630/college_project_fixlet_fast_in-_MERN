@@ -19,7 +19,12 @@ import ServiceDetail from './ServiceDetail.jsx';
 import { currentContext } from '../component/Context.jsx';
 import { useContext } from 'react';
 import { IoCloseOutline } from "react-icons/io5";
-import {get_offers} from "../app/Actions/offers_action"
+import {get_offers} from "../app/Actions/offers_action";
+
+
+
+
+
 
 
 function ServiceDetailPage(props) {
@@ -134,7 +139,7 @@ useEffect(() => {
         }))
 
     }
-  },[offerLoading,all_service])
+  },[offerLoading,loading,cart])
 
 
   useEffect(() => {
@@ -169,7 +174,7 @@ useEffect(() => {
       })
  
     }
-  },[offerLoading,loading])
+  },[offerLoading,loading,offers])
 
 
 
