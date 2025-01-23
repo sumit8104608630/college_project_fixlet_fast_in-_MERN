@@ -76,7 +76,7 @@ return setShowService({serviceId:serviceId,subServiceId:subServiceId,subservice:
 
 useEffect(() => {
   if(!offerLoading){
-    const filter_offer=offersData?.filter(item=>item._id===categories)[0];
+    const filter_offer=offersData?.filter(item=>item?._id===categories)[0];
   setOffers(filter_offer?.offersDetails)
   }
 },[offersData,offerLoading,categories])
@@ -115,9 +115,27 @@ useEffect(() => {
 
   useEffect(() => {
     setCartItems(cart)
-    const cart_item = cart?.filter(item => item._id === categories);
+    const cart_item = cart?.filter(item => item?._id === categories);
     setFilter_cartItems(cart_item[0]?.productDetails || []);
   }, [cart,categories,Context]);
+
+
+
+
+  useEffect(()=>{
+    if(!offerLoading&&offers&&all_service&&!loading&&filter_cartItems){
+
+      setFilter_cartItems((prev)=>
+        prev?.map((item)=>{
+          if(item.serviceId===offers[0]?.serviceId&&offers[0]?.subServiceId===item.subService.subServiceId){
+            return{...item,subService:{...item.subService,totalPrice:item.subService.totalPrice-offers[0]?.price}}
+      }
+      return item;
+        }))
+
+    }
+  },[offerLoading,all_service])
+
 
   useEffect(() => {
     if (state && city && categories) {
@@ -151,7 +169,7 @@ useEffect(() => {
       })
  
     }
-  },[offers,offerLoading,loading])
+  },[offerLoading,loading])
 
 
 
@@ -380,7 +398,7 @@ function isEmpty(obj_inside) {
 
   return (
     <>
-      {  loading &&offerLoading ? (
+      {  loading &&offerLoading&&!offers ? (
         <Loader />
       ) : (
 <>
@@ -602,7 +620,7 @@ function isEmpty(obj_inside) {
                       
                         <span className='flex items-center'>
                           <FaIndianRupeeSign />
-                          {cartItems?.filter((services) => services?._id === categories)[0]?.totalPrice}
+                          {cartItems?.filter((services) => services?._id === categories)[0]?.totalPrice - (offers?offers[0].price:0)}
                         </span>
                         <span>View Cart</span>
                       </button>
@@ -630,7 +648,7 @@ function isEmpty(obj_inside) {
 
 <span className='flex items-center '>
                         <FaIndianRupeeSign />
-                        {cartItems?.filter((services) => services?._id === categories)[0]?.totalPrice}
+                        {(cartItems?.filter((services) => services?._id === categories)[0]?.totalPrice)-(offers?offers[0].price:0)}
                       </span>
 <button onClick={()=>handleCheckOut( categories)} className='flex justify-between  px-4 py-2 hover:bg-orange-600 bg-orange-500 rounded text-white font-semibold text-lg'>
                       
