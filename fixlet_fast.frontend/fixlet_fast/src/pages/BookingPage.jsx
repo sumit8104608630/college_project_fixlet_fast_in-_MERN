@@ -15,6 +15,7 @@ import EmptyCartItem from '../component/EmptyCartItem.jsx';
 import { IoCloseOutline } from "react-icons/io5";
 import axios from 'axios';
 import { LuIndianRupee } from "react-icons/lu";
+import {get_offers} from "../app/Actions/offers_action";
 const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
@@ -39,18 +40,59 @@ function BookingPage() {
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const [time,setTime]=useState([])
     const [loading,setLoading]=useState(true);
+      const { offerLoading, offersData, offerError } = useSelector(state => state.offers);
+    const [offers,setOffers]=useState([])
+    
     const [date,setDate]=useState({
       day:"",
       date:"",
       time:""
     });
     
-
+    useEffect(() => {
+      dispatch(get_offers());
+    }, [dispatch]);
+    useEffect(() => {
+      if(!offerLoading){
+        const filter_offer=offersData?.filter(item=>item?._id===categories)[0];
+      setOffers(filter_offer?.offersDetails)
+      }
+    },[offersData,offerLoading,categories])
     
+
+
+    console.log(allItem)
+
+    useEffect(()=>{
+      if(!offerLoading&&offers&&allItem&&!loading){
+        console.log("yes")
+        setAllItem((prevService)=>{
+  
+        return prevService?.map(service=>{
+            if(service._id===offers[0]?.serviceId){
+              let new_subservice=service.serviceSubType?.map(subservice=>{
+                if(subservice._id===offers[0]?.subServiceId)
+                {
+                  return {...subservice,price:subservice.price-offers[0]?.price}
+                }
+                return subservice
+              })
+              return { ...service, productDetails: new_subservice };
+            }
+            return service;
+          })
+        })
+   
+      }
+    },[offerLoading,loading,offers])
+
+
+
     // Get current day and date
     const currentDay = daysOfWeek[today.getDay()];
     const currentDate = today.getDate();
     ;
+
 
     useEffect(()=>{
       axios.get(`${apiUrl}/tax/get_tax_fee?totalPrice=${allItem?.totalPrice}`,{

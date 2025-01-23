@@ -127,19 +127,6 @@ useEffect(() => {
 
 
 
-  useEffect(()=>{
-    if(!offerLoading&&offers&&all_service&&!loading&&filter_cartItems){
-
-      setFilter_cartItems((prev)=>
-        prev?.map((item)=>{
-          if(item.serviceId===offers[0]?.serviceId&&offers[0]?.subServiceId===item.subService.subServiceId){
-            return{...item,subService:{...item.subService,totalPrice:item.subService.totalPrice-offers[0]?.price}}
-      }
-      return item;
-        }))
-
-    }
-  },[offerLoading,loading,cart])
 
 
   useEffect(() => {
@@ -153,28 +140,7 @@ useEffect(() => {
     dispatch(fetchCart());
   }, [dispatch]);
 
-  useEffect(()=>{
-    if(!offerLoading&&offers&&all_service&&!loading){
-      console.log("yes")
-      setAllService((prevService)=>{
 
-      return prevService?.map(service=>{
-          if(service._id===offers[0]?.serviceId){
-            let new_subservice=service.serviceSubType?.map(subservice=>{
-              if(subservice._id===offers[0]?.subServiceId)
-              {
-                return {...subservice,price:subservice.price-offers[0]?.price}
-              }
-              return subservice
-            })
-            return { ...service, serviceSubType: new_subservice };
-          }
-          return service;
-        })
-      })
- 
-    }
-  },[offerLoading,loading,offers])
 
 
 
@@ -278,8 +244,10 @@ setFilter_cartItems((prev) => {
 // console.log(price)
 if(cartItems.length>0){
   console.log(cartItems)
-if(cartItems.some(cartItems=>cartItems?._id===categories)){
+  console.log(price)
 
+if(cartItems.some(cartItems=>cartItems?._id===categories)){
+console.log(price)
   setCartItems((prev)=>prev.map((item)=>{
     if( item?._id === categories){
       return{...item,totalPrice:item.totalPrice+price}
@@ -290,9 +258,15 @@ if(cartItems.some(cartItems=>cartItems?._id===categories)){
   else{
     console.log(price)
     setCartItems((prev)=>
-        [{_id:categories,totalPrice:+price}]
+        [{_id:categories,totalPrice:price}]
   )
   }
+}
+else{
+  console.log(price)
+  setCartItems((prev)=>
+      [{_id:categories,totalPrice:price}]
+)
 }
 
 }
@@ -524,7 +498,7 @@ function isEmpty(obj_inside) {
                               <FaIndianRupeeSign size={12} />
 
                                   {
-                                      offers?.some(item=>item.serviceId===service._id&&item.subServiceId===subService._id)?offers[0].price:""}
+                                      offers?.some(item=>item.serviceId===service._id&&item.subServiceId===subService._id)?offers[0].price+subService.price:""}
                                   </del>
                             <div className='flex items-center'>
                                 <FaIndianRupeeSign size={12} />
@@ -625,7 +599,7 @@ function isEmpty(obj_inside) {
                       
                         <span className='flex items-center'>
                           <FaIndianRupeeSign />
-                          {cartItems?.filter((services) => services?._id === categories)[0]?.totalPrice - (offers?offers[0].price:0)}
+                          {cartItems?.filter((services) => services?._id === categories)[0]?.totalPrice }
                         </span>
                         <span>View Cart</span>
                       </button>
@@ -653,7 +627,7 @@ function isEmpty(obj_inside) {
 
 <span className='flex items-center '>
                         <FaIndianRupeeSign />
-                        {(cartItems?.filter((services) => services?._id === categories)[0]?.totalPrice)-(offers?offers[0].price:0)}
+                        {(cartItems?.filter((services) => services?._id === categories)[0]?.totalPrice)}
                       </span>
 <button onClick={()=>handleCheckOut( categories)} className='flex justify-between  px-4 py-2 hover:bg-orange-600 bg-orange-500 rounded text-white font-semibold text-lg'>
                       

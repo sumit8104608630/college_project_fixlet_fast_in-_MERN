@@ -19,7 +19,9 @@ const washinMachine=require("../component/fakeWashingMashineData.js");
 const mixer =require("../component/fakeMixerData.js");
 const decoration =require("../component/lightDecorationData.js");
 const wallPanel=require("../component/fake_wall_panelData.js");
-const wallPaint =require("../component/fakeWallPainData.js")
+const wallPaint =require("../component/fakeWallPainData.js");
+const Offers =require("../model/offers.model.js")
+
 // let's push the data into the service data base 
  
 const inserting_service_data=asyncHandler(async(_,res)=>{
@@ -33,40 +35,79 @@ const inserting_service_data=asyncHandler(async(_,res)=>{
        new  apiError("something went wrong",500);
     }
 })
-
-const get_service_data=asyncHandler(async(req,res)=>{
+const get_service_data = asyncHandler(async (req, res) => {
     try {
         const { state = "maharashtra", city = "mumbai", categories } = req.query;
-
 
         if (!categories) {
             return res.status(400).json(new ApiResponse(400, "Please provide the required category"));
         }
-        
-        const area=await Area.findOne({state:state});
-        if(!area){
-            return res.status(404).json(new ApiResponse(404,"area not found"));
+
+        // Find the area
+        const area = await Area.findOne({ state });
+        if (!area) {
+            return res.status(404).json(new ApiResponse(404, "Area not found"));
         }
-        else{
-            const cities=area.city
-            if(!cities.includes(city)){
-                return res.status(404).json({
-                    status:404,
-                    message:"city not found",
-                    success:false,
-                })
-            }
+
+        // Check if the city exists in the area
+        const cities = area.city || [];
+        if (!cities.includes(city)) {
+            return res.status(404).json({
+                status: 404,
+                message: "City not found",
+                success: false,
+            });
         }
-            const data=await Service.find({serviceType:categories});
-            if(data.length===0){
-                return res.status(404).json(new ApiResponse(404, "No service data available for the specified category"));
+
+        // Fetch services based on category
+        const data = await Service.find({ serviceType: categories });
+
+        // If no data found for the category
+        if (data.length === 0) {
+            return res.status(404).json(new ApiResponse(404, "No service data available for the specified category"));
+        }
+
+        // Fetch offers for the category
+        const offers = await Offers.findOne({ offersTo: categories });
+
+        if (!offers) {
+            // If no offers, return data as is
+            return res.status(200).json(new ApiResponse(200, data, "Service data fetched successfully"));
+        }
+
+        // Apply offers to the service data
+        const updatedData = data.map(service => {
+            if (service._id.toString() === offers.serviceId.toString()) {
+                const updatedSubTypes = service.serviceSubType.map(subType => {
+                    if (subType._id.toString() === offers.subServiceId) {
+                        const discountedPrice = Math.max(0, subType.price - offers.price);
+                        return {
+                            ...subType.toObject(),
+                            price: discountedPrice,
+                            offerDescription: offers.offerDescription,
+                        };
+                    }
+                    return subType.toObject();
+                });
+
+                return { ...service.toObject(), serviceSubType: updatedSubTypes };
             }
-            return res.status(200).json(new ApiResponse(200,data,"electrician service data"))
+            return service.toObject();
+        });
+
+        // Return the updated data with applied offers
+        return res.status(200).json(new ApiResponse(200, updatedData, "Service data with offers fetched successfully"));
+
     } catch (error) {
+        // Handle server errors
+        console.error(error);
         return res.status(500).json(new ApiResponse(500, "Something went wrong on the server. Please try again later"));
     }
-})
+});
 
+  
+  
+  
 // let's write the functionality for quick installation
 
 // const get_quick_installation=asyncHandler((req,res)=>{

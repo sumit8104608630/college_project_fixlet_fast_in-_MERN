@@ -7,7 +7,8 @@ const {ApiResponse}=require("../utils/apiResponse.js")
 const Cart=require("../model/cart.model.js");
 const Service=require("../model/service.model.js");
 const { ObjectId } = require('mongodb');
-const User =require("../model/user.model.js") 
+const User =require("../model/user.model.js"); 
+const Offers = require("../model/offers.model.js");
 // Improved error handling using ApiResponse
 
 
@@ -16,6 +17,15 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
         const userId = req.user._id;
         const { serviceId, subServiceId } = req.body;
         const quantity = 1;
+        const offers=await Offers.findOne({serviceId:serviceId,subServiceId:subServiceId})
+        let offerPrice;
+        if(offers){
+           offerPrice=offers.price;
+        }else{
+         
+         offerPrice=0
+        }
+        console.log(offerPrice)
 
         const user = await User.findById(userId);
         if (!user) return res.status(400).json(new ApiResponse(400, "User not found"));
@@ -40,7 +50,7 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
                     const subService = serviceInCart.subServices[subServiceIndex];
                     subService.quantity += quantity;
                     subService.serviceTime = Number(currentSubService.serviceTime)*Number(subService.quantity);
-                    subService.totalPrice = subService.quantity * currentSubService.price;
+                    subService.totalPrice = (subService.quantity * currentSubService.price)-offerPrice*subService.quantity;
                 } else {
                     const newSubService = {
                         subServiceId, 
@@ -50,7 +60,7 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
                         included: currentSubService.included,
                         note: currentSubService.note,
                         quantity,
-                        totalPrice: currentSubService.price * quantity
+                        totalPrice: (currentSubService.price * quantity)-offerPrice*quantity
                     };
                     serviceInCart.subServices.push(newSubService);
                 }
@@ -71,7 +81,7 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
                         included: currentSubService.included,
                         note: currentSubService.note,
                         quantity,
-                        totalPrice: currentSubService.price * quantity
+                        totalPrice: (currentSubService.price * quantity)-offerPrice*quantity
                     }]
                 };
 
@@ -96,7 +106,7 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
                         included: currentSubService.included,
                         note: currentSubService.note,
                         quantity,
-                        totalPrice: currentSubService.price * quantity
+                        totalPrice: (currentSubService.price * quantity)-offerPrice*quantity
                     }]
                 }]
             });
@@ -115,6 +125,15 @@ const cancel_the_service = asyncHandler(async (req, res) => {
     try {
         const userId = req.user._id;
         const { serviceId, subServiceId } = req.body;
+        const offers=await Offers.findOne({serviceId:serviceId,subServiceId:subServiceId})
+
+        let offerPrice;
+        if(offers){
+           offerPrice=offers.price;
+        }else{
+         
+         offerPrice=0
+        }
 
         if (!serviceId) {
             return res.status(400).json(new ApiResponse(400, "Service ID is required"));
@@ -163,7 +182,7 @@ const cancel_the_service = asyncHandler(async (req, res) => {
             currentSubService.serviceTime=Number(currentSubService.serviceTime)-Number(currentSubService.serviceTime)/Number(currentSubService.quantity)
 
             currentSubService.quantity -= 1;
-            currentSubService.totalPrice = currentSubService.quantity * subService.price;
+            currentSubService.totalPrice = (currentSubService.quantity * subService.price)-offerPrice*currentSubService.quantity;
         } else {
             product.subServices.splice(subServiceIndex, 1);
         }

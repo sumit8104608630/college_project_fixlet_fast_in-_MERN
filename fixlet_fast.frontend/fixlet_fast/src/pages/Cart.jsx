@@ -11,18 +11,37 @@ import { Link } from 'react-router-dom';
 import emptyCart from "../assets/staticPhotp/emptyCart.svg";
 import Loader from "../component/Loader"
 import { FaArrowLeftLong } from "react-icons/fa6";
+import {get_offers} from "../app/Actions/offers_action";
 
 
 
 function Cart() {
-    const Context=useContext(currentContext);
+  const Context=useContext(currentContext);
+  const { offerLoading, offersData, offerError } = useSelector(state => state.offers);
   const dispatch=useDispatch();
   const [cartEmpty,setCartEmpty]=useState(false)
- // const [cart,setSart]=useState([]);
+ //const [cart,setSart]=useState([]);
   const footerShow=useContext(currentContext)
   const {cartLoading,cartItems,cartError}=useSelector((state)=>state.cart);
   const {isLoading,userInfo}=useSelector((state)=>state.user);
   const city=userInfo?.city
+  const [offers,setOffers]=useState([])
+  
+
+
+
+  useEffect(()=>{
+    dispatch(get_offers())
+},[dispatch])
+
+useEffect(() => {
+  setOffers(offersData)
+  
+},[offersData,offerLoading,])
+
+console.log(offersData)
+
+
 
   useEffect(()=>{
     Context.setShowHeader(false)
@@ -42,7 +61,10 @@ function Cart() {
       setCartEmpty(false)
     }
   },[cartItems]) 
-  return (<>{cartLoading?<><Loader/></>:
+
+console.log(cartItems)
+
+  return (<>{cartLoading&&offerLoading?<><Loader/></>:
     <main className=' md:pt-28  flex flex-col   items-center w-full md:px-32'>
       <div className='w-full bg-white shadow-sm fixed top-0 px-5 py-5 '>
      <Link to={"/"}>
@@ -74,7 +96,11 @@ function Cart() {
     <div className='' key={item._id}>
       <hr className='h-0.5  bg-gray-400'/>
     <h1 className='text-3xl px-2 md:p-0 pt-2 font-medium text-gray-600 mb-2' >{item.serviceTypeName}</h1>
-    <p className='flex px-2 text-gray-700  mb-3 items-center'><span>Total service {item.totalQuantity}</span> . <span className='flex items-center'><LuIndianRupee size={15} />{item.totalPrice}</span></p>
+    <p className='flex px-2 text-gray-700  mb-3 items-center'><span>Total service {item.totalQuantity}</span> . <span className='flex items-center'><LuIndianRupee size={15} />
+    {
+item?.totalPrice
+}
+    </span></p>
     <>
     {
       item.productDetails?.map(item=>{
@@ -96,7 +122,7 @@ function Cart() {
     }
     </>
     <div className='flex w-full px-2 gap-2 my-5'>
-      <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=${item._id}`} className='px-5 py-2 text-xl  text-center font-semibold text-gray-700   hover:bg-gray-100 w-full bg-white border-2  rounded-lg'>Add Service</Link>
+      <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=${item._id}`}  state={{ headLine: `${item?.serviceTypeName}` }} className='px-5 py-2 text-xl  text-center font-semibold text-gray-700   hover:bg-gray-100 w-full bg-white border-2  rounded-lg'>Add Service</Link>
       <Link to={`/check_out/?city=${city||"mumbai"}&categories=${item._id}`} className='px-5 py-2 text-xl font-semibold text-white text-center bg-orange-500 w-full  rounded-lg'>Checkout</Link>
     </div>
     </div>

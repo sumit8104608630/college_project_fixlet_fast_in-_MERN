@@ -37,6 +37,7 @@ const get_offers=asyncHandler(async(_,res)=>{
                             price:"$price",
                         },
                       },
+                      totalPrice:{$sum:"$price"}
                 }}
             ]) 
             if(!offerData){
