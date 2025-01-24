@@ -243,11 +243,9 @@ setFilter_cartItems((prev) => {
 // console.log(cartItems)
 // console.log(price)
 if(cartItems.length>0){
-  console.log(cartItems)
-  console.log(price)
+ 
 
 if(cartItems.some(cartItems=>cartItems?._id===categories)){
-console.log(price)
   setCartItems((prev)=>prev.map((item)=>{
     if( item?._id === categories){
       return{...item,totalPrice:item.totalPrice+price}
@@ -270,7 +268,6 @@ else{
 }
 
 }
-
 
 
 
@@ -397,9 +394,15 @@ function isEmpty(obj_inside) {
       </div>
       </div>
 }
-        <div className={`flex  w-full pt-10 justify-center md:justify-around`}>
+        <div className=' md:mt-14  w-full flex flex-col'>
+          {offers&&
+        <p className='w-full text-center text-gray-800 font-semibold fixed z-10 py-2 bg-green-300 mb-5'>{offers?offers[0]?.offerDescription:""}</p>
+          }
+
+        <div className={`flex  w-full  justify-center md:justify-around`}>
+
         
-          <div className="gap-5 md:justify-around  w-full px-2 md:w-4/5  md:flex-row md:mt-14 md:flex flex-col md:items-start items-center">
+          <div className="gap-5 md:justify-around  w-full px-2 md:w-4/5 md:mt-14  md:flex-row  md:flex flex-col md:items-start items-center">
 
           <div className='md:hidden sticky top-0  block'>
           {!showMenu&&
@@ -441,6 +444,7 @@ function isEmpty(obj_inside) {
 </div>
 
 <div className="h-min md:flex hidden pb-5  flex-col justify-center items-center bg-white sticky top-0   md:top-24">
+
               <h1 className="md:text-3xl w-full px-2 text-xl font-semibold mt-5 text-gray-700 mb-5">{headLine}</h1>
               {all_service?.length <= 1 && !loading ? (
                 <div><Promise /></div>
@@ -637,6 +641,7 @@ function isEmpty(obj_inside) {
 
       </div>
      }
+        </div>
         </div>
         </>
       )}

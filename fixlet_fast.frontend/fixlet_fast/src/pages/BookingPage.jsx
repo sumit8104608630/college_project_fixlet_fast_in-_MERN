@@ -16,6 +16,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import axios from 'axios';
 import { LuIndianRupee } from "react-icons/lu";
 import {get_offers} from "../app/Actions/offers_action";
+import Location from "../component/Location.jsx"
 const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
@@ -48,20 +49,25 @@ function BookingPage() {
       date:"",
       time:""
     });
+
+    useEffect(()=>{
+      Context.setShowAddress(true)
+    },[Context])
+
     
     useEffect(() => {
       dispatch(get_offers());
     }, [dispatch]);
     useEffect(() => {
       if(!offerLoading){
-        const filter_offer=offersData?.filter(item=>item?._id===categories)[0];
+        const filter_offer=offersData?.filter(item=>item?._id===categories?item?._id===categories:item?._id==="visitation")[0];
       setOffers(filter_offer?.offersDetails)
       }
     },[offersData,offerLoading,categories])
     
 
 
-console.log(offers)
+
 
 
 
@@ -80,17 +86,39 @@ console.log(offers)
     })
 
     useEffect(()=>{
-      Context.setShowHeader(false)
-      setTimeEditToggle(false)
-      footerShow.setFooterShow(false)
-      dispatch(fetchCheckOut({state,city,categories}));
-      Context.setCheckout(false)
-      console.log(categories)
       axios.get(`${apiUrl}/visit/get_visit_fee?type=${categories}`,{
         withCredentials: true, 
       }).then((response)=>{
         setVisitationFee(response.data.data?.price)
       })
+    },[categories])
+
+    useEffect(() => {
+      if (!offers || offers.length === 0 || !allItem) return;
+    
+      const offer = offers[0];
+    
+      // Condition to reduce visitationFee
+      if (allItem?.totalQuantity >= offer?.quantity && visitationFee > offer?.price) {
+        setVisitationFee((prev) => prev - offer.price);
+      }
+    
+      // Condition to increase visitationFee
+      if (allItem?.totalQuantity < offer?.quantity && visitationFee < offer?.price) {
+        setVisitationFee((prev) => prev + offer.price);
+      }
+    }, [allItem?.totalQuantity, offers]);
+    
+
+
+
+    useEffect(()=>{
+      Context.setShowHeader(false)
+      setTimeEditToggle(false)
+      footerShow.setFooterShow(false)
+      dispatch(fetchCheckOut({state,city,categories}));
+      Context.setCheckout(false)
+ 
       return()=>{
         Context.setShowHeader(true)
 
@@ -137,16 +165,12 @@ const update_cart = (serviceId, subServiceId, subService, quantity, price,time) 
   if(allItem._id===categories){
     if(quantity===-1){
       setAllItem((prev)=>{
-        
-          return{...prev,totalPrice:prev.totalPrice-price,totalQuantity:prev.totalQuantity-quantity,totalTime:prev.totalTime-time}
-        
+          return{...prev,totalPrice:prev.totalPrice-price,totalQuantity:prev.totalQuantity+quantity,totalTime:prev.totalTime-time}
       });
     }
     else{
       setAllItem((prev)=>{
-        
         return{...prev,totalPrice:prev.totalPrice+price,totalQuantity:prev.totalQuantity+quantity,totalTime:prev.totalTime+time}
-      
     });
     }
     }
@@ -315,8 +339,14 @@ const handleSelectTime=(time)=>{
   setDate(prev=>({...prev,time:time}));
   console.log(date)
   setSlotToggle(false);
+  
   setTimeEditToggle(true)
 }
+useEffect(()=>{
+  if(date.day!==""&&date.date!==""&&date.time!==""){
+    setTimeEditToggle(true)
+    }
+},[date])
 
 const handlePay=()=>{
   
@@ -330,7 +360,9 @@ const handlePay=()=>{
 
 {slotToggle&&
       <div className='fixed  z-20 px-5 bg-opacity-50 left-0 top-0 justify-center items-center bg-black flex w-full h-screen '>
+
               <div className=' border-1 rounded  md:w-1/2   backdrop-blur-lg bg-opacity-10 '>
+              
                   <button onClick={()=>setSlotToggle(false)} className='bg-white rounded-full p-1 mb-2 absolute right-0  -top-10 translate-y-0'><IoCloseOutline size={20}/></button>
                   <div className='rounded border-gray-600  shadow p-5 bg-white'>
 
@@ -434,32 +466,31 @@ const handlePay=()=>{
 
       <div className='w-4/5 hidden md:flex justify-between gap-5'>
         <div className='w-full px-2 flex flex-col gap-5'>
+          {}
           <div className='bg-green-200 px-5 rounded-lg py-4'><p className=' text-center text-green-800 font-medium text-xs'>{`You'`} {offers[0]?.offerDescription}</p></div>
 
 
           <div className='border bg-gray-50 rounded-lg  flex flex-col'>
-          <div className='flex items-center gap-4  px-3 py-4 ' >
+          <div className='flex  items-center gap-4  px-3 py-4 ' >
             <IoIosMail className='text-gray-600 ' size={30}/><p className='flex flex-col'><span className="text-base font-semibold text-gray-800">Send booking detail to</span><span className='text-sm font-normal text-gray-600'>{userInfo?.email}</span></p>
           </div>
           <hr className=' my-2 bg-gray-500'/>
-          <div className='flex items-center gap-4 px-3 py-4 ' >
-            <div><FaLocationDot className='text-gray-600 ' size={25}/></div><p className='flex flex-col'><span className="text-base font-semibold text-gray-800">Address</span><span className='text-sm font-normal text-gray-600'>{userInfo?.location}</span></p>
+          <div className='flex w-full items-center justify-between gap-4 py-4 pr-2 ' >
+           <p className='flex w-full px-2 flex-col'><div> <Location/> </div></p>
           </div>
-          <div className='px-2'>
-          <button className='text-base font-semibold w-full rounded py-2 hover:bg-orange-600 text-white bg-orange-500'> Change address </button>
-          </div>
+          
           <hr className=' my-2 bg-gray-500'/>
 
           <div className=' flex items-center gap-4 px-2 py-4 ' >
             <div className='flex flex-col w-full' >
               <div className='flex justify-between items-center gap-2 pr-2'>
                 <div className='flex items-center gap-2'>
-            <div><IoTime className='text-gray-600 ' size={25}/></div><p className='flex'>{`${date.day}: ${date.date} Time: ${date.time}`}</p></div>
+            <div><IoTime className='text-gray-600 ' size={25}/></div><p className='flex'>{date.day!==""&&date.date!==""&&date.time!==""?`${date.day}: ${date.date} Time: ${date.time}`:"Select Slot"}</p></div>
             {timeEditToggle&&
             <button onClick={()=>setSlotToggle(true)} className='px-5 py-2 bg-gray-100 rounded-lg border-2 border-gray-400 hover:bg-gray-200 font-semibold'>Edit</button>
             }
               </div>
-              {!timeEditToggle&&
+              {!timeEditToggle&&date.day==""&&date.date==""&&date.time==""&&
             <div className='pt-2'>       
           <button onClick={handleSlot} className='text-base font-semibold w-full rounded py-2 hover:bg-orange-600 text-white bg-orange-500'> Select Slot  </button>  
           </div>

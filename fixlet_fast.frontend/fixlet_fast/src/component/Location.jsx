@@ -6,8 +6,10 @@ import { IoCloseOutline } from "react-icons/io5";
 import locationImage from "../assets/staticPhotp/locate.svg"
 import { useSelector,useDispatch } from 'react-redux';
 import { fetchUser } from '../app/Actions/user_action.js';
-
+import { currentContext } from '../component/Context.jsx';
+import { useContext } from 'react';
 function Location(props) {
+  const Show=useContext(currentContext)
   const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
   const [toggle,setToggle]=useState(false);
   const [toggle2,setToggle2]=useState(false);
@@ -110,13 +112,40 @@ else{
 
   return (
     <>
-    <div>
-        <button onClick={handleToggle}  className=' bg-white flex items-center px-2 py-2 rounded-lg'>
-      <FaLocationDot className='text-gray-500' size={20} />
-    <p className='  text-gray-600 text-sm w-96 text-ellipsis overflow-hidden whitespace-nowrap px-2'>{location?location:userInfo?.location}</p>
+    {!Show.showAddress&&
+      <div>
+  <button onClick={handleToggle} className='bg-white flex items-center px-2 py-2 rounded-lg'>
+    <FaLocationDot className='text-gray-500' size={20} />
+    {/* Replace <p> with <span> to avoid invalid nesting */}
+    <span className='text-gray-600 text-sm w-96 text-ellipsis overflow-hidden whitespace-nowrap px-2'>
+      {location || userInfo?.location}
+    </span>
     <FaLocationCrosshairs size={20} className='text-gray-500' />
-    </button>
+  </button>
+</div>
+
+}
+{Show.showAddress&&
+  <div className='w-full'>
+  <div className='flex w-full items-center justify-between'>
+    <div className='flex items-center gap-2'>
+      <FaLocationDot className='text-gray-600' size={25} />
+      <span className='text-gray-600 text-sm w-96 text-ellipsis px-2'>
+        {location ? location : userInfo?.location}
+      </span>
+    </div>
+    <div>
+      <button
+        onClick={handleToggle}
+        className='px-5 py-2 bg-gray-100 rounded-lg border-2 border-gray-400 hover:bg-gray-200 font-semibold'>
+        Edit
+      </button>
+    </div>
   </div>
+</div>
+
+
+}
   {toggle&&
 <>
 

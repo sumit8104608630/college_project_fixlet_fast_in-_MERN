@@ -32,7 +32,6 @@ const dispatch=useDispatch();
 const [cartCount, setCartCount] = useState(); // Example cart count
 const [isScroll,setIsScroll]=useState(false)
 const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
-const [mapToggle,setMapToggle]=useState(null);
 const city=userInfo?.city
 
 
@@ -60,8 +59,15 @@ const handelLogout=(e)=>{
     }
   })
 }
+useEffect(()=>{
+  Show.setShowAddress(false)
+return ()=>{
+  Show.setShowAddress(true)
+}
+},[Show])
 
 useEffect(()=>{
+
   dispatch(fetchUser())
   setProfileToggle(false)
   return () => {
@@ -178,7 +184,7 @@ useEffect(()=>{
     </div>
 }
 <div className='block md:hidden'>
-{Show.showHeader&&
+{!Show.showAddress&&
   <>
 <div className='flex h-max fixed w-full z-10 shadow-sm  bg-white  flex-col gap-3 px-2 py-2'>
   {userInfo?
@@ -188,7 +194,7 @@ useEffect(()=>{
     <div className='flex items-center gap-2'><span className=''>{userInfo?.city.charAt(0).toUpperCase()+userInfo?.city.slice(1)}</span><span><IoIosArrowDown/></span></div>
 </div>
     <div>
-    {Show.cartShow&&
+    {Show.showAddress&&
 <div className="relative">
       <Link to="/cart">
       <p className='p-1 border-2 border-gray-800 rounded-full'><CiShoppingCart size={20} /></p>
