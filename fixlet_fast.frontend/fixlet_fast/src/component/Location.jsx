@@ -9,7 +9,6 @@ import { fetchUser } from '../app/Actions/user_action.js';
 import { currentContext } from '../component/Context.jsx';
 import { useContext } from 'react';
 function Location(props) {
-  const Show=useContext(currentContext)
   const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
   const [toggle,setToggle]=useState(false);
   const [toggle2,setToggle2]=useState(false);
@@ -18,6 +17,8 @@ function Location(props) {
   const [not_in_area,setNotInArea]=useState(false);
   const [longitude,setLongitude]=useState(null);
   const [latitude,setLatitude]=useState(null);
+  const Show=useContext(currentContext)
+
   const [formData, setFormData] = useState({
     address: "",
     city: "",

@@ -286,7 +286,6 @@ try {
           $group: {
             _id: '$products.serviceType',
             serviceTypeName: { $first: '$products.serviceTypeName' },
-            orderId:{$first:`$products._id`},
             productDetails: {
               // Collect product details into an array
               $push: {

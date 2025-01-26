@@ -7,15 +7,64 @@ const paymentSchema=mongoose.Schema({
         ref:"User",
         required:true
     },
-    serviceId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Service",
-        required:true
-    },
-    paymentMethod:{
-        type:String,
-        required:true
-    },
+    products:[{
+        
+        serviceName: {  
+            type: String,
+            required: true,
+          },
+            serviceId:{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"Service",
+                index:true
+            },
+
+         
+            subServices:[{
+                subServiceId: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    required: true, // SubService is nested; you handle this in the application logic
+                  },
+                  subServiceName:{
+                    type:String,
+                    required:true
+                  },
+                  subServiceImage:{
+                    type:String,
+                    required:true
+                  },
+                  serviceTime:{
+                    type: Number,
+                    required: true,
+                  },
+    
+                  included: {
+                    type: [String],
+                    required: true,
+                    validate: {
+                      validator: (arr) => arr.length > 0,
+                      message: "Included items cannot be empty.",
+                    },
+                  },
+                  note: {
+                    type: [String],
+                    required: true,
+                    validate: {
+                      validator: (arr) => arr.length > 0,
+                      message: "Excluded items cannot be empty.",
+                    },
+                  },
+                quantity:{
+                    type:Number,
+                    default:1,
+                },
+                totalPrice:{
+                    type:Number,
+                     
+                }
+            }
+            ],
+    }],
     amount:{
         type:Number,
         required:true
@@ -24,10 +73,7 @@ const paymentSchema=mongoose.Schema({
         type:Date,
         default:Date.now
     },
-    transactionId:{
-        type:String,
-        required:true
-    }
+
 },{
     timestamps:true
 })

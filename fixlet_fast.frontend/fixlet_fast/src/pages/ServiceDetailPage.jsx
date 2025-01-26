@@ -104,7 +104,7 @@ useEffect(() => {
   useEffect(()=>{
     setShowMenu(true)
     Context.setShowHeader(false)
-
+    Context.setShowSearch(false)
     // if(!userInfo){
     //   navigate('/login')
     // }
@@ -396,7 +396,7 @@ function isEmpty(obj_inside) {
 }
         <div className=' md:mt-14  w-full flex flex-col'>
           {offers&&
-        <p className='w-full text-center text-gray-800 font-semibold fixed z-10 py-2 bg-green-300 mb-5'>{offers?offers[0]?.offerDescription:""}</p>
+        <p className='w-full text-center  md:block hidden text-gray-800 font-semibold fixed z-10 py-2 bg-green-300 mb-5'>{offers?offers[0]?.offerDescription:""}</p>
           }
 
         <div className={`flex  w-full  justify-center md:justify-around`}>

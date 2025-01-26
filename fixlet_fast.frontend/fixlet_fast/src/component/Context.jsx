@@ -11,6 +11,7 @@ export const ContextProvider=(props)=>{
     const [checkout,setCheckout]=useState(true);
     const [showHeader,setShowHeader]=useState(true)
     const [showAddress,setShowAddress]=useState(true)
+    const [showSearch,setShowSearch]=useState(true)
     return(
         <currentContext.Provider
          value={{cartShow,setCartShow,
@@ -18,6 +19,7 @@ export const ContextProvider=(props)=>{
                 servicePartName,setPartValue,
                 checkout,setCheckout,
                 showHeader,setShowHeader,
+                showSearch,setShowSearch,
                 showAddress,setShowAddress}}>
             {props.children}
         </currentContext.Provider>

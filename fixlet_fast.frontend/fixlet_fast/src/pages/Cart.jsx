@@ -39,7 +39,6 @@ useEffect(() => {
   
 },[offersData,offerLoading,])
 
-console.log(offersData)
 
 
 
@@ -62,7 +61,6 @@ console.log(offersData)
     }
   },[cartItems]) 
 
-console.log(cartItems)
 
   return (<>{cartLoading&&offerLoading?<><Loader/></>:
     <main className=' md:pt-28  flex flex-col   items-center w-full md:px-32'>

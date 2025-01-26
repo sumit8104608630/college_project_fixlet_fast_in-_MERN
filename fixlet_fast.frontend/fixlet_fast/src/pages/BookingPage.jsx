@@ -17,7 +17,10 @@ import axios from 'axios';
 import { LuIndianRupee } from "react-icons/lu";
 import {get_offers} from "../app/Actions/offers_action";
 import Location from "../component/Location.jsx"
+import PaymentLoading from '../component/PaymentLoading.jsx';
+
 const apiUrl=import.meta.env.VITE_BACKEND_API_URL
+const  RAZORPAY_KEY_ID=import.meta.env.VITE_REACT_APP_RAZORPAY_KEY_ID // Razorpay Key ID
 
 
 function BookingPage() {
@@ -43,7 +46,7 @@ function BookingPage() {
     const [loading,setLoading]=useState(true);
       const { offerLoading, offersData, offerError } = useSelector(state => state.offers);
     const [offers,setOffers]=useState([])
-    
+    const [paymentLoading,setPaymentLoading]=useState(false)
     const [date,setDate]=useState({
       day:"",
       date:"",
@@ -89,7 +92,12 @@ function BookingPage() {
       axios.get(`${apiUrl}/visit/get_visit_fee?type=${categories}`,{
         withCredentials: true, 
       }).then((response)=>{
+   
         setVisitationFee(response.data.data?.price)
+      }).catch((error)=>{
+        if (error.response?.status === 404) {
+          setVisitationFee(false);
+        } 
       })
     },[categories])
 
@@ -346,17 +354,69 @@ useEffect(()=>{
   if(date.day!==""&&date.date!==""&&date.time!==""){
     setTimeEditToggle(true)
     }
-},[date])
+},[date]);
 
-const handlePay=()=>{
-  
-}
+
+
+const handlePay = async (amount,allItem,date) => {
+  try {
+    const { data } = await axios.post(`${apiUrl}/payment/orderId`, {
+      amount: amount * 100, // Amount in paise (Razorpay expects amount in paise)
+      receipt: `receipt_${Date.now()}`,
+    });
+
+
+    const options = {
+      key: RAZORPAY_KEY_ID,
+      amount: data.data.amount,
+      currency: data.data.currency,
+      name: "Fixlet Fast",
+      order_id: data.data.id,
+      handler: async (response) => {
+        // Send payment details to backend for verification
+        try {
+          setPaymentLoading(true);
+
+          await axios.post(`${apiUrl}/payment/verify_payment`, {
+            categories,
+            serviceDetail:allItem,
+            date:date,
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+          },{withCredentials:true})
+          setEmpty(true)
+          setAllItem(prev=>({}))
+          setPaymentLoading(false) 
+        } catch (error) {
+          console.error("Error verifying payment:", error);
+          alert("Payment verification failed!");
+        }
+      },
+      prefill: {
+        name: "Customer Name", // Prefill customer info
+        email: "customer@example.com",
+        contact: "9999999999",
+      },
+      theme: {
+        color: "#f97316",
+      },
+    };
+
+    const razorpay = new window.Razorpay(options);
+    razorpay.open();
+  } catch (error) {
+    console.error("Error creating Razorpay order:", error);
+    alert("Payment initialization failed!");
+  }
+};
 
 
   
   return (<>{checkOutItemLoading?<><Loader/></>:emptyCart||!checkOutItem?<EmptyCartItem city={city} categories={categories} />:
-
+<>{paymentLoading?<PaymentLoading/>:
     <main className='md:pt-24 pt-5 w-full flex  justify-center  md:px-20'>
+      
 
 {slotToggle&&
       <div className='fixed  z-20 px-5 bg-opacity-50 left-0 top-0 justify-center items-center bg-black flex w-full h-screen '>
@@ -476,7 +536,7 @@ const handlePay=()=>{
           </div>
           <hr className=' my-2 bg-gray-500'/>
           <div className='flex w-full items-center justify-between gap-4 py-4 pr-2 ' >
-           <p className='flex w-full px-2 flex-col'><div> <Location/> </div></p>
+           <div className='flex w-full px-2 flex-col'> <Location/></div>
           </div>
           
           <hr className=' my-2 bg-gray-500'/>
@@ -508,7 +568,7 @@ const handlePay=()=>{
           </div>
           {timeEditToggle&&
           <div className='pt-2 px-2 pb-2'>       
-          <button onClick={handlePay} className='text-base font-semibold w-full rounded py-2 hover:bg-orange-600 text-white bg-orange-500'> Proceed to pay  </button>  
+          <button onClick={()=>handlePay((allItem?.totalPrice+visitationFee+taxFee||0),allItem,date)} className='text-base font-semibold w-full rounded py-2 hover:bg-orange-600 text-white bg-orange-500'> Proceed to pay  </button>  
           </div>
 }
           </div>
@@ -558,7 +618,7 @@ const handlePay=()=>{
             <h1 className='px-5 py-2 text-lg font-medium text-gray-700'>Payment summary</h1>
             <ul className='flex gap-2 flex-col px-4 mt-2'>
               <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>total item</span><span className='flex items-center decoration-dotted'><LuIndianRupee className='text-gray-800' size={12} />{allItem?.totalPrice}</span></li>
-              <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>Visitation Fee</span><span className='flex items-center decoration-dotted'><LuIndianRupee className='text-gray-800' size={12} />{visitationFee}</span></li>
+              {visitationFee&&<> <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>Visitation Fee</span><span className='flex items-center decoration-dotted'><LuIndianRupee className='text-gray-800' size={12} />{visitationFee}</span></li></>}
               <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>Tax & Fee</span><span className='flex items-center decoration-dotted'><LuIndianRupee className='text-gray-800' size={12} />{taxFee}</span></li>
             </ul> 
             <hr className='h-0.5 bg-gray-500 my-2'/>
@@ -633,7 +693,9 @@ const handlePay=()=>{
 
         </div>
       </div>
-    </main>}</>
+    </main>
+  
+    }</>}</>
   )
 }
 

@@ -81,15 +81,18 @@ const get_visitFee_data=asyncHandler(async(req,res)=>{
             return ApiResponse(res,400,"Please provide type of visit fee")
         }
         const visitFeeData=await visitationFee.findOne({serviceType:type});
+          if(!visitFeeData){
+         return res.status(404).json(new ApiResponse(404,"","No visit fee data found"))
+        }
         const visitFeeDataObj=await visitFeeData.toObject();
 
-        console.log(offers)
-       
+      
         const updatedPrice = {
             ...visitFeeDataObj,
             price: Math.max(0, visitFeeDataObj.price - offerPrice) // Ensures price doesn't go below 0
         };
-        if(product.totalQuantity>=offers.quantity){ 
+  
+        if(product?.totalQuantity>=offers.quantity){ 
             return res.status(200).json(new ApiResponse(200,updatedPrice,"success"));
 
         }

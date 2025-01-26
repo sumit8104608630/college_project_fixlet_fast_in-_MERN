@@ -194,7 +194,7 @@ useEffect(()=>{
     <div className='flex items-center gap-2'><span className=''>{userInfo?.city.charAt(0).toUpperCase()+userInfo?.city.slice(1)}</span><span><IoIosArrowDown/></span></div>
 </div>
     <div>
-    {Show.showAddress&&
+    {Show.cartShow&&
 <div className="relative">
       <Link to="/cart">
       <p className='p-1 border-2 border-gray-800 rounded-full'><CiShoppingCart size={20} /></p>
@@ -233,7 +233,7 @@ useEffect(()=>{
 </div>
 
 </div>
-
+{Show.showHeader&&
 
 <div className='fixed w-full bottom-0 z-10'>
   <div className='flex justify-between  px-10 items-center py-2 bg-orange-500'>
@@ -262,6 +262,7 @@ useEffect(()=>{
             </div>
   </div>
 </div>
+}
 </>
 }</div>
     </>

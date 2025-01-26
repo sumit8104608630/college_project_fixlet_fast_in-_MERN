@@ -180,7 +180,6 @@ client.connect();
   
     try {
     const very=  await transporter.sendMail(mailOptions);
-    console.log(very);
       res.status(201).json(new ApiResponse(200, 'OTP sent successfully'));
     } catch (err) {
       res.status(500).json(new apiError('Error sending email', 500));
