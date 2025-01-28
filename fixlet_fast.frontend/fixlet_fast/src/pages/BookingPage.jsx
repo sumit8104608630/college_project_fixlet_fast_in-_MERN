@@ -25,6 +25,7 @@ const  RAZORPAY_KEY_ID=import.meta.env.VITE_REACT_APP_RAZORPAY_KEY_ID // Razorpa
 
 function BookingPage() {
   const [searchParams] = useSearchParams();
+  
   const dispatch=useDispatch()
   const [timeEditToggle,setTimeEditToggle]=useState(false)
   const [emptyCart,setEmpty]=useState(false);
@@ -303,8 +304,10 @@ function isEmpty(obj_inside) {
       const nextDate = new Date(today);
       nextDate.setDate(today.getDate() + i);  // Add i days to the current date
       const futureDay = daysOfWeek[nextDate.getDay()]; // Get day of the week
-      const futureDate = nextDate.getDate(); // Get the date of the month
-      futureDates.push({ day: futureDay, date: futureDate });
+    const futureDate = nextDate.getDate(); // Get the date of the month
+    const month = nextDate.getMonth() + 1;
+    const year = nextDate.getFullYear();
+    futureDates.push({ day: futureDay, date: futureDate, month: month,year:year });
     }
     
     return futureDates;
@@ -318,6 +321,8 @@ function isEmpty(obj_inside) {
     return futureDates.map((date) => ({
       day: date.day,
       date: date.date,
+      month:date.month,
+      year:date.year,
       times: ["09:00 AM", "10:00 AM", "11:00 AM"],
     }));
   });
@@ -360,6 +365,10 @@ useEffect(()=>{
 
 const handlePay = async (amount,allItem,date) => {
   try {
+    const month=timeSlots.filter(item=>item.date==date.date&&date.day==item.day)[0].month
+    const year=timeSlots.filter(item=>item.date==date.date&&date.day==item.day)[0].year
+    const formateDate=`${year}-${month}-${date.date} ${date.time}`
+    console.log(formateDate);
     const { data } = await axios.post(`${apiUrl}/payment/orderId`, {
       amount: amount * 100, // Amount in paise (Razorpay expects amount in paise)
       receipt: `receipt_${Date.now()}`,
@@ -379,8 +388,10 @@ const handlePay = async (amount,allItem,date) => {
 
           await axios.post(`${apiUrl}/payment/verify_payment`, {
             categories,
+            serviceType:checkOutItem?.serviceTypeName,
             serviceDetail:allItem,
             date:date,
+            formateDate:formateDate,
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,

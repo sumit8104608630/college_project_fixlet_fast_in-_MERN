@@ -5,8 +5,13 @@ const paymentSchema=mongoose.Schema({
     userId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
-        required:true
+        required:true,
+        index:true
     },
+    serviceType:{
+      type:String,
+      required:true
+     },
     products:[{
         
         serviceName: {  
@@ -20,7 +25,7 @@ const paymentSchema=mongoose.Schema({
             },
 
          
-            subServices:[{
+            subService:[{
                 subServiceId: {
                     type: mongoose.Schema.Types.ObjectId,
                     required: true, // SubService is nested; you handle this in the application logic
@@ -65,15 +70,14 @@ const paymentSchema=mongoose.Schema({
             }
             ],
     }],
-    amount:{
+    status:{
+      type:String,
+      required:true
+    },
+    totalAmount:{
         type:Number,
         required:true
     },
-    paymentDate:{
-        type:Date,
-        default:Date.now
-    },
-
 },{
     timestamps:true
 })

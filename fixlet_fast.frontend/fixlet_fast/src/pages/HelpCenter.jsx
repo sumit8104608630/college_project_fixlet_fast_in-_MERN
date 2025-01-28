@@ -13,7 +13,7 @@ function HelpCenter() {
   const navigate = useNavigate();
 
   const handleBackFunctionality=()=>{
-    navigate(-1);
+    navigate("/");
   }
   return (
     <main className='flex justify-center py-10 h-screen  bg-gray-100'>

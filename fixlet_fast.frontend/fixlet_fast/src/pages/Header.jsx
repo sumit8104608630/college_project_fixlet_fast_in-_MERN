@@ -166,7 +166,7 @@ useEffect(()=>{
           <Link to={`/helpCenter`}>Help Center</Link>
         </li>
         <li>
-          <Link to={"/booking_page"}>My Booking</Link>
+          <Link to={"/myBooking"}>My Booking</Link>
         </li>
         <li>
           <button onClick={handelLogout}>Logout</button>

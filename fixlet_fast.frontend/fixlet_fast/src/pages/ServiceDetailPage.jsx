@@ -396,7 +396,7 @@ function isEmpty(obj_inside) {
 }
         <div className=' md:mt-14  w-full flex flex-col'>
           {offers&&
-        <p className='w-full text-center  md:block hidden text-gray-800 font-semibold fixed z-10 py-2 bg-green-300 mb-5'>{offers?offers[0]?.offerDescription:""}</p>
+        <p className='w-full text-center z  md:block hidden text-gray-800 font-semibold fixed  py-2 bg-green-300 mb-5'>{offers?offers[0]?.offerDescription:""}</p>
           }
 
         <div className={`flex  w-full  justify-center md:justify-around`}>
@@ -520,7 +520,7 @@ function isEmpty(obj_inside) {
                             <div className="text-start">
                               <button onClick={()=>handleViewDetail(service._id,subService._id,subService)} className="text-orange-500">View details</button>
                               {showService&&<div className='fixed z-20 bg-black bg-opacity-5 left-0 top-0 justify-center items-center  flex flex-col  w-full h-screen '>
-                                <div  className=' w-1/3  flex-col flex  items-end '>
+                                <div  className=' md:w-1/3 w-full px-5  flex-col flex  items-end '>
 
                                     <button  onClick={()=>setShowService(false)} className='bg-white rounded-full p-1 mb-2  translate-y-0'><IoCloseOutline size={20}/></button>
 

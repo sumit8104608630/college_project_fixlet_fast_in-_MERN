@@ -24,6 +24,7 @@ import ChangePassword from './component/ChangePassword.jsx'
 import ChangeEmail from './component/ChangeEmail.jsx'
 import ForgotPassword from './component/ForgotPassword.jsx'
 import Feedback from './pages/Feedback.jsx'
+import MyBooking from './pages/MyBooking.jsx'
 
 
 const route=createBrowserRouter([
@@ -42,7 +43,13 @@ const route=createBrowserRouter([
   {
     path: "/account",
     element: <Account />,
+    
   },
+   {
+    path:"/paymentHistory",
+    element:<PaymentHistory/>
+  },
+
   {
     path: "/changePassword",
     element: <ChangePassword/>,
@@ -89,9 +96,10 @@ const route=createBrowserRouter([
         element:<BookingPage/>
       },
       {
-        path:"/paymentHistory",
-        element:<PaymentHistory/>
+        path:"/myBooking",
+        element:<MyBooking/>
       },
+   
       {
         path:"/about",
         element:<About/>

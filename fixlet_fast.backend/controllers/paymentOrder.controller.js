@@ -6,6 +6,8 @@ const crypto = require("crypto");
 const PaymentHistory=require("../model/payment.model.js")
 const Cart =require("../model/cart.model.js")
 const nodemailer = require("nodemailer");
+const MyBooking=require("../model/myBook.model.js")
+const moment = require("moment");
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -21,7 +23,7 @@ const create_order_id = asyncHandler(async (req, res) => {
     }
 
     const options = {
-      amount: amount, 
+      amount: parseInt(amount), 
       currency,
       receipt,
     };
@@ -30,13 +32,13 @@ const create_order_id = asyncHandler(async (req, res) => {
     return res.status(201).json(new ApiResponse(201, orderId, "Order created successfully"));
   } catch (error) {
     console.log(error);
-    throw apiError(error.message, 500);
+    throw new apiError(error.message, 500);
   }
 });
 
 const verify_payment = asyncHandler(async (req, res) => {
   try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, serviceDetail, date,categories } = req.body;
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature,serviceType, serviceDetail, date,formateDate,categories } = req.body;
     const { email } = req.user;
     const userId=req.user._id
     if(!userId){
@@ -75,10 +77,19 @@ const verify_payment = asyncHandler(async (req, res) => {
         console.error("Failed to send email:", mailError);
       }
 
+
+
+
      const cart = await Cart.findOne({userId:userId});
      console.log(categories)
      cart.products =  await cart.products.filter(item=>item.serviceType!==categories);
      await cart.save()
+     await PaymentHistory.create({userId:userId,serviceType:serviceType,products:serviceDetail.productDetails,status:"success",totalAmount:serviceDetail.totalPrice});
+
+     const parsedDate = moment(formateDate, "YYYY-M-D h:mm A").format("YYYY-MM-DDTHH:mm:ss"); // This will convert it to ISO format
+     await MyBooking.create({userId:userId,serviceType:serviceType,products:serviceDetail.productDetails,date:parsedDate,totalAmount:serviceDetail.totalPrice}) 
+
+
 
 
       return res.status(200).json(new ApiResponse(200, { message: "Payment verified successfully" }, "success"));
@@ -91,7 +102,81 @@ const verify_payment = asyncHandler(async (req, res) => {
   }
 });
 
+
+// let's make functionality for payment history;
+
+const get_payment_history=asyncHandler(async(req,res)=>{
+  try {
+
+      const userId=req.user._id;
+      const limit = parseInt(req.query.limit) || 5;
+      const skip = parseInt(req.query.skip) || 0;  // Default to 0 (start from the beginning)
+      if(!userId){
+        return res.status(404).json(new ApiResponse(404,"","unauthorized"));
+      }
+      
+      const aggregatedData = await PaymentHistory.aggregate([
+        {
+          // Match specific user data if needed (optional)
+          $match: { userId: userId },
+        },
+        {
+          // Group data to calculate the totalAmount sum
+          $group: {
+            _id: null, // Grouping all data together (null groups everything)
+            totalAmountPay: { $sum: "$totalAmount" }, // Summing up totalAmount
+
+            entries: {
+              $push: {
+                _id: "$_id",
+                userId: "$userId",
+                serviceType: "$serviceType",
+                products: "$products",
+                totalAmount: "$totalAmount",
+                status:"$status",
+
+                createdAt: "$createdAt",
+              },
+            },
+          },
+        },
+        {
+          // Unwind entries array to sort them by date
+          $unwind: "$entries",
+        },
+        {
+          // Sort by createdAt date (descending order)
+          $sort: { "entries.createdAt": 1 },
+        },
+        { $skip: skip },
+        {
+          // Limit the search to 5 entries
+          $limit: limit,
+        },
+        {
+          // Group again to reshape data
+          $group: {
+            _id: "$_id",
+            totalAmountPay: { $first: "$totalAmountPay" },
+            Entries: { $push: "$entries" },
+
+          },
+        },
+      ]);
+      
+
+      return res.status(200).json(new ApiResponse(200,aggregatedData,"success"));
+
+  } catch (error) {
+      console.log(error);
+      throw apiError("something went wrong",500)
+  }
+})
+
+
+
 module.exports = {
   create_order_id,
-  verify_payment
+  verify_payment,
+  get_payment_history
 };
