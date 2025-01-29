@@ -10,7 +10,7 @@ import play from "../assets/Google_Play_Store_badge_EN.svg.png"
 
 function Footer() {
   return (
-    <div className='bg-gray-200  xl:block hidden mt-10'>
+    <div className='bg-gray-200 mt-10 xl:block hidden '>
     <div className=' flex flex-col px-56 pt-14 '>
          <div className='mb-10'>      
           <img className='w-56' src={logo}/>
@@ -49,7 +49,7 @@ function Footer() {
 
       <div className='flex items-start flex-col  px-5 py-10'>
       <h1 className='text-xl  font-semibold text-gray-700 mb-5'>Social link</h1>
-      <ul className='flex flex mb-5 gap-3'>
+      <ul className='flex  mb-5 gap-3'>
         <li><a href='#' ><FaInstagram  size={25} className='text-gray-700' /></a></li>
         <li><a href='#' ><FaXTwitter  size={25} className='text-gray-700' /></a></li>
         <li><a href='#' ><CiFacebook   size={25} className='text-gray-700' /></a></li>

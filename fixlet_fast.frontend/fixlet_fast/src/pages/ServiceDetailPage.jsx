@@ -372,7 +372,7 @@ function isEmpty(obj_inside) {
 
   return (
     <>
-      {  loading||offerLoading||offers ||all_service.length===0? (
+      {  loading&&offerLoading&&offers &&all_service.length===0? (
         <Loader />
       ) : (
 <>
@@ -497,10 +497,9 @@ function isEmpty(obj_inside) {
                             <div className="flex items-center gap-4">
                               <div className="flex gap-2 items-center">
                               <del className='flex items-center'>
-                              <FaIndianRupeeSign size={12} />
 
                                   {
-                                      offers?.some(item=>item.serviceId===service._id&&item.subServiceId===subService._id)?offers[0].price+subService.price:""}
+                                      offers?.some(item=>item.serviceId===service._id&&item.subServiceId===subService._id)?<><FaIndianRupeeSign size={12} /><>{offers[0].price+subService.price}</></>:""}
                                   </del>
                             <div className='flex items-center'>
                                 <FaIndianRupeeSign size={12} />

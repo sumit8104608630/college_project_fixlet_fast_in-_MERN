@@ -21,6 +21,8 @@ function SearchBar() {
 
   const city = userInfo?.city;
 
+
+
 // Typing animation for the placeholder
 useEffect(() => {
   let currentOptionIndex = 0;
@@ -71,7 +73,6 @@ useEffect(() => {
   }
 }, [key]); // Depend on `key` for search results
  // No dependency on `key`
-  
 
   const handleChange = (e) => {
     setKey(e.target.value);

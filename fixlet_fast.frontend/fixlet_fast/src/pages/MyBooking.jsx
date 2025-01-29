@@ -13,13 +13,13 @@ const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
 function MyBooking() {
+    const currDate=new Date()
     const {isLoading,userInfo}=useSelector((state)=>state.user);
     const dispatch=useDispatch();
     const [bookingData,setBookingData]=useState({});
     const { bookingLoading, bookingAllData, bookingError } = useSelector(state => state.booking);
     const [cancelCart,setCancelCart]=useState(false);
     const [cancelBookId,setBookId]=useState(null)
-
     useEffect(() => {
         if (cancelCart) {
             document.body.classList.add('overflow-hidden');
@@ -61,6 +61,7 @@ function MyBooking() {
             console.log(error)
         }
     }
+    console.log(bookingData.Entries?.map(item=>item.date))
 
   return (
     <>{bookingLoading&&isLoading?<Loader/>:
@@ -98,13 +99,33 @@ function MyBooking() {
           </div>
           <div className='flex gap-5 items-center mb-2'>
             <div className='flex items-end gap-1'>
-            <span className="text-xl font-semibold ">Arrival Date: </span>
-            <span className='text-green-500 font-medium'> {new Date(entry.date).toLocaleDateString()}</span>
+            <span className="text-xl font-semibold ">Arrival Date & Time: </span>
+            <span className={`text-green-500 ${currDate>new Date(entry.date)?"text-red-600":"text-green-600"} font-medium`}>
+                {
+                (()=>{
+                    const currentDate=new Date();
+                    const arrivalDate=new Date(entry.date);
+                    if(currentDate>arrivalDate){
+                        const delay = currentDate - arrivalDate; // Difference in milliseconds
+                        const days = Math.floor(delay / (1000 * 60 * 60 * 24)); // Convert to days
+                        const hours = Math.floor((delay / (1000 * 60 * 60)) % 24); // Convert to hours
+                        const minutes = Math.floor((delay / (1000 * 60)) % 60);
+                        if(days==0){
+                            return `delay By :${hours} hours ${minutes} minutes`;
+                        }
+                        else{
+                            return `delay By :${days} days ${hours} hours ${minutes} minutes`;
+                        }
+                    }
+                    else{
+                        return `Arrival Date: ${new Date(entry.date).toLocaleDateString()} `;
+                    }
+
+                })()
+      }
+            </span>
             </div>
-            <div className='flex items-end gap-1'>
-            <span className="text-xl font-semibold ">Arrival Time: </span>
-            <span className='text-green-500 font-medium'> {new Date(entry.date).toLocaleTimeString("en-US", {hour: "2-digit",minute: "2-digit",hour12: true,})}</span>
-            </div>
+       
 
           </div>
           <table className="  mt-5 w-full bg-white border border-gray-200 ">
