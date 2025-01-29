@@ -65,7 +65,31 @@ const get_all_booking=asyncHandler(async(req,res)=>{
     }
 })
 
+// let's write the cancel booking function 
+const cancel_booking=asyncHandler(async(req,res)=>{
+    try {
+        const {bookingId}=req.body;
+        const userId=req.user._id;
+        if(!bookingId){
+            return res.status(400).json(new ApiResponse(400,"","Please provide booking id"))
+        }
+        if(!userId){
+            return res.status(400).json(new ApiResponse(400,"","unauthorized"))
+        }
+        const deletedBooking = await MyBooking.findByIdAndDelete(bookingId);
+
+        if (!deletedBooking) {
+            return res.status(404).json({ success: false, message: "Booking not found" });
+        }
+        return res.status(201).json(new ApiResponse(201,"","deleted the booking"))
+    } catch (error) {
+       console.log(error);
+       throw new apiError("something wentWrong",500)
+    }
+})
+
 
 module.exports={
-    get_all_booking
+    get_all_booking,
+    cancel_booking
 }

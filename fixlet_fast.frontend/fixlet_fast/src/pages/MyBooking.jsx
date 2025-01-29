@@ -6,6 +6,10 @@ import {fetchCart} from "../app/Actions/cart_action.js"
 import Loader from "../component/Loader"
 import CancelBooking from '../component/CancelBooking';
 import { IoCloseOutline } from "react-icons/io5";
+import axios from 'axios';
+import { Link } from 'react-router';
+import EmptyBooking from "../assets/emptyBooking.svg"
+const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
 function MyBooking() {
@@ -40,12 +44,23 @@ function MyBooking() {
         }
     },[bookingAllData])
 
-    console.log(bookingAllData)
 
-    const handleCancelShow=()=>{
+    const handleCancelShow=(bookingId)=>{
         setCancelCart(true)
+        setBookId(bookingId)
     }
+    
+    const handleCancelBooking=async(bookingId)=>{
+        console.log(bookingId)
+        try {
+            setBookingData({...bookingAllData,Entries:bookingAllData.Entries.filter((item)=>item._id!==bookingId),totalAmountPay:bookingAllData.totalAmountPay-bookingAllData.Entries.filter((item)=>item._id==bookingId)[0].totalAmount    })
 
+            const deleted=await axios.post(`${apiUrl}/book/deleteBooking`,{bookingId},{withCredentials:true});
+            console.log(deleted)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
   return (
     <>{bookingLoading&&isLoading?<Loader/>:
@@ -56,14 +71,25 @@ function MyBooking() {
             <div className='relative'>
                   <button onClick={()=>setCancelCart(false)} className='bg-white rounded-full p-1 mb-2 absolute right-0  top-0 translate-y-0'><IoCloseOutline size={20}/></button>
             
-            <CancelBooking/>
+            <CancelBooking funCancelBooking={handleCancelBooking} bookId={cancelBookId} />
             </div>
         </div>
         }
 
         
 
-            <div className='px-20 mt-10'>
+            <div className='px-20 mt-10'>{!Object.hasOwn(bookingData,"Entries") ?
+                  <div className='pt-20 w-full h-screen  flex justify-center'>
+                  <div className='w-96 flex flex-col items-center'>
+                  <img className='w-52' src={EmptyBooking}></img>
+                  <h1 className='font-medium text-gray-800 text-lg mt-4'>No Bookings Yet!</h1>
+                  <p className='text-center font-normal text-gray-700 mt-2 text-base'>
+                    It looks like you haven't made any bookings yet. Explore our wide range of home services and schedule your first appointment today!
+                  </p>
+                  <Link to={`/`}state={{ headLine: 'Bed Bugs Control' }} className=" mt-2 text-orange-500 font-medium px-5 py-1 hover:bg-gray-50 rounded-lg border-2 text-lg">Explore Services</Link>        
+                  </div>
+              </div>
+                :<>
       {bookingData.Entries?.map((entry, index) => (
         <div key={entry._id} className="mb-10">
           <div className='flex gap-2 items-center mb-1'>
@@ -84,7 +110,7 @@ function MyBooking() {
           <table className="  mt-5 w-full bg-white border border-gray-200 ">
             <thead>
                 <tr>
-                    <th colSpan={5} className='text-end py-3  border px-2 '><div className='flex w-full justify-between pl-5 text-xl text-gray-800  font-medium'><div>{entry.serviceType}</div><div><button onClick={handleCancelShow} className='text-lg mr-5 px-4 py-1 bg-red-600 rounded-full text-white font-medium'>Cancel</button><span className="text-lg font-medium px-4 py-1 rounded-full bg-amber-500 text-white">{entry.status}</span></div></div></th>
+                    <th colSpan={5} className='text-end py-3  border px-2 '><div className='flex w-full justify-between pl-5 text-xl text-gray-800  font-medium'><div>{entry.serviceType}</div><div><button onClick={()=>handleCancelShow(entry._id)} className='text-lg mr-5 px-4 py-1 bg-red-600 rounded-full text-white font-medium'>Cancel</button><span className="text-lg font-medium px-4 py-1 rounded-full bg-amber-500 text-white">{entry.status}</span></div></div></th>
                 </tr>
               <tr className='text-center '>
             
@@ -136,7 +162,8 @@ function MyBooking() {
           </table>
         </div>
         
-      ))}
+      ))}</>
+    }
     </div>
 
 

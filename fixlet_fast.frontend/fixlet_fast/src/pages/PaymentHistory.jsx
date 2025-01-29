@@ -52,21 +52,21 @@ const handleLoadMore = () => {
 
 
 const fetchPaymentHistory = () => {
-  offset==0?offset=5:offset
-  if(offset<paymentData.Entries.length){
+  offset==0?offset=5:offset=offset+limit
+  if(offset>paymentData.Entries.length){
     setButton(true) 
     return
   }
   axios
     .get(`${apiUrl}/payment/payment_history?skip=${offset}&limit=${limit}`, { withCredentials: true })
     .then((response) =>{
-      console.log(response.data.data[0].Entries)
 setPaymentData({...paymentData,Entries:[...paymentData.Entries,...response.data.data[0].Entries]})
     }
     )
     .catch((error) => {
       console.error('Error fetching more payments:', error)});
 };
+
   return (
     <div>
       <div className='fixed w-full z-10'>
@@ -109,7 +109,7 @@ setPaymentData({...paymentData,Entries:[...paymentData.Entries,...response.data.
 
         <div className='px-20 mt-10'>
   {paymentData.Entries?.map((entry, index) => (
-    <div key={entry._id} className="mb-8">
+    <div key={index} className="mb-8">
       <div className='flex gap-2 items-center mb-2'>
         <span className="text-xl font-semibold ">Entry {index + 1}</span>
         <span className='text-green-500 font-medium'> {new Date(entry.createdAt).toLocaleDateString()}</span>
@@ -126,8 +126,8 @@ setPaymentData({...paymentData,Entries:[...paymentData.Entries,...response.data.
         </thead>
         <tbody>
           {entry.products?.map((service) =>
-            service?.subService?.map((subService) => (
-              <tr key={subService._id} className="hover:bg-gray-50 text-center">
+            service?.subService?.map((subService,i) => (
+              <tr key={i} className="hover:bg-gray-50 text-center">
                 <td className="py-3 text-center px-4 border-b text-sm text-gray-700">{service?.serviceName}</td>
                 <td className="py-3 text-center flex justify-center px-4 border-b text-sm text-gray-700">
                   <div className="flex gap-3 w-1/2 justify-between items-center">

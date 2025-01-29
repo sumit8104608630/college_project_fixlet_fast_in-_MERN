@@ -261,7 +261,6 @@ if(cartItems.some(cartItems=>cartItems?._id===categories)){
   }
 }
 else{
-  console.log(price)
   setCartItems((prev)=>
       [{_id:categories,totalPrice:price}]
 )
@@ -371,10 +370,9 @@ function isEmpty(obj_inside) {
   }
 
 
-
   return (
     <>
-      {  loading &&offerLoading&&!offers ? (
+      {  loading||offerLoading||offers ||all_service.length===0? (
         <Loader />
       ) : (
 <>

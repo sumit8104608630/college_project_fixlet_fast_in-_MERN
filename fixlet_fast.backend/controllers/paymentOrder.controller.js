@@ -144,10 +144,7 @@ const get_payment_history=asyncHandler(async(req,res)=>{
           // Unwind entries array to sort them by date
           $unwind: "$entries",
         },
-        {
-          // Sort by createdAt date (descending order)
-          $sort: { "entries.createdAt": 1 },
-        },
+    
         { $skip: skip },
         {
           // Limit the search to 5 entries
