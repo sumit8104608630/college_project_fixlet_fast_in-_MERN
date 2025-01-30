@@ -25,6 +25,7 @@
     "react-router-dom": "^7.1.1",
     "react-router-hash-link": "^2.4.3",
     "react-scroll": "^1.9.0",
+    "sweetalert2": "^11.15.10",
     "tailwind-scrollbar": "^3.1.0"
   },
   "devDependencies": {

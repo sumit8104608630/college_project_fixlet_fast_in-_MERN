@@ -8,6 +8,7 @@ import Cookies from "js-cookie"
 import {logout} from "../app/user.redux"
 import logo from "../assets/Symbol-01.png"
 import { FaIndianRupeeSign } from "react-icons/fa6";
+import Loader from "../component/Loader"
 const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
@@ -24,6 +25,7 @@ function PaymentHistory() {
   useEffect(()=>{
     axios.get(`${apiUrl}/payment/payment_history`,{withCredentials:true}).then((response)=>response.data).then((data)=>setPaymentData(data.data[0]))
     dispatch(fetchUser)
+    dispatch(fetchUser())
   },[dispatch]);
 
   const handelLogout=(e)=>{
@@ -66,9 +68,14 @@ setPaymentData({...paymentData,Entries:[...paymentData.Entries,...response.data.
     .catch((error) => {
       console.error('Error fetching more payments:', error)});
 };
+console.log(userInfo)
 
   return (
+    <>
+    {isLoading&&!Object.hasOwn(paymentData,"Entries")?
+    <Loader/>:
     <div>
+      
       <div className='fixed w-full z-10'>
               <nav className='bg-black flex justify-between px-10 py-1'>
         <div>
@@ -164,7 +171,7 @@ setPaymentData({...paymentData,Entries:[...paymentData.Entries,...response.data.
         </tfoot>
       </table>
     </div>
-    
+  
   ))}
 </div>
 
@@ -180,6 +187,8 @@ setPaymentData({...paymentData,Entries:[...paymentData.Entries,...response.data.
 
         </div>
     </div>
+    }
+    </>
   )
 }
 

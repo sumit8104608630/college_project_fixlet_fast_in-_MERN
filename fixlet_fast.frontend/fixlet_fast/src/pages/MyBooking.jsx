@@ -55,13 +55,12 @@ function MyBooking() {
         try {
             setBookingData({...bookingAllData,Entries:bookingAllData.Entries.filter((item)=>item._id!==bookingId),totalAmountPay:bookingAllData.totalAmountPay-bookingAllData.Entries.filter((item)=>item._id==bookingId)[0].totalAmount    })
 
-            const deleted=await axios.post(`${apiUrl}/book/deleteBooking`,{bookingId},{withCredentials:true});
-            console.log(deleted)
+            await axios.post(`${apiUrl}/book/deleteBooking`,{bookingId},{withCredentials:true});
+            setCancelCart(false)
         } catch (error) {
             console.log(error)
         }
     }
-    console.log(bookingData.Entries?.map(item=>item.date))
 
   return (
     <>{bookingLoading&&isLoading?<Loader/>:
@@ -118,7 +117,7 @@ function MyBooking() {
                         }
                     }
                     else{
-                        return `Arrival Date: ${new Date(entry.date).toLocaleDateString()} `;
+                        return `${new Date(entry.date).toLocaleDateString()}  ${new Date(entry.date).toLocaleTimeString()} `;
                     }
 
                 })()

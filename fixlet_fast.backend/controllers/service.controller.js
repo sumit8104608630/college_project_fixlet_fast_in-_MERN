@@ -37,7 +37,7 @@ const inserting_service_data=asyncHandler(async(_,res)=>{
 })
 const get_service_data = asyncHandler(async (req, res) => {
     try {
-        const { state = "maharashtra", city = "mumbai", categories } = req.query;
+        const { state , city , categories } = req.query;
 
         if (!categories) {
             return res.status(400).json(new ApiResponse(400, "Please provide the required category"));
@@ -61,7 +61,6 @@ const get_service_data = asyncHandler(async (req, res) => {
 
         // Fetch services based on category
         const data = await Service.find({ serviceType: categories });
-
         // If no data found for the category
         if (data.length === 0) {
             return res.status(404).json(new ApiResponse(404, "No service data available for the specified category"));

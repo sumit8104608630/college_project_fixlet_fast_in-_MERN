@@ -8,7 +8,6 @@ import { AiFillSafetyCertificate } from "react-icons/ai";
 import { GiAutoRepair } from "react-icons/gi";
 import { useNavigate } from 'react-router';
 
-
 function HelpCenter() {
   const navigate = useNavigate();
 
@@ -28,7 +27,7 @@ function HelpCenter() {
           <ul>
            <Link to={`/account`} className='flex border-b-2 justify-between items-center'> <li className='py-2 flex items-center '><span><RiAccountCircleFill className='text-gray-700' size={30}/></span> <span className='text-base  text-gray-700 px-5 py-1'>Account</span></li><span><IoIosArrowForward className='text-gray-500' size={20}/></span></Link>
            <Link className='flex border-b-2 justify-between items-center'> <li className='py-2 flex items-center '><span><FaBookReader className='text-gray-700' size={25}/></span> <span className='text-base  text-gray-700 px-5 py-1'>Getting Started with Fixlet Fast</span></li><span><IoIosArrowForward className='text-gray-500' size={20}/></span></Link>
-           <Link className='flex border-b-2 justify-between items-center'> <li className='py-2 flex items-center '><span><AiFillSafetyCertificate className='text-gray-700' size={25}/></span> <span className='text-base  text-gray-700 px-5 py-1'>Our Safety</span></li><span><IoIosArrowForward className='text-gray-500' size={20}/></span></Link>
+           <Link to={'/safetyCheck'} className='flex border-b-2 justify-between items-center'> <li className='py-2 flex items-center '><span><AiFillSafetyCertificate className='text-gray-700' size={25}/></span> <span className='text-base  text-gray-700 px-5 py-1'>Our Safety</span></li><span><IoIosArrowForward className='text-gray-500' size={20}/></span></Link>
            <Link className='flex  justify-between items-center'> <li className=' pt-2 flex items-center '><span><GiAutoRepair className='text-gray-700' size={25}/></span> <span className='text-base  text-gray-700 px-5 pt-1'>Warranty</span></li><span><IoIosArrowForward className='text-gray-500' size={20}/></span></Link> 
           </ul>
         </div>

@@ -174,9 +174,33 @@ client.connect();
     const mailOptions = {
       from: process.env.COMPANY_EMAIL,
       to: email,
-      subject: 'Your OTP Code',
-      text: `Your OTP is ${OTP} and it will expire in 5 minutes.`,
+      subject: 'Your OTP Code - Fixlet Fast',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+          
+          <h2 style="text-align: center; color: #f97316;">Fixlet Fast - OTP Verification</h2>
+    
+          <p style="color: #374151; font-size: 16px;">Dear User,</p>
+    
+          <p style="color: #374151; font-size: 16px;">
+            Your One-Time Password (OTP) for verification is:
+          </p>
+    
+          <p style="text-align: center; font-size: 24px; font-weight: bold; color: #f97316; border: 2px dashed #f97316; padding: 10px; display: inline-block; margin: 20px auto;">
+            ${OTP}
+          </p>
+    
+          <p style="color: #374151; font-size: 16px;">
+            This OTP will expire in <strong>1 minutes</strong>. Please do not share it with anyone.
+          </p>
+    
+          <p style="text-align: center; font-size: 14px; color: #6b7280; margin-top: 20px;">
+            Thank you for using Fixlet Fast!
+          </p>
+        </div>
+      `,
     };
+    
   
     try {
     const very=  await transporter.sendMail(mailOptions);
@@ -491,6 +515,9 @@ if (!isCityAvailable) {
 const changePassword = asyncHandler(async (req, res) => {
   try { 
     const { email, fullName, password } = req.body;
+    if(fullName===""){
+      fullName=req.user.fullName;
+    }
 
     // Check if any required field is missing
     if ([email, password].some(item => item === "")) {

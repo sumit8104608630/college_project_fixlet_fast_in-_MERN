@@ -8,8 +8,8 @@ import Cookies from "js-cookie"
 import OtpInput from "../component/OtpInput.jsx"
 import {logout} from "../app/user.redux"
 import  axios  from 'axios';
-import { FaRegCircleCheck } from "react-icons/fa6";
 import { useNavigate } from 'react-router';
+import Swal from "sweetalert2"
 const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
@@ -122,11 +122,19 @@ useEffect(()=>{
     },);
      const data= response
      console.log(data)
-     if(data.statusCode===201){
-      alert("Password changed successfully!");
-      setStep(1); // Reset form
-     }
+     if (data.status === 200) {
+      Swal.fire({
+        title: "Password changed successfully!",
+        icon: "success",
+        confirmButtonColor: "#000000", // Black color
+        confirmButtonText: "OK",
+        draggable: true
+      });
       
+    
+      setData({...formData,email:"",fullName:"",password:"",})
+        setStep(false);
+    }
     };
 
 
@@ -152,6 +160,14 @@ useEffect(()=>{
     const responseData=await response.json();
     console.log(responseData)
     if(responseData.statusCode===200 && responseData.success){
+      Swal.fire({
+        title: responseData.message,
+        icon: "success",
+        confirmButtonColor: "#000000", // Black color
+        confirmButtonText: "OK",
+        draggable: true
+      });
+      
        setStep(true);
     }
 
@@ -178,7 +194,7 @@ useEffect(()=>{
               </li>
               <li>
               <button onClick={handelLogout} className={`relative text-white text-lg after:left-1/2 after:translate-x-[-50%] py-2 hover:text-white after:content-[''] after:absolute after:bottom-0 after:h-[2px] after:rounded after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:left-0 hover:after:translate-x-0 hover:after:w-full`}to="/store">
-                   Logout-{userInfo?.fullName}
+                   Logout-{formData.fullName||userInfo?.fullName}
               </button>
 
               </li>
@@ -202,14 +218,7 @@ useEffect(()=>{
               {toggle&&
               <div className='pb-2'>
               <OtpInput length={4} email={formData.email} onclick={handelverifyOtp} />
-              </div>}{
-              toggleVerify&&
-                   <div
-                   className="w-full p-2 bg-white text-black rounded hover:bg-gray-800"
-                 ><FaRegCircleCheck/>
-                 </div>}
-           
-
+              </div>}
               <button
                 type="submit"
                 className="w-full p-2 bg-black text-white rounded hover:bg-gray-800"
@@ -242,7 +251,7 @@ useEffect(()=>{
                 className="w-full p-2 mb-4 border border-gray-400 rounded focus:outline-none"
                 placeholder="Enter new password"
                 value={formData.password}
-                onChange={onChange}                required
+                onChange={onChange}  required
               />
               <input
               name='confirmPassword'

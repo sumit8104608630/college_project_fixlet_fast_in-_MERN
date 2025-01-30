@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import {  useNavigate } from 'react-router';
 import OtpInput from "../component/OtpInput"
 const apiUrl=import.meta.env.VITE_BACKEND_API_URL
+import Swal from "sweetalert2"
 
 
 function Register() {
@@ -39,7 +40,7 @@ function Register() {
       return
     }
     try{
-      const response=await fetch('http://localhost:8000/user/user_register',{
+      const response=await fetch(`${apiUrl}/user/user_register`,{
         method:'POST',
         headers:{
           'Content-Type':'application/json',
@@ -88,7 +89,6 @@ function Register() {
   
 
   const handelSendOtp=async(email)=>{
-    setOtpInput(true);
     try {
       console.log(email)
       const obj={
@@ -103,6 +103,18 @@ function Register() {
         credentials: 'include'
 
       })
+      if(response.status===201){
+        Swal.fire({
+          title: "OTP send successfully!",
+          icon: "success",
+          confirmButtonColor: "#f97316", // Black color
+          confirmButtonText: "OK",
+          draggable: true
+        });
+        setOtpInput(true);
+      }
+
+      console.log(response)
 
     } catch (error) {
       console.log(error)
@@ -128,6 +140,13 @@ function Register() {
     const responseData=await response.json();
     console.log(responseData)
     if(responseData.statusCode===200 && responseData.success){
+      Swal.fire({
+        title: "OTP verify successfully!",
+        icon: "success",
+        confirmButtonColor: "#f97316", // Black color
+        confirmButtonText: "OK",
+        draggable: true
+      });
       setVerified(responseData.success);
     }
 

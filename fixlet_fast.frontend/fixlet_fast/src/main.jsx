@@ -25,6 +25,7 @@ import ChangeEmail from './component/ChangeEmail.jsx'
 import ForgotPassword from './component/ForgotPassword.jsx'
 import Feedback from './pages/Feedback.jsx'
 import MyBooking from './pages/MyBooking.jsx'
+import SafetyMeasures from './component/static/SafetyCheckPolicy.jsx'
 
 
 const route=createBrowserRouter([
@@ -48,6 +49,10 @@ const route=createBrowserRouter([
    {
     path:"/paymentHistory",
     element:<PaymentHistory/>
+  },
+  {
+    path:"/safetyCheck",
+    element:<SafetyMeasures/>
   },
 
   {

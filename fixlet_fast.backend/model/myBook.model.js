@@ -9,6 +9,10 @@ const myBookSchema=mongoose.Schema({
          required:true,
          index:true
      },
+     orderId:{
+      type:String,
+      required:true
+     },
      serviceType:{
       type:String,
       required:true

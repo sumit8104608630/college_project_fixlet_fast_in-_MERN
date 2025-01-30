@@ -8,7 +8,7 @@
 
             try {
 
-            const response = await fetch(`${apiUrl}/service/service_data_get?state=${state}&city=${city}&categories=${categories}`,{
+            const response = await fetch(`${apiUrl}/service/service_data_get?state=${state||"maharashtra"}&city=${city}&categories=${categories}`,{
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -24,7 +24,6 @@
             const data=await response.json();
             
             const service_data=data.data
-            
             return service_data;
 
             } catch (error) {

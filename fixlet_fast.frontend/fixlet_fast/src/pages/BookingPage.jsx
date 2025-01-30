@@ -334,13 +334,37 @@ function isEmpty(obj_inside) {
 const handleSelectDate=async(day,date)=>{
   setDate(prev=>({...prev,day:day,date:date}))
 setLoading(true)
-  console.log(day)
   const response=await axios.get(`${apiUrl}/time/get_time?day=${day}`,{
     withCredentials: true, 
   });
   const data=await response.data;
   setTimeToggle(true);
-  setTime(data.data.times)
+  const time=data.data.times
+
+  const filterPassTime=(times)=>{
+    const now=new Date();
+    const currentDay=now.getDate();
+    const currentHours=now.getHours();
+    const currentMinutes=now.getMinutes();
+
+    return times.filter(timeSlot=>{
+      const [time,period]=timeSlot.split(" ");
+      let [hours, minutes] = time.split(":").map(Number);
+
+      if (period === "PM" && hours !== 12) hours += 12;
+      if (period === "AM" && hours === 12) hours = 0;
+      if(currentDay===date){
+      return   hours > currentHours || (hours === currentHours && minutes >= currentMinutes);
+      }
+      else{
+       return times
+      }
+
+    })
+  }
+
+
+  setTime(filterPassTime(time))
   if(data.statusCode===200){
     setLoading(false)
   }
@@ -350,7 +374,6 @@ setLoading(true)
 const handleSelectTime=(time)=>{
 
   setDate(prev=>({...prev,time:time}));
-  console.log(date)
   setSlotToggle(false);
   
   setTimeEditToggle(true)
@@ -395,7 +418,7 @@ const handlePay = async (amount,allItem,date) => {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
-          },{withCredentials:true})
+          },{withCredentials:true}).then(res=>console.log(res))
           setEmpty(true)
           setAllItem(prev=>({}))
           setPaymentLoading(false) 
@@ -405,8 +428,8 @@ const handlePay = async (amount,allItem,date) => {
         }
       },
       prefill: {
-        name: "Customer Name", // Prefill customer info
-        email: "customer@example.com",
+        name: `${userInfo.fullName}`, // Prefill customer info
+        email: userInfo?.email,
         contact: "9999999999",
       },
       theme: {
@@ -441,7 +464,15 @@ const handlePay = async (amount,allItem,date) => {
                     <div>
                       <div>
                         <h1 className='text-lg font-semibold'>When should the professional arrive?</h1>
-                        <p className='text-gray-700 text-base'>{`Service will take approx. ${allItem?.totalTime > 60 ?allItem?.totalTime / 60 +"hr" : `${allItem?.totalTime} mins`}`}</p>
+                        <p className="text-gray-700 text-base">
+  {`Service will take approx. ${
+    allItem?.totalTime >= 60
+      ? `${Math.floor(allItem?.totalTime / 60)} hr${
+          allItem?.totalTime % 60 !== 0 ? ` ${allItem?.totalTime % 60} min` : ""
+        }`
+      : `${allItem?.totalTime} min`
+  }`}
+</p>
                       
                                <div className='grid grid-cols-2 md:grid-cols-4 md:h-max h-40 overflow-auto custom-scrollbar w-full mt-5 gap-5 '>{
                             timeSlots?.map((time)=>{

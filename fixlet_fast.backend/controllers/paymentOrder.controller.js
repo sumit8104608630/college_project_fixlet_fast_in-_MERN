@@ -63,13 +63,77 @@ const verify_payment = asyncHandler(async (req, res) => {
         },
       });
 
+      
+      
+
+      const generateBillHTML = (billData) => {
+        return `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+            
+            <h2 style="text-align: center; color: #f97316;">Fixlet Fast - Invoice</h2>
+      
+            <p style="color: #374151; font-size: 16px;"><strong>Invoice ID:</strong> ${razorpay_order_id}</p>
+            <p style="color: #374151; font-size: 16px;"><strong>Service Type:</strong> ${billData.serviceTypeName}</p>
+      
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+              <thead>
+                <tr style="background: #f97316; color: white;">
+                  <th style="padding: 10px; text-align: left;">Image</th>
+                  <th style="padding: 10px; text-align: left;">Sub Service</th>
+                  <th style="padding: 10px; text-align: center;">Time</th>
+                  <th style="padding: 10px; text-align: center;">Quantity</th>
+                  <th style="padding: 10px; text-align: right;">Price (₹)</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${billData.productDetails.map(product => `
+                  <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px;">
+                      <img src="${product.subService.subServiceImage}" alt="${product.subService.subServiceName}" style="width: 60px; height: 60px; border-radius: 4px;">
+                    </td>
+                    <td style="padding: 10px; color: #374151;">
+                      ${product.subService.subServiceName}
+                    </td>
+                    <td style="padding: 10px; text-align: center; color: #374151;">
+                      ${Math.floor(product.subService.serviceTime / 60)}h ${product.subService.serviceTime % 60}m
+                    </td>
+                    <td style="padding: 10px; text-align: center; color: #374151;">
+                      ${billData.totalQuantity}
+                    </td>
+                    <td style="padding: 10px; text-align: right; color: #f97316; font-weight: bold;">
+                      ₹${billData.totalPrice}
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+      
+            <p style="text-align: right; font-size: 18px; color: #f97316; font-weight: bold; margin-top: 20px;">
+              Total Price: ₹${billData.totalPrice}
+            </p>
+      
+            <p style="text-align: center; font-size: 14px; color: #6b7280; margin-top: 20px;">
+              Thank you for choosing Fixlet Fast!
+            </p>
+          </div>
+        `;
+      };
+      
+      // Example Usage:
+      const billHTML = generateBillHTML(serviceDetail);
+      
+
+
+      // Example Usage:
+      
+
       const mailOptions = {
         from: process.env.COMPANY_EMAIL,
         to: email,
         subject: "Payment Confirmation - Fixlet Fast",
-        text: `Your payment of ₹${serviceDetail.totalPrice} has been successfully completed. 
-                Date Allotted: ${date?.day || "N/A"} / ${date?.date || "N/A"} / ${date?.time || "N/A"}`,
+        html: billHTML
       };
+      
       try {
         await transporter.sendMail(mailOptions);
         console.log("Payment confirmation email sent to:", email);
@@ -87,12 +151,12 @@ const verify_payment = asyncHandler(async (req, res) => {
      await PaymentHistory.create({userId:userId,serviceType:serviceType,products:serviceDetail.productDetails,status:"success",totalAmount:serviceDetail.totalPrice});
 
      const parsedDate = moment(formateDate, "YYYY-M-D h:mm A").format("YYYY-MM-DDTHH:mm:ss"); // This will convert it to ISO format
-     await MyBooking.create({userId:userId,serviceType:serviceType,products:serviceDetail.productDetails,date:parsedDate,totalAmount:serviceDetail.totalPrice}) 
+     await MyBooking.create({userId:userId,orderId:razorpay_order_id,serviceType:serviceType,products:serviceDetail.productDetails,date:parsedDate,totalAmount:serviceDetail.totalPrice}) 
 
 
 
 
-      return res.status(200).json(new ApiResponse(200, { message: "Payment verified successfully" }, "success"));
+      return res.status(200).json(new ApiResponse(200, serviceDetail, "success"));
     } else {
       return res.status(400).json(new ApiResponse(400, "", "Invalid payment signature"));
     }
@@ -144,7 +208,10 @@ const get_payment_history=asyncHandler(async(req,res)=>{
           // Unwind entries array to sort them by date
           $unwind: "$entries",
         },
-    
+        {
+          // Sort by createdAt date (descending order)
+          $sort: { "entries.createdAt": -1 },
+        },
         { $skip: skip },
         {
           // Limit the search to 5 entries

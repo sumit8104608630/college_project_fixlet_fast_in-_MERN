@@ -20,6 +20,7 @@ import { currentContext } from '../component/Context.jsx';
 import { useContext } from 'react';
 import { IoCloseOutline } from "react-icons/io5";
 import {get_offers} from "../app/Actions/offers_action";
+const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
 
@@ -42,7 +43,7 @@ function ServiceDetailPage(props) {
   const [filter_cartItems, setFilter_cartItems] = useState([]);
   const city = searchParams.get('city') || "mumbai";
   const categories = searchParams.get('categories');
-  const state = userInfo?.state;
+  const state = userInfo?.state||"maharashtra";
   const location = useLocation();
   const navigate =useNavigate();
   const [showMenu,setShowMenu]=useState(false)
@@ -139,7 +140,6 @@ useEffect(() => {
   useEffect(() => {
     dispatch(fetchCart());
   }, [dispatch]);
-
 
 
 
@@ -293,7 +293,7 @@ const remove_obj=(serviceId,subServiceId,price)=>{
         serviceId: serviceId,
         subServiceId: subServiceId,
       };
-      const response = await fetch(`http://localhost:8000/cart/cart_of_service`, {
+      const response = await fetch(`${apiUrl}/cart/cart_of_service`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -331,7 +331,7 @@ function isEmpty(obj_inside) {
         subServiceId: subServiceId,
       };
 
-      const response = await fetch(`http://localhost:8000/cart/reduce_service_cart`, {
+      const response = await fetch(`${apiUrl}/cart/reduce_service_cart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -509,9 +509,13 @@ function isEmpty(obj_inside) {
                               </div>
                               <div className="flex gap-2 items-center">
                                 <FaRegClock size={12} />
-                                <span>{subService.serviceTime > 60 ? (
-                                  (((subService.serviceTime) / 60).toFixed() > (subService.serviceTime) / 60 ? ((subService.serviceTime) / 60).toFixed() - 1 : ((subService.serviceTime) / 60).toFixed() + "." + (((subService.serviceTime) / 60 - 1) * 60).toFixed()) + " hr"
-                                ) : `${subService.serviceTime} mins`} </span>
+                                <span>
+                              {subService.serviceTime >= 60
+                                    ? `${Math.floor(subService.serviceTime / 60)} hr ${
+                                                       subService.serviceTime % 60 !== 0 ? subService.serviceTime % 60 + " min" : ""
+                                                            }`
+                                             : `${subService.serviceTime} min`}
+                                </span>
                               </div>
                             </div>
                             <div className="text-start">

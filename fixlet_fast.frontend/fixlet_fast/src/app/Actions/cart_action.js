@@ -15,7 +15,7 @@ export const fetchCart=createAsyncThunk(
             credentials:"include"
         });
         const data=await response.json();
-        if(data.statusCode==401){
+        if(response.status==401){
             return []
         }
         if (!response.ok) {
