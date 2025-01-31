@@ -38,7 +38,7 @@ const create_order_id = asyncHandler(async (req, res) => {
 
 const verify_payment = asyncHandler(async (req, res) => {
   try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature,serviceType, serviceDetail, date,formateDate,categories } = req.body;
+    const {visitationFee,taxFee, razorpay_order_id, razorpay_payment_id, razorpay_signature,serviceType, serviceDetail, date,formateDate,categories } = req.body;
     const { email } = req.user;
     const userId=req.user._id
     if(!userId){
@@ -98,10 +98,10 @@ const verify_payment = asyncHandler(async (req, res) => {
                       ${Math.floor(product.subService.serviceTime / 60)}h ${product.subService.serviceTime % 60}m
                     </td>
                     <td style="padding: 10px; text-align: center; color: #374151;">
-                      ${billData.totalQuantity}
+                      ${product.subService.quantity }
                     </td>
                     <td style="padding: 10px; text-align: right; color: #f97316; font-weight: bold;">
-                      ₹${billData.totalPrice}
+                      ₹${product.subService.totalPrice}
                     </td>
                   </tr>
                 `).join('')}
@@ -109,7 +109,7 @@ const verify_payment = asyncHandler(async (req, res) => {
             </table>
       
             <p style="text-align: right; font-size: 18px; color: #f97316; font-weight: bold; margin-top: 20px;">
-              Total Price: ₹${billData.totalPrice}
+              Total Price: ₹${billData.totalPrice+taxFee+visitationFee||0}
             </p>
       
             <p style="text-align: center; font-size: 14px; color: #6b7280; margin-top: 20px;">
@@ -119,12 +119,10 @@ const verify_payment = asyncHandler(async (req, res) => {
         `;
       };
       
-      // Example Usage:
       const billHTML = generateBillHTML(serviceDetail);
       
 
 
-      // Example Usage:
       
 
       const mailOptions = {
@@ -145,13 +143,12 @@ const verify_payment = asyncHandler(async (req, res) => {
 
 
      const cart = await Cart.findOne({userId:userId});
-     console.log(categories)
      cart.products =  await cart.products.filter(item=>item.serviceType!==categories);
      await cart.save()
-     await PaymentHistory.create({userId:userId,serviceType:serviceType,products:serviceDetail.productDetails,status:"success",totalAmount:serviceDetail.totalPrice});
+     await PaymentHistory.create({userId:userId,serviceType:serviceType,products:serviceDetail.productDetails,status:"success",totalAmount:serviceDetail.totalPrice+taxFee+visitationFee||0});
 
      const parsedDate = moment(formateDate, "YYYY-M-D h:mm A").format("YYYY-MM-DDTHH:mm:ss"); // This will convert it to ISO format
-     await MyBooking.create({userId:userId,orderId:razorpay_order_id,serviceType:serviceType,products:serviceDetail.productDetails,date:parsedDate,totalAmount:serviceDetail.totalPrice}) 
+     await MyBooking.create({userId:userId,orderId:razorpay_order_id,serviceType:serviceType,products:serviceDetail.productDetails,date:parsedDate,totalAmount:serviceDetail.totalPrice+taxFee+visitationFee||0}) 
 
 
 

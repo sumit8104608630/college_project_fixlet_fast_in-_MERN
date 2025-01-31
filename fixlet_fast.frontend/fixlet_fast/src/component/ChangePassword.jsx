@@ -67,8 +67,16 @@ const [toggle,setToggle]=useState(false)
       const data=await response.json();
       console.log(data)
       if(data.statusCode===200){
+        Swal.fire({
+          title:"OTP send successfully!",
+          icon: "success",
+          confirmButtonColor: "#000000", // Black color
+          confirmButtonText: "OK",
+          draggable: true
+        });
         setToggle(true)
       }
+
      
      // Simulate sending OTP
    

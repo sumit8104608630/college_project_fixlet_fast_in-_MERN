@@ -9,6 +9,7 @@ import {logout} from "../app/user.redux"
 import logo from "../assets/Symbol-01.png"
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import Loader from "../component/Loader"
+import emptyTransaction from "../assets/emptyPaymentHistory.svg"
 const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
@@ -68,12 +69,12 @@ setPaymentData({...paymentData,Entries:[...paymentData.Entries,...response.data.
     .catch((error) => {
       console.error('Error fetching more payments:', error)});
 };
-console.log(userInfo)
 
   return (
     <>
-    {isLoading&&!Object.hasOwn(paymentData,"Entries")?
+    {isLoading&&!paymentData?
     <Loader/>:
+   
     <div>
       
       <div className='fixed w-full z-10'>
@@ -104,7 +105,33 @@ console.log(userInfo)
 
         </nav >
         </div>
+
+        
+
+{!paymentData?
+<div>
+
+<div className="pt-20 w-full h-screen flex justify-center bg-white">
+  <div className="w-96 flex flex-col items-center">
+    <img className="w-52 grayscale" src={emptyTransaction} alt="No Payment History" />
+    <h1 className="font-medium text-black text-lg mt-4">Payment History is Empty</h1>
+    <p className="text-center font-normal text-gray-800 mt-2 text-base">
+      It looks like you haven't made any payments yet. Start exploring our services and make your first transaction today!
+    </p>
+    <Link
+      to={`/`}
+      state={{ headLine: "Bed Bugs Control" }}
+      className="mt-2 text-black font-medium px-5 py-1 border-2 border-black text-lg rounded-lg hover:bg-black hover:text-white transition"
+    >
+      Explore Services
+    </Link>
+  </div>
+</div>
+
+
+</div>:
         <div className='pt-20'>
+        
           <div className='flex items-center justify-between px-10'>
         <h1 className='text-3xl font-semibold text-gray-800'>Payment History</h1>
         <p className='flex items-center gap-2'><span className='text-lg font-medium text-gray-600'>Total amount</span><span className='flex gap-0.5 text-gray-600 items-center'><FaIndianRupeeSign className='text-gray-600' />{paymentData?.totalAmountPay}</span></p>
@@ -177,7 +204,7 @@ console.log(userInfo)
 
 
 
-
+         
 
 
 
@@ -186,7 +213,10 @@ console.log(userInfo)
 
 
         </div>
+        
+    }
     </div>
+
     }
     </>
   )

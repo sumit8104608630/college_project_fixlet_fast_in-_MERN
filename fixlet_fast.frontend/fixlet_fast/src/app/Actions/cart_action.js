@@ -52,7 +52,7 @@ export const fetchCheckOut=createAsyncThunk(
             if(data?.statusCode===404){
                 return false
             }
-            return data.data[0];
+            return data?.data[0];
     }
         catch (error) {
             console.log(error)

@@ -149,6 +149,14 @@ function Register() {
       });
       setVerified(responseData.success);
     }
+    if(responseData.statusCode===404 ){
+      Swal.fire({
+        icon: "error",
+        title: responseData.message,
+         confirmButtonColor: "#f97316"
+      });
+      setVerified(false);
+    }
 
   }
 const handleEmailVerifiedMessage=()=>{

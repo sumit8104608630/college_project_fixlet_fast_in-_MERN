@@ -11,6 +11,8 @@ import  axios  from 'axios';
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { useNavigate } from 'react-router';
 import { FaArrowLeftLong } from "react-icons/fa6";
+import Swal from "sweetalert2"
+
 const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
@@ -63,12 +65,20 @@ const [toggle,setToggle]=useState(false)
           credentials:"include"
         },
      
+     
 
       )
 
       const data=await response.json();
       console.log(data)
       if(data.statusCode===200){
+                Swal.fire({
+                  title: data.message,
+                  icon: "success",
+                  confirmButtonColor: "#f97316", // Black color
+                  confirmButtonText: "OK",
+                  draggable: true
+                });
         setToggle(true)
       }
      
@@ -142,7 +152,21 @@ useEffect(()=>{
     const responseData=await response.json();
     console.log(responseData)
     if(responseData.statusCode===200 && responseData.success){
+      Swal.fire({
+        title: responseData.message,
+        icon: "success",
+        confirmButtonColor: "#f97316", // Black color
+        confirmButtonText: "OK",
+        draggable: true
+      });
        setStep(true);
+    }
+    if(responseData.statusCode===404 ){
+      Swal.fire({
+        icon: "error",
+        title: responseData.message,
+         confirmButtonColor: "#f97316"
+      });
     }
 
   }

@@ -20,7 +20,6 @@ try {
 const get_all_store_data=asyncHandler(async(req,res)=>{
     try {
         const { state = "maharashtra", city = "mumbai" } = req.query;
-        console.log(state,city)
 
     const all_product=await Product.find();
     console.log(all_product) 

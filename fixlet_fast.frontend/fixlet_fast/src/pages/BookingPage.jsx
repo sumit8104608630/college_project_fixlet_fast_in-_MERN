@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSearchParams } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 import { useState,useEffect } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { IoIosMail } from "react-icons/io";
@@ -29,7 +29,7 @@ function BookingPage() {
   const dispatch=useDispatch()
   const [timeEditToggle,setTimeEditToggle]=useState(false)
   const [emptyCart,setEmpty]=useState(false);
-  const {checkOutItemLoading,checkOutItem}=useSelector((state)=>state.cart);
+  const {checkOutItemLoading,checkOutItem,checkOutItemError}=useSelector((state)=>state.cart);
   const [allItem,setAllItem]=useState({})
   const {isLoading,userInfo}=useSelector((state)=>state.user);
     const Context=useContext(currentContext);
@@ -47,6 +47,7 @@ function BookingPage() {
     const [loading,setLoading]=useState(true);
       const { offerLoading, offersData, offerError } = useSelector(state => state.offers);
     const [offers,setOffers]=useState([])
+    const navigate=useNavigate()
     const [paymentLoading,setPaymentLoading]=useState(false)
     const [date,setDate]=useState({
       day:"",
@@ -54,6 +55,11 @@ function BookingPage() {
       time:""
     });
 
+   useEffect(()=>{
+    if(!userInfo&&!loading){
+      navigate("/login")
+    }
+   }) 
     useEffect(()=>{
       Context.setShowAddress(true)
     },[Context])
@@ -87,7 +93,7 @@ function BookingPage() {
       }).then((response)=>{
         setTaxFee(response.data.data)
       })
-    })
+    },[allItem?.totalPrice])
 
     useEffect(()=>{
       axios.get(`${apiUrl}/visit/get_visit_fee?type=${categories}`,{
@@ -382,6 +388,10 @@ useEffect(()=>{
   if(date.day!==""&&date.date!==""&&date.time!==""){
     setTimeEditToggle(true)
     }
+ if(date.time==""){
+  setTimeEditToggle(false)
+ }
+
 },[date]);
 
 
@@ -410,6 +420,9 @@ const handlePay = async (amount,allItem,date) => {
           setPaymentLoading(true);
 
           await axios.post(`${apiUrl}/payment/verify_payment`, {
+            visitationFee,
+            taxFee,
+  
             categories,
             serviceType:checkOutItem?.serviceTypeName,
             serviceDetail:allItem,
@@ -533,7 +546,12 @@ const handlePay = async (amount,allItem,date) => {
         <div className="mt-2 text-center text-orange-500 text-sm font-medium">Please wait</div>
       </div>:
                       
-                          <ul className="grid grid-cols-2 md:grid-cols-4 md:h-max custom-scrollbar h-36 overflow-auto gap-4">
+                          <ul className="grid grid-cols-2 w-full  md:grid-cols-4 md:h-max custom-scrollbar h-36 overflow-auto gap-4">
+                            {time.length===0?<>
+                              <div className=" text-red-700  w-max   rounded-lg text-center">
+      ⏳ No time slots are available for the selected date. Please choose a different Date.
+    </div>
+                            </>:<>
  {time?.map((time, index) => {
    return (
      <button
@@ -545,6 +563,7 @@ const handlePay = async (amount,allItem,date) => {
      </button>
    );
  })}
+ </>}
 </ul>
 }
                           
@@ -589,10 +608,14 @@ const handlePay = async (amount,allItem,date) => {
                 <div className='flex items-center gap-2'>
             <div><IoTime className='text-gray-600 ' size={25}/></div><p className='flex'>{date.day!==""&&date.date!==""&&date.time!==""?`${date.day}: ${date.date} Time: ${date.time}`:"Select Slot"}</p></div>
             {timeEditToggle&&
-            <button onClick={()=>setSlotToggle(true)} className='px-5 py-2 bg-gray-100 rounded-lg border-2 border-gray-400 hover:bg-gray-200 font-semibold'>Edit</button>
+            <button onClick={()=>{setSlotToggle(true)
+              setDate({...date,  day:"",
+                date:"",
+                time:""})
+            }} className='px-5 py-2 bg-gray-100 rounded-lg border-2 border-gray-400 hover:bg-gray-200 font-semibold'>Edit</button>
             }
               </div>
-              {!timeEditToggle&&date.day==""&&date.date==""&&date.time==""&&
+              {!timeEditToggle&&
             <div className='pt-2'>       
           <button onClick={handleSlot} className='text-base font-semibold w-full rounded py-2 hover:bg-orange-600 text-white bg-orange-500'> Select Slot  </button>  
           </div>

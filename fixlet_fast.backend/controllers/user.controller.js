@@ -13,6 +13,8 @@ const nodemailer=require("nodemailer")
 const Area=require("../model/area.model.js")
 const { createHmac, randomBytes } = require("node:crypto");
 const crypto = require('crypto');
+const axios = require('axios');
+
 
 
 
@@ -204,7 +206,7 @@ client.connect();
   
     try {
     const very=  await transporter.sendMail(mailOptions);
-      res.status(201).json(new ApiResponse(200, 'OTP sent successfully'));
+      res.status(201).json(new ApiResponse(200,"",'OTP sent successfully'));
     } catch (err) {
       res.status(500).json(new apiError('Error sending email', 500));
     }
@@ -221,7 +223,7 @@ client.connect();
       // Get OTP from Redis
       const storedOtpData = await client.get(email);
       if (!storedOtpData) {
-        throw new apiError('OTP has expired or is not valid', 400);
+       return res.status(404).json(new ApiResponse(404, '', 'Email verified successfully'));
       }
   
       const { otp: storedOtp, expiresAt } = JSON.parse(storedOtpData);
@@ -232,7 +234,7 @@ client.connect();
       }
   
       if (storedOtp !== otp) {
-        throw new apiError('Invalid OTP', 400);
+        return res.status(404).json(new ApiResponse(404, '', 'OTP is Invalid'));
       }
   
       // OTP is correct, clear OTP from Redis

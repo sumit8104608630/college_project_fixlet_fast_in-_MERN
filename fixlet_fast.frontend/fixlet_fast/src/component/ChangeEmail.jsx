@@ -2,6 +2,9 @@ import React ,{useState,useEffect} from 'react'
 import { FaArrowLeftLong } from "react-icons/fa6";
 import OtpInput from './OtpInput';
 import axios from "axios"
+import Swal from "sweetalert2"
+import Loader from "../component/Loader"
+
 const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 import { Link } from 'react-router'
@@ -61,6 +64,13 @@ function ChangeEmail() {
         const data=await response.json();
         console.log(data)
         if(data.statusCode===200){
+                Swal.fire({
+                    title:"OTP send successfully!",
+                    icon: "success",
+                    confirmButtonColor: "#000000", // Black color
+                    confirmButtonText: "OK",
+                    draggable: true
+                  });
           setToggleOtp(true)
         }
        
@@ -93,6 +103,13 @@ function ChangeEmail() {
       const responseData=await response.json();
       console.log(responseData)
       if(responseData.statusCode===200 && responseData.success){
+             Swal.fire({
+                title: responseData.message,
+                icon: "success",
+                confirmButtonColor: "#000000", // Black color
+                confirmButtonText: "OK",
+                draggable: true
+              });
         setChangeButton(true);
         setToggleOtp(false)
         SetSendToggle(false)
@@ -107,15 +124,22 @@ function ChangeEmail() {
     password:form.password,
  }
  const response=await axios.post(`${apiUrl}/user/changeEmail`,obj,{withCredentials:true});
- console.log(response)
- if(response.data.statusCode===200){
-    alert(response.data.message)
+
+ if(response.status===200){
+  Swal.fire({
+    title: "Email changed successfully!",
+    icon: "success",
+    confirmButtonColor: "#000000", // Black color
+    confirmButtonText: "OK",
+    draggable: true
+  });
  }
 
 
     }
 
   return (
+    <>
 <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
 
   <div className="w-1/4 flex items-start gap-5 flex-col">
@@ -152,43 +176,64 @@ function ChangeEmail() {
     {/* New Email Form */}
     <form>
         
-      <div className="">
-        <label htmlFor="newEmail" className="block text-black font-medium">New Email</label>
-        <input
-        name='newEmail'
-        disabled={changeButton}
-        onChange={onchange}
-        value={form.newEmail}
-          type="email"
-          id="newEmail"
-          required
-          className="w-full p-2 mb-4 border border-gray-400 rounded focus:outline-none"
-        />
-      </div>
+ 
 
       {  sendToggle&&
+      <>
+             <div className="">
+             <label htmlFor="newEmail" className="block text-black font-medium">New Email</label>
+             <input
+             name='newEmail'
+             disabled={changeButton}
+             onChange={onchange}
+             value={form.newEmail}
+               type="email"
+               id="newEmail"
+               required
+               className="w-full p-2 mb-4 border border-gray-400 rounded focus:outline-none"
+             />
+           </div>
         <button onClick={handleOtpSend} type="submit" className="w-full p-2 bg-black mb-3 text-white rounded hover:bg-gray-800">
             
           {buttonToggle?
                 "ReSend"
                 : "Send OTP"}
       </button>
+      </>
       }
       {toggleOtp&&
+      
          <div className='pb-2'>
          <OtpInput length={4} email={form.newEmail} onclick={handelverifyOtp} />
          </div>
     }
 
       {changeButton&&
+      <>
+           <div className="">
+             <label htmlFor="newEmail" className="block text-black font-medium">New Email</label>
+             <input
+             name='newEmail'
+             disabled={changeButton}
+             onChange={onchange}
+             value={form.newEmail}
+               type="email"
+               id="newEmail"
+               required
+               className="w-full p-2 mb-4 border border-gray-400 rounded focus:outline-none"
+             />
+           </div>
       <button onClick={handleChangeEmail} type="submit" className="w-full p-2 bg-black text-white rounded hover:bg-gray-800">
         Change Email
       </button>
+      </>
 }
     </form>
   </div>
   </div>
 </div>
+
+</>
   )
 }
 

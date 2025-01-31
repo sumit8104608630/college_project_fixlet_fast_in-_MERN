@@ -25,7 +25,6 @@ const add_service_to_cart = asyncHandler(async (req, res) => {
          
          offerPrice=0
         }
-        console.log(offerPrice)
 
         const user = await User.findById(userId);
         if (!user) return res.status(400).json(new ApiResponse(400, "User not found"));

@@ -8,6 +8,9 @@ import { useSelector,useDispatch } from 'react-redux';
 import { fetchUser } from '../app/Actions/user_action.js';
 import { currentContext } from '../component/Context.jsx';
 import { useContext } from 'react';
+const apiUrl=import.meta.env.VITE_BACKEND_API_URL
+
+
 function Location(props) {
   const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
   const [toggle,setToggle]=useState(false);
@@ -41,7 +44,7 @@ function Location(props) {
         longitude:position.coords.longitude,
       latitude:position.coords.latitude
       }
-      const fetchData=await fetch("http://localhost:8000/user/storeAddress",{
+      const fetchData=await fetch(`${apiUrl}/user/storeAddress`,{
         method:"POST",
         body:JSON.stringify(obj)
         ,
@@ -69,9 +72,8 @@ function Location(props) {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log("Form Submitted", formData);
 // API call to store the address
-const data= await fetch("http://localhost:8000/user/store_custom_address",{
+const data= await fetch(`${apiUrl}/user/store_custom_address`,{
   method:"POST",
   body:JSON.stringify(formData),
   headers:{
