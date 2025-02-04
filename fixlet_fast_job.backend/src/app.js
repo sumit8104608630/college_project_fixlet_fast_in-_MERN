@@ -4,6 +4,7 @@ const cors=require("cors");
 // cookieParser for the storing the jwt token
 const cookieParser =require("cookie-parser");
 
+const AllBooking=require("../models/allBooking.model.js")
 
 // create the app for the other functionality
 const app=express();
@@ -19,6 +20,14 @@ app.use(express.static("public"));
 // let set cookie-parser 
 app.use(cookieParser());
 
+app.get("/all_booking",async(req,res)=>{
+    try {
+        const allBooking=await AllBooking.find()
+        res.json(allBooking)
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 
 // let export the app
