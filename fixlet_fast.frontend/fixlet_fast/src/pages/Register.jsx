@@ -178,10 +178,11 @@ const handleEmailVerifiedMessage=()=>{
         <div className='flex gap-1 flex-col mt-3'>
           <label>Email : </label>
           <div className='flex gap-3'>
-          <input value={formData.email} ref={emailInput} disabled={verified} onChange={handelInput} className='border-2 w-full focus:outline-none rounded-lg border-gray-300 px-5 py-1 ' type="email" placeholder='email@gmail.com' name="email" required/>
+          <input value={formData.email} ref={emailInput} disabled={verified||otpInput} onChange={handelInput} className='border-2 w-full focus:outline-none rounded-lg border-gray-300 px-5 py-1 ' type="email" placeholder='email@gmail.com' name="email" required/>
           {sendOtp&&<>
           {!verified?
-          <button onClick={()=>handelSendOtp(formData.email)} className='w-1/4 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'> Send OTP</button>:<button onClick={()=>setVerified(false)} className='w-1/2 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'><span>Change mail</span></button>}</>}
+          <button onClick={()=>handelSendOtp(formData.email)} className='w-1/4 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'> Send OTP</button>:<button onClick={()=>{setVerified(false)
+          setOtpInput(false)}} className='w-1/2 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'><span>Change mail</span></button>}</>}
           </div>
           {errorMessage&&<span className='text-red-500 text-xs font-medium'>{errorMessage}</span>}
         </div>

@@ -6,9 +6,9 @@ const express=require("express")
 const cookieParser = require("cookie-parser");
 //creating app
 const app=express();
-console.log(process.env.CORS_ORIGIN)
+const allOrigin=process.env.CORS_ORIGIN?.split(",")
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: allOrigin,
     credentials:true,
 }))
 // let set the file type which  we will except and give
@@ -37,7 +37,8 @@ const taxRoute=require("../routes/tax.routes.js")
 const paymentRoute = require("../routes/payment.routes.js");
 const offersRoute=require("../routes/offers.routes.js")
 const bookingRoute=require("../routes/myBooking.routes")
-//export this app
+
+// all route middleware is here
 app.use("/user",userRoute);
 app.use("/service",serviceRoute);
 app.use("/area",areaRoute);
@@ -52,5 +53,6 @@ app.use('/payment',paymentRoute);
 app.use("/book",bookingRoute);
 
 
+//export this app
 
 module.exports = {app}

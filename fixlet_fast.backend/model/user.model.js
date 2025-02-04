@@ -1,7 +1,6 @@
 const mongoose=require("mongoose");
 const {createHmac,randomBytes} = require('node:crypto');
 const {setUser,refreshToken}=require("../service/authenticate.service.js");
-const { type } = require("node:os");
 
 
 // let's create schema for user or you can say table 

@@ -8,6 +8,11 @@ const Cart =require("../model/cart.model.js")
 const nodemailer = require("nodemailer");
 const MyBooking=require("../model/myBook.model.js")
 const moment = require("moment");
+const qrCode=require("qrcode");
+const cloudinary=require("cloudinary").v2
+
+
+
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -40,7 +45,27 @@ const verify_payment = asyncHandler(async (req, res) => {
   try {
     const {visitationFee,taxFee, razorpay_order_id, razorpay_payment_id, razorpay_signature,serviceType, serviceDetail, date,formateDate,categories } = req.body;
     const { email } = req.user;
-    const userId=req.user._id
+    const userId=req.user._id;
+
+     cloudinary.config({ 
+      cloud_name: process.env.CLOUD_NAME, 
+          api_key: process.env.API_KEY, 
+          api_secret: process.env.API_SECRET  // Click 'View API Keys' above to copy your API secret
+  });
+  const generateQr=async (data)=>{
+    const qrData= await qrCode.toDataURL(data);
+    const uploadQr=await cloudinary.uploader.upload(qrData,{
+      folder:"/fixlet_fast/qrCode"
+    });
+    return uploadQr.secure_url;
+
+   }
+
+       
+
+
+
+
     if(!userId){
         return res.status(400).json(new ApiResponse(400, "", "User id is missing"))
     }
@@ -64,9 +89,9 @@ const verify_payment = asyncHandler(async (req, res) => {
       });
 
       
-      
+      const qrCode=await generateQr(razorpay_order_id)
 
-      const generateBillHTML = (billData) => {
+      const generateBillHTML = (billData,qrCode) => {
         return `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
             
@@ -111,20 +136,14 @@ const verify_payment = asyncHandler(async (req, res) => {
             <p style="text-align: right; font-size: 18px; color: #f97316; font-weight: bold; margin-top: 20px;">
               Total Price: ₹${billData.totalPrice+taxFee+visitationFee||0}
             </p>
-      
+      <div style="display: flex; width:100% justify-content: center; align-items: center;"><img src="${qrCode}" alt="QR Code" style="max-width: 100%; height: auto;"/></div>      
             <p style="text-align: center; font-size: 14px; color: #6b7280; margin-top: 20px;">
               Thank you for choosing Fixlet Fast!
             </p>
           </div>
         `;
       };
-      
-      const billHTML = generateBillHTML(serviceDetail);
-      
-
-
-      
-
+      const billHTML = generateBillHTML(serviceDetail,qrCode);
       const mailOptions = {
         from: process.env.COMPANY_EMAIL,
         to: email,

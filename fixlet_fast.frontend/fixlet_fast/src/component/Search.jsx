@@ -7,6 +7,9 @@ import { Link } from "react-router-dom"; // Use react-router-dom instead of reac
 function SearchBar() {
   const searchRef = useRef(null);
   const [showFilter, setFilter] = useState(false);
+  const debouncing=useRef(null)
+  const [searchLoading,setLoading]=useState(false)
+  const [emtySearch,setEmptySearch]=useState(false)
   const [placeholder, setPlaceholder] = useState("Search here...");
   const placeholderOptions = [
     "Electrician...",
@@ -18,7 +21,6 @@ function SearchBar() {
   const [key, setKey] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const { isLoading, userInfo } = useSelector((state) => state.user);
-
   const city = userInfo?.city;
 
 
@@ -53,25 +55,56 @@ useEffect(() => {
 
 // Fetch search results when the user types
 useEffect(() => {
-  if (key) {
-    const fetchSearchResults = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/global/search?query=${key}`
-        );
-        setSearchResults(response.data);
-      } catch (error) {
-        console.error("Error fetching search results:", error);
-      }
-    };
-
-    fetchSearchResults();
-    setFilter(true); // Show the filter dropdown when there's input
-  } else {
-    setSearchResults([]);
-    setFilter(false); // Hide the filter dropdown when the input is cleared
+  
+  if(debouncing.current)
+  {
+    clearTimeout(debouncing.current);
   }
-}, [key]); // Depend on `key` for search results
+  if(key.length>0){
+    setLoading(true)
+  setFilter(true); // Show the filter dropdown when there's input
+  }
+  else{
+    setLoading(false)
+    setFilter(false); // Hide the filter dropdown when there's no input
+  }
+
+  debouncing.current=setTimeout(()=>{
+    if (key) {
+
+      const fetchSearchResults = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:8000/global/search?query=${key}`
+          );
+          if(response.status===200){
+            if(response.data.length===0)
+            {
+              setLoading(false)
+              setEmptySearch(true)
+            }
+            else{
+              setLoading(false)
+              setEmptySearch(false)
+              setFilter(true);
+            }
+          }
+          setSearchResults(response.data);
+        } catch (error) {
+          console.error("Error fetching search results:", error);
+        }
+      };
+  
+      fetchSearchResults();
+    } else {
+      setSearchResults([]);
+      
+    }
+  },600)
+}, [key]); 
+
+
+// Depend on `key` for search results
  // No dependency on `key`
 
   const handleChange = (e) => {
@@ -100,7 +133,7 @@ useEffect(() => {
       </div>
       {showFilter && (
         <div className="absolute bg-white border-2 w-full rounded-lg mt-2 px-2 py-1">
-          {searchResults.length===0?
+          {emtySearch?
           <div className="text-gray-500 flex flex-col items-center  text-center py-4">
             <img className="w-56" src={emptySearchImage}/>
               <p className="text-sm font-medium">No results found.</p>
@@ -110,7 +143,48 @@ useEffect(() => {
           <ul
             style={{ maxHeight: "300px", overflowY: "auto" }}
             className="custom-scrollbar"
-          >
+          >{searchLoading?<div style={{height:"300px"}} className="flex justify-center items-center">
+            <div className="relative flex flex-col items-center">
+        <svg
+          version="1.1"
+          viewBox="0 0 64 64"
+          width="2em"
+          height="2em"
+          xmlns="http://www.w3.org/2000/svg"
+          className="animate-spin"
+        >
+          <circle
+            className="stroke-gradient"
+            cx="32"
+            cy="32"
+            r="28"
+            fill="none"
+            stroke="url(#spinner-gradient)"
+            strokeWidth="8"
+          />
+          <path
+            className="stroke-current text-orange-500"
+            d="M32,4 A28 28,0,0,0,32,60"
+            fill="none"
+            strokeWidth="8"
+            strokeLinecap="round"
+          />
+          <defs>
+            <linearGradient
+              id="spinner-gradient"
+              gradientUnits="userSpaceOnUse"
+              x1="32"
+              y1="0"
+              x2="32"
+              y2="64"
+            >
+              <stop offset="0.1" stopColor="currentColor" stopOpacity="0" />
+              <stop offset="0.9" stopColor="currentColor" stopOpacity="1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+          </div>:<>
             {searchResults.length > 0 && (
               <>
                 {searchResults.map((item) => (
@@ -156,6 +230,8 @@ useEffect(() => {
                 ))}
               </>
             )}
+            </>
+}
           </ul>
 }
         </div>
