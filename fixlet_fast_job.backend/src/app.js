@@ -20,16 +20,12 @@ app.use(express.static("public"));
 // let set cookie-parser 
 app.use(cookieParser());
 
-app.get("/all_booking",async(req,res)=>{
-    try {
-        const allBooking=await AllBooking.find()
-        res.json(allBooking)
-    } catch (error) {
-        console.log(error)
-    }
-})
 
 
+// all user Router  middleware
+const userJobRoute=require("../routes/userJob.routes.js");
+// let use route middleware
+app.use("/userJob",userJobRoute);
 // let export the app
 
 module.exports={app}

@@ -13,7 +13,6 @@ const nodemailer=require("nodemailer")
 const Area=require("../model/area.model.js")
 const { createHmac, randomBytes } = require("node:crypto");
 const crypto = require('crypto');
-const axios = require('axios');
 
 
 
