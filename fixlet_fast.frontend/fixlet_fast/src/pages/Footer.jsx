@@ -24,7 +24,7 @@ function Footer() {
         <li><a href='#' className='text-gray-700 text-lg hover:underline'>Privacy Policy</a></li>
         <li><a href='#' className='text-gray-700 text-lg hover:underline'>Terms & Condition</a></li>
         <li><a href='#' className='text-gray-700 text-lg hover:underline'>Anti-discrimination policy</a></li>
-        <li><a href='#' className='text-gray-700 text-lg hover:underline'>Careers</a></li>
+        <li><a target='blank' href="http://localhost:5174/" className='text-gray-700 text-lg hover:underline'>Careers</a></li>
       </ul>
       </div>
 

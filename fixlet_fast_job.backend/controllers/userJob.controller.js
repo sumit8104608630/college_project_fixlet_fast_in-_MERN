@@ -88,7 +88,42 @@ const generate_otp=asyncHandler(async(req,res)=>{
     }
 })
 
+// let's verify the OTP
+const verify_otp=asyncHandler(async(req,res)=>{
+  try {
+    const {email}=req.body;
+    if(!email){
+      return res.status(400).json(new ApiResponse(400,"",'Email is required'));
+    }
+    const user=await UserJob.findOne({email});
+    if(!user){
+      return res.status(404).json(new ApiResponse(404,"",'User not found'));
+    }
+    const storeOtpData=await client.get(email);
+    if(!storeOtpData){
+      return res.status(404).json(new ApiResponse(404,"",'OTP not found'));
+    }
+    const { otp: storedOtp, expiresAt } = JSON.parse(storedOtpData);
 
+    // let's check is the otp is expire or not
+    const isExpired = expiresAt < Date.now();
+    if (isExpired) {
+      return res.status(400).json(new ApiResponse(400,"",'OTP has expired'));
+    }
+    // let's check is the otp is correct or not
+    if (storedOtp !== req.body.otp) {
+      return res.status(400).json(new ApiResponse(400,"",'Invalid OTP'));
+    }
+
+    await client.del(email)
+    res.status(200).json(new ApiResponse(200, '', 'Email verified successfully'));
+
+
+  } catch (error) {
+    console.log(error);
+    throw new ApiError(500,"something went wrong");
+  }
+})
 //let's save the data of user in mongo db
 const registration=asyncHandler(async(req,res)=>{
   try {
@@ -120,18 +155,43 @@ const user_login=asyncHandler(async(req,res)=>{
     if(!email||!password){
       return res.status(400).json(new ApiResponse(400,"",'Please fill all the fields'));
     }
+    const user= await UserJob.findOne({email:email});
+    if(!user){
+      return res.status(404).json(new ApiResponse(404,"",'User not found'));
+    }
+    const token= await UserJob.matchPasswordGenerateToken(email,password);
+    const refresh_token=token?.refreshToken;
+    user.refreshToken=refresh_token;
+    await user.save({validateBeforeSave:false});
+    const loginUser=await UserJob.findOne({email}).select("-password -salt -refreshToken");
+    const accessToken=token.token;
+
+    res.status(200).cookie('accessToken',accessToken,{
+      httpOnly:true,
+      secure:true,
+  }).cookie("refresh_token",refresh_token,{
+      httpOnly:true,
+      secure:true,
+  }).json(new ApiResponse(
+      200,
+  
+          loginUser
+      ,
+      "user logged in successfully"
+  ))
     
   } catch (error) {
     console.log(error);
     throw new ApiError(500,"something went wrong");
   }
-})
+});
 
 
 
 
 
 module.exports={
+     user_login,
     generate_otp,
     registration
 }

@@ -50,7 +50,9 @@ function Register() {
       })
       const data=await response.json()
       console.log(data)
-      navigate("/login")
+      if(data.statusCode===201){
+        navigate("/login")
+      }
     }catch(err){
       console.log(err)
     }

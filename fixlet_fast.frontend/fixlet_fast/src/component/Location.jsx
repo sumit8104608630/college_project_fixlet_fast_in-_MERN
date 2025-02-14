@@ -12,14 +12,12 @@ const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
 function Location(props) {
-  const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
+  const {userInfo}=useSelector((state)=>state.user);
   const [toggle,setToggle]=useState(false);
   const [toggle2,setToggle2]=useState(false);
   const [location,setCompleteLocation]=useState("")
   const dispatch = useDispatch();
   const [not_in_area,setNotInArea]=useState(false);
-  const [longitude,setLongitude]=useState(null);
-  const [latitude,setLatitude]=useState(null);
   const Show=useContext(currentContext)
 
   const [formData, setFormData] = useState({
@@ -105,9 +103,9 @@ else{
       dispatch(fetchUser());
     }
     return()=>{
-      console.log("Component Updated");
+      //un mount the component
     }
-  },[location]);
+  },[location,dispatch]);
 
 
 

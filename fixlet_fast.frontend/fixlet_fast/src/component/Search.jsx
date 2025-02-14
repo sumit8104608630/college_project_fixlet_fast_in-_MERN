@@ -19,8 +19,9 @@ function SearchBar() {
     "Full home cleaning..."
   ];
   const [key, setKey] = useState("");
+  const [showResult,setShowResult]=useState(false)
   const [searchResults, setSearchResults] = useState([]);
-  const { isLoading, userInfo } = useSelector((state) => state.user);
+  const {userInfo} = useSelector((state) => state.user);
   const city = userInfo?.city;
 
 
@@ -44,7 +45,7 @@ useEffect(() => {
         currentOptionIndex =
           (currentOptionIndex + 1) % placeholderOptions.length;
         typingInterval = setInterval(typePlaceholder, 100);
-      }, 1500); // Pause for 1.5 seconds after typing
+      }, 300); // Pause for 1.5 seconds after typing
     }
   };
 
@@ -54,6 +55,8 @@ useEffect(() => {
 }, []); // Run only once when the component mounts
 
 // Fetch search results when the user types
+  // let's create the memoization for the search bar to cache the memory
+
 useEffect(() => {
   
   if(debouncing.current)
@@ -110,7 +113,13 @@ useEffect(() => {
   const handleChange = (e) => {
     setKey(e.target.value);
   };
+  const handle_showResult=()=>{
+    setShowResult(false)
+    setKey("")
+  }
 
+console.log(userInfo)
+  
 
   return (
     <div className="relative">
@@ -118,6 +127,7 @@ useEffect(() => {
         <input
           size={50}
           value={key}
+          onFocus={()=>setShowResult(true)}
           onChange={(e) => handleChange(e)}
           type="text"
           ref={searchRef}
@@ -131,7 +141,7 @@ useEffect(() => {
           />
         </button>
       </div>
-      {showFilter && (
+      {showFilter &&showResult && (
         <div className="absolute bg-white border-2 w-full rounded-lg mt-2 px-2 py-1">
           {emtySearch?
           <div className="text-gray-500 flex flex-col items-center  text-center py-4">
@@ -140,6 +150,7 @@ useEffect(() => {
               <p className="text-xs mt-1">Try searching with different keywords.</p>
           </div>
           :
+          
           <ul
             style={{ maxHeight: "300px", overflowY: "auto" }}
             className="custom-scrollbar"
@@ -191,13 +202,14 @@ useEffect(() => {
                   <ul key={item._id}>
                     <li>
                       <Link
+                      onClick={handle_showResult}
                         to={`/serviceDetailPage/service_data_get?city=${
                           city || "mumbai"
                         }&categories=${item.serviceType}`}
                         state={{ headLine: `${item?.serviceTypeName}` }}
                         className="font-semibold text-xl "
                       >
-                        <span>{item?.serviceTypeName}</span>
+                        <span >{item?.serviceTypeName}</span>
                       </Link>
                       <hr className="h-0.5 bg-gray-400 mt-1"></hr>
                       <ul className="my-3 flex flex-col gap-2">
@@ -207,6 +219,8 @@ useEffect(() => {
                             key={serviceItem.serviceName}
                           >
                             <Link
+                             onClick={handle_showResult}
+
                               to={`/serviceDetailPage/service_data_get?city=${
                                 city || "mumbai"
                               }&categories=${item.serviceType}`}

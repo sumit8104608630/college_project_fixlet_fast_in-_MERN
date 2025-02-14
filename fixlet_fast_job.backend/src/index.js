@@ -1,5 +1,5 @@
 // let's require the app 
-const {app} =require("../src/app.js")
+const {app} =require("./app.js")
 // let get the access to the .env file 
 require('dotenv').config({path:"./.env"});
 // let get connected to the database

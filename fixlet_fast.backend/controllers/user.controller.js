@@ -60,7 +60,7 @@ client.connect();
        if(!isUserCreated){
         throw new apiError("user not created",500)
        }
-        return res.status(201).json( new ApiResponse(200,isUserCreated,"user created successfully"))
+        return res.status(201).json( new ApiResponse(201,isUserCreated,"user created successfully"))
   
     }
     catch(error){
@@ -207,6 +207,7 @@ client.connect();
     const very=  await transporter.sendMail(mailOptions);
       res.status(201).json(new ApiResponse(200,"",'OTP sent successfully'));
     } catch (err) {
+      console.log(err);
       res.status(500).json(new apiError('Error sending email', 500));
     }
   });
@@ -246,14 +247,6 @@ client.connect();
     }
   });
   
-
-
-
-
-
-
-
-
 
 
 /*

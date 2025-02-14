@@ -10,7 +10,6 @@ import { CgProfile } from "react-icons/cg";
 import { fetchUser } from '../app/Actions/user_action';
 import { FaShoppingCart } from "react-icons/fa";
 import {logout} from "../app/user.redux"
-import Loader from"../component/Loader.jsx"
 import { currentContext } from '../component/Context.jsx';
 import { useContext } from 'react';
 import { CiShoppingCart } from "react-icons/ci";
@@ -25,13 +24,13 @@ const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
 function Header() {
-const {cartLoading,cartItems,cartError}=useSelector((state)=>state.cart);
+const {cartItems}=useSelector((state)=>state.cart);
 const Show=useContext(currentContext)
 const [profileToggle,setProfileToggle]=useState(false)
 const dispatch=useDispatch();
 const [cartCount, setCartCount] = useState(); // Example cart count
 const [isScroll,setIsScroll]=useState(false)
-const {isLogin,userInfo,isLoading}=useSelector((state)=>state.user);
+const {isLogin,userInfo}=useSelector((state)=>state.user);
 const city=userInfo?.city
 
 
@@ -72,7 +71,6 @@ useEffect(()=>{
   setProfileToggle(false)
   return () => {
     // Cleanup code (optional)
-    console.log("Cleanup function called");
   };
 },[isLogin,dispatch])
 

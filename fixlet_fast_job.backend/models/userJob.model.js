@@ -43,6 +43,10 @@ const userJobSchema=mongoose.Schema({
         maxlength: 12, // ✅ Ensures maximum length of 12 characters
         match: /^[0-9]{12}$/, // ✅ Ensures it contains exactly 12 digits
       },
+      refresh_token:{
+        type:String,
+        required: true,
+      }
 
 },
 {
