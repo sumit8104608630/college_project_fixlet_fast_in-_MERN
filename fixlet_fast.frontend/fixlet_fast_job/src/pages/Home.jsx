@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../index.css"
 function Home(){
 
@@ -69,6 +70,11 @@ function Home(){
           />
         </div>
       </div>
+    </div>
+    <div className="flex items-center justify-center">
+    <Link to="/bePartner" className="px-5 py-2 text-white rounded-lg mb-10 font-semibold bg-orange-500 hover:bg-orange-600">
+      Get start with us
+    </Link>
     </div>
     </main>
     </>)

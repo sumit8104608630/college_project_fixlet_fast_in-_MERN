@@ -7,6 +7,8 @@ import Home from './pages/Home.jsx'
 import App from './App.jsx'
 import LayOut from './pages/LayOut.jsx'
 import BePartner from './pages/BePartnner.jsx'
+import Register from "./pages/Register.jsx"
+import JobNotify from './pages/JobNotify.jsx'
 
 const route=createBrowserRouter([
   {
@@ -23,7 +25,11 @@ const route=createBrowserRouter([
       },
       {
         path:"/bePartner",
-        element:<BePartner/>
+        element:<Register/>
+      },
+      {
+        path:"/jobNotify",
+        element:<JobNotify/>
       }
     ]
   }

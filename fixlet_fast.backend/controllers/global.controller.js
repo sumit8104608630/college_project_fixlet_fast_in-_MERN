@@ -8,6 +8,12 @@ const Service=require("../model/service.model.js")
 const Areas =require ("../model/area.model.js");
 const Contact =require ("../model/contact.model.js")
 const nodemailer = require("nodemailer");
+const {io}=require("../src/webSocket.js")
+
+const notify=()=>{
+  io.emit("new_service",({message:"hii"}))
+}
+
 const no_of_user_globally=asyncHandler(async(req,res)=>{
 
     try {
@@ -265,5 +271,6 @@ module.exports={
     no_of_user_globally,
     searchFunctionality,
     get_no_of_cities,
-    send_mail
+    send_mail,
+    notify
 }

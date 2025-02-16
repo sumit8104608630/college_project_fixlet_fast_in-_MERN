@@ -1,18 +1,47 @@
-// let's create the live web socket server 
-// let's first require the http from module 
-const http=require("http");
-// let's require the Server from socket.io
+// server.js
+
+// Importing required modules
+const http = require("http");
 const { Server } = require("socket.io");
-//let's require the the app from the app file
+const express = require("express");
+const app = express();
 
-const express=require("express");
-const app=express()
+// Define CORS origins (can be set from environment variables or defaults)
+const allOrigin = process.env.CORS_ORIGIN?.split(",") || ["*"]; // Allow all origins by default
 
-// now creating the server
-const server=http.createServer(app);
-const io = new Server( server,{cors: {origin:"*"}});
+// Creating the HTTP server
+const server = http.createServer(app);
 
-// exports the io as module
+// Setting up the Socket.IO server with CORS configuration
+const io = new Server(server, {
+  cors: {
+    origin: allOrigin, // Use the provided CORS origins or allow all
+    methods: ["GET", "POST"], // Allowed HTTP methods
+  },
+});
 
-module.exports = {io};
+// Socket.io event handling when a client connects
+io.on("connection", (socket) => {
+  console.log(`A user connected: ${socket.id}`);
 
+  // Handle message from client
+  socket.on("send_message", (message) => {
+    console.log("Message from client:", message);
+    // Broadcasting the message to all connected clients
+    io.emit("receive_message", message);
+  });
+
+  // Handle disconnection event
+  socket.on("disconnect", () => {
+    console.log(`A user disconnected: ${socket.id}`);
+  });
+});
+
+// Exporting the io object for use in other parts of the app (like routes or other modules)
+module.exports = { io };
+
+// Start the server
+const PORT =  5000;
+server.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});

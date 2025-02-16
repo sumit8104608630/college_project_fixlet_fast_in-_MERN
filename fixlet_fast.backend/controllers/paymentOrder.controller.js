@@ -10,7 +10,7 @@ const MyBooking=require("../model/myBook.model.js")
 const moment = require("moment");
 const qrCode=require("qrcode");
 const cloudinary=require("cloudinary").v2
-const {io }=require("../src/webSocket");
+const { io }=require("../src/webSocket.js");
 const User = require("../model/user.model.js");
 
 
@@ -174,13 +174,21 @@ const verify_payment = asyncHandler(async (req, res) => {
      const cart = await Cart.findOne({userId:userId});
      cart.products =  await cart.products.filter(item=>item.serviceType!==categories);
      await cart.save()
+     const parsedDate = moment(formateDate, "YYYY-M-D h:mm A").format("YYYY-MM-DDTHH:mm:ss"); // This will convert it to ISO format
+
+
+try {
+  
+       const bookingInformation={userId:userId,orderId:razorpay_order_id,serviceType:serviceType,products:serviceDetail.productDetails,date:parsedDate,totalAmount:serviceDetail.totalPrice+taxFee+visitationFee||0}
+       io.emit('new_service',{Address:Address,booking:bookingInformation});
+  
+} catch (error) {
+  console.log(error)
+}
+
      await PaymentHistory.create({userId:userId,serviceType:serviceType,products:serviceDetail.productDetails,status:"success",totalAmount:serviceDetail.totalPrice+taxFee+visitationFee||0});
 
-     const parsedDate = moment(formateDate, "YYYY-M-D h:mm A").format("YYYY-MM-DDTHH:mm:ss"); // This will convert it to ISO format
-     const bookingInformation={userId:userId,orderId:razorpay_order_id,serviceType:serviceType,products:serviceDetail.productDetails,date:parsedDate,totalAmount:serviceDetail.totalPrice+taxFee+visitationFee||0}
      
-     io.emit({Address:Address,booking:bookingInformation});
-
      await MyBooking.create({userId:userId,orderId:razorpay_order_id,serviceType:serviceType,products:serviceDetail.productDetails,date:parsedDate,totalAmount:serviceDetail.totalPrice+taxFee+visitationFee||0}) 
 
 
