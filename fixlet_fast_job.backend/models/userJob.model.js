@@ -4,54 +4,74 @@ const bcrypt =require("bcrypt");
 const {}=require("../db/connection.js");
 const { setUser, refresh_token } = require("../services/authenticate.service.js");
 
-const userJobSchema=mongoose.Schema({
-    fullName:{
-        type:String,
-        required:true
+const userJobSchema = mongoose.Schema({
+    fullName: {
+        type: String,
+        required: true
     },
-    profilePhoto:{
-        type:String,
+    profilePhoto: {
+        type: String, // Store the URL or path to the file
     },
-    email:{
-        type:String,
-        required:true,
-        unique:true
+    email: {
+        type: String,
+        required: true,
+        unique: true
     },
-    phoneCode:{
-        type:String,
-        default:"+91"
+    phoneCode: {
+        type: String,
+        default: "+91"
     },
-    phoneNumber:{
-        type:String,
-        required:true,
+    phoneNumber: {
+        type: String,
+        required: true,
         unique: true,
-        },
+    },
     password: {
         type: String,
         required: true
     },
-    specialized:[String],
-    jobType:{
-        type:String,    
-        required:true,
+    specialized: [String],
+    jobType: {
+        type: String,
+        required: true,
     },
     AadhaarCardNumber: {
         type: String,
         required: true,
         unique: true,
-        minlength: 12, // ✅ Ensures minimum length of 12 characters
-        maxlength: 12, // ✅ Ensures maximum length of 12 characters
-        match: /^[0-9]{12}$/, // ✅ Ensures it contains exactly 12 digits
-      },
-      refresh_token:{
-        type:String,
-        required: true,
-      }
+        minlength: 12, // Ensures minimum length of 12 characters
+        maxlength: 12, // Ensures maximum length of 12 characters
+        match: /^[0-9]{12}$/, // Ensures it contains exactly 12 digits
+    },
+    address: {
+        country: {
+            type: String,
+            required: true,
+        },
+        state: {
+            type: String,
+            required: true,
+        },
+        city: {
+            type: String,
+            required: true,
+        },
+        pincode: {
+            type: String,
+            required: true,
+        },
+        additionalDetails: {
+            type: String,
+            required: true,
+        }
+    },
+    refresh_token: {
+        type: String,
+    }
 
-},
-{
-    timestamps:true
-})
+}, {
+    timestamps: true
+});
 
 
 

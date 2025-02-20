@@ -1,12 +1,11 @@
-const Offers=require("../model/offers.model.js");
-const User=require("../model/user.model.js");
-const Product=require("../model/product.model.js");
-// let's require the api error for error message 
-const {apiError}=require("../utils/apiError.js")
-// let's require the api response for error message 
-const {ApiResponse}=require("../utils/apiResponse.js")
-const {asyncHandler}=require("../utils/asyncHandler.js");
-const offer=require("../component/offers.js")
+import Offers from "../model/offers.model.js";
+import User from "../model/user.model.js";
+import Product from "../model/product.model.js";
+import { apiError } from "../utils/apiError.js";
+import { ApiResponse } from "../utils/apiResponse.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import offer from "../component/offers.js";
+
 
 const set_offers=asyncHandler(async(req,res)=>{
     try {
@@ -50,7 +49,7 @@ const get_offers=asyncHandler(async(_,res)=>{
     }
 })
 
-module.exports={
+export {
     set_offers,
     get_offers
-}
+};

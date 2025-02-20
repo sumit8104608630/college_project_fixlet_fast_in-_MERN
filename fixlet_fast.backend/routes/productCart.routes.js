@@ -1,8 +1,10 @@
-const express=require("express");
+import express from 'express';
 // creating the route for the cart controller
-const productCartRoute=express.Router();
+const productCartRoute = express.Router();
+
 // let's collect all functionality
-const {checkAuthenticationCookie}=require("../middlewares/authenticate.middleware.js")
+import { checkAuthenticationCookie } from '../middlewares/authenticate.middleware.js';
+
 
 
 
@@ -13,4 +15,4 @@ productCartRoute.get("/get_all_product_cart",checkAuthenticationCookie("accessTo
 productCartRoute.get("/productCart_checkout_filter",checkAuthenticationCookie("accessToken"));
 
 //let's export the module         
-module.exports=cartRoute         
+export default productCartRoute;

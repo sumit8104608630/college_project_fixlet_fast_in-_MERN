@@ -1,8 +1,9 @@
-const Product =require("../model/product.model.js");
-const {asyncHandler} =require ("../utils/asyncHandler");
-const {ApiResponse} =require("../utils/apiResponse");
-const {apiError} =require ("../utils/apiError");
-const product =require("../component/store/store.js")
+import Product from "../model/product.model.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { ApiResponse } from "../utils/apiResponse.js";
+import { apiError } from "../utils/apiError.js";
+import product from "../component/store/store.js";
+
 
 const set_all_product=asyncHandler(async(req,res)=>{
 try {
@@ -34,7 +35,7 @@ const get_all_store_data=asyncHandler(async(req,res)=>{
     }
 })
 
-module.exports={
+export {
     set_all_product,
     get_all_store_data
-}
+};

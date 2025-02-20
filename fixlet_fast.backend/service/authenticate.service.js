@@ -1,5 +1,5 @@
 // let's get the jwt 
-const jwt=require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 const secret=process.env.SECRET;
 
 const setUser=(user)=>{
@@ -63,8 +63,8 @@ const getUser=async (token)=>{
 
 
 
-module.exports={
+export {
     setUser,
     getUser,
     refreshToken
-}
+};

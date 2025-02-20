@@ -1,15 +1,16 @@
-const {asyncHandler}=require("../utils/asyncHandler.js");
-// let's require the api error for error message 
- const {apiError}=require("../utils/apiError.js")
-// let's require the api response for error message 
-const {ApiResponse}=require("../utils/apiResponse.js")
-//let's require the cart model and service model
-const Cart=require("../model/cart.model.js");
-const Service=require("../model/service.model.js");
-const { ObjectId } = require('mongodb');
-const User =require("../model/user.model.js"); 
-const Offers = require("../model/offers.model.js");
+import { asyncHandler } from "../utils/asyncHandler.js";
+// Let's import the api error for error message 
+import { apiError } from "../utils/apiError.js";
+// Let's import the api response for error message 
+import { ApiResponse } from "../utils/apiResponse.js";
+// Let's import the cart model and service model
+import Cart from "../model/cart.model.js";
+import Service from "../model/service.model.js";
+import { ObjectId } from 'mongodb';
+import User from "../model/user.model.js"; 
+import Offers from "../model/offers.model.js";
 // Improved error handling using ApiResponse
+
 
 
 const add_service_to_cart = asyncHandler(async (req, res) => {
@@ -317,9 +318,9 @@ const product=await group_cart.filter(item=>item._id===categories)
 
 
 // lets export all functionality
-module.exports={
+export {
     add_service_to_cart, 
     cancel_the_service,
     get_all_cart_services,
     checkout_filter
-}
+};

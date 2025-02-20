@@ -6,22 +6,20 @@ function JobNotify() {
 
   useEffect(() => {
     // Connect to your backend's Socket.IO server
-    const socket = io("http://localhost:5000", {
-      // withCredentials: true, // Uncomment if needed
+    const socket = io("http://localhost:8000", {
+      withCredentials: true,
     });
 
-    // Log connection success
-    socket.on("connect", () => {
+    socket.on("connection", () => {
       console.log("Connected to Socket.IO server with ID:", socket.id);
     });
 
     // Listen for the `new_service` event
     socket.on("new_service", (data) => {
       console.log("Received new_service event:", data);
-      setNewService(data); // Store received data in state
+      setNewService(data);
     });
 
-    // Clean up connection on unmount
     return () => {
       socket.disconnect();
     };
@@ -31,59 +29,78 @@ function JobNotify() {
     const { Address, booking } = notificationData;
 
     return (
-      <div
-        className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-900 bg-opacity-50 transition-opacity"
-      >
-        <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+      <div className=" flex justify-center items-center bg-opacity-50 transition-opacity z-50">
+        <div className="bg-white  rounded-lg shadow-lg w-full px-10  max-h-[90vh] overflow-auto">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-xl font-semibold text-gray-800">Job Application</h3>
             <button
               onClick={closePopup}
-              className="text-gray-500 hover:text-gray-700"
+              className="text-gray-500  hover:text-gray-700 text-2xl"
             >
               &times;
             </button>
           </div>
 
+          {/* Booking Details */}
           <div className="mb-4">
             <h4 className="text-lg font-medium text-gray-700">Booking Details</h4>
             <p className="text-sm text-gray-600">Order ID: {booking.orderId}</p>
             <p className="text-sm text-gray-600">Service Type: {booking.serviceType}</p>
             <p className="text-sm text-gray-600">Date: {new Date(booking.date).toLocaleString()}</p>
+            <p className="text-sm text-gray-600">Total Amount: ₹{booking.totalAmount}</p>
           </div>
 
+          {/* User Address */}
           <div className="mb-4">
             <h4 className="text-lg font-medium text-gray-700">User Address</h4>
             <p className="text-sm text-gray-600">{Address.userAddress}</p>
+            <p className="text-sm text-gray-600">
+              City: {Address.city}, State: {Address.state}
+            </p>
           </div>
 
+          {/* Service Details */}
           <div className="mb-4">
             <h4 className="text-lg font-medium text-gray-700">Service Details</h4>
-            <div className="flex mb-2">
-              <img
-                src={booking.products[0].subService.subServiceImage}
-                alt="Service"
-                className="w-16 h-16 object-cover rounded-lg mr-4"
-              />
-              <div>
-                <p className="text-sm font-semibold">{booking.products[0].subService.subServiceName}</p>
-                <p className="text-xs text-gray-500">{booking.products[0].subService.serviceTime} minutes</p>
-                <p className="text-sm text-gray-600">Total: ₹{booking.products[0].totalPrice}</p>
+            {booking.products.map((product, index) => (
+              <div key={index} className="flex mb-4 border-b pb-2">
+                <img
+                  src={product.subService.subServiceImage}
+                  alt="Service"
+                  className="w-16 h-16 object-cover rounded-lg mr-4"
+                />
+                <div>
+                  <p className="text-sm font-semibold">{product.subService.subServiceName}</p>
+                  <p className="text-xs text-gray-500">
+                    Service Time: {product.subService.serviceTime} minutes
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Price: ₹{product.subService.totalPrice}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    Notes: {product.subService.note?.join(", ") || "No additional notes"}
+                  </p>
+                </div>
               </div>
-            </div>
-            <p className="text-xs text-gray-500">{booking.products[0].subService.note.join(", ")}</p>
+            ))}
           </div>
 
+          {/* Accept/Reject Buttons */}
           <div className="mt-4 flex justify-between">
             <button
-              onClick={() => alert("Job Accepted")}
-              className="px-4 py-2 bg-orange-500 text-gray-800 rounded-lg hover:bg-orange-600"
+              onClick={() => {
+                alert("Job Accepted");
+                closePopup();
+              }}
+              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
             >
               Accept
             </button>
             <button
-              onClick={() => alert("Job Rejected")}
-              className="px-4 py-2 bg-orange-500 text-gray-800 rounded-lg hover:bg-orange-600"
+              onClick={() => {
+                alert("Job Rejected");
+                closePopup();
+              }}
+              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
             >
               Reject
             </button>
@@ -95,7 +112,6 @@ function JobNotify() {
 
   return (
     <div>
-      <h1>Job Notify</h1>
       {newService && (
         <NotificationPopup
           notificationData={newService}

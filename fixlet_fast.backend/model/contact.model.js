@@ -1,4 +1,4 @@
-const mongoose=require("mongoose");
+import mongoose from "mongoose";
 // let's create the model for the schema
 
 const contactSchema=mongoose.Schema({
@@ -26,4 +26,4 @@ const contactSchema=mongoose.Schema({
 
 // let's create model for this schema 
 const Contact=mongoose.model("Contact",contactSchema);
-module.exports=Contact;
+export default Contact;

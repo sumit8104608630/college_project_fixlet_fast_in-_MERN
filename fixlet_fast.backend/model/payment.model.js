@@ -1,4 +1,4 @@
-const mongoose=require("mongoose");
+import mongoose from "mongoose";
 //let's create the schema model for the payment history and for track
 
 const paymentSchema=mongoose.Schema({
@@ -85,4 +85,4 @@ const paymentSchema=mongoose.Schema({
 // let's make the model for the schema
 const Payment=mongoose.model("Payment",paymentSchema);
 // let's import the model 
-module.exports=Payment;
+export default Payment;

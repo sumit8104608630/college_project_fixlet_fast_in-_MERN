@@ -118,7 +118,6 @@ useEffect(() => {
     setKey("")
   }
 
-console.log(userInfo)
   
 
   return (

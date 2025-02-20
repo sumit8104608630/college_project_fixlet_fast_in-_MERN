@@ -378,4 +378,4 @@ const carpenterData = [
   }
 ];
 
-module.exports=  carpenterData;
+export default  carpenterData;

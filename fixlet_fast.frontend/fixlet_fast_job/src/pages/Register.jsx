@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import {Country,State,City} from "country-state-city"
-
-
+import axios from "axios"
+import { Link } from "react-router-dom";
 function Register  ()  {
 
-const [Countries,setCountries]=useState(Country.getAllCountries())
+  const [countryCode,setCountryCode]=useState("")
+
+
+
 
 
   const [formData, setFormData] = useState({
     fullName: "",
-    profilePhoto: null,
+    profilePhoto: "",
     email: "",
     phoneCode: "+91",
     phoneNumber: "",
@@ -21,6 +24,7 @@ const [Countries,setCountries]=useState(Country.getAllCountries())
       country: "",
       state: "",
       city: "",
+      pincode: "",
       additionalDetails: "",
     },
   });
@@ -37,18 +41,7 @@ const [Countries,setCountries]=useState(Country.getAllCountries())
     "Decorative",
   ]; // Add more as needed
 
-  const countries =Countries; // Example, can be dynamic
-  const states = {
-    India: ["Delhi", "Mumbai", "Kolkata"],
-    USA: ["California", "Texas", "New York"],
-    UK: ["London", "Manchester", "Bristol"],
-    Australia: ["Sydney", "Melbourne", "Brisbane"],
-  };
-  const cities = {
-    Delhi: ["South Delhi", "North Delhi", "East Delhi"],
-    Mumbai: ["South Mumbai", "Bandra", "Andheri"],
-    // Add more cities here
-  };
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -58,16 +51,6 @@ const [Countries,setCountries]=useState(Country.getAllCountries())
     }));
   };
 
-  const handleAddressChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      address: {
-        ...prevData.address,
-        [name]: value,
-      },
-    }));
-  };
 
   const handleFileChange = (e) => {
     setFormData((prevData) => ({
@@ -86,11 +69,103 @@ const [Countries,setCountries]=useState(Country.getAllCountries())
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form Data:", formData);
-    // Add form submission logic here
+
+
+  const handleCityChange = (selectedCity) => {
+    setFormData((formData)=>({ ...formData,address:{...formData.address,  city: selectedCity }}));
   };
+
+
+
+  const handleAddressChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      address: {
+        ...prevData.address,
+        [name]: value,
+      },
+    }));
+  };
+
+  const setCountry = (e) => {
+    const selectedCountry = JSON.parse(e.target.value); // Parse the JSON string back into an object
+    setFormData((prevData) => ({
+      ...prevData,
+      address: {
+        ...prevData.address,
+        country: selectedCountry.name, // Store the country name in formData
+      },
+    }));
+    setCountryCode(selectedCountry.code); // Also update the country code
+  };
+  
+
+const country = Country.getAllCountries();
+
+const states = State.getStatesOfCountry(countryCode);
+
+const cities = State.getStatesOfCountry(countryCode)
+  .filter((state) => state.name === formData.address.state)
+  .map((state) => City.getCitiesOfState(state.countryCode, state.isoCode));
+
+const handlePinCode=(e)=>{
+  setFormData((formData)=>({ ...formData,address:{...formData.address,  pincode: e.target.value }}));
+
+}
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const formDataToSend = new FormData();
+
+  // Append form fields to FormData
+  formDataToSend.append('fullName', formData.fullName);
+  formDataToSend.append('email', formData.email);
+  formDataToSend.append('phoneCode', formData.phoneCode);
+  formDataToSend.append('phoneNumber', formData.phoneNumber);
+  formDataToSend.append('password', formData.password);
+  formDataToSend.append('specialized', formData.specialized);
+  formDataToSend.append('jobType', formData.jobType);
+  formDataToSend.append('AadhaarCardNumber', formData.AadhaarCardNumber);
+
+  // Append the address fields
+  formDataToSend.append('address[country]', formData.address.country);
+  formDataToSend.append('address[state]', formData.address.state);
+  formDataToSend.append('address[city]', formData.address.city);
+  formDataToSend.append('address[pincode]', formData.address.pincode);
+  formDataToSend.append('address[additionalDetails]', formData.address.additionalDetails);
+
+  // Append the file
+  formDataToSend.append('profilePhoto', formData.profilePhoto);
+console.log(formDataToSend)
+  // Log FormData content
+  for (let [key, value] of formDataToSend.entries()) {
+    console.log(key, value);  // This will show the data in FormData
+  }
+
+  try {
+    const response = await fetch(
+      `http://localhost:9000/userJob/user_register`,
+      {
+        method: 'POST',
+        body: formDataToSend, // Send FormData directly
+        credentials: "include",
+      }
+    );
+
+    console.log(response);
+  } catch (error) {
+    console.error("Error during the request:", error);
+  }
+};
+
+
+
+
+
+
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center my-5">
@@ -242,20 +317,23 @@ const [Countries,setCountries]=useState(Country.getAllCountries())
             <div className="w-full">
               <label className="block text-gray-800 font-medium mb-2">Country</label>
               <select
-                name="country"
-                value={formData.address.country}
-                onChange={handleAddressChange}
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
-              >
-                <option value="" disabled>
-                  Select Country
-                </option>
-                {countries.map((country) => (
-          <option key={country.isoCode} value={{ name: country.name, isoCode: country.isoCode }}>
-          {country.name}
-        </option>
-                ))}
-              </select>
+    name="country"
+    value={formData.address.country} // Use country name
+    onChange={setCountry}
+
+    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+  >
+
+                        <option value="">{formData.address.country||"SelectCountry"}</option>
+                    {country.flat().map((country) => (
+                      <option key={country.name} 
+                      value={JSON.stringify({ name: country.name, code: country.isoCode })} // Encode as a JSON string
+                      >
+                        {country.name}
+                      </option>
+                    ))}
+
+  </select>
             </div>
 
             {/* State Dropdown */}
@@ -264,19 +342,15 @@ const [Countries,setCountries]=useState(Country.getAllCountries())
               <select
                 name="state"
                 value={formData.address.state}
-                onChange={handleAddressChange}
-                disabled={!formData.address.country}
+                onChange={(e)=>handleAddressChange(e)}
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
               >
-                <option value="" disabled>
-                  Select State
-                </option>
-                {formData.address.country &&
-                  states[formData.address.country]?.map((state) => (
-                    <option key={state} value={state}>
-                      {state}
-                    </option>
-                  ))}
+                 <option value="">Select State</option>
+                {states.map((state) => (
+                  <option key={state.name} value={state.name}>
+                    {state.name}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -286,22 +360,33 @@ const [Countries,setCountries]=useState(Country.getAllCountries())
               <select
                 name="city"
                 value={formData.address.city}
-                onChange={handleAddressChange}
+                onChange={(e) => handleCityChange(e.target.value)}
                 disabled={!formData.address.state}
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
               >
-                <option value="" disabled>
-                  Select City
-                </option>
-                {formData.address.state &&
-                  cities[formData.address.state]?.map((city) => (
-                    <option key={city} value={city}>
-                      {city}
-                    </option>
-                  ))}
+                  <option value="">Select City</option>
+                {cities.flat().map((city) => (
+                  <option key={city.name} value={city.name}>
+                    {city.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
+          
+  <div className="mb-4">
+    <label className="block text-sm font-medium text-gray-400 mb-1">
+      Pin Code
+    </label>
+    <input
+      type="text"
+      name="pincode"
+      value={formData.address.pincode}
+      onChange={handlePinCode}
+      placeholder="Enter your pin code"
+      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gorange-500"
+    />
+  </div>
 
           {/* Additional Address Details */}
           <div className="mt-4">
@@ -325,7 +410,17 @@ const [Countries,setCountries]=useState(Country.getAllCountries())
             Register
           </button>
         </div>
+        <div className="mt-4 text-sm text-center text-gray-700">
+         Alredy have account? {" "}
+          <Link
+            to={"/login"}
+            className="text-orange-500 hover:underline font-medium"
+          >
+            login
+          </Link>
+        </div>
       </form>
+  
     </div>
   );
 };

@@ -1,7 +1,7 @@
-const express=require("express");
-const globalRoute=express.Router();
+import express from 'express';
+const globalRoute = express.Router();
 
-const {store_inquire_message,no_of_user_globally,searchFunctionality,get_no_of_cities,send_mail,notify}=require("../controllers/global.controller")
+import { store_inquire_message, no_of_user_globally, searchFunctionality, get_no_of_cities, send_mail, notify } from '../controllers/global.controller.js';
 
 globalRoute.get("/user_count",no_of_user_globally);
 globalRoute.get("/search",searchFunctionality);
@@ -11,4 +11,4 @@ globalRoute.post("/send_inquire",store_inquire_message);
 globalRoute.get("/notify",notify)
 
 
-module.exports=globalRoute
+export default globalRoute

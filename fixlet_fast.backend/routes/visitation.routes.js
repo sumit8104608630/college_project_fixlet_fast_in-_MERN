@@ -1,8 +1,10 @@
-const express=require("express");
-const visitRoute=express.Router();
-const {checkAuthenticationCookie}=require("../middlewares/authenticate.middleware.js")
-const {set_visitFee,get_visitFee_data} =require("../controllers/visitFee.controller.js")
+import express from "express";
+const visitRoute = express.Router();
+import { checkAuthenticationCookie } from "../middlewares/authenticate.middleware.js";
+import { set_visitFee, get_visitFee_data } from "../controllers/visitFee.controller.js";
+
+
 visitRoute.post("/set_visit_fee",checkAuthenticationCookie("accessToken"),set_visitFee);
 visitRoute.get("/get_visit_fee",checkAuthenticationCookie("accessToken"),get_visitFee_data);
 
-module.exports=visitRoute
+export default visitRoute;

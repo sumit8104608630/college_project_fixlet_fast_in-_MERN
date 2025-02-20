@@ -127,7 +127,15 @@ const verify_otp=asyncHandler(async(req,res)=>{
 //let's save the data of user in mongo db
 const registration=asyncHandler(async(req,res)=>{
   try {
-    const {fullName,email,phoneCode,phoneNumber,password,specialized,jobType,AadhaarCardNumber}=req.body;   
+    const {fullName,email,phoneCode,phoneNumber,password,specialized,jobType,AadhaarCardNumber}=req.body; 
+    const address = {
+      country: req.body.address.country,
+      state: req.body.address.state,
+      city: req.body.address.city,
+      pincode: req.body.address.pincode,
+      additionalDetails: req.body.address.additionalDetails,
+  };  
+  
     if([fullName,email,phoneNumber,password,specialized,jobType,AadhaarCardNumber].some(item=>item==="")){
       return res.status(400).json(new ApiResponse(400,"",'Please fill all the fields'));
     } 
@@ -137,8 +145,22 @@ const registration=asyncHandler(async(req,res)=>{
     const local_path=path.join(__dirname,`../public/upload/${req.file.filename}`);
     const upload=await uploadFile(local_path);
     
+
+    const newUserJob = new UserJob({
+      fullName,
+      email,
+      phoneCode,
+      phoneNumber,
+      password, // Make sure to hash the password before saving it
+      specialized: specialized.split(','), // Assuming it's a comma-separated string
+      jobType,
+      AadhaarCardNumber,
+      address,
+      profilePhoto: upload.secure_url,  // Store the Cloudinary URL
+  });
+
     const user=await UserJob.create(
-      {fullName,profilePhoto:upload.secure_url,email,phoneCode,phoneNumber,password,specialized,jobType,AadhaarCardNumber}
+      newUserJob
     ) 
     
     res.status(201).json(new ApiResponse(200,user,'User created successfully'));

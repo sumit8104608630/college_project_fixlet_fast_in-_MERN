@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import  mongoose from "mongoose";
 
 
 // let's create SubServiceSchema
@@ -100,4 +100,4 @@ const serviceSchema = mongoose.Schema({
 // Create the model for the schema
 const Service = mongoose.model("Service", serviceSchema);
 // let's export the model
-module.exports = Service;
+export default Service;

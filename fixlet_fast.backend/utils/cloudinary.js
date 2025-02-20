@@ -1,6 +1,6 @@
-// Import Cloudinary's v2 API and the filesystem module
-const { v2: cloudinary } = require("cloudinary"); // Cloudinary for file uploads
-const fs = require("fs"); // File system module to handle file operations
+import { v2 as cloudinary } from "cloudinary"; // Cloudinary for file uploads
+import fs from "fs"; // File system module to handle file operations
+
 
 // Configure Cloudinary with environment variables for security and flexibility
 cloudinary.config({
@@ -46,6 +46,4 @@ const uploadFile = async (localStorage) => {
 };
 
 // Export the uploadFile function for use in other modules
-module.exports = {
-  uploadFile
-};
+export { uploadFile };

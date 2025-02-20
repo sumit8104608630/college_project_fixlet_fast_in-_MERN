@@ -1,8 +1,6 @@
 
-// let connect the database through connection 
-const mongoose=require('mongoose');
-const {data_base_name}=require("../src/constants")
-// let's write the code for connection to mongodb
+import mongoose from 'mongoose';
+import { data_base_name } from '../src/constants.js';
 
 
  const connection_database=async()=>{
@@ -18,4 +16,4 @@ const {data_base_name}=require("../src/constants")
     }
 }
 
-module.exports={connection_database}
+export { connection_database };

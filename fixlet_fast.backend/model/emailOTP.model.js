@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
-const { createHmac, randomBytes } = require("node:crypto");
-const { apiError } = require("../utils/apiError");
+import mongoose from 'mongoose';
+import { createHmac, randomBytes } from 'crypto';
+import { apiError } from '../utils/apiError.js';
+
 
 const emailOtpSchema = mongoose.Schema({
   email: {
@@ -72,4 +73,4 @@ emailOtpSchema.index({ expireTime: 1 }, { expireAfterSeconds: 0 });
 // Create model
 const EmailOtp = mongoose.model("EmailOtp", emailOtpSchema);
 
-module.exports = EmailOtp;
+export default EmailOtp;

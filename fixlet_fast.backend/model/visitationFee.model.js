@@ -1,4 +1,4 @@
-const mongoose=require("mongoose");
+import  mongoose from "mongoose";
 
 const visitationSchema=mongoose.Schema({
     serviceType:{
@@ -21,4 +21,4 @@ const visitationSchema=mongoose.Schema({
 
 const VisitationFee=mongoose.model("VisitationFee",visitationSchema);
 
-module.exports=VisitationFee;
+export default VisitationFee;

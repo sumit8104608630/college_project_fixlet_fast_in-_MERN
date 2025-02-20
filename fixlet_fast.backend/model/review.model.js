@@ -1,4 +1,5 @@
-const mongoose =require("mongoose");
+import  mongoose from "mongoose";
+
 
 // let's create the schema for review of customer
 
@@ -30,4 +31,4 @@ const reviewSchema=mongoose.Schema({
 //no we create model for schema
 const Review=mongoose.model("Review",reviewSchema);
 // let's export this model
-module.exports=Review;
+export default Review;

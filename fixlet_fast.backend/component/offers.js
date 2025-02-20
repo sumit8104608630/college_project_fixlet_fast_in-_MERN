@@ -22,4 +22,4 @@ const offers=[
     }
 ]
 
-module.exports=offers
+export default offers

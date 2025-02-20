@@ -1,12 +1,40 @@
-const cors=require("cors")
-// let's create the app with the help of express
-// first we will initialize the express
-const express=require("express")
-//let required cookie-parser for setting a cookie of my as well as upcoming url from frontend
-const cookieParser = require("cookie-parser");
+import cors from "cors";
+import express from "express";
+import cookieParser from "cookie-parser";
+import http from 'http';
+import { Server } from 'socket.io';
+
+
 //creating app
 const app=express();
 const allOrigin=process.env.CORS_ORIGIN?.split(",")
+const server = http.createServer(app);
+export const io = new Server(server, {
+    cors: {
+      origin: allOrigin,
+      methods: ["GET", "POST"],
+      credentials: true,
+    },
+  });
+  
+
+// Socket.io event handling when a client connects
+io.on("connection", (socket) => {
+    console.log(`A user connected: ${socket.id}`);
+  
+    // Handle message from client
+    socket.on("send_message", (message) => {
+      console.log("Message from client:", message);
+      // Broadcasting the message to all connected clients
+      io.emit("receive_message", message);
+    });
+  
+    // Handle disconnection event
+    socket.on("disconnect", () => {
+      console.log(`A user disconnected: ${socket.id}`);
+    });
+  });
+  
 app.use(cors({
     origin: allOrigin,
     credentials:true,
@@ -25,18 +53,19 @@ app.use(cookieParser());
  
 // let's get the user route and use some url path as middleware for the user route 
 // let's use it
-const userRoute=require("../routes/user.routes.js");
-const serviceRoute = require("../routes/service.routes.js");
-const areaRoute=require("../routes/area.routes.js")
-const cartRoute=require("../routes/cart.routes.js");
-const globalRoute=require("../routes/global.routes.js");
-const storeRoute=require("../routes/store.routes.js")
-const timeRoute=require("../routes/time.routes.js")
-const visitRoute=require("../routes/visitation.routes.js")
-const taxRoute=require("../routes/tax.routes.js")
-const paymentRoute = require("../routes/payment.routes.js");
-const offersRoute=require("../routes/offers.routes.js")
-const bookingRoute=require("../routes/myBooking.routes")
+import userRoute from "../routes/user.routes.js";
+import serviceRoute from "../routes/service.routes.js";
+import areaRoute from "../routes/area.routes.js";
+import cartRoute from "../routes/cart.routes.js";
+import globalRoute from "../routes/global.routes.js";
+import storeRoute from "../routes/store.routes.js";
+import timeRoute from "../routes/time.routes.js";
+import visitRoute from "../routes/visitation.routes.js";
+import taxRoute from "../routes/tax.routes.js";
+import paymentRoute from "../routes/payment.routes.js";
+import offersRoute from "../routes/offers.routes.js";
+import bookingRoute from "../routes/myBooking.routes.js";
+
 
 // all route middleware is here
 app.use("/user",userRoute);
@@ -55,4 +84,4 @@ app.use("/book",bookingRoute);
 
 //export this app
 
-module.exports = {app}
+export default server ;

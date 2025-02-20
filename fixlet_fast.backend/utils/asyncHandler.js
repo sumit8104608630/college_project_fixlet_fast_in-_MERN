@@ -6,6 +6,6 @@ const asyncHandler=(functions)=>{
 }
 }
 
-module.exports={
+export{
     asyncHandler
 } 

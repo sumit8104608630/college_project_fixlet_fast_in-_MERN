@@ -1,10 +1,10 @@
-const Tax=require("../model/tax.model.js");
-// let's require the api error for error message 
-const {apiError}=require("../utils/apiError.js")
-// let's require the api response for error message 
-const {ApiResponse}=require("../utils/apiResponse.js")
-const {asyncHandler}=require("../utils/asyncHandler.js");
-const visitFee=require("../component/visitFee/visitFee.js");
+import Tax from "../model/tax.model.js";
+// Importing the api error for error message
+import { apiError } from "../utils/apiError.js";
+// Importing the api response for error message
+import { ApiResponse } from "../utils/apiResponse.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import visitFee from "../component/visitFee/visitFee.js";
 
 
 const set_tax=asyncHandler(async(req,res)=>{
@@ -34,7 +34,7 @@ const getTaxFee=asyncHandler(async(req,res)=>{
     }
 })
 
-module.exports={
+export {
     set_tax,
     getTaxFee
-}
+};

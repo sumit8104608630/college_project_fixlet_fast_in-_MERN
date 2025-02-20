@@ -1,23 +1,26 @@
- const {asyncHandler}=require("../utils/asyncHandler.js");
-// let's require the api error for error message 
- const {apiError}=require("../utils/apiError.js")
-// let's require the api response for error message 
-const {ApiResponse}=require("../utils/apiResponse.js")
- const User = require("../model/user.model.js");
-// let require cookie for saving token into the cookie
-const cookie=require("cookie-parser");
-// otp  model
-const EmailOtp =require("../model/emailOTP.model.js")
-// nodemailer
-const nodemailer=require("nodemailer")
-const Area=require("../model/area.model.js")
-const { createHmac, randomBytes } = require("node:crypto");
-const crypto = require('crypto');
+import { asyncHandler } from "../utils/asyncHandler.js";
+// Import the api error for error message
+import { apiError } from "../utils/apiError.js";
+// Import the api response for error message
+import { ApiResponse } from "../utils/apiResponse.js";
+// Import User model
+import User from "../model/user.model.js";
+// Import cookie-parser for saving token into the cookie
+import cookieParser from "cookie-parser";
+// Import EmailOtp model
+import EmailOtp from "../model/emailOTP.model.js";
+// Import nodemailer for sending emails
+import nodemailer from "nodemailer";
+// Import Area model
+import Area from "../model/area.model.js";
+// Import specific functions from crypto module
+import { createHmac, randomBytes } from "node:crypto";
+// Import crypto for additional cryptographic utilities
+import crypto from "crypto";
+// Import redis for caching and database purposes
+import redis from "redis";
 
 
-
-
-const redis = require('redis');
 const client = redis.createClient({
   url: process.env.REDIS_URL || 'redis://localhost:6379', // Adjust the URL based on your Redis setup
 });
@@ -277,21 +280,6 @@ client.connect();
 */
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // let's create the user login algorithm to create user functionality
 const userLogin=asyncHandler(async(req,res)=>{
     /*
@@ -486,7 +474,6 @@ const saveUserCustomAddress=asyncHandler(async(req,res)=>{
       success:false
     });
   }
-  console.log(area);
   const city_available=area.city;
  const isCityAvailable=city_available.some(
   (item) => item.toLowerCase().trim() == cityCheck.toLowerCase());
@@ -501,6 +488,7 @@ if (!isCityAvailable) {
     res.status(201).json(new ApiResponse(200,location,"user location has been saved"));
 
   } catch (error) {
+    console.log(error)
     throw new apiError("some thing went wrong in server",500)
   }
 })
@@ -557,9 +545,7 @@ const checkPassword=asyncHandler(async(req,res)=>{
   }
   const matchPassword=await User.matchPassword(email,password);
   if(!matchPassword){
-
     return res.status(401).json(new ApiResponse("incorrect password",401))
-
   }
   return res.status(201).json(new ApiResponse(201,matchPassword,"password verified"))
 
@@ -596,17 +582,18 @@ const changeEmail=asyncHandler(async(req,res)=>{
 })
 
 
- module.exports={
-    userRegister,
-    userLogin,
-    userLogout, 
-    userInfo,
-    generateOtp,
-    verify_otp,
-    saveUserAddress,
-    saveUserCustomAddress,
-    changePassword,
-    changeEmail,
-    checkPassword
- }
+export { 
+  userRegister, 
+  userLogin, 
+  userLogout, 
+  userInfo, 
+  generateOtp, 
+  verify_otp, 
+  saveUserAddress, 
+  saveUserCustomAddress, 
+  changePassword, 
+  changeEmail, 
+  checkPassword 
+};
+
 

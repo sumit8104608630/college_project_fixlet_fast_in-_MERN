@@ -325,4 +325,4 @@ const storeData = [
   }
 ];
 
-module.exports=storeData
+export default storeData

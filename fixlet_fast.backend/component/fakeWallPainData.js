@@ -89,5 +89,5 @@ const wallPaintingData = [
     }
   ];
   
-  module.exports= wallPaintingData;
+  export default wallPaintingData;
   

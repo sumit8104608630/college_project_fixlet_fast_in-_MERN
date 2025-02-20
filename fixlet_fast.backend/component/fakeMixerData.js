@@ -86,5 +86,5 @@ const mixerGrinderData = [
     }
   ];
   
-  module.exports= mixerGrinderData;
+  export default mixerGrinderData;
   

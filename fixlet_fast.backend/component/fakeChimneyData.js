@@ -92,5 +92,5 @@ const chimneyServiceData = [
     }
   ];
   
-module.exports= chimneyServiceData;
+  export default chimneyServiceData;
   

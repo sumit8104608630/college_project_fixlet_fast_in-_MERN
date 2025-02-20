@@ -1,4 +1,4 @@
-const mongoose=require("mongoose");
+import mongoose from "mongoose";
 
 const areaSchema=mongoose.Schema({
     state:{
@@ -13,4 +13,5 @@ const areaSchema=mongoose.Schema({
 })
 
 const Area=mongoose.model("Area",areaSchema);
-module.exports=Area;
+
+export default Area;

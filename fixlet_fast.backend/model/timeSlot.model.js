@@ -1,4 +1,4 @@
-const mongoose=require("mongoose");
+import  mongoose from "mongoose";
 // let's create the model for time for different date 
 
 
@@ -15,4 +15,4 @@ const timeSchema=mongoose.Schema({
 
 const TimeSlot=mongoose.model("TimeSlot",timeSchema);
 
-module.exports=TimeSlot
+export default TimeSlot

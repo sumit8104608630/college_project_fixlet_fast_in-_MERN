@@ -1,4 +1,4 @@
-const mongoose=require("mongoose");
+import  mongoose from "mongoose";
 const taxSchema=mongoose.Schema({
     country:{
         type:String,
@@ -13,6 +13,6 @@ const taxSchema=mongoose.Schema({
 })
 
 const Tax=mongoose.model("Tax",taxSchema);
-module.exports=Tax;
+export default Tax;
 
 

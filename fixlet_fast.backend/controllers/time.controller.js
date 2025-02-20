@@ -1,10 +1,11 @@
-const TimeSlot=require("../model/timeSlot.model");
-const time_data=require("../component/timeSlot/time.js")
-// let's require the api error for error message 
-const {apiError}=require("../utils/apiError.js")
-// let's require the api response for error message 
-const {ApiResponse}=require("../utils/apiResponse.js")
-const {asyncHandler}=require("../utils/asyncHandler.js");
+import TimeSlot from "../model/timeSlot.model.js";
+import time_data from "../component/timeSlot/time.js";
+// Import the api error for error messages
+import { apiError } from "../utils/apiError.js";
+// Import the api response for API messages
+import { ApiResponse } from "../utils/apiResponse.js";
+// Import the asyncHandler utility
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 
 const set_time_data=asyncHandler(async (_,res)=>{
@@ -34,7 +35,7 @@ const get_time_data=asyncHandler(async (req,res)=>{
     }
 })
 
-module.exports={
+export {
     set_time_data,
     get_time_data
-}
+};

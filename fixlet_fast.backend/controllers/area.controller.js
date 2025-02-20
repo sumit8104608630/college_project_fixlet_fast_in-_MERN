@@ -1,7 +1,6 @@
-const Area=require("../model/area.model");
-const {ApiResponse} =require("../utils/apiResponse");
-const {apiError} =require ("../utils/apiError");
-const {asyncHandler} =require ("../utils/asyncHandler");
+import Area from "../model/area.model.js";
+import { apiError } from "../utils/apiError.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 
 const area_of_service=asyncHandler(async(req,res)=>{
@@ -29,7 +28,4 @@ const area_of_service=asyncHandler(async(req,res)=>{
 })
 
 
-
-module.exports={
-    area_of_service
-}
+export { area_of_service };

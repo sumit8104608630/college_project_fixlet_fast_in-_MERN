@@ -1,4 +1,4 @@
-const mongoose=require("mongoose");
+import mongoose from "mongoose";
 
 const offersSchema=mongoose.Schema({
     offersTo:{
@@ -29,4 +29,4 @@ const offersSchema=mongoose.Schema({
 
 
 const Offers=mongoose.model("Offers",offersSchema);
-module.exports = Offers;
+export default Offers;

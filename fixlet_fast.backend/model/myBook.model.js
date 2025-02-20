@@ -1,4 +1,4 @@
-const mongoose=require("mongoose")
+import mongoose from "mongoose";
 
 // create the model for booking
 
@@ -93,4 +93,4 @@ const myBookSchema=mongoose.Schema({
 
 
  const MyBooking=mongoose.model("MyBooking",myBookSchema);
- module.exports=MyBooking;
+ export default MyBooking;

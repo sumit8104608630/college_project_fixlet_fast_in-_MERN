@@ -13,4 +13,4 @@ const visitFee=[
     }
   ]
   
-  module.exports=visitFee
+  export default visitFee

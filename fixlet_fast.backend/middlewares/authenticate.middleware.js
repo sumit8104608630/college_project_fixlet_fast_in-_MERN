@@ -1,8 +1,10 @@
-const { getUser, refreshToken ,setUser} = require("../service/authenticate.service.js");
+import { getUser, refreshToken, setUser } from "../service/authenticate.service.js";
 
 // Schema model
-const User = require("../model/user.model.js");
-const { verify } = require("jsonwebtoken");
+import User from "../model/user.model.js";
+import jwt from "jsonwebtoken";
+const { verify } = jwt;
+
 
 // Middleware function to authenticate a logged-in user using a cookie
 const checkAuthenticationCookie = (cookieName) => {
@@ -75,6 +77,4 @@ const checkAuthenticationCookie = (cookieName) => {
   };
 };
 
-module.exports = {
-  checkAuthenticationCookie,
-};
+export { checkAuthenticationCookie };

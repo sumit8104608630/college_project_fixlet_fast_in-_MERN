@@ -1,13 +1,14 @@
-const visitationFee=require("../model/visitationFee.model.js");
-// let's require the api error for error message 
-const {apiError}=require("../utils/apiError.js")
-// let's require the api response for error message 
-const {ApiResponse}=require("../utils/apiResponse.js")
-const {asyncHandler}=require("../utils/asyncHandler.js");
-const visitFee=require("../component/visitFee/visitFee.js")
-const Offers=require("../model/offers.model.js")
-const Cart=require("../model/cart.model.js");
-const User =require("../model/user.model.js"); 
+import visitationFee from "../model/visitationFee.model.js";
+// Importing the API error for error messages
+import { apiError } from "../utils/apiError.js";
+// Importing the API response for error messages
+import { ApiResponse } from "../utils/apiResponse.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import visitFee from "../component/visitFee/visitFee.js";
+import Offers from "../model/offers.model.js";
+import Cart from "../model/cart.model.js";
+import User from "../model/user.model.js";
+
 
 
 const set_visitFee=asyncHandler(async(req,res)=>{
@@ -108,7 +109,7 @@ const get_visitFee_data=asyncHandler(async(req,res)=>{
     }
 })
 
-module.exports={
+export {
     set_visitFee,
     get_visitFee_data
-}
+};

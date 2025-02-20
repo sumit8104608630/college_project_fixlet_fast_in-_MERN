@@ -1,8 +1,9 @@
-const User =require("../model/user.model.js") 
-const {ApiResponse}=require("../utils/apiResponse.js")
-const {apiError}=require("../utils/apiError.js")
-const {asyncHandler}=require("../utils/asyncHandler.js");
-const MyBooking =require("../model/myBook.model.js");
+import User from "../model/user.model.js";
+import { ApiResponse } from "../utils/apiResponse.js";
+import { apiError } from "../utils/apiError.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import MyBooking from "../model/myBook.model.js";
+
 
 const get_all_booking=asyncHandler(async(req,res)=>{
     try {
@@ -89,7 +90,7 @@ const cancel_booking=asyncHandler(async(req,res)=>{
 })
 
 
-module.exports={
-    get_all_booking,
-    cancel_booking
-}
+export {
+  get_all_booking,
+  cancel_booking
+};

@@ -88,5 +88,5 @@ const lightDecorationData = [
     }
   ];
   
-  module.exports=  lightDecorationData;
+  export default  lightDecorationData;
   

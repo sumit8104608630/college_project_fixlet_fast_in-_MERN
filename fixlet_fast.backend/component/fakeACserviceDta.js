@@ -118,5 +118,5 @@ const acServiceData = [
     }
   ];
   
-  module.exports=acServiceData;
+  export default acServiceData;
   

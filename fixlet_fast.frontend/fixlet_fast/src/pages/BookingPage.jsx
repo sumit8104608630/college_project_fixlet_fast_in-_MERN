@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router';
 import { useState,useEffect } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { IoIosMail } from "react-icons/io";
-import { FaLocationDot } from "react-icons/fa6";
+import CancellationPolicyModal from "../component/static/CancellationPolicyModal.jsx"
 import { IoTime } from "react-icons/io5";
 import { MdPayments } from "react-icons/md";
 import { useContext } from 'react';
@@ -27,6 +27,7 @@ function BookingPage() {
   const [searchParams] = useSearchParams();
   
   const dispatch=useDispatch()
+  const [isModalOpen, setModalOpen] = useState(false);
   const [timeEditToggle,setTimeEditToggle]=useState(false)
   const [emptyCart,setEmpty]=useState(false);
   const {checkOutItemLoading,checkOutItem,checkOutItemError}=useSelector((state)=>state.cart);
@@ -642,11 +643,18 @@ const handlePay = async (amount,allItem,date) => {
           <div className=''>
             <h1 className='text-lg font-semibold text-gray-800'>Cancellation policy</h1>
             <p className='text-gray-600'>Free cancellations if done more than 12 hrs before the service or if a professional isn’t assigned. A fee will be charged otherwise.</p>
-            <button className='text-sm font-semibold underline'>Read full policy</button>
+            <button className="text-base underline font-semibold " onClick={() => setModalOpen(true)}>Read full policy</button>
           </div>
-
+<div>
+          <CancellationPolicyModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+      />
+    </div>
 
         </div>
+
+
         <div className='w-full flex flex-col gap-5 '>
           <div>
             {<>

@@ -88,5 +88,5 @@ const wallPanelInstallationData = [
     }
   ];
   
-  module.exports= wallPanelInstallationData;
+  export default wallPanelInstallationData;
   

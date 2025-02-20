@@ -7,9 +7,9 @@ import locationImage from "../assets/staticPhotp/locate.svg"
 import { useSelector,useDispatch } from 'react-redux';
 import { fetchUser } from '../app/Actions/user_action.js';
 import { currentContext } from '../component/Context.jsx';
+import {Country,State,City} from "country-state-city"
 import { useContext } from 'react';
 const apiUrl=import.meta.env.VITE_BACKEND_API_URL
-
 
 function Location(props) {
   const {userInfo}=useSelector((state)=>state.user);
@@ -19,7 +19,6 @@ function Location(props) {
   const dispatch = useDispatch();
   const [not_in_area,setNotInArea]=useState(false);
   const Show=useContext(currentContext)
-
   const [formData, setFormData] = useState({
     address: "",
     city: "",
@@ -27,6 +26,7 @@ function Location(props) {
     pincode: "",
     country: "",
   });
+  const [countryCode,setCountryCode]=useState("")
 
   const handleToggle=()=>{
     setToggle(true)
@@ -62,14 +62,19 @@ function Location(props) {
     })
   }
 
+  const setCountry=(e)=>{
+    const selectedCountry = JSON.parse(e.target.value); // Parse the JSON string back into an object
+    setFormData({ ...formData, country: selectedCountry.name }); // Set country code in formData
+    setCountryCode(selectedCountry.code) // Access both name and code
+  }
 
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const handleSubmit = async(e) => {
     e.preventDefault();
+  
 // API call to store the address
 const data= await fetch(`${apiUrl}/user/store_custom_address`,{
   method:"POST",
@@ -108,6 +113,21 @@ else{
   },[location,dispatch]);
 
 
+  const handleStateChange = (selectedState) => {
+    setFormData({ ...formData, state: selectedState, city: "" });
+  };
+
+  const handleCityChange = (selectedCity) => {
+    setFormData({ ...formData, city: selectedCity });
+  };
+
+  const country = Country.getAllCountries();
+  
+  const states = State.getStatesOfCountry(countryCode);
+
+  const cities = State.getStatesOfCountry(countryCode)
+    .filter((state) => state.name === formData.state)
+    .map((state) => City.getCitiesOfState(state.countryCode, state.isoCode));
 
 
 
@@ -205,34 +225,68 @@ else{
   Address Form
 </h2>
 <form onSubmit={handleSubmit}>
+<div className="mb-4">
+  <label className="block text-sm font-medium text-gray-400 mb-1">
+    Country
+  </label>
+  <select
+    name="country"
+    value={formData.country}
+    onChange={(e)=>setCountry(e)}
+    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+  >
+                        <option value="">Select Country</option>
+                    {country.flat().map((country) => (
+                      <option key={country.name} 
+                      value={JSON.stringify({ name: country.name, code: country.isoCode })} // Encode as a JSON string
+                      >
+                        {country.name}
+                      </option>
+                    ))}
+
+  </select>
+</div>
 
 <div className='flex gap-2'>
+<div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-400 mb-1">
+                    State
+                  </label>
+                  <select
+                    name="state"
+                    value={formData.state}
+                    onChange={(e) => handleStateChange(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  >
+                    <option value="">Select State</option>
+                    {states.map((state) => (
+                      <option key={state.isoCode} value={state.name}>
+                        {state.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+
   <div className="mb-4">
-    <label className="block text-sm font-medium text-gray-400 mb-1">
-      City
-    </label>
-    <input
-      type="text"
-      name="city"
-      value={formData.city}
-      onChange={handleChange}
-      placeholder="Enter your city"
-      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gorange-500"
-    />
-  </div>
-  <div className="mb-4">
-    <label className="block text-sm font-medium text-gray-400 mb-1">
-      State
-    </label>
-    <input
-      type="text"
-      name="state"
-      value={formData.state}
-      onChange={handleChange}
-      placeholder="Enter your state"
-      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gorange-500"
-    />
-  </div>
+                  <label className="block text-sm font-medium text-gray-400 mb-1">
+                    City
+                  </label>
+                  <select
+                    name="city"
+                    value={formData.city}
+                    onChange={(e) => handleCityChange(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  >
+                    <option value="">Select City</option>
+                    {cities.flat().map((city) => (
+                      <option key={city.name} value={city.name}>
+                        {city.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+ 
   </div>
 
 
@@ -249,19 +303,8 @@ else{
       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gorange-500"
     />
   </div>
-  <div className="mb-4">
-    <label className="block text-sm font-medium text-gray-400 mb-1">
-      Country
-    </label>
-    <input
-      type="text"
-      name="country"
-      value={formData.country}
-      onChange={handleChange}
-      placeholder="Enter your country"
-      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gorange-500"
-    />
-  </div>
+
+
 
   <div className="mb-4">
     <label className="block text-sm font-medium text-gray-400 mb-1">

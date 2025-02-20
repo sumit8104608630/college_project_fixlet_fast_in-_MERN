@@ -1,6 +1,7 @@
-const mongoose=require("mongoose");
-const {createHmac,randomBytes} = require('node:crypto');
-const {setUser,refreshToken}=require("../service/authenticate.service.js");
+import mongoose from 'mongoose';
+import { createHmac, randomBytes } from 'node:crypto';
+import { setUser, refreshToken } from '../service/authenticate.service.js';
+
 
 
 // let's create schema for user or you can say table 
@@ -131,4 +132,4 @@ userSchema.static("matchPassword",async function (email,password) {
 
 // let's export the model 
 const User=mongoose.model("User",userSchema);
-module.exports=User;
+export default User;

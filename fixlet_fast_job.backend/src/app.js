@@ -9,8 +9,10 @@ const AllBooking=require("../models/allBooking.model.js")
 // create the app for the other functionality
 const app=express();
 //setting cors origin for secure response
+const allOrigin=process.env.CORS_ORIGIN?.split(",")
+
 app.use(cors({
-    origin:process.env.CORS_ORIGIN,
+    origin:allOrigin,
     credentials:true,
 }))
 // setting json type with limit

@@ -1,5 +1,5 @@
-const multer = require("multer"); // Multer is a middleware for handling file uploads
-const path = require("path"); // Path module for working with file and directory paths
+import multer from 'multer'; // Multer is a middleware for handling file uploads
+import path from 'path'; // Path module for working with file and directory paths
 
 // Configure storage for file uploads
 const storage = multer.diskStorage({
@@ -21,6 +21,5 @@ const upload = multer({
 });
 
 // Export the upload middleware for use in other modules
-module.exports = {
-  upload
-};
+export { upload };
+

@@ -9,6 +9,7 @@ import LayOut from './pages/LayOut.jsx'
 import BePartner from './pages/BePartnner.jsx'
 import Register from "./pages/Register.jsx"
 import JobNotify from './pages/JobNotify.jsx'
+import Login from './pages/Login.jsx'
 
 const route=createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const route=createBrowserRouter([
       {
         path:"/jobNotify",
         element:<JobNotify/>
+      },
+      {
+        path:"/login",
+        element:<Login/>
       }
     ]
   }

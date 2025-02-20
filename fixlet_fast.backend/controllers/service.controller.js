@@ -1,26 +1,27 @@
-const {asyncHandler} =require ("../utils/asyncHandler");
-const {ApiResponse} =require("../utils/apiResponse");
-const {apiError} =require ("../utils/apiError");
-const Area=require("../model/area.model.js")
-const Service=require("../model/service.model.js");
-const electricianJson =require("../component/fakejsonData.js"); // Assuming this is the data you're working with
-const plumberJson =require( "../component/fakeJsonPlumberData.js");
-const carpenter =require("../component/fakeCarpenterData.js")
-const bathroomKitchen =require ("../component/fakeCleaningbathroomkitchendata.js")
-const homeCleaning =require("../component/fakeHomeCleaning.js")
-const sofaCleaning =require("../component/fakeSofaCleaningData.js")
-const pestControl =require("../component/fakepestjsondata.js")
-const bedPestControl=require("../component/fakeBedData.js");
-const ACservice=require("../component/fakeACserviceDta.js");
-const chimney=require("../component/fakeChimneyData.js");
-const stove=require("../component/fakeStoveData.js")
-const refrigerator =require("../component/fakeRefrigeratorData.js");
-const washinMachine=require("../component/fakeWashingMashineData.js");
-const mixer =require("../component/fakeMixerData.js");
-const decoration =require("../component/lightDecorationData.js");
-const wallPanel=require("../component/fake_wall_panelData.js");
-const wallPaint =require("../component/fakeWallPainData.js");
-const Offers =require("../model/offers.model.js")
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { ApiResponse } from "../utils/apiResponse.js";
+import { apiError } from "../utils/apiError.js";
+import Area from "../model/area.model.js";
+import Service from "../model/service.model.js";
+import electricianJson from "../component/fakejsonData.js"; // Assuming this is the data you're working with
+import plumberJson from "../component/fakeJsonPlumberData.js";
+import carpenter from "../component/fakeCarpenterData.js";
+import bathroomKitchen from "../component/fakeCleaningbathroomkitchendata.js";
+import homeCleaning from "../component/fakeHomeCleaning.js";
+import sofaCleaning from "../component/fakeSofaCleaningData.js";
+import pestControl from "../component/fakepestjsondata.js";
+import bedPestControl from "../component/fakeBedData.js";
+import ACservice from "../component/fakeACserviceDta.js";
+import chimney from "../component/fakeChimneyData.js";
+import stove from "../component/fakeStoveData.js";
+import refrigerator from "../component/fakeRefrigeratorData.js";
+import washingMachine from "../component/fakeWashingMashineData.js";
+import mixer from "../component/fakeMixerData.js";
+import decoration from "../component/lightDecorationData.js";
+import wallPanel from "../component/fake_wall_panelData.js";
+import wallPaint from "../component/fakeWallPainData.js";
+import Offers from "../model/offers.model.js";
+
 
 // let's push the data into the service data base 
  
@@ -122,7 +123,7 @@ const get_service_data = asyncHandler(async (req, res) => {
 // })
 
 
-module.exports={
+export {
     inserting_service_data,
-    get_service_data,
-}
+    get_service_data
+};

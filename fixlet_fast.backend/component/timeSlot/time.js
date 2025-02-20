@@ -30,4 +30,4 @@ const times=[
 ]
 
   
-  module.exports=times
+export default times

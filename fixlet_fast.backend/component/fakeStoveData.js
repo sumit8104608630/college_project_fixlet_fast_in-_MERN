@@ -61,5 +61,5 @@ const forgasStoveData = [
     }
   ];
   
-  module.exports= forgasStoveData;
+  export default forgasStoveData;
   

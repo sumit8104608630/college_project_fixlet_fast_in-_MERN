@@ -1,7 +1,4 @@
 // database name 
- const data_base_name="fixlet_fast"
+const data_base_name = "fixlet_fast";
 
-
- module.exports={
-    data_base_name
- }
+export { data_base_name };

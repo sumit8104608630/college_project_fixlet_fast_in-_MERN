@@ -1,14 +1,15 @@
-const User = require("../model/user.model.js");
-// let's require the api error for error message 
-const {apiError}=require("../utils/apiError.js")
-// let's require the api response for error message 
-const {ApiResponse}=require("../utils/apiResponse.js")
-const {asyncHandler}=require("../utils/asyncHandler.js");
-const Service=require("../model/service.model.js")
-const Areas =require ("../model/area.model.js");
-const Contact =require ("../model/contact.model.js")
-const nodemailer = require("nodemailer");
-const {io}=require("../src/webSocket.js")
+import User from "../model/user.model.js";
+// Importing api error for error messages
+import { apiError } from "../utils/apiError.js";
+// Importing api response for error messages
+import { ApiResponse } from "../utils/apiResponse.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import Service from "../model/service.model.js";
+import Areas from "../model/area.model.js";
+import Contact from "../model/contact.model.js";
+import nodemailer from "nodemailer";
+import { io } from "../src/app.js";
+
 
 const notify=()=>{
   io.emit("new_service",({message:"hii"}))
@@ -266,11 +267,11 @@ throw new apiError("something went wrong",500)
   }
 })
 
-module.exports={
+export {
   store_inquire_message,
-    no_of_user_globally,
-    searchFunctionality,
-    get_no_of_cities,
-    send_mail,
-    notify
-}
+  no_of_user_globally,
+  searchFunctionality,
+  get_no_of_cities,
+  send_mail,
+  notify
+};
