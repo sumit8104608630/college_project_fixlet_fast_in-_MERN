@@ -505,10 +505,19 @@ if (!isCityAvailable) {
 // let's write controller for changing password
 const changePassword = asyncHandler(async (req, res) => {
   try { 
-    const { email, fullName, password } = req.body;
-    if(fullName===""){
-      fullName=req.user.fullName;
+    let { email, fullName, password } = req.body;
+    console.log(req.user)
+    if(!req.user){
+      fullName=""
     }
+    else{
+      if(fullName===""){
+        fullName=req.user.fullName;
+      }
+    }
+  
+ 
+
 
     // Check if any required field is missing
     if ([email, password].some(item => item === "")) {
