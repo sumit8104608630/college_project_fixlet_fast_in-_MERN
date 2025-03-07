@@ -1,6 +1,8 @@
 // Importing dotenv to access variables stored in the .env file
 import dotenv from 'dotenv';
 dotenv.config({ path: './.env' });
+import "dotenv/config";
+
 
 // Importing connection_database and app
 import { connection_database } from '../db/connect.js';

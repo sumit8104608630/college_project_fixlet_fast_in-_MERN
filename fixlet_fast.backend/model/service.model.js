@@ -53,7 +53,6 @@ const serviceSchema = mongoose.Schema({
   serviceType: {
     type: String,
     required: true,
-    unique:true,
     index: true,
   },
   serviceTypeName:{

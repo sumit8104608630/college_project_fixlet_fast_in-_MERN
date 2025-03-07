@@ -1,92 +1,116 @@
-const wallPanelInstallationData = [
-    {
-      "serviceType": "wallpanel",
-      "serviceTypeName": "Wall panel",
-      "serviceImage": "",
-      "serviceName": "Wall Panel Installation",
-      "servicePartName": "Installation",
-      "serviceSubType": [
-        {
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734853938/acoustic_qld31p.jpg",
-          "subServiceName": "Acoustic Wall Panel Installation",
-          "serviceTime": 120,
-          "serviceRatingCount": 0,
-          "price": 2000, // Increased price
-          "included": [
-            "Installation of soundproof and acoustic panels",
-            "Alignment and leveling for optimal sound absorption"
-          ],
-          "note": [
-            "Materials to be provided by the client or charged extra",
-            "Large-scale installations may require additional time"
-          ]
-        },
-        {
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734853934/3d_u7afza.jpg",
-          "subServiceName": "3D Wall Panel Installation",
-          "serviceTime": 150,
-          "serviceRatingCount": 0,
-          "price": 2500, // Increased price
-          "included": [
-            "Installation of decorative 3D wall panels",
-            "Ensures proper alignment and secure mounting"
-          ],
-          "note": [
-            "Panels must be client-provided or charged separately",
-            "Complex patterns or designs may incur additional costs"
-          ]
-        },
-        {
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734853931/wooden_urlx9h.jpg",
-          "subServiceName": "Wooden Wall Panel Installation",
-          "serviceTime": 180,
-          "serviceRatingCount": 0,
-          "price": 3000, // Increased price
-          "included": [
-            "Setup of wooden or faux-wood wall panels",
-            "Cutting and fitting for customized spaces"
-          ],
-          "note": [
-            "Premium wood finishes available on request",
-            "Installation includes leveling and sealing"
-          ]
-        },
-        {
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734853929/laminate_umlvlm.jpg",
-          "subServiceName": "Laminate Wall Panel Installation",
-          "serviceTime": 120,
-          "serviceRatingCount": 0,
-          "price": 2200, // Increased price
-          "included": [
-            "Fitting of laminate panels for walls",
-            "Ensures scratch-resistant and durable finishes"
-          ],
-          "note": [
-            "Additional cost for custom color laminates",
-            "Panels need to be client-provided or ordered beforehand"
-          ]
-        },
-        {
-          "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734853926/texture_szomq0.jpg",
-          "subServiceName": "Textured Wall Panel Installation",
-          "serviceTime": 150,
-          "serviceRatingCount": 0,
-          "price": 2500, // Increased price
-          "included": [
-            "Installation of textured panels for accent walls",
-            "Focus on aesthetic appeal and even finishing"
-          ],
-          "note": [
-            "Highly detailed textures may require extra time",
-            "Cleaning and sealing available on request"
-          ]
-        }
+const wallPanelInstallationData =  [
+  {
+      
+      "serviceType": "wallpainting",
+      "serviceTypeName": "Panting & Water proofing",
+      "serviceArea": [
+          "mumbai",
+          "patna",
+          "agra",
+          "pune"
       ],
-      "price": 2000, // Increased base price for installation
+      "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734856481/subfullhome_qvsd5o.jpg",
+      "serviceName": "Full Home Painting",
+      "servicePartName": "full",
+      "serviceSubType": [
+          {
+              "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734856330/fullHome_bwuhes.jpg",
+              "subServiceName": "Standard Paint",
+              "serviceTime": 1440,
+              "serviceRatingCount": 0,
+              "price": 15000,
+              "included": [
+                  "Painting of all walls in the home",
+                  "Standard paint quality",
+                  "Minor wall repairs included"
+              ],
+              "note": [
+                  "Furniture and other objects should be covered or moved by the client",
+                  "Paint selection to be finalized during booking"
+              ],
+                        },
+          {
+              "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734856327/premium_zxfy6q.jpg",
+              "subServiceName": "Premium Paint",
+              "serviceTime": 1440,
+              "serviceRatingCount": 0,
+              "price": 19500,
+              "included": [
+                  "Painting of all walls in the home",
+                  "Premium paint options",
+                  "Minor wall repairs included"
+              ],
+              "note": [
+                  "Premium textures and finishes available at extra cost",
+                  "Wall size may affect the overall price"
+              ],
+              
+              "offerDescription": "you have save Up to 500 each Premium paint  service "
+          }
+      ],
+      "price": 15000,
       "rating": 0,
-      "reviewCount": 0
-    }
-  ];
+      "reviewCount": 0,
+      "availability": true,
+      "__v": 0,
+      
+      
+  },
+  {
+      "serviceType": "wallpainting",
+      "serviceTypeName": "Panting & Water proofing",
+      "serviceArea": [
+          "mumbai",
+          "patna",
+          "agra",
+          "pune"
+      ],
+      "serviceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734856479/subwall_fhqdio.jpg",
+      "serviceName": "Room Wall Painting",
+      "servicePartName": "room",
+      "serviceSubType": [
+          {
+              "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734856324/standard_zzrk6u.jpg",
+              "subServiceName": "Standard Paint",
+              "serviceTime": 360,
+              "serviceRatingCount": 0,
+              "price": 3000,
+              "included": [
+                  "Painting of all walls in one room",
+                  "Standard paint quality",
+                  "Wall surface preparation included"
+              ],
+              "note": [
+                  "Room size up to 200 sq ft; extra charges for larger rooms",
+                  "Ceiling painting can be added at extra cost"
+              ],
+          },
+          {
+              "subServiceImage": "https://res.cloudinary.com/dcsmp3yjk/image/upload/v1734856321/texture_ownsgk.jpg",
+              "subServiceName": "Premium Paint",
+              "serviceTime": 360,
+              "serviceRatingCount": 0,
+              "price": 5000,
+              "included": [
+                  "Painting of all walls in one room",
+                  "Premium quality paint options",
+                  "Wall surface preparation included"
+              ],
+              "note": [
+                  "Room size up to 200 sq ft; extra charges for larger rooms",
+                  "Textured or stencil painting available at extra cost"
+              ],
+          }
+      ],
+      "price": 3000,
+      "rating": 0,
+      "reviewCount": 0,
+      "availability": true,
+      "__v": 0,
+      
+      
+  }
+]
   
   export default wallPanelInstallationData;
   

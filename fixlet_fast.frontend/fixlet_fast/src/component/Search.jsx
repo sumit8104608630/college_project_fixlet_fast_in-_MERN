@@ -103,7 +103,7 @@ useEffect(() => {
       setSearchResults([]);
       
     }
-  },600)
+  },500)
 }, [key]); 
 
 

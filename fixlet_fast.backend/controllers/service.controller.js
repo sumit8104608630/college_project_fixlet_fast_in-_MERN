@@ -27,7 +27,7 @@ import Offers from "../model/offers.model.js";
  
 const inserting_service_data=asyncHandler(async(_,res)=>{
     try {
-        const json =[...electricianJson,...plumberJson,...carpenter,...bathroomKitchen,...homeCleaning,...sofaCleaning,...pestControl,...bedPestControl,...ACservice,...chimney,...stove,...refrigerator,...washinMachine,...mixer,...decoration,...wallPanel,...wallPaint];
+        const json =[...electricianJson,...plumberJson,...carpenter,...bathroomKitchen,...homeCleaning,...sofaCleaning,...pestControl,...bedPestControl,...ACservice,...chimney,...stove,...refrigerator,...washingMachine,...mixer,...decoration,...wallPanel,...wallPaint];
         const serviceData=await Service.insertMany(json);
         
         return res.status(201).json( new ApiResponse(200,serviceData,"service created successfully"))
