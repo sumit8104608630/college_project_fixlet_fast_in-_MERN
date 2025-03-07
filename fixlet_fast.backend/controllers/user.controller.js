@@ -308,9 +308,13 @@ const userLogin=asyncHandler(async(req,res)=>{
         res.status(200).cookie('accessToken',accessToken,{
             httpOnly:true,
             secure:true,
+            sameSite: "None" // Cross-origin पर काम करने के लिए
+
         }).cookie("refresh_token",refresh_token,{
             httpOnly:true,
             secure:true,
+            sameSite: "None" // Cross-origin पर काम करने के लिए
+
         }).json(new ApiResponse(
             200,
         
