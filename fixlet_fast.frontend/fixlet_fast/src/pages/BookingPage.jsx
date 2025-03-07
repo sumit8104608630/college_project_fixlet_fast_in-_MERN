@@ -347,6 +347,7 @@ setLoading(true)
   const data=await response.data;
   setTimeToggle(true);
   const time=data.data.times
+  console.log(data)
 
   const filterPassTime=(times)=>{
     const now=new Date();
