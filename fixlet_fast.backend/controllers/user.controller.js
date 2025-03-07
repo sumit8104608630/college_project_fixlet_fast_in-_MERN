@@ -345,9 +345,14 @@ const userLogout=asyncHandler(async(req,res)=>{
         res.status(200).clearCookie('accessToken',{
             httpOnly:true,
             secure:true,
+            sameSite: "None" // Cross-origin पर काम करने के लिए
+
         }).clearCookie('refresh_token',{
                 httpOnly:true,
                 secure:true,
+                sameSite: "None" // Cross-origin पर काम करने के लिए
+
+                
         }).json(new  ApiResponse(200,"logout successfully"));
 
     }
