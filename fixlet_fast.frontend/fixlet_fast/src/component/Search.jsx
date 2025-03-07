@@ -3,6 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import emptySearchImage from "../assets/EmptySearchResult.svg"
+const apiUrl=import.meta.env.VITE_BACKEND_API_URL
+
 import { Link } from "react-router-dom"; // Use react-router-dom instead of react-router
 function SearchBar() {
   const searchRef = useRef(null);
@@ -78,7 +80,7 @@ useEffect(() => {
       const fetchSearchResults = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:8000/global/search?query=${key}`
+            `${apiUrl}/global/search?query=${key}`
           );
           if(response.status===200){
             if(response.data.length===0)
