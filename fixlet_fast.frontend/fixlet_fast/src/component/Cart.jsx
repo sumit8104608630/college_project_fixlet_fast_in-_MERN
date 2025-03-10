@@ -25,60 +25,17 @@ function Cart(props) {
             </div>
             <div className={`flex items-center w-20 border bg-orange-100 border-orange-500 rounded mt-2 justify-between`}>
             <button  onClick={() => onClickAdd(serviceId, subServiceId,subservice,price)} 
-                          className={button_loading[subServiceId]?"border px-5 w-15 rounded text-sm border-orange-400 mt-2 hover:bg-orange-100 font-semibold hover:border-orange-600 hover:text-orange-600":
+                          className={
                             `text-orange-500 px-2`}
                         >
-                           {button_loading[subServiceId] ? (
-    <div className={`py-1 px-2 `}>  <svg
-    version="1.1"
-    viewBox="0 0 64 64"
-    width="0.8em"
-    height="0.8em"
-    xmlns="http://www.w3.org/2000/svg"
-    className="animate-spin"
-  >
-    <circle
-      className="stroke-gradient"
-      cx="32"
-      cy="32"
-      r="28"
-      fill="none"
-      stroke="url(#spinner-gradient)"
-      strokeWidth="8"
-    />
-    <path
-      className="stroke-current text-orange-500"
-      d="M32,4 A28 28,0,0,0,32,60"
-      fill="none"
-      strokeWidth="8"
-      strokeLinecap="round"
-    />
-    <defs>
-      <linearGradient
-        id="spinner-gradient"
-        gradientUnits="userSpaceOnUse"
-        x1="32"
-        y1="0"
-        x2="32"
-        y2="64"
-      >
-        <stop offset="0.1" stopColor="currentColor" stopOpacity="0" />
-        <stop offset="0.9" stopColor="currentColor" stopOpacity="1" />
-      </linearGradient>
-    </defs>
-  </svg></div>  // Spinner during loading
-  ) : (
-  "+" // Button label when not loading
-  )}
+     +
                         </button>
 
-                    <span className="text-sm font-semibold text-orange-500">{quantity}</span>
+                    <span >
 
-                    <button  onClick={() => onClickSubtract(serviceId, subServiceId,subservice,price)} 
-                                  className={button_loading[subServiceId]?"border px-5 w-15 rounded text-sm border-orange-400 mt-2 hover:bg-orange-100 font-semibold hover:border-orange-600 hover:text-orange-600":
-                                    `text-orange-500 px-2`}
-                                >
-                                   {button_loading[subServiceId] ? (
+
+                
+                    {button_loading[subServiceId] ? (
             <div className={`py-1 px-2 `}>  <svg
             version="1.1"
             viewBox="0 0 64 64"
@@ -118,9 +75,16 @@ function Cart(props) {
             </defs>
           </svg></div>  // Spinner during loading
           ) : (
-          "-" // Button label when not loading
+            <span className="text-sm font-semibold text-orange-500">{ quantity }</span>// Button label when not loading
           )}
-                                </button>
+                                
+                      
+                      </span>
+
+                    <button  onClick={() => onClickSubtract(serviceId, subServiceId,subservice,price)} 
+                                 className={
+                                  `text-orange-500 px-2`}
+                                >-</button>
                     </div>
         </div>
     </div>
