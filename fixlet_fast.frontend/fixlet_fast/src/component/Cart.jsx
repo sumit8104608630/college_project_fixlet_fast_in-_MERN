@@ -26,7 +26,7 @@ function Cart(props) {
             <div className={`flex items-center w-20 border bg-orange-100 border-orange-500 rounded mt-2 justify-between`}>
             <button  onClick={() => onClickAdd(serviceId, subServiceId,subservice,price)} 
                           className={button_loading[subServiceId]?"border px-5 w-15 rounded text-sm border-orange-400 mt-2 hover:bg-orange-100 font-semibold hover:border-orange-600 hover:text-orange-600":
-                            `text-orange-500 border px-5 w-15 rounded text-sm border-orange-400 mt-2 hover:bg-orange-100 font-semibold hover:border-orange-600 hover:text-orange-600`}
+                            `text-orange-500 px-2`}
                         >
                            {button_loading[subServiceId] ? (
     <div className={`py-1 px-2 `}>  <svg
@@ -76,7 +76,7 @@ function Cart(props) {
 
                     <button  onClick={() => onClickSubtract(serviceId, subServiceId,subservice,price)} 
                                   className={button_loading[subServiceId]?"border px-5 w-15 rounded text-sm border-orange-400 mt-2 hover:bg-orange-100 font-semibold hover:border-orange-600 hover:text-orange-600":
-                                    `text-orange-500 border px-5 w-15 rounded text-sm border-orange-400 mt-2 hover:bg-orange-100 font-semibold hover:border-orange-600 hover:text-orange-600`}
+                                    `text-orange-500 px-2`}
                                 >
                                    {button_loading[subServiceId] ? (
             <div className={`py-1 px-2 `}>  <svg
