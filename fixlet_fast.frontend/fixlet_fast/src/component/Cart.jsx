@@ -25,6 +25,7 @@ function Cart(props) {
             </div>
             <div className={`flex items-center w-20 border bg-orange-100 border-orange-500 rounded mt-2 justify-between`}>
             <button  onClick={() => onClickAdd(serviceId, subServiceId,subservice,price)} 
+            disabled={button_loading[subServiceId]} 
                           className={
                             `text-orange-500 px-2`}
                         >
@@ -82,6 +83,8 @@ function Cart(props) {
                       </span>
 
                     <button  onClick={() => onClickSubtract(serviceId, subServiceId,subservice,price)} 
+                                disabled={button_loading[subServiceId]} 
+
                                  className={
                                   `text-orange-500 px-2`}
                                 >-</button>

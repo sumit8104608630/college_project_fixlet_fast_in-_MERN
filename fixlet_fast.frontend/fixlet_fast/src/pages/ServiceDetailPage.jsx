@@ -574,6 +574,8 @@ function isEmpty(obj_inside) {
                                 <button
                                 
                                   onClick={() => handleAddServices(service._id, subService._id,subService,subService.price)}
+                                  disabled={button_loading[subService._id]} 
+
                                   className={button_loading[subService._id]?"border px-5 w-15 rounded text-sm border-orange-400 mt-2 hover:bg-orange-100 font-semibold hover:border-orange-600 hover:text-orange-600":
                                     `text-orange-500 border px-5 w-15 rounded text-sm border-orange-400 mt-2 hover:bg-orange-100 font-semibold hover:border-orange-600 hover:text-orange-600`}
                                 >
