@@ -556,6 +556,8 @@ function isEmpty(obj_inside) {
                                 <div key={subService._id}>
                                   {filter_cartItems?.map((item, i) => (
                                     <MemoizedButton
+                                    const button_loading={button_loading}
+
                                       onClickAdd={handleAddServices}
                                       price={subService.price}
                                       subservice={subService}
