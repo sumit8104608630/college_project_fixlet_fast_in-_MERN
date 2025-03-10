@@ -169,8 +169,8 @@ const handleEmailVerifiedMessage=()=>{
 
 
   return (
-    <div className='flex justify-center w-full'>
-    <div className='w-2/3  md:w-1/3 shadow-gray-300 bg-gray-50 shadow-lg p-5 rounded-lg mt-36 mb-28 ' >
+    <div className='flex justify-center w-full px-2'>
+    <div className='w-full  md:w-1/3 shadow-gray-300 bg-gray-50 shadow-lg p-5 rounded-lg md:mt-36 mt-24  mb-28 ' >
       <div className='flex justify-center text-gray-700 text-2xl font-semibold'><span>Sign Up</span></div>
       <form onSubmit={handelSubmit}>
         <div className='flex gap-1 flex-col mt-3'>
@@ -179,12 +179,12 @@ const handleEmailVerifiedMessage=()=>{
         </div>
         <div className='flex gap-1 flex-col mt-3'>
           <label>Email : </label>
-          <div className='flex gap-3'>
+          <div className='flex gap-3 md:flex-nowrap flex-wrap'>
           <input value={formData.email} ref={emailInput} disabled={verified||otpInput} onChange={handelInput} className='border-2 w-full focus:outline-none rounded-lg border-gray-300 px-5 py-1 ' type="email" placeholder='email@gmail.com' name="email" required/>
           {sendOtp&&<>
-          {!verified?
-          <button onClick={()=>handelSendOtp(formData.email)} className='w-1/4 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'> Send OTP</button>:<button onClick={()=>{setVerified(false)
-          setOtpInput(false)}} className='w-1/2 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'><span>Change mail</span></button>}</>}
+          {!otpInput?
+          <button onClick={()=>handelSendOtp(formData.email)} className='md:w-1/4 w-full text-lg py-1 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'> Send OTP</button>:<button onClick={()=>{setVerified(false)
+          setOtpInput(false)}} className='md:w-1/4 w-full text-lg py-1 font-semibold hover:bg-orange-600 text-white rounded-lg bg-orange-500'><span>Change mail</span></button>}</>}
           </div>
           {errorMessage&&<span className='text-red-500 text-xs font-medium'>{errorMessage}</span>}
         </div>

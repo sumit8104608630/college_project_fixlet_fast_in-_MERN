@@ -50,6 +50,7 @@ function ServiceDetailPage(props) {
   const { headLine } = location.state || {};
   const { offerLoading, offersData, offerError } = useSelector(state => state.offers);
   const [offers,setOffers]=useState([])
+  const [button_loading,setButton_loading]=useState({})
   const [localState, setLocalState] = useState(() => ({
     serviceId: location.state?.serviceId,
     subServiceId: location.state?.subServiceId,
@@ -187,6 +188,7 @@ else{
     })
   ));
 }
+setButton_loading((prevState) => ({ ...prevState, [subServiceId]: false }));
 
 }
 
@@ -265,6 +267,7 @@ else{
       [{_id:categories,totalPrice:price}]
 )
 }
+setButton_loading((prevState) => ({ ...prevState, [subServiceId]: false }));
 
 }
 
@@ -284,11 +287,14 @@ const remove_obj=(serviceId,subServiceId,price)=>{
     }
   }));
 }
+setButton_loading((prevState) => ({ ...prevState, [subServiceId]: false }));
+
 } 
 
 
   const handleAddServices = async (serviceId,subServiceId,subService,price) => {
     try {
+      setButton_loading((prevState) => ({ ...prevState, [subServiceId]: true }));
       const obj = {
         serviceId: serviceId,
         subServiceId: subServiceId,
@@ -320,11 +326,15 @@ function isEmpty(obj_inside) {
     } catch (error) {
       console.log(error);
     }
+    setButton_loading((prevState) => ({ ...prevState, [subServiceId]: false }));
+
   };
 
 
 
   const handleSubServices = async (serviceId, subServiceId,subService,price) => {
+    setButton_loading((prevState) => ({ ...prevState, [subServiceId]: true }));
+
     try {
       const obj = {
         serviceId: serviceId,
@@ -353,6 +363,8 @@ function isEmpty(obj_inside) {
     } catch (error) {
       console.log(error);
     }
+    setButton_loading((prevState) => ({ ...prevState, [subServiceId]: false }));
+
   };
 
   const handleCheckOut=(categories)=>{
@@ -372,7 +384,7 @@ function isEmpty(obj_inside) {
 
   return (
     <>
-      {  loading&&offerLoading&&offers &&all_service.length===0? (
+      {  loading&&offerLoading&&offers&&all_service.length===0? (
         <Loader />
       ) : (
 <>
@@ -558,10 +570,53 @@ function isEmpty(obj_inside) {
                                 </div>
                               ) : (
                                 <button
+                                
                                   onClick={() => handleAddServices(service._id, subService._id,subService,subService.price)}
-                                  className="text-orange-500 border px-5 w-15 rounded text-sm border-orange-400 mt-2 hover:bg-orange-100 font-semibold hover:border-orange-600 hover:text-orange-600"
+                                  className={button_loading[subService._id]?"border px-5 w-15 rounded text-sm border-orange-400 mt-2 hover:bg-orange-100 font-semibold hover:border-orange-600 hover:text-orange-600":
+                                    `text-orange-500 border px-5 w-15 rounded text-sm border-orange-400 mt-2 hover:bg-orange-100 font-semibold hover:border-orange-600 hover:text-orange-600`}
                                 >
-                                  Add
+                                   {button_loading[subService._id] ? (
+            <div className={`py-1 px-2 `}>  <svg
+            version="1.1"
+            viewBox="0 0 64 64"
+            width="0.8em"
+            height="0.8em"
+            xmlns="http://www.w3.org/2000/svg"
+            className="animate-spin"
+          >
+            <circle
+              className="stroke-gradient"
+              cx="32"
+              cy="32"
+              r="28"
+              fill="none"
+              stroke="url(#spinner-gradient)"
+              strokeWidth="8"
+            />
+            <path
+              className="stroke-current text-orange-500"
+              d="M32,4 A28 28,0,0,0,32,60"
+              fill="none"
+              strokeWidth="8"
+              strokeLinecap="round"
+            />
+            <defs>
+              <linearGradient
+                id="spinner-gradient"
+                gradientUnits="userSpaceOnUse"
+                x1="32"
+                y1="0"
+                x2="32"
+                y2="64"
+              >
+                <stop offset="0.1" stopColor="currentColor" stopOpacity="0" />
+                <stop offset="0.9" stopColor="currentColor" stopOpacity="1" />
+              </linearGradient>
+            </defs>
+          </svg></div>  // Spinner during loading
+          ) : (
+          "Add" // Button label when not loading
+          )}
                                 </button>
                               )}
                             </div>
@@ -592,6 +647,7 @@ function isEmpty(obj_inside) {
                             serviceId={service.serviceId}
                             price={service.subService.totalPrice/service.subService.quantity}
                             totalPrice={service.subService.totalPrice}
+                            button_loading={button_loading}
                             quantity={service.subService.quantity}
                             subServiceId={service.subService.subServiceId}
                           />

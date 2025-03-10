@@ -44,10 +44,8 @@ function Login() {
       const datas = await respond.json();
       console.log(datas)
       setData(datas)
-      if(datas.statusCode==401){
-        setError("Invalid Email or Password")
-          
-        
+      if(datas.statusCode==401||datas.statusCode==404){
+        setError(datas.message)
       }
       
     } catch (error) {
@@ -56,22 +54,22 @@ function Login() {
   };
 
 
-  const isEmpty=(obj)=>Object.keys(obj).length===0;  
  
   useEffect(() => {
+    dispatch(fetchUser());
+
     if (userInfo) {
       navigate('/');
     }
-  }, [userInfo,navigate]);
+  }, [userInfo,navigate,dispatch]);
 
 
 useEffect(() => {
   window.scrollTo(0,0)
-  dispatch(fetchUser());
   return () => {
     console.log("Cleanup function called");
   };
-}, [data, dispatch]);
+}, [data, ]);
 
 
 
@@ -80,8 +78,8 @@ useEffect(() => {
 
 
   return (
-    <div className='w-full justify-center flex'>
-    <div className='    w-max md:w-1/2 shadow-gray-300 bg-gray-50 shadow-lg p-5 rounded-lg mb-36 mt-52 '>
+    <div className='w-full justify-center flex px-2'>
+    <div className='    w-full md:w-1/2 shadow-gray-300 bg-gray-50 shadow-lg p-5  rounded-lg mb-36 mt-52 '>
     <div className='flex gap-8'>
       <div className='hidden md:block'>
         <img  src={MyImage} alt='background image' />

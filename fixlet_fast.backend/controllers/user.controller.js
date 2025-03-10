@@ -19,6 +19,7 @@ import { createHmac, randomBytes } from "node:crypto";
 import crypto from "crypto";
 // Import redis for caching and database purposes
 import redis from "redis";
+import { json } from "node:stream/consumers";
 
 
 const client = redis.createClient({
@@ -282,22 +283,21 @@ client.connect();
 
 // let's create the user login algorithm to create user functionality
 const userLogin=asyncHandler(async(req,res)=>{
-    /*
-    1.get user detail from the frontend 
-    2.check validation all possible validation
+  const {email,password}=req.body;
 
-    */ 
+   const user=await User.findOne({email});
+
+    if(!user){
+      res.status(404).json(new ApiResponse(404,{}," Email is correct "));
+    }
     try{
-        const {email,password}=req.body;
+
         if([email,password].some(property=>property?.trim()==="")){
-            throw new apiError("please fill all the field",400)
+            throw new apiError("please fill all the field",400);
         }
-        const user=await User.findOne({email});
-        if(!user){
-            throw new apiError("user not found",404)
-        }
+     
       const token=await User.matchPasswordGenerateToken(email,password);
-      
+       
         const refresh_token=token?.refresh_token;
         user.refreshToken=refresh_token; 
         await user.save({validateBeforeSave:false});
