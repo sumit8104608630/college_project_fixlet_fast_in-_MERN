@@ -43,6 +43,10 @@ function Login() {
 
       const datas = await respond.json();
       console.log(datas)
+      if(datas.statusCode==200){
+        dispatch(fetchUser())
+        navigate("/")
+      }
       setData(datas)
       if(datas.statusCode==401||datas.statusCode==404){
         setError(datas.message)
@@ -57,7 +61,6 @@ function Login() {
  
   useEffect(() => {
     dispatch(fetchUser());
-
     if (userInfo) {
       navigate('/');
     }

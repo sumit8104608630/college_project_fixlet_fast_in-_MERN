@@ -86,6 +86,7 @@ useEffect(() => {
     const filter_offer=offersData?.filter(item=>item?._id===categories)[0];
   setOffers(filter_offer?.offersDetails)
   }
+  
 },[offersData,offerLoading,categories])
 
 
