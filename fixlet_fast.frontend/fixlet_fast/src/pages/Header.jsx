@@ -81,7 +81,7 @@ useEffect(()=>{
 },[cartItems])
 
   return (<>{
-    <div className='absolute xl:block hidden top-0 z-10'>
+    <div className='absolute md:block hidden top-0 z-10'>
       {
         
       <nav className={`fixed w-full ${isScroll ? 'shadow-xl' : 'shadow-none'} items-center`}>

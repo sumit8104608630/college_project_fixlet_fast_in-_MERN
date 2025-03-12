@@ -8,7 +8,7 @@ import plumber_img from "../assets/staticPhotp/plumber_img.webp"
 
 function Addvertice() {
   return (
-    <div className=' xl:block hidden'>
+    <div className=' md:block hidden'>
     <div className='flex gap-3  rounded-lg'>
     <div className='flex flex-col gap-3'>
       <div className='w-72 h-56'> 
