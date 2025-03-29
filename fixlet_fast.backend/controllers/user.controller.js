@@ -306,14 +306,14 @@ const userLogin=asyncHandler(async(req,res)=>{
 
         const accessToken=token.token;
         res.status(200).cookie('accessToken',accessToken,{
-            httpOnly:true,
-            secure:true,
-            sameSite: "None" // Cross-origin पर काम करने के लिए
+       httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax' // Cross-origin पर काम करने के लिए
 
         }).cookie("refresh_token",refresh_token,{
-            httpOnly:true,
-            secure:true,
-            sameSite: "None" // Cross-origin पर काम करने के लिए
+           httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax' // Cross-origin पर काम करने के लिए
 
         }).json(new ApiResponse(
             200,
@@ -343,14 +343,14 @@ const userLogout=asyncHandler(async(req,res)=>{
         },{ new: true });
 
         res.status(200).clearCookie('accessToken',{
-            httpOnly:true,
-            secure:true,
-            sameSite: "None" // Cross-origin पर काम करने के लिए
+           httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax'// Cross-origin पर काम करने के लिए
 
         }).clearCookie('refresh_token',{
-                httpOnly:true,
-                secure:true,
-                sameSite: "None" // Cross-origin पर काम करने के लिए
+               httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax' // Cross-origin पर काम करने के लिए
 
                 
         }).json(new  ApiResponse(200,"logout successfully"));
