@@ -306,14 +306,14 @@ const userLogin=asyncHandler(async(req,res)=>{
 
         const accessToken=token.token;
         res.status(200).cookie('accessToken',accessToken,{
-       httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax' // Cross-origin पर काम करने के लिए
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: process.env.NODE_ENV === 'production' ? 'None':'Lax'
 
         }).cookie("refresh_token",refresh_token,{
-           httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax' // Cross-origin पर काम करने के लिए
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: process.env.NODE_ENV === 'production' ? 'None':'Lax'
 
         }).json(new ApiResponse(
             200,
