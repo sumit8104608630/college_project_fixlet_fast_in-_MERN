@@ -45,16 +45,7 @@ const checkAuthenticationCookie = (cookieName) => {
       }).cookie("refresh_token",newRefreshToken,{
           httpOnly:true,
           secure:true,
-      }).json(new ApiResponse(
-          200,
-      
-              loginUser
-          ,
-          "user logged in successfully"
-      ))
-
-        
- 
+      })
        // const id=refreshToken
       }
       if (!user || !user.id) {

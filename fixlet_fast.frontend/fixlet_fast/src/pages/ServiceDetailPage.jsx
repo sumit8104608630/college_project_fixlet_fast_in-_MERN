@@ -540,7 +540,7 @@ function isEmpty(obj_inside) {
 
                                   <div className=' w-full rounded-xl  custom-scrollbar  bg-white py-5'>
                                     <div className="overflow-auto custom-scrollbar h-96">
-                              <ServiceDetail  onSubButton={handleSubServices} onAddButton={handleAddServices}  filter_cartItems={filter_cartItems} dataDetail={showService} /></div>
+                              <ServiceDetail  onSubButton={handleSubServices} onAddButton={handleAddServices}   button_loading={button_loading} filter_cartItems={filter_cartItems} dataDetail={showService} /></div>
                               </div>
                               </div></div>}
                             </div>

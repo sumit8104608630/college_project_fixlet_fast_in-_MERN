@@ -13,12 +13,12 @@ function ServiceDetail(props) {
 const MemoizedButton = React.memo(AddButton);
 const [filter_cartItems,setFilter_cartItems] = useState([]);
 const showDetail=props?.dataDetail;
+const button_loading=props?.button_loading;
 const subService=showDetail?.subservice;
 const serviceId=showDetail?.serviceId
 const onAddButton=props.onAddButton;
 const [cartLoading,setCartLoading]=useState(true)
-const { loading, services_data, error } = useSelector(state => state.service);
-
+const { loading, } = useSelector(state => state.service);
 
 useEffect(()=>{
 setFilter_cartItems(props.filter_cartItems)
@@ -121,6 +121,7 @@ if(filter_cartItems.length>0||cartLoading){
                                                   subservice={subService}
                                                   onClickSubtract={props.onSubButton}
                                                   key={i}
+                                                  button_loading={button_loading}
                                                   service={item?.serviceId}
                                                   subService_id={subService?._id}
                                                   service_id={serviceId}
