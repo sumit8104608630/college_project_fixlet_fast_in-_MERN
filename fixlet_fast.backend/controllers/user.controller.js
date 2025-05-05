@@ -342,16 +342,15 @@ const userLogout=asyncHandler(async(req,res)=>{
         },{ new: true });
 
         res.status(200).clearCookie('accessToken',{
-           httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax'// Cross-origin पर काम करने के लिए
-
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+          path: '/'
         }).clearCookie('refresh_token',{
-               httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax' // Cross-origin पर काम करने के लिए
-
-                
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+          path: '/'      
         }).json(new  ApiResponse(200,"logout successfully"));
 
     }
