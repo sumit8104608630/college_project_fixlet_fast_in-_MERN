@@ -7,9 +7,9 @@ import paint from "../assets/button_image/paint.webp"
 import wallPanel from "../assets/button_image/wallPanel.jpeg"
 import Addvertice from '../component/Addvertice'
 import sofa from "../assets/Add/pexels-martinpechy-1866149.jpg"
-import { IoCloseOutline } from "react-icons/io5";
+import { IoCloseOutline, IoStorefront } from "react-icons/io5";
 import electricity_image from "../assets/togglebutton/electrician/electricity.webp"
-import { data, Link, useNavigate } from 'react-router'
+import { data, Link, NavLink, useNavigate } from 'react-router'
 import plumber from "../assets/togglebutton/electrician/plumber.webp"
 import carpenter from "../assets/togglebutton/electrician/carpenter.webp"
 import Loader from "../component/Loader"
@@ -26,12 +26,17 @@ import washinMashin from "../assets/togglebutton/AC&Apliance/washing_mashin.jpeg
 import { useSelector ,useDispatch} from 'react-redux'
 import {fetchCart} from "../app/Actions/cart_action.js"
 import QuickAccess from '../component/QuickAcces.jsx'
-import { IoIosArrowDropleft } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowDropleft, IoMdHome } from "react-icons/io";
 import { IoIosArrowDropright } from "react-icons/io";
 import { useRef } from 'react'
 import { useContext } from 'react'
 import { currentContext } from '../component/Context.jsx';
 import axios from 'axios'
+import SearchBar from '../component/Search.jsx'
+import { AiFillLayout } from 'react-icons/ai'
+import { CgProfile } from 'react-icons/cg'
+import { CiShoppingCart } from 'react-icons/ci'
+import ProfileMobileMenu from '../component/ProfileMobileMenu.jsx'
 const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
@@ -44,11 +49,18 @@ function Dashbord() {
   const dispatch=useDispatch();
   const scrollContainRef=useRef(null);
   const city=userInfo?.city
-  
+  const [cartCount, setCartCount] = useState(); // Example cart count
+    const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const Context=useContext(currentContext);
     const {cartLoading,}=useSelector((state)=>state.cart);
     const [user_globally,setUser_globally]=useState(0)
+  const {cartItems}=useSelector((state)=>state.cart);
   
+    useEffect(()=>{
+      const singleArray=cartItems?.map((item=>item.productDetails)).flat()
+      setCartCount(singleArray.length)
+    },[cartItems])
+
     useEffect(()=>{
 axios.get(`${apiUrl}/global/user_count`).then(response=>response.data).then(data=>{
   setUser_globally(data.data.totalUser)
@@ -97,15 +109,99 @@ const toogleRender=()=>{
 
   return (
     <>{isLoading||cartLoading?<Loader/>:
+<>
+
+   <ProfileMobileMenu
+        isOpen={isProfileMenuOpen}
+        onClose={setIsProfileMenuOpen}  
+      />
 
 
-      <main  className={ `custom-dashBoardScroll  pt-20 xl:pt-28    w-full xl:px-32 ${ link3Toggle&&"  overflow-hidden "}` }>
+      <div className='block md:hidden'>
+      {!Context.showAddress&&
+        <>
+      <div className='flex h-max fixed w-full z-10 shadow-sm  bg-white  flex-col gap-3 px-2 py-2'>
+        {userInfo?
+        <div className='flex items-center justify-between px-2'>
+          <div className='flex flex-col'>
+          <div><p className=' overflow-hidden w-40 text-ellipsis  whitespace-nowrap'>{userInfo?.location}</p></div>
+          <div className='flex items-center gap-2'><span className=''>{userInfo?.city.charAt(0).toUpperCase()+userInfo?.city.slice(1)}</span><span><IoIosArrowDown/></span></div>
+      </div>
+          <div>
+          {Context.cartShow&&
+      <div className="relative">
+            <Link to="/cart">
+            <p className='p-1 border-2 border-gray-800 rounded-full'><CiShoppingCart size={20} /></p>
+            {cartCount >0 && (
+                <span className="absolute top-0 right-0 translate-x-1/3 -translate-y-1/3 text-xs font-semibold text-white bg-red-600 rounded-full px-2 py-0.5">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
+          </div>
+       
+      }
+      
+      
+      
+          </div>
+        </div>:
+                  <div className='flex w-full justify-end gap-5'>
+      
+                  <div>
+                  <NavLink className={({isActive})=>`${isActive?"text-white border-orange-500 border-2 font-semibold text-xs md:text-lg bg-orange-500 px-5 py-1 rounded-full":"text-orange-500 text-xs md:text-lg font-semibold border-2 px-5 py-1 rounded-full border-orange-500"} hover:text-orange-500 hover:border-orange-500  hover:bg-white`} to={"/login"}>
+                    Login
+                  </NavLink>
+                  </div>
+      
+                  <div>
+                  <NavLink  className={({isActive})=>`${isActive?"text-white border-orange-500 border-2 font-semibold text-xs md:text-lg bg-orange-500 px-5 py-1 rounded-full":"text-orange-500 text-xs md:text-lg font-semibold border-2 px-5 py-1 rounded-full border-orange-500"} hover:text-orange-500 hover:border-orange-500  hover:bg-white`} to={"/register"}>
+                    Sign Up
+                  </NavLink>
+                  </div>
+                  
+                </div>
+      }
+        <div className="sticky top-0  z-50 px-2 py-2">
+        <SearchBar />
+      </div>
+      
+      </div>
+      {Context.showHeader&&
+      
+      <div className='fixed w-full bottom-0 z-10'>
+        <div className='flex justify-between  px-10 items-center py-2 bg-orange-500'>
+        <ul className='flex  items-center text-white text-2xl gap-8 font-semibold'>
+                    <li>
+                      <NavLink to="/">
+                        <IoMdHome size={30} />
+                      </NavLink>
+                    </li>
+                    <li>
+                    <NavLink  to="/about">
+                        <AiFillLayout size={25}/>
+                      </NavLink>
+                    </li>
+                 
+                  </ul>
+                  <div>
+                    <button onClick={()=>setIsProfileMenuOpen(true)}>
+                    <CgProfile  className='text-white' size={25} />
+                    </button>
+                  </div>
+        </div>
+      </div>
+      }
+      </>
+      }</div>
 
 
 
 
-        
+{/* this is main dash board */}
+      
 
+      <main  className={ `custom-dashBoardScroll  pt-20 xl:pt-28  pb-16  w-full xl:px-32 ${ link3Toggle&&"  overflow-hidden "}` }>
 {link3Toggle&&
 <div className='fixed z-20 px-5 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
   
@@ -415,6 +511,7 @@ const toogleRender=()=>{
 
 
       </main>
+      </>
 }
     </>
   )

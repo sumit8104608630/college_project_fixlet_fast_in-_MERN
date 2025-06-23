@@ -34,8 +34,8 @@ if(filter_cartItems.length>0||cartLoading){
 
   return (<>
   {cartLoading||loading?
-<div className=' flex justify-center items-center h-full'>
-<div className="relative flex flex-col items-center">
+<div className=' flex justify-center items-center  h-full'>
+<div className="relative flex flex-col  items-center">
         <svg
           version="1.1"
           viewBox="0 0 64 64"
@@ -80,7 +80,7 @@ if(filter_cartItems.length>0||cartLoading){
   :
     <>
         <div>
-          <div className='px-5'>
+          <div className='px-5 '>
             {
                                   <div >
                                     <div className="flex gap-5 items-center w-full justify-between py-4">

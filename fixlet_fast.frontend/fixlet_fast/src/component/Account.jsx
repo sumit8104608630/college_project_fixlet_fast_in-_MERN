@@ -6,8 +6,8 @@ import { IoIosArrowForward } from "react-icons/io";
 
 function Account() {
   return (
-    <main className='flex justify-center py-10 h-screen  bg-gray-100'>
-      <div className='w-1/3 '>
+     <main className='flex justify-center md:py-10 py-5 h-screen   bg-gray-100'>
+      <div className='w-full px-5 md:w-1/3'>
         <Link to={"/helpCenter"}>
         <FaArrowLeftLong className='' size={30}/>
         </Link>

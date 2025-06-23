@@ -8,7 +8,7 @@ import { useSelector, useDispatch, shallowEqual, connect } from "react-redux";
 import { fetchService } from '../app/Actions/service_action';
 import { useLocation } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { IoMenu } from "react-icons/io5";
+import { IoClose, IoMenu } from "react-icons/io5";
 import Loader from "../component/Loader";
 import Promise from '../component/Promise';
 import { fetchCart } from "../app/Actions/cart_action.js";
@@ -390,8 +390,8 @@ function isEmpty(obj_inside) {
       ) : (
 <>
 
-{showMenu&&
-<div className='fixed z-10 bg-white w-full'>
+{showMenu?
+<div className='fixed  bg-white w-full'>
         <div className='xl:hidden justify-between flex py-3 px-5'>
         <div> 
       <button onClick={handle_back} to={"/"}>
@@ -403,9 +403,9 @@ function isEmpty(obj_inside) {
           </button>
         </div>
       </div>
-      </div>
+      </div>:<div className='w-full sticky top-0 z-10 bg-white flex justify-end p-4 '><button onClick={()=>setShowMenu(true)}><IoClose className='text-4xl'/></button></div>
 }
-        <div className=' md:mt-14  w-full flex flex-col'>
+        <div className={` md:mt-14  w-full  flex flex-col  ${filter_cartItems?.length > 0?"pb-10":""}`}>
           {offers&&
         <p className='w-full text-center z  md:block hidden text-gray-800 font-semibold fixed  py-2 bg-green-300 mb-5'>{offers?offers[0]?.offerDescription:""}</p>
           }
