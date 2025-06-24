@@ -89,11 +89,11 @@ useEffect(() => {
                 <h1 className='text-3xl text-gray-700 font-bold'>Your Cart</h1>
               </div>
       {
-  cartItems.map((item)=>{
+  cartItems.map((item,i)=>{
     return(
     <div className='' key={item._id}>
-      <hr className='h-0.5  bg-gray-400'/>
-    <h1 className='text-3xl px-2 md:p-0 pt-2 font-medium text-gray-600 mb-2' >{item.serviceTypeName}</h1>
+      {i!=0&&<hr className='h-0.5  bg-gray-400'/>}
+    <h1 className='text-2xl md:text-3xl px-2 md:p-0 pt-2 font-medium text-gray-600 mb-2' >{item.serviceTypeName}</h1>
     <p className='flex px-2 text-gray-700  mb-3 items-center'><span>Total service {item.totalQuantity}</span> . <span className='flex items-center'><LuIndianRupee size={15} />
     {
 item?.totalPrice
@@ -105,7 +105,7 @@ item?.totalPrice
         return(
           <div className='flex px-5' key={item.subService.subServiceId}>
             <div className='flex flex-col '>
-            <p className='text-xl items-center  flex gap-2'><li>{item.subService.subServiceName}</li><span className='text-gray-500 text-base'>x {item.subService.quantity}</span></p>
+            <p className='md:text-xl text-lg items-center  flex gap-2'><li>{item.subService.subServiceName}</li><span className='text-gray-500 text-base'>x {item.subService.quantity}</span></p>
                  <div className="flex gap-2 items-center">{/*
                   <FaRegClock size={12} />
                   <span>{item.subService.serviceTime > 60 ? (
@@ -120,8 +120,8 @@ item?.totalPrice
     }
     </>
     <div className='flex w-full px-2 gap-2 my-5'>
-      <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=${item._id}`}  state={{ headLine: `${item?.serviceTypeName}` }} className='px-5 py-2 text-xl  text-center font-semibold text-gray-700   hover:bg-gray-100 w-full bg-white border-2  rounded-lg'>Add Service</Link>
-      <Link to={`/check_out/?city=${city||"mumbai"}&categories=${item._id}`} className='px-5 py-2 text-xl font-semibold text-white text-center bg-orange-500 w-full  rounded-lg'>Checkout</Link>
+      <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=${item._id}`}  state={{ headLine: `${item?.serviceTypeName}` }} className='md:px-5 px-2 md:py-2 py-1 md:text-xl text-lg  text-center font-semibold text-gray-700   hover:bg-gray-100 w-full bg-white border-2  rounded-lg'>Add Service</Link>
+      <Link to={`/check_out/?city=${city||"mumbai"}&categories=${item._id}`} className='md:px-5 px-2 md:py-2 py-1 md:text-xl text-lg  font-semibold text-white text-center bg-orange-500 w-full  rounded-lg'>Checkout</Link>
     </div>
     </div>
     

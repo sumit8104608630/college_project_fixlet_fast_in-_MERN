@@ -123,7 +123,7 @@ useEffect(() => {
   
 
   return (
-    <div className="relative">
+    <div className="relative z-0">
       <div className="flex items-center bg-white border border-gray-300 rounded-lg shadow-sm">
         <input
           size={50}

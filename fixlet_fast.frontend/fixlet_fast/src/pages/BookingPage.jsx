@@ -4,7 +4,7 @@ import { useState,useEffect } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { IoIosMail } from "react-icons/io";
 import CancellationPolicyModal from "../component/static/CancellationPolicyModal.jsx"
-import { IoTime } from "react-icons/io5";
+import { IoArrowBack, IoTime } from "react-icons/io5";
 import { MdPayments } from "react-icons/md";
 import { useContext } from 'react';
 import { currentContext } from '../component/Context.jsx';
@@ -18,7 +18,7 @@ import { LuIndianRupee } from "react-icons/lu";
 import {get_offers} from "../app/Actions/offers_action";
 import Location from "../component/Location.jsx"
 import PaymentLoading from '../component/PaymentLoading.jsx';
-
+import { Link } from 'react-router';
 const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 const  RAZORPAY_KEY_ID=import.meta.env.VITE_REACT_APP_RAZORPAY_KEY_ID // Razorpay Key ID
 
@@ -460,317 +460,343 @@ const handlePay = async (amount,allItem,date) => {
   }
 };
 
-
+   const handleGoBack = () => {
+        navigate(-1); // Go back to previous page
+    }
   
-  return (<>{checkOutItemLoading?<><Loader/></>:emptyCart||!checkOutItem?<EmptyCartItem city={city} categories={categories} />:
-<>{paymentLoading?<PaymentLoading/>:
-    <main className='md:pt-24 pt-5 w-full flex  justify-center  md:px-20'>
-      
-
-{slotToggle&&
-      <div className='fixed  z-20 px-5 bg-opacity-50 left-0 top-0 justify-center items-center bg-black flex w-full h-screen '>
-
-              <div className=' border-1 rounded  md:w-1/2   backdrop-blur-lg bg-opacity-10 '>
-              
-                  <button onClick={()=>setSlotToggle(false)} className='bg-white rounded-full p-1 mb-2 absolute right-0  -top-10 translate-y-0'><IoCloseOutline size={20}/></button>
-                  <div className='rounded border-gray-600  shadow p-5 bg-white'>
-
-
-                    <div>
-                      <div>
-                        <h1 className='text-lg font-semibold'>When should the professional arrive?</h1>
-                        <p className="text-gray-700 text-base">
-  {`Service will take approx. ${
-    allItem?.totalTime >= 60
-      ? `${Math.floor(allItem?.totalTime / 60)} hr${
-          allItem?.totalTime % 60 !== 0 ? ` ${allItem?.totalTime % 60} min` : ""
-        }`
-      : `${allItem?.totalTime} min`
-  }`}
-</p>
-                      
-                               <div className='grid grid-cols-2 md:grid-cols-4 md:h-max h-40 overflow-auto custom-scrollbar w-full mt-5 gap-5 '>{
-                            timeSlots?.map((time)=>{
-                              return(                    
-                                  <button key={time.date} onClick={()=>handleSelectDate(time.day,time.date)} className={`flex  ${date.day===time.day?"bg-orange-50":""} flex-col gap-1 justify-center items-center border-2 hover:bg-orange-50 px-4 py-1 rounded`}>
-                                  <span className='md:text-lg text-base font-semibold'>{time.day}</span>
-                                  <span className='md:text-sm text-base'>{time.date} </span>
-                                  </button>
-                              )
-                            })
-                          }</div>
-                        
-                      </div>
-                      {timeToggle&&
-                      <>
-                      <hr className='my-5 h-0.5 bg-gray-500'></hr>
-                      <h1 className='mb-5'>Time available :</h1>
-                      <div className=''>
-                        {loading?<div className="relative flex flex-col items-center">
-        <svg
-          version="1.1"
-          viewBox="0 0 64 64"
-          width="2em"
-          height="2em"
-          xmlns="http://www.w3.org/2000/svg"
-          className="animate-spin"
-        >
-          <circle
-            className="stroke-gradient"
-            cx="32"
-            cy="32"
-            r="28"
-            fill="none"
-            stroke="url(#spinner-gradient)"
-            strokeWidth="8"
-          />
-          <path
-            className="stroke-current text-orange-500"
-            d="M32,4 A28 28,0,0,0,32,60"
-            fill="none"
-            strokeWidth="8"
-            strokeLinecap="round"
-          />
-          <defs>
-            <linearGradient
-              id="spinner-gradient"
-              gradientUnits="userSpaceOnUse"
-              x1="32"
-              y1="0"
-              x2="32"
-              y2="64"
-            >
-              <stop offset="0.1" stopColor="currentColor" stopOpacity="0" />
-              <stop offset="0.9" stopColor="currentColor" stopOpacity="1" />
-            </linearGradient>
-          </defs>
-        </svg>
-        <div className="mt-2 text-center text-orange-500 text-sm font-medium">Please wait</div>
-      </div>:
-                      
-                          <ul className="grid grid-cols-2 w-full  md:grid-cols-4 md:h-max custom-scrollbar h-36 overflow-auto gap-4">
-                            {time.length===0?<>
-                              <div className=" text-red-700  w-max   rounded-lg text-center">
-      ⏳ No time slots are available for the selected date. Please choose a different Date.
-    </div>
-                            </>:<>
- {time?.map((time, index) => {
-   return (
-     <button
-       key={index}
-       onClick={() => handleSelectTime(time)}
-       className="flex flex-col gap-1 justify-center items-center border-2 hover:bg-orange-50 px-4 py-1 rounded"
-     >
-       <span className="md:text-lg text-base font-semibold">{time}</span>
-     </button>
-   );
- })}
- </>}
-</ul>
-}
-                          
-                      </div>
-                      </>
-}
-                      <div></div>
+  return (
+    <>
+           <div className=' w-full top-0  md:hidden fixed bg-white shadow-sm border-b z-10'>
+                            <div className='px-4 sm:px-6 lg:px-20 py-4'>
+                                <div className='flex items-center gap-4'>
+                                    <button 
+                                        onClick={handleGoBack}
+                                        className='flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors p-2 rounded-lg hover:bg-gray-100'
+                                    >
+                                        <IoArrowBack size={25} />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+      {checkOutItemLoading ? (
+        <Loader />
+      ) : emptyCart || !checkOutItem ? (
+        <>
+        <EmptyCartItem city="Mumbai" categories={categories} />
+     
+        </>
+      ) : (
+        <>
+          {paymentLoading ? (
+            <PaymentLoading />
+          ) : (
+            <div className="min-h-screen md:mt-0 mt-16 bg-gray-50">
+              {/* Slot Selection Modal */}
+              {slotToggle && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+                  <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                    <div className="sticky top-0 bg-white p-4 border-b flex justify-between items-center">
+                      <h2 className="text-xl font-semibold">Select Time Slot</h2>
+                      <button
+                        onClick={() => setSlotToggle(false)}
+                        className="p-2 hover:bg-gray-100 rounded-full"
+                      >
+                        <IoCloseOutline size={24} />
+                      </button>
                     </div>
-
+                    
+                    <div className="p-6">
+                      <div className="mb-6">
+                        <h3 className="text-lg font-medium mb-2">When should the professional arrive?</h3>
+                        <p className="text-gray-600">
+                          Service will take approx. {
+                            allItem?.totalTime >= 60
+                              ? `${Math.floor(allItem?.totalTime / 60)} hr${
+                                  allItem?.totalTime % 60 !== 0 ? ` ${allItem?.totalTime % 60} min` : ""
+                                }`
+                              : `${allItem?.totalTime} min`
+                          }
+                        </p>
+                      </div>
                       
+                      {/* Date Selection */}
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                        {timeSlots?.map((timeSlot) => (
+                          <button
+                            key={timeSlot.date}
+                            onClick={() => handleSelectDate(timeSlot.day, timeSlot.date)}
+                            className={`p-4 border-2 rounded-lg text-center transition-colors ${
+                              date.day === timeSlot.day
+                                ? "border-orange-500 bg-orange-50 text-orange-600"
+                                : "border-gray-200 hover:border-orange-200 hover:bg-orange-50"
+                            }`}
+                          >
+                            <div className="font-medium">{timeSlot.day}</div>
+                            <div className="text-sm text-gray-600">{timeSlot.date}</div>
+                          </button>
+                        ))}
+                      </div>
+                      
+                      {/* Time Selection */}
+                      {timeToggle && (
+                        <div>
+                          <hr className="my-6" />
+                          <h3 className="text-lg font-medium mb-4">Available Times</h3>
+                          {loading ? (
+                            <div className="text-center py-8">
+                              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto"></div>
+                              <p className="mt-2 text-orange-500">Please wait</p>
+                            </div>
+                          ) : time.length === 0 ? (
+                            <div className="text-center py-8 text-red-600">
+                              ⏳ No time slots available for the selected date. Please choose a different date.
+                            </div>
+                          ) : (
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                              {time.map((timeSlot, index) => (
+                                <button
+                                  key={index}
+                                  onClick={() => handleSelectTime(timeSlot)}
+                                  className={`p-3 border-2 rounded-lg text-center transition-colors ${
+                                    date.time === timeSlot
+                                      ? "border-orange-500 bg-orange-50 text-orange-600"
+                                      : "border-gray-200 hover:border-orange-200 hover:bg-orange-50"
+                                  }`}
+                                >
+                                  {timeSlot}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </div>
-              </div>
-      </div>
-}
+                </div>
+              )}
 
+              {/* Main Content */}
+              <div className="container mx-auto px-4 py-6 lg:py-12">
+                <div className="max-w-6xl mx-auto">
+                  {/* Mobile: Stack vertically, Desktop: Side by side */}
+                  <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+                    
+                    {/* Left Column - Booking Details */}
+                    <div className="flex-1 space-y-6">
+                      {/* Offer Banner */}
+                      <div className="bg-green-100 border border-green-200 rounded-lg p-4">
+                        <p className="text-center text-green-800 font-medium text-sm">
+                          You {offers[0]?.offerDescription}
+                        </p>
+                      </div>
 
-
-
-
-
-
-      <div className='w-4/5 hidden md:flex justify-between gap-5'>
-        <div className='w-full px-2 flex flex-col gap-5'>
-          {}
-          <div className='bg-green-200 px-5 rounded-lg py-4'><p className=' text-center text-green-800 font-medium text-xs'>{`You'`} {offers[0]?.offerDescription}</p></div>
-
-
-          <div className='border bg-gray-50 rounded-lg  flex flex-col'>
-          <div className='flex  items-center gap-4  px-3 py-4 ' >
-            <IoIosMail className='text-gray-600 ' size={30}/><p className='flex flex-col'><span className="text-base font-semibold text-gray-800">Send booking detail to</span><span className='text-sm font-normal text-gray-600'>{userInfo?.email}</span></p>
-          </div>
-          <hr className=' my-2 bg-gray-500'/>
-          <div className='flex w-full items-center justify-between gap-4 py-4 pr-2 ' >
-           <div className='flex w-full px-2 flex-col'> <Location/></div>
-          </div>
-          
-          <hr className=' my-2 bg-gray-500'/>
-
-          <div className=' flex items-center gap-4 px-2 py-4 ' >
-            <div className='flex flex-col w-full' >
-              <div className='flex justify-between items-center gap-2 pr-2'>
-                <div className='flex items-center gap-2'>
-            <div><IoTime className='text-gray-600 ' size={25}/></div><p className='flex'>{date.day!==""&&date.date!==""&&date.time!==""?`${date.day}: ${date.date} Time: ${date.time}`:"Select Slot"}</p></div>
-            {timeEditToggle&&
-            <button onClick={()=>{setSlotToggle(true)
-              setDate({...date,  day:"",
-                date:"",
-                time:""})
-            }} className='px-5 py-2 bg-gray-100 rounded-lg border-2 border-gray-400 hover:bg-gray-200 font-semibold'>Edit</button>
-            }
-              </div>
-              {!timeEditToggle&&
-            <div className='pt-2'>       
-          <button onClick={handleSlot} className='text-base font-semibold w-full rounded py-2 hover:bg-orange-600 text-white bg-orange-500'> Select Slot  </button>  
-          </div>
-          }
-          </div>
-          </div>
-          <hr className=' mt-2  bg-gray-500'/>
-          <div className='relative'>
-            {!timeEditToggle&&
-          <div className='absolute w-full h-full opacity-60 top-0 rounded-b bg-gray-200 '></div>
-
-            }
-          <div className='flex  items-center gap-4 px-3 py-4 ' >
-            <div><MdPayments className='text-gray-600 ' size={25}/></div><p>Payment method</p>
-          </div>
-          {timeEditToggle&&
-          <div className='pt-2 px-2 pb-2'>       
-          <button onClick={()=>handlePay((allItem?.totalPrice+visitationFee+taxFee||0),allItem,date)} className='text-base font-semibold w-full rounded py-2 hover:bg-orange-600 text-white bg-orange-500'> Proceed to pay  </button>  
-          </div>
-}
-          </div>
-          </div>
-          
-          <div className=''>
-            <h1 className='text-lg font-semibold text-gray-800'>Cancellation policy</h1>
-            <p className='text-gray-600'>Free cancellations if done more than 12 hrs before the service or if a professional isn’t assigned. A fee will be charged otherwise.</p>
-            <button className="text-base underline font-semibold " onClick={() => setModalOpen(true)}>Read full policy</button>
-          </div>
-<div>
-          <CancellationPolicyModal
-        isOpen={isModalOpen}
-        onClose={() => setModalOpen(false)}
-      />
-    </div>
-
-        </div>
-
-
-        <div className='w-full flex flex-col gap-5 '>
-          <div>
-            {<>
-              <h1 className='text-3xl mb-2 font-semibold text-gray-700'>{checkOutItem?.serviceTypeName}</h1>
-            <div style={allItem?.productDetails?.length>4?{overflow:"auto",height:"320px"}:{overflow:"hidden"}} className='flex custom-cartScroll  flex-col gap-2'>{allItem?.productDetails?.map((item)=>{
-              return(
-              
-                
-
-                    <div key={item?.subService.subServiceId} className='flex justify-between border-2 px-5 py-2 rounded'>
-                        <div><span>{item?.subService.subServiceName}</span></div>
-                        <div>
-                            <div>    
-                                <span className='flex justify-center items-center'><FaIndianRupeeSign size={15} className='text-gray-800' /> {item?.subService.totalPrice}</span>
-                            </div>
-                            <div className={`flex items-center w-20 border bg-orange-100 border-orange-500 rounded mt-2 justify-between`}>
-                            <button  onClick={() => handleAddServices(item.serviceId, item?.subService.subServiceId,item?.subService,(item?.subService.totalPrice/item?.subService.quantity),(item?.subService.serviceTime/item?.subService.quantity))} className="text-sm font-semibold text-orange-500 hover:bg-orange-300 hover:text-white px-2">+</button>
-                
-                                    <span className="text-sm font-semibold text-orange-500">{item?.subService.quantity}</span>
-                
-                                    <button onClick={()=>handleSubServices(item.serviceId,item?.subService.subServiceId,item?.subService,(item?.subService.totalPrice/item?.subService.quantity),(item?.subService.serviceTime/item?.subService.quantity))} className="text-sm font-semibold text-orange-500 px-2 hover:bg-orange-300 hover:text-white">-</button>
-                                    </div>
+                      {/* Booking Information Card */}
+                      <div className="bg-white rounded-lg shadow-sm border">
+                        {/* Email Section */}
+                        <div className="p-4 flex items-center gap-3">
+                          <IoIosMail className="text-gray-500 flex-shrink-0" size={24} />
+                          <div>
+                            <p className="font-medium text-gray-800">Send booking details to</p>
+                            <p className="text-sm text-gray-600">{userInfo?.email}</p>
+                          </div>
                         </div>
+
+                        <hr className="border-gray-200" />
+
+                        {/* Location Section */}
+                        <div className="p-4">
+                          <Location />
+                        </div>
+
+                        <hr className="border-gray-200" />
+
+                        {/* Time Slot Section */}
+                        <div className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <IoTime className="text-gray-500 flex-shrink-0" size={24} />
+                              <div>
+                                <p className="font-medium text-gray-800">Service Time</p>
+                                <p className="text-sm text-gray-600">
+                                  {date.day && date.date && date.time
+                                    ? `${date.day}: ${date.date}, ${date.time}`
+                                    : "Select time slot"}
+                                </p>
+                              </div>
+                            </div>
+                            {timeEditToggle && (
+                              <button
+                                onClick={() => {
+                                  setSlotToggle(true);
+                                  setDate({ day: "", date: "", time: "" });
+                                }}
+                                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition-colors"
+                              >
+                                Edit
+                              </button>
+                            )}
+                          </div>
+                          {!timeEditToggle && (
+                            <button
+                              onClick={handleSlot}
+                              className="w-full mt-4 bg-orange-500 text-white py-3 rounded-lg font-medium hover:bg-orange-600 transition-colors"
+                            >
+                              Select Time Slot
+                            </button>
+                          )}
+                        </div>
+
+                        <hr className="border-gray-200" />
+
+                        {/* Payment Section */}
+                        <div className={`p-4 ${!timeEditToggle ? 'opacity-50 pointer-events-none' : ''}`}>
+                          <div className="flex items-center gap-3 mb-4">
+                            <MdPayments className="text-gray-500 flex-shrink-0" size={24} />
+                            <p className="font-medium text-gray-800">Payment Method</p>
+                          </div>
+                          {timeEditToggle && (
+                            <button
+                              onClick={() => handlePay(
+                                (allItem?.totalPrice + visitationFee + taxFee || 0),
+                                allItem,
+                                date
+                              )}
+                              className="w-full bg-orange-500 text-white py-3 rounded-lg font-medium hover:bg-orange-600 transition-colors"
+                            >
+                              Proceed to Pay ₹{allItem?.totalPrice + visitationFee + taxFee || 0}
+                            </button>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Cancellation Policy */}
+                      <div className="bg-white rounded-lg shadow-sm border p-4">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-2">Cancellation Policy</h3>
+                        <p className="text-gray-600 mb-3">
+                          Free cancellations if done more than 12 hrs before the service or if a professional isn't assigned. A fee will be charged otherwise.
+                        </p>
+                        <button
+                          className="text-orange-500 font-medium underline hover:text-orange-600"
+                          onClick={() => setModalOpen(true)}
+                        >
+                          Read full policy
+                        </button>
+                      </div>
                     </div>
 
-
-
-              )
-            })}</div>
-            </>
-            }
-          </div>
-          <div className='rounded-lg border'>
-            <h1 className='px-5 py-2 text-lg font-medium text-gray-700'>Payment summary</h1>
-            <ul className='flex gap-2 flex-col px-4 mt-2'>
-              <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>total item</span><span className='flex items-center decoration-dotted'><LuIndianRupee className='text-gray-800' size={12} />{allItem?.totalPrice}</span></li>
-              {visitationFee&&<> <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>Visitation Fee</span><span className='flex items-center decoration-dotted'><LuIndianRupee className='text-gray-800' size={12} />{visitationFee}</span></li></>}
-              <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>Tax & Fee</span><span className='flex items-center decoration-dotted'><LuIndianRupee className='text-gray-800' size={12} />{taxFee}</span></li>
-            </ul> 
-            <hr className='h-0.5 bg-gray-500 my-2'/>
-            <div className='px-4'>
-              <p className='flex justify-between px-2 text-lg font-medium py-2 text-gray-800'><span>Total Price</span><span className='flex items-center'><LuIndianRupee className='text-gray-800' size={15} />{allItem?.totalPrice+visitationFee+taxFee||0}</span></p>
-            </div>
-          </div>
-        </div>
-
-
-
-      </div>
-      
-      <div className='w-full md:hidden block'>
-      <div className='w-full flex pb-10 flex-col gap-5 '>
-          <div>
-            {<>
-              <h1 className='text-xl px-2 mb-2 font-semibold text-gray-700'>{checkOutItem?.serviceTypeName}</h1>
-            <div style={allItem?.productDetails?.length>4?{overflow:"auto",height:"320px"}:{overflow:"hidden"}} className='flex custom-cartScroll  flex-col gap-2'>{allItem?.productDetails?.map((item)=>{
-              return(
-              
-                
-
-                    <div key={item?.subService.subServiceId} className='flex justify-between border-2 px-5 py-2 '>
-                        <div><span>{item?.subService.subServiceName}</span></div>
-                        <div>
-                            <div>    
-                                <span className='flex justify-center items-center'><FaIndianRupeeSign  /> {item?.subService.totalPrice}</span>
-                            </div>
-                            <div className={`flex items-center w-20 border bg-orange-100 border-orange-500 rounded mt-2 justify-between`}>
-                            <button  onClick={() => handleAddServices(item.serviceId, item?.subService.subServiceId,item?.subService,(item?.subService.totalPrice/item?.subService.quantity),(item?.subService.serviceTime/item?.subService.quantity))} className="text-sm font-semibold text-orange-500 hover:bg-orange-300 hover:text-white px-2">+</button>
-                
-                                    <span className="text-sm font-semibold text-orange-500">{item?.subService.quantity}</span>
-                
-                                    <button onClick={()=>handleSubServices(item.serviceId,item?.subService.subServiceId,item?.subService,(item?.subService.totalPrice/item?.subService.quantity),(item?.subService.serviceTime/item?.subService.quantity))} className="text-sm font-semibold text-orange-500 px-2 hover:bg-orange-300 hover:text-white">-</button>
-                                    </div>
+                    {/* Right Column - Order Summary */}
+                    <div className="w-full lg:w-96 space-y-6">
+                      {/* Service Details */}
+                      <div className="bg-white rounded-lg shadow-sm border">
+                        <div className="p-4 border-b">
+                          <h2 className="text-xl font-semibold text-gray-800">
+                            {checkOutItem?.serviceTypeName}
+                          </h2>
                         </div>
+                        
+                        <div className="max-h-80 overflow-y-auto">
+                          {allItem?.productDetails?.map((item) => (
+                            <div key={item?.subService.subServiceId} className="p-4 border-b last:border-b-0">
+                              <div className="flex justify-between items-start mb-3">
+                                <h4 className="font-medium text-gray-800 flex-1 mr-2">
+                                  {item?.subService.subServiceName}
+                                </h4>
+                                <div className="text-right">
+                                  <div className="flex items-center text-gray-800 font-medium">
+                                    <FaIndianRupeeSign size={14} />
+                                    <span className="ml-1">{item?.subService.totalPrice}</span>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center border border-orange-300 rounded-lg overflow-hidden">
+                                  <button
+                                    onClick={() => handleSubServices(
+                                      item.serviceId,
+                                      item?.subService.subServiceId,
+                                      item?.subService,
+                                      (item?.subService.totalPrice / item?.subService.quantity),
+                                      (item?.subService.serviceTime / item?.subService.quantity)
+                                    )}
+                                    className="px-3 py-1 text-orange-500 hover:bg-orange-50 transition-colors"
+                                  >
+                                    -
+                                  </button>
+                                  <span className="px-3 py-1 text-orange-500 font-medium min-w-[2rem] text-center">
+                                    {item?.subService.quantity}
+                                  </span>
+                                  <button
+                                    onClick={() => handleAddServices(
+                                      item.serviceId,
+                                      item?.subService.subServiceId,
+                                      item?.subService,
+                                      (item?.subService.totalPrice / item?.subService.quantity),
+                                      (item?.subService.serviceTime / item?.subService.quantity)
+                                    )}
+                                    className="px-3 py-1 text-orange-500 hover:bg-orange-50 transition-colors"
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Payment Summary */}
+                      <div className="bg-white rounded-lg shadow-sm border">
+                        <div className="p-4 border-b">
+                          <h3 className="text-lg font-medium text-gray-800">Payment Summary</h3>
+                        </div>
+                        
+                        <div className="p-4 space-y-3">
+                          <div className="flex justify-between text-gray-600">
+                            <span>Service Total</span>
+                            <span>₹{allItem?.totalPrice}</span>
+                          </div>
+                          <div className="flex justify-between text-gray-600">
+                            <span>Visitation Fee</span>
+                            <span>₹{visitationFee}</span>
+                          </div>
+                          <div className="flex justify-between text-gray-600">
+                            <span>Tax & Fees</span>
+                            <span>₹{taxFee}</span>
+                          </div>
+                        </div>
+                        
+                        <hr className="border-gray-200" />
+                        
+                        <div className="p-4">
+                          <div className="bg-green-100 border border-green-200 rounded-lg p-3 mb-4">
+                            <p className="text-center text-green-800 font-medium text-sm">
+                              You're saving total ₹60 on this order!
+                            </p>
+                          </div>
+                          
+                          <div className="flex justify-between text-lg font-semibold text-gray-800">
+                            <span>Total Amount</span>
+                            <span>₹{allItem?.totalPrice + visitationFee + taxFee || 0}</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                  </div>
+                </div>
+              </div>
 
-
-
-              )
-            })}</div>
-            </>
-            }
-          </div>
-          <div className='rounded-lg border'>
-            <h1 className='px-5 py-2 text-lg font-medium text-gray-700'>Payment summary</h1>
-            <ul className='flex gap-2 flex-col px-4 mt-2'>
-              <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>total item</span><span className=' decoration-dotted'>{allItem?.totalPrice}</span></li>
-              <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>Visitation Fee</span><span className=' decoration-dotted'>{visitationFee}</span></li>
-              <li className='flex justify-between px-2'><span className='underline decoration-dotted text-gray-800'>Tax & Fee</span><span className=' decoration-dotted'>{taxFee}</span></li>
-            </ul> 
-            <hr className='h-0.5 bg-gray-500 my-2'/>
-            <div className='px-2'>
-            <div className='bg-green-200 px-5 rounded py-2'><p className=' text-center text-green-800 font-medium text-xs'>{`You'`} re saving total ₹60 on this order! .</p></div>
+              {/* Cancellation Policy Modal */}
+              <CancellationPolicyModal
+                isOpen={isModalOpen}
+                onClose={() => setModalOpen(false)}
+              />
             </div>
-            <div className='px-4'>
-              <p className='flex justify-between px-2 text-lg font-medium py-2 text-gray-800'><span>Total Price</span><span>{allItem?.totalPrice+visitationFee+taxFee||0}</span></p>
-            </div>
-          </div>
-        </div>
-
-
-        <div className='fixed z-10 h-max py-2 border-t shadow-[0px_-4px_10px_rgba(0,0,0,0.1)] border-gray-100  w-full px-1  bottom-0  bg-white  '>
-          <div>
-            <div className='flex items-center px-2'><p className='text-xs '>{userInfo?.location}</p><span className='text-orange-500 border-2 px-2 py-1 rounded-lg border-gray-400'>Edit</span></div>
-            <div>
-              <button onClick={handleSlot} className='w-full py-2 rounded-lg font-semibold text-base text-white mt-2 bg-orange-500'>Select Slot</button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </main>
-  
-    }</>}</>
-  )
+          )}
+        </>
+      )}
+    </>
+  );
 }
 
 export default BookingPage

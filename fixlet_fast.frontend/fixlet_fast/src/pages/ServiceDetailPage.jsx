@@ -374,7 +374,7 @@ function isEmpty(obj_inside) {
 
 
   const handle_back=()=>{
-    navigate(-1)
+    navigate("/")
   }
 
   const handleClickMenu=(service)=>{
@@ -394,7 +394,7 @@ function isEmpty(obj_inside) {
 <div className='fixed  bg-white w-full'>
         <div className='xl:hidden justify-between flex py-3 px-5'>
         <div> 
-      <button onClick={handle_back} to={"/"}>
+      <button onClick={handle_back} >
     <FaArrowLeftLong className='' size={25}/>
     </button></div>
         <div>

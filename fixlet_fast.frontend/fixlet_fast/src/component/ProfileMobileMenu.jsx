@@ -1,10 +1,18 @@
 import React from 'react';
-import { X, HelpCircle, LogOut, Calendar } from 'lucide-react';
+import { X, HelpCircle, LogOut, Calendar, Home, Info } from 'lucide-react';
+import {  useNavigate } from 'react-router';
 
 function ProfileMobileMenu({ isOpen, onClose }) {
-
+  const navigate=useNavigate()
 
   if (!isOpen) return null;
+  const handleHomeClick=(click)=>{
+if(click==="home"){navigate("/")}
+if(click==="about"){navigate("/about")}
+if(click==="helpCenter"){navigate("/helpCenter")}
+if(click==="myBooking"){navigate("/myBooking")}
+
+}
 
   return (
     <>
@@ -30,8 +38,23 @@ function ProfileMobileMenu({ isOpen, onClose }) {
 
           {/* Menu Items */}
           <div className="py-2">
+            <button 
+            onClick={()=>handleHomeClick("home")}
+              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-left"
+            >
+              <Home size={22} className="text-orange-600" />
+              <span className="text-gray-700 font-medium">Home</span>
+            </button>
             <button
-              onClick={() => handleMenuClick('Help Center')}
+              onClick={()=>handleHomeClick("about")}
+              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-left"
+            >
+            <Info size={22} className="text-green-600" />
+
+              <span className="text-gray-700 font-medium">About</span>
+            </button>
+            <button
+            onClick={()=>handleHomeClick("helpCenter")}
               className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-left"
             >
               <HelpCircle size={22} className="text-blue-600" />
@@ -39,7 +62,7 @@ function ProfileMobileMenu({ isOpen, onClose }) {
             </button>
 
             <button
-              onClick={() => handleMenuClick('My Booking')}
+            onClick={()=>handleHomeClick("myBooking")}
               className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-left"
             >
               <Calendar size={20} className="text-green-600" />

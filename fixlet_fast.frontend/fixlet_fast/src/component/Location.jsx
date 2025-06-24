@@ -9,6 +9,7 @@ import { fetchUser } from '../app/Actions/user_action.js';
 import { currentContext } from '../component/Context.jsx';
 import {Country,State,City} from "country-state-city"
 import { useContext } from 'react';
+import { IoIosArrowDown } from 'react-icons/io';
 const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 function Location(props) {
@@ -134,7 +135,8 @@ else{
   return (
     <>
     {!Show.showAddress&&
-      <div>
+    <>
+      <div className='md:block hidden'>
   <button onClick={handleToggle} className='bg-white flex items-center px-2 py-2 rounded-lg'>
     <FaLocationDot className='text-gray-500' size={20} />
     {/* Replace <p> with <span> to avoid invalid nesting */}
@@ -145,9 +147,18 @@ else{
   </button>
 </div>
 
+ <button 
+ onClick={handleToggle}
+   className='flex flex-col md:hidden  cursor-pointer'>
+          <div><p className=' overflow-hidden w-40 text-ellipsis  whitespace-nowrap'>{userInfo?.location}</p></div>
+          <div className='flex items-center gap-2'><span className=''>{userInfo?.city.charAt(0).toUpperCase()+userInfo?.city.slice(1)}</span><span><IoIosArrowDown/></span></div>
+  </button>
+  </>
+
 }
 {Show.showAddress&&
-  <div className='w-full'>
+<>
+  <div className='w-full md:block hidden'>
   <div className='flex w-full items-center justify-between'>
     <div className='flex items-center gap-2'>
       <FaLocationDot className='text-gray-600' size={25} />
@@ -164,19 +175,20 @@ else{
     </div>
   </div>
 </div>
-
+            <div className='flex items-center md:hidden justify-between  px-2'><p className='text-xs px-0.5  '>{userInfo?.location}</p><button onClick={handleToggle} className='text-orange-500 cursor-pointer border-2 px-2 py-1 rounded-lg border-gray-400'>Edit</button></div>
+</>
 
 }
   {toggle&&
 <>
 
-  <div className='fixed z-20 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen  '>
-    <div className='relative h-max'>
+  <div className='fixed z-20  justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen  '>
+    <div className='relative  h-max'>
     <button onClick={()=>{setToggle(false)
     }
-    } className='bg-white rounded-full p-1 mb-2 absolute   -top-10 right-0 translate-y-0'><IoCloseOutline size={20}/></button>
+    } className='bg-white rounded-full p-1 mb-2 absolute   -top-10  right-0 translate-y-0'><IoCloseOutline size={20}/></button>
 
-         <div className=' bg-white flex flex-col w-96  p-5 rounded'>
+         <div className=' bg-white flex  flex-col md:w-96 w-80 p-5 rounded'>
              <div className=' '>
                  <button onClick={handleCurrentLocation} className='w-full  flex gap-2 items-center font-semibold text-orange-500 hover:text-orange-500'>  
                     <FaLocationCrosshairs size={20} className='text-orange-500 ' />
@@ -209,14 +221,14 @@ else{
              </div>
              </div>
 
-      </div>
+  </div>
 
 
 
 
 {
   toggle2&&
-<div className='absolute overflow-auto z-20 py-10 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen  '>
+<div className='absolute overflow-auto md:px-2 px-5 z-30 py-10 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen  '>
 <div className='relative h-full '>
 <button onClick={()=>setToggle2(false)} className='bg-white rounded-full p-1 mb-2 absolute   -top-0 right-0 translate-y-0'><IoCloseOutline size={20}/></button>
 

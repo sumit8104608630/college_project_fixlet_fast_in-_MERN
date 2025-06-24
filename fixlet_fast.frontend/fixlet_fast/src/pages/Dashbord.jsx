@@ -37,6 +37,7 @@ import { AiFillLayout } from 'react-icons/ai'
 import { CgProfile } from 'react-icons/cg'
 import { CiShoppingCart } from 'react-icons/ci'
 import ProfileMobileMenu from '../component/ProfileMobileMenu.jsx'
+import Location from '../component/Location.jsx'
 const apiUrl=import.meta.env.VITE_BACKEND_API_URL
 
 
@@ -55,7 +56,7 @@ function Dashbord() {
     const {cartLoading,}=useSelector((state)=>state.cart);
     const [user_globally,setUser_globally]=useState(0)
   const {cartItems}=useSelector((state)=>state.cart);
-  
+  const [mobileAddressToggle,setMobileAddressToggle]=useState(null)
     useEffect(()=>{
       const singleArray=cartItems?.map((item=>item.productDetails)).flat()
       setCartCount(singleArray.length)
@@ -105,6 +106,9 @@ const toogleRender=()=>{
   navigate(`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=carpenter`)
 }
 
+const handleAddressSet=()=>{
+ setMobileAddressToggle(true)
+}
 
 
   return (
@@ -123,9 +127,13 @@ const toogleRender=()=>{
       <div className='flex h-max fixed w-full z-10 shadow-sm  bg-white  flex-col gap-3 px-2 py-2'>
         {userInfo?
         <div className='flex items-center justify-between px-2'>
-          <div className='flex flex-col'>
-          <div><p className=' overflow-hidden w-40 text-ellipsis  whitespace-nowrap'>{userInfo?.location}</p></div>
-          <div className='flex items-center gap-2'><span className=''>{userInfo?.city.charAt(0).toUpperCase()+userInfo?.city.slice(1)}</span><span><IoIosArrowDown/></span></div>
+        <div className='flex gap-4 justify-center items-center'>
+               <div>
+                    <button onClick={()=>setIsProfileMenuOpen(true)}>
+                    <CgProfile  className='text-orange-500 ' size={30} />
+                    </button>
+                </div>
+                <Location/>
       </div>
           <div>
           {Context.cartShow&&
@@ -162,36 +170,12 @@ const toogleRender=()=>{
                   
                 </div>
       }
-        <div className="sticky top-0  z-50 px-2 py-2">
+        <div className="sticky top-0  z-10 px-2 py-2">
         <SearchBar />
       </div>
       
       </div>
-      {Context.showHeader&&
-      
-      <div className='fixed w-full bottom-0 z-10'>
-        <div className='flex justify-between  px-10 items-center py-2 bg-orange-500'>
-        <ul className='flex  items-center text-white text-2xl gap-8 font-semibold'>
-                    <li>
-                      <NavLink to="/">
-                        <IoMdHome size={30} />
-                      </NavLink>
-                    </li>
-                    <li>
-                    <NavLink  to="/about">
-                        <AiFillLayout size={25}/>
-                      </NavLink>
-                    </li>
-                 
-                  </ul>
-                  <div>
-                    <button onClick={()=>setIsProfileMenuOpen(true)}>
-                    <CgProfile  className='text-white' size={25} />
-                    </button>
-                  </div>
-        </div>
-      </div>
-      }
+
       </>
       }</div>
 
@@ -201,7 +185,7 @@ const toogleRender=()=>{
 {/* this is main dash board */}
       
 
-      <main  className={ `custom-dashBoardScroll  pt-20 xl:pt-28  pb-16  w-full xl:px-32 ${ link3Toggle&&"  overflow-hidden "}` }>
+      <main  className={ `custom-dashBoardScroll  pt-20 xl:pt-28  pb-4  w-full xl:px-32 ${ link3Toggle&&"  overflow-hidden "}` }>
 {link3Toggle&&
 <div className='fixed z-20 px-5 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
   
