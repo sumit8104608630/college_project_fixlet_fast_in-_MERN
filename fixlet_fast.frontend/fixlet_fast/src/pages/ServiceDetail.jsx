@@ -33,7 +33,7 @@ if(filter_cartItems.length>0||cartLoading){
 },[filter_cartItems.length,cartLoading])
 
   return (<>
-  {cartLoading||loading?
+  {cartLoading?
 <div className=' flex justify-center items-center  h-full'>
 <div className="relative flex flex-col  items-center">
         <svg
