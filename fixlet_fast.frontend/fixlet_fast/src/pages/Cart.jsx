@@ -120,8 +120,8 @@ item?.totalPrice
     }
     </>
     <div className='flex w-full px-2 gap-2 my-5'>
-      <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=${item._id}`}  state={{ headLine: `${item?.serviceTypeName}` }} className='md:px-5 px-2 md:py-2 py-1 md:text-xl text-lg  text-center font-semibold text-gray-700   hover:bg-gray-100 w-full bg-white border-2  rounded-lg'>Add Service</Link>
-      <Link to={`/check_out/?city=${city||"mumbai"}&categories=${item._id}`} className='md:px-5 px-2 md:py-2 py-1 md:text-xl text-lg  font-semibold text-white text-center bg-orange-500 w-full  rounded-lg'>Checkout</Link>
+      <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=${item._id}`}  state={{ headLine: `${item?.serviceTypeName}` }} className='md:px-5 px-2 md:py-2 py-1 md:text-xl text-lg flex items-center justify-center  text-center font-semibold text-gray-700   hover:bg-gray-100 w-full bg-white border-2  rounded-lg'>Add Service</Link>
+      <Link to={`/check_out/?city=${city||"mumbai"}&categories=${item._id}`} className='md:px-5 px-2 md:py-2 py-1 md:text-xl text-lg  font-semibold text-white text-center flex items-center justify-center bg-orange-500 w-full  rounded-lg'>Checkout</Link>
     </div>
     </div>
     
