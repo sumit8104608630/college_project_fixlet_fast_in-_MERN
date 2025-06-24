@@ -200,8 +200,8 @@ const handleAddressSet=()=>{
               <div className='flex gap-5 '>
               <div className='md:w-24'>
             <Link  to={{pathname:`/serviceDetailPage/service_data_get`,search:`?city=${city||"mumbai"}&categories=electrician`}} state={ {headLine: 'Electrician'} } className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="md:w-11 w-32 h-11" src={electricity_image} alt="Cleaning" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className="md:w-11 w-32 " src={electricity_image} alt="Cleaning" />
               </div>
                 <span className='text-xs mt-1'>Electrician</span>
             </Link>
@@ -209,8 +209,8 @@ const handleAddressSet=()=>{
 
             <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=plumber`}   state={{ headLine: 'Plumber' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="md:w-11 w-32 h-11" src={plumber} alt="Plumber" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className="md:w-11 w-32 " src={plumber} alt="Plumber" />
               </div>
                 <span className='text-xs mt-1'>Plumber</span>
             </Link>
@@ -218,8 +218,8 @@ const handleAddressSet=()=>{
 
             <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=carpenter`} state={{ headLine: 'Carpenter' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="md:w-11 w-32 h-11" src={carpenter} alt="Festival Decoration" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className="md:w-11 w-32 " src={carpenter} alt="Festival Decoration" />
               </div>
               <span className='text-xs mt-1'>Carpenter</span>
             </Link>
@@ -248,8 +248,8 @@ const handleAddressSet=()=>{
 
               <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=acservice`} state={{ headLine: 'AC repair & Service' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="md:w-11 w-32 h-11" src={ac_repair} alt="Cleaning" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className="md:w-11 w-32 " src={ac_repair} alt="Cleaning" />
               </div>
                 <span className='text-xs mt-1'>AC repair & Service</span>
             </Link>
@@ -257,8 +257,8 @@ const handleAddressSet=()=>{
 
               <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=chimney`} state={{ headLine: 'Chimney Repair & Service' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="md:w-11 w-32 h-11" src={chimney} alt="Cleaning" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className="md:w-11 w-32 " src={chimney} alt="Cleaning" />
               </div>
                 <span className='text-xs mt-1'>Chimney Repair & Service</span>
             </Link>
@@ -266,8 +266,8 @@ const handleAddressSet=()=>{
 
             <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=gasstoverepair`} state={{ headLine: 'Gas Repair & service' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="md:w-11 w-32 h-11" src={gas} alt="Electrician" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className="md:w-11 w-32 " src={gas} alt="Electrician" />
               </div>
                 <span className='text-xs mt-1'>Gas Repair & service</span>
             </Link>
@@ -282,8 +282,8 @@ const handleAddressSet=()=>{
             <div className='flex gap-5 '>
             <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=refrigerator`} state={{ headLine: 'Refrigerator Repair ' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="md:w-11 w-32 h-11" src={refrigerator} alt="Festival Decoration" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className="md:w-11 w-32 " src={refrigerator} alt="Festival Decoration" />
               </div>
               <span className='text-xs mt-1'>Refrigerator Repair </span>
             </Link>
@@ -291,8 +291,8 @@ const handleAddressSet=()=>{
 
             <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=mixergrinder`} state={{ headLine: 'Mixer & Grinder Repair' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="md:w-11 w-32 h-11" src={mixer} alt="Electrician" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className="md:w-11 w-32 " src={mixer} alt="Electrician" />
               </div>
                 <span className='text-xs mt-1'>Mixer & Grinder Repair</span>
             </Link>
@@ -300,8 +300,8 @@ const handleAddressSet=()=>{
 
             <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=washingmachine`} state={{ headLine: 'Washin Machine Repair' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="md:w-11 w-32 h-11" src={washinMashin} alt="Festival Decoration" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className="md:w-11 w-32 " src={washinMashin} alt="Festival Decoration" />
               </div>
               <span className='text-xs mt-1'>Washin Machine Repair </span>
             </Link>
@@ -327,8 +327,8 @@ const handleAddressSet=()=>{
               <div className='flex  gap-5 mb-5  mt-3'>
               <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=bathroom_kitchen`} state={{ headLine: 'Bathroom & Kitchen Cleaning' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className=" md:w-11 w-32 md:11 h-11" src={bathroom} alt="Cleaning" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className=" md:w-11 w-32 " src={bathroom} alt="Cleaning" />
               </div>
                 <span className='text-xs mt-1'>Bathroom & Kitchen Cleaning</span>
             </Link>
@@ -336,8 +336,8 @@ const handleAddressSet=()=>{
 
             <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=fullhome`} state={{ headLine: 'Full Home Cleaning' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className=" md:md:w-11 w-32 h-11" src={home} alt="Electrician" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className=" md:w-11 w-32 " src={home} alt="Electrician" />
               </div>
                 <span className='text-xs mt-1'>Full Home Cleaning</span>
             </Link>
@@ -345,8 +345,8 @@ const handleAddressSet=()=>{
 
             <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=sofaCleaning`} state={{ headLine: 'Sofa Cleaning' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className=" md:md:w-11 w-32 h-11" src={sofa_image} alt="Festival Decoration" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className=" md:w-11 w-32 " src={sofa_image} alt="Festival Decoration" />
               </div>
               <span className='text-xs mt-1'>Sofa Cleaning</span>
             </Link>
@@ -357,8 +357,8 @@ const handleAddressSet=()=>{
               <div className='flex  gap-5  mt-3'>
               <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=pestcontrol`} state={{ headLine: 'Insect Pest Control' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-11  h-11" src={pest} alt="Cleaning" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className=" md:w-11 w-12" src={pest} alt="Cleaning" />
               </div>
                 <span className='text-xs mt-1'>Insect Pest Control</span>
             </Link>
@@ -368,8 +368,8 @@ const handleAddressSet=()=>{
 
             <div className='md:w-24'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=bedbugcontrol`}state={{ headLine: 'Bed Bugs Control' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="w-11  h-11" src={bed} alt="Festival Decoration" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className=" md:w-11 w-12 " src={bed} alt="Festival Decoration" />
               </div>
               <span className='text-xs mt-1'>Bed Bugs Control</span>
             </Link>
@@ -398,8 +398,8 @@ const handleAddressSet=()=>{
             <div className='flex gap-5'>
              <div className='w-22 md:w-28 '>
             <button onClick={()=>setlink2Toggle(true)} className="relative  hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="md:w-11 w-32 h-11" src={cleaning} alt="AC Repair" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className="md:w-11 w-32 " src={cleaning} alt="AC Repair" />
                </div>
                 <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
                 <span className='text-xs mt-1'>Cleaning & pest control</span>
@@ -408,8 +408,8 @@ const handleAddressSet=()=>{
 
             <div className='w-22 md:w-28'>
             <button onClick={()=>setlink1Toggle(true)} className="relative hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="md:w-11 w-32 h-11" src={ac_repair} alt="Cleaning" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className="md:w-11 w-32 " src={ac_repair} alt="Cleaning" />
               </div>
                 <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
                 <span className='text-xs mt-1'>AC & Appliance Repair</span>
@@ -418,8 +418,8 @@ const handleAddressSet=()=>{
 
             <div  className='  w-22 md:w-28'>
             <button onClick={()=>!link2Toggle?setlink3Toggle(true):setlink3Toggle(false )} className="relative  hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="md:w-11 w-32 h-11" src={electresian} alt="Electrician" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className="md:w-11 w-32 " src={electresian} alt="Electrician" />
               </div>
                 <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
                 <span className='text-xs mt-1'>Electrician,Plumber & Carpenter</span>
@@ -431,8 +431,8 @@ const handleAddressSet=()=>{
             <div className='flex gap-5'>
             <div className='w-22 md:w-28'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=lightdecoration`} state={{ headLine: 'Festival Lights decoration' }} className="relative  flex flex-col text-center hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="md:w-11 w-32 h-11" src={festival_decoration} alt="Festival Decoration" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className="md:w-11 w-32 " src={festival_decoration} alt="Festival Decoration" />
               </div>
               <span className="absolute left-1/2 bottom-0 h-[2px] w-0  bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
               <span className='text-xs mt-1'>Festival Lights decoration</span>
@@ -442,8 +442,8 @@ const handleAddressSet=()=>{
 
           <div className='w-22 md:w-28'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=wallpanel`} state={{ headLine: 'Wall Panel installation' }} className="relative w-full flex flex-col text-center    hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="md:w-11 w-32 h-11" src={wallPanel} alt="Wall Panel" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className="md:w-11 w-32 " src={wallPanel} alt="Wall Panel" />
               </div>
               <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
               <span className='text-xs mt-1'>Wall Panel installation</span>
@@ -452,8 +452,8 @@ const handleAddressSet=()=>{
 
             <div className='w-22 md:w-28'>
             <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=wallpainting`} state={{ headLine: 'Painting & Water proofing' }} className="relative w-full flex flex-col text-center hover:text-gray-600 group">
-              <div className="bg-gray-100 px-8 rounded py-3">
-                <img className="md:w-11 w-32 h-11" src={paint} alt="Paint" />
+              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
+                <img className="md:w-11 w-32 " src={paint} alt="Paint" />
               </div>
               <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
               <span className='text-xs mt-1'>Painting & Water proofing</span>
