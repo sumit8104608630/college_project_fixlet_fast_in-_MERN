@@ -107,7 +107,7 @@ function MyBooking() {
 
                     {/* Main Content */}
                     <div className='px-4 sm:px-6 lg:px-20 py-6 sm:py-10'>
-                        {!Object.hasOwn(bookingData, "Entries") ?
+                        {!Object.hasOwn(bookingData, "Entries") && !bookingLoading ?
                             <div className='pt-10 sm:pt-20 w-full min-h-[60vh] flex justify-center items-center'>
                                 <div className='w-full max-w-md flex flex-col items-center px-4'>
                                     <img className='w-40 sm:w-52' src={EmptyBooking} alt="No bookings" />

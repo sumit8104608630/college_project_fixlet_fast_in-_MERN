@@ -16,7 +16,7 @@ export const io = new Server(server, {
       credentials: true,
     },
   });
-  
+  console.log(allOrigin)
 
 // Socket.io event handling when a client connects
 io.on("connection", (socket) => {
@@ -37,6 +37,7 @@ io.on("connection", (socket) => {
   
 app.use(cors({
     origin: allOrigin,
+    methods: ["GET", "POST"],
     credentials:true,
 }))
 // let set the file type which  we will except and give

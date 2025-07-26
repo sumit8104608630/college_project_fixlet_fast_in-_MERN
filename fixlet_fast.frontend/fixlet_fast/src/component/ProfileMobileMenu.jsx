@@ -1,9 +1,30 @@
 import React from 'react';
 import { X, HelpCircle, LogOut, Calendar, Home, Info } from 'lucide-react';
 import {  useNavigate } from 'react-router';
+import axios from 'axios';
+import Cookies from "js-cookie"
+import { useDispatch } from 'react-redux';
+import {logout} from "../app/user.redux"
 
 function ProfileMobileMenu({ isOpen, onClose }) {
   const navigate=useNavigate()
+  const dispatch=useDispatch();
+  const apiUrl=import.meta.env.VITE_BACKEND_API_URL
+
+const handelLogout=()=>{
+   axios.post( `${apiUrl}/user/user_logout`,{},{
+    withCredentials:true
+  }).then((response)=>{
+    if(response.status===200){
+    Cookies.remove('accessToken')
+    Cookies.remove('refresh_token');
+    dispatch(logout())
+    }
+    else{
+      console.log("logout failed")
+    }
+  })
+}
 
   if (!isOpen) return null;
   const handleHomeClick=(click)=>{
@@ -11,8 +32,13 @@ if(click==="home"){navigate("/")}
 if(click==="about"){navigate("/about")}
 if(click==="helpCenter"){navigate("/helpCenter")}
 if(click==="myBooking"){navigate("/myBooking")}
+if(click==="Logout"){
+  handelLogout()
+  onClose(false)
+}
 
 }
+
 
   return (
     <>
@@ -70,7 +96,7 @@ if(click==="myBooking"){navigate("/myBooking")}
             </button>
 
             <button
-              onClick={() => handleMenuClick('Logout')}
+              onClick={() => handleHomeClick('Logout')}
               className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-left border-t border-gray-100"
             >
               <LogOut size={22} className="text-red-600" />

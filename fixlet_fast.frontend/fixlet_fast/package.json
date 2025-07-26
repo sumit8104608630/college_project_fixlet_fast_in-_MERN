@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.4.0",
     "axios": "^1.7.9",
+    "caniuse-lite": "^1.0.30001721",
     "country-state-city": "^3.2.1",
     "dotenv": "^16.4.7",
     "js-cookie": "^3.0.5",
