@@ -14,6 +14,7 @@ function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [errorMessage, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false); // Local loading state for API call
   
   // Get the authentication state from Redux
   const { userInfo, isLoading } = useSelector((state) => state.user);
@@ -32,6 +33,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(""); // Clear previous errors
+    setIsSubmitting(true); // Start local loading
     
     try {
       const respond = await fetch(`${apiUrl}/user/user_login`, {
@@ -44,7 +46,6 @@ function Login() {
       });
 
       const datas = await respond.json();
-      console.log(datas);
       
       if (datas.statusCode == 200) {
         dispatch(fetchUser());
@@ -60,6 +61,8 @@ function Login() {
     } catch (error) {
       console.log("Error during login:", error);
       setError("Network error. Please try again.");
+    } finally {
+      setIsSubmitting(false); // Stop local loading
     }
   };
 
@@ -81,9 +84,12 @@ function Login() {
   const LoadingSpinner = () => (
     <div className="flex items-center justify-center">
       <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2"></div>
-      <span>Logging In...</span>
+      <span>{isSubmitting ? "Logging In..." : "Loading..."}</span>
     </div>
   );
+
+  // Combined loading state - true if either local submission or Redux loading
+  const isFormDisabled = isSubmitting || isLoading;
 
   return (
     <div className='w-full justify-center flex px-2'>
@@ -100,12 +106,12 @@ function Login() {
                   value={formData.email}
                   onChange={handleInput}
                   className={`border-2 w-full focus:outline-none rounded-lg border-gray-300 px-5 py-1 ${
-                    isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                    isFormDisabled ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
                   type="email"
                   placeholder='email@gmail.com'
                   name="email"
-                  disabled={isLoading}
+                  disabled={isFormDisabled}
                   required
                 />
               </div>
@@ -113,7 +119,7 @@ function Login() {
               <div className='flex gap-1 flex-col mt-3'>
                 <label>Password: </label>
                 <div className={`border-2 bg-white flex px-5 py-1 w-full rounded-lg border-gray-300 ${
-                  isLoading ? 'opacity-50' : ''
+                  isFormDisabled ? 'opacity-50' : ''
                 }`}>
                   <input
                     value={formData.password}
@@ -121,14 +127,14 @@ function Login() {
                     className='w-full focus:outline-none rounded-lg'
                     onChange={handleInput}
                     name="password"
-                    disabled={isLoading}
+                    disabled={isFormDisabled}
                     required
                   />
                   <button 
                     type='button' 
-                    className={`text-xl ${isLoading ? 'cursor-not-allowed' : ''}`}
+                    className={`text-xl ${isFormDisabled ? 'cursor-not-allowed' : ''}`}
                     onClick={() => setToggle(prev => !prev)}
-                    disabled={isLoading}
+                    disabled={isFormDisabled}
                   >
                     {toggle ? <IoEye /> : <IoMdEyeOff />}
                   </button>
@@ -148,13 +154,13 @@ function Login() {
                 <button
                   type='submit'
                   className={`px-5 py-2 text-white font-semibold rounded-lg w-full transition-all duration-200 ${
-                    isLoading 
+                    isFormDisabled 
                       ? 'bg-orange-400 cursor-not-allowed opacity-80' 
                       : 'bg-orange-500 hover:bg-orange-600 active:bg-orange-700'
                   }`}
-                  disabled={isLoading}
+                  disabled={isFormDisabled}
                 >
-                  {isLoading ? <LoadingSpinner /> : "Log In"}
+                  {isFormDisabled ? <LoadingSpinner /> : "Log In"}
                 </button>
               </div>
             </form>
