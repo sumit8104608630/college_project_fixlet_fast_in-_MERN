@@ -74,7 +74,7 @@ function MyBooking() {
     return (
         <>
             {bookingLoading && isLoading ? <Loader /> :
-                <div className={`pt-16 sm:pt-20 ${cancelCart && "overflow-hidden"} w-full min-h-screen bg-gray-50`}>
+                <div className={`pt-32 sm:pt-20 ${cancelCart && "overflow-hidden"} w-full min-h-screen bg-gray-50`}>
                     {/* Back Button Header */}
                     <div className=' w-full top-0  md:hidden fixed bg-white shadow-sm border-b z-10'>
                         <div className='px-4 sm:px-6 lg:px-20 py-4'>

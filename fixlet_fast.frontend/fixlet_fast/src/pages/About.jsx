@@ -36,7 +36,7 @@ function About() {
 
   return (
     <>
-      <div className='pb-8 md:py-16 bg-gray-100 min-h-screen'>
+      <div className='pt-32 md:pt-16 pb-8 bg-gray-100 min-h-screen'>
         {/* Header Section */}
         <div className='w-full justify-center bg-white'>
           <h1 className='text-2xl md:text-3xl font-bold text-gray-700 text-center py-4 md:py-5'>ABOUT US</h1>

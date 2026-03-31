@@ -68,7 +68,7 @@ function Contact() {
 
   return (
   
-<div className="flex justify-center w-full items-center min-h-screen pt-14 px-4">
+<div className="flex justify-center w-full items-center min-h-screen pt-32 px-4">
 
   {loading&&
 <div className="w-full h-screen fixed top-0 z-20 bg-opacity-50 bg-white">

@@ -34,9 +34,8 @@ if(click==="helpCenter"){navigate("/helpCenter")}
 if(click==="myBooking"){navigate("/myBooking")}
 if(click==="Logout"){
   handelLogout()
-  onClose(false)
 }
-
+onClose(false)
 }
 
 
