@@ -384,72 +384,90 @@ const userInfo=asyncHandler(async(req,res)=>{
 
 const saveUserAddress=asyncHandler(async(req,res)=>{
   try {
-
     const {longitude,latitude}=req.body;
-    console.log(longitude,latitude) 
-   const _id=req.user._id;  
+    const _id=req.user._id;  
+    
+    // Reverse Geocoding with OpenCage
     const Api="https://api.opencagedata.com/geocode/v1/json"
     const apiKey="6657af194bfb4a048eea38f84c4504b6"
     const query = `${latitude},${longitude}`;
     const url=`${Api}?key=${apiKey}&q=${query}&pretty=1`;
 
-    const location =await fetch(url);
-    const locationData=await location.json();
-    const formatted=locationData.results[0].components
-  //  console.log(formatted)
-
-    if(!formatted){
-      return new ApiResponse("invalid location",400);
-    }
-    const pinCode=formatted.postcode;
-
-    const dataLocation=await (await fetch(`http://www.postalpincode.in/api/pincode/${pinCode}`)).json();
-    console.log(dataLocation)
-
-   const currentLocation=`${formatted.neighbourhood},${formatted.city},${dataLocation.PostOffice[0].District},${dataLocation.PostOffice[1]?.Name},${dataLocation.PostOffice[0].Name},${formatted.postcode},${dataLocation.PostOffice[0].State}`
-
-  //let's check that we are in that state ,city or not
-  const state=dataLocation.PostOffice[0].State;
-  const city=formatted.city
-  const district=dataLocation.PostOffice[0].District;
-
-  const area = await Area.findOne({ state: state.toLowerCase() });
-  if(!area){
-     res.status(404).json({
-      message: "Area not found",
-      success:false
-    });
-  }
-  console.log(area);
-  const city_available=area.city;
- const isCityAvailable=city_available.some(
-  (item) => item.toLowerCase().trim() === city.toLowerCase() || item.toLowerCase().trim() === district.toLowerCase()
-);
-
-if (!isCityAvailable) {
-  return res.status(404).json({ message: "City or district not found", success: false });
-}
-
-    //let save this or update this to the user model by id
-    const userAddress=await User.findByIdAndUpdate(
-      _id,
-      { $set: { location: currentLocation,state:state.toLowerCase(),city:district.toLowerCase()} },
-      { new: true } // Return the updated document
-  );
-
-  //let set the district in req
-
-    req.location={
-      state:dataLocation.PostOffice[0].State,
-      region:dataLocation.PostOffice[0].Region,
-      district:dataLocation.PostOffice[0].District,
-    }
-    res.status(201).json(new ApiResponse(200,currentLocation,"user location as been saved"))
-
+    const locationResponse = await fetch(url);
+    const locationData = await locationResponse.json();
     
+    if (!locationData.results || locationData.results.length === 0) {
+      return res.status(400).json({ success: false, message: "Invalid location coordinates" });
+    }
+
+    const formatted = locationData.results[0].components;
+    const pinCode = formatted.postcode;
+    
+    if (!pinCode) {
+      return res.status(400).json({ success: false, message: "Unable to determine pincode for this location" });
+    }
+
+    // Try to get district/state info from postalpincode.in with timeout
+    let state, district;
+    try {
+      const pincodeResponse = await fetch(`http://www.postalpincode.in/api/pincode/${pinCode}`, {
+        signal: AbortSignal.timeout(5000) // 5s timeout for this external API
+      });
+      const dataLocation = await pincodeResponse.json();
+      
+      if (dataLocation.Status === "Success" && dataLocation.PostOffice) {
+        state = dataLocation.PostOffice[0].State;
+        district = dataLocation.PostOffice[0].District;
+      }
+    } catch (e) {
+      console.warn("PostalPincode API failed, falling back to reverse geocoding data:", e.message);
+    }
+
+    // Fallback to OpenCage data if pincode API fails
+    state = state || formatted.state || formatted.state_district;
+    district = district || formatted.city || formatted.town || formatted.suburb;
+
+    if (!state || !district) {
+      return res.status(400).json({ success: false, message: "Unable to determine area details" });
+    }
+
+    const currentLocation = `${formatted.neighbourhood || ""}${formatted.suburb ? ", " + formatted.suburb : ""}, ${district}, ${state}, ${pinCode}`;
+
+    // Check if we serve this area
+    const area = await Area.findOne({ state: state.toLowerCase() });
+    if (!area) {
+      return res.status(404).json({
+        success: false,
+        message: "We don't serve in your state yet",
+        data: currentLocation
+      });
+    }
+
+    const isCityAvailable = area.city.some(
+      (item) => item.toLowerCase().trim() === district.toLowerCase() || 
+                (formatted.city && item.toLowerCase().trim() === formatted.city.toLowerCase())
+    );
+
+    if (!isCityAvailable) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "We don't serve in your city yet", 
+        data: currentLocation 
+      });
+    }
+
+    // Update user record
+    await User.findByIdAndUpdate(
+      _id,
+      { $set: { location: currentLocation, state: state.toLowerCase(), city: district.toLowerCase() } },
+      { new: true }
+    );
+
+    res.status(200).json(new ApiResponse(200, currentLocation, "Location saved successfully"));
+
   } catch (error) {
-    console.log(error)
-    throw new apiError("some thing went wrong in server please try again after some time",500);
+    console.error("Critical error in saveUserAddress:", error);
+    res.status(500).json({ success: false, message: "Internal server error while saving location" });
   }
 })
 

@@ -47,6 +47,12 @@ function Location(props) {
   const handleCurrentLocation = async () => {
     setIsLocationLoading(true);
     
+    const geoOptions = {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 0
+    };
+
     navigator.geolocation.getCurrentPosition(async (position) => {
       try {
         const obj = {
@@ -64,22 +70,30 @@ function Location(props) {
         })
         
         const data = await fetchData.json()
-        setCompleteLocation(data.data)
         
-        if (data.data) {
+        if (data.success) {
+          setCompleteLocation(data.data)
           setNotInArea(false)
           setToggle(false)
+        } else {
+          setNotInArea(true)
+          console.warn("Location out of service area:", data.message)
         }
       } catch (error) {
-        console.error("Error fetching location:", error);
-        alert("Failed to get location. Please try again.");
+        console.error("Error fetching location from backend:", error);
+        alert("Server error: Unable to save your location. Please try entering it manually.");
       } finally {
         setIsLocationLoading(false);
       }
-    }, () => {
+    }, (error) => {
       setIsLocationLoading(false);
-      alert("Unable to get your location please allow the Location")
-    })
+      let errorMsg = "Unable to get your location.";
+      if (error.code === 1) errorMsg = "Location permission denied. Please allow location access in your browser settings.";
+      if (error.code === 2) errorMsg = "Position unavailable. Please try again or enter manually.";
+      if (error.code === 3) errorMsg = "Location request timed out. Please try again.";
+      
+      alert(errorMsg);
+    }, geoOptions)
   }
 
   const setCountry = (e) => {

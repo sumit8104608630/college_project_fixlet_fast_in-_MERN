@@ -1,7 +1,7 @@
 import React from "react";
 
 function CancelBooking(props) {
-    const {bookId,funCancelBooking}=props;
+    const {bookId,funCancelBooking, isLoading}=props;
 
 
 
@@ -12,8 +12,15 @@ function CancelBooking(props) {
         If you cancel your booking, 20% of the service price will be charged as a cancellation fee. The refund will be processed within 24 to 48 hours.
       </p>
       <div className="flex justify-end">
-        <button onClick={()=>funCancelBooking(bookId)} className="px-4 py-2 text-white bg-orange-500 rounded-md hover:bg-orange-600">
-          Cancel Booking
+        <button 
+          disabled={isLoading}
+          onClick={()=>funCancelBooking(bookId)} 
+          className={`px-4 py-2 text-white rounded-md flex items-center gap-2 ${isLoading ? 'bg-orange-300 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600'}`}
+        >
+          {isLoading && (
+            <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+          )}
+          {isLoading ? 'Cancelling...' : 'Cancel Booking'}
         </button>
       </div>
     </div>

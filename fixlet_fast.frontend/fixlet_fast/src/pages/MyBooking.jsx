@@ -21,6 +21,7 @@ function MyBooking() {
     const { bookingLoading, bookingAllData, bookingError } = useSelector(state => state.booking);
     const [cancelCart, setCancelCart] = useState(false);
     const [cancelBookId, setBookId] = useState(null)
+    const [isCancelling, setIsCancelling] = useState(false);
 
     useEffect(() => {
         if (cancelCart) {
@@ -52,18 +53,23 @@ function MyBooking() {
     }
 
     const handleCancelBooking = async (bookingId) => {
-        console.log(bookingId)
+        setIsCancelling(true);
         try {
-            setBookingData({
-                ...bookingAllData,
-                Entries: bookingAllData.Entries.filter((item) => item._id !== bookingId),
-                totalAmountPay: bookingAllData.totalAmountPay - bookingAllData.Entries.filter((item) => item._id == bookingId)[0].totalAmount
-            })
-
             await axios.post(`${apiUrl}/book/deleteBooking`, { bookingId }, { withCredentials: true });
-            setCancelCart(false)
+            
+            // Update local state after successful deletion
+            setBookingData((prev) => ({
+                ...prev,
+                Entries: prev.Entries.filter((item) => item._id !== bookingId),
+                totalAmountPay: prev.totalAmountPay - (prev.Entries.find((item) => item._id === bookingId)?.totalAmount || 0)
+            }));
+            
+            setCancelCart(false);
         } catch (error) {
-            console.log(error)
+            console.error("Error deleting booking:", error);
+            alert("Failed to cancel booking. Please try again.");
+        } finally {
+            setIsCancelling(false);
         }
     }
 
@@ -100,14 +106,14 @@ function MyBooking() {
                                 >
                                     <IoCloseOutline size={20} />
                                 </button>
-                                <CancelBooking funCancelBooking={handleCancelBooking} bookId={cancelBookId} />
+                                <CancelBooking funCancelBooking={handleCancelBooking} bookId={cancelBookId} isLoading={isCancelling} />
                             </div>
                         </div>
                     }
 
                     {/* Main Content */}
                     <div className='px-4 sm:px-6 lg:px-20 py-6 sm:py-10'>
-                        {!Object.hasOwn(bookingData, "Entries") && !bookingLoading ?
+                        {(!bookingData.Entries || bookingData.Entries.length === 0) && !bookingLoading ?
                             <div className='pt-10 sm:pt-20 w-full min-h-[60vh] flex justify-center items-center'>
                                 <div className='w-full max-w-md flex flex-col items-center px-4'>
                                     <img className='w-40 sm:w-52' src={EmptyBooking} alt="No bookings" />
