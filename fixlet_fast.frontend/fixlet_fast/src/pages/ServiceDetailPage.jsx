@@ -423,28 +423,28 @@ function isEmpty(obj_inside) {
                 <div><Promise /></div>
               ) : (
                 <div
-                  className={`grid h-max w-max grid-cols-${Math.ceil(all_service?.length <= 2 ? 2 : all_service?.length / 2)} gap-5 md:border-2 md:p-5  rounded-lg`} style={{ gridTemplateColumns: `repeat(${Math.ceil(all_service?.length <= 2 ? 2 : all_service?.length >2?3:all_service?.length/2)}, 1fr)` } }
+                  className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-3 gap-3 md:gap-5 md:border-2 md:p-5 rounded-xl bg-gray-50/50"
                 >
                   {all_service?.map((service) => (
                     <Link
                       to={service.servicePartName}
                       smooth={true}
-                      offset={-580}
+                      offset={-120}
                       duration={500}
                       onClick={()=>handleClickMenu(service)}
                       key={service._id}
                     >
                       <div
-                        className={`bg-white p-4 w-24 h-full flex flex-col items-center justify-between rounded border-2 border-gray-200 transition-transform transform hover:scale-95 hover:border-gray-500 gap-2 cursor-pointer ${
-                          service.serviceName === active && "border-2 border-gray-500"
+                        className={`bg-white p-3 w-full aspect-square flex flex-col items-center justify-center rounded-xl border-2 transition-all hover:shadow-md hover:border-orange-300 cursor-pointer ${
+                          service.serviceName === active ? "border-orange-500 bg-orange-50" : "border-gray-100"
                         }`}
                       >
                         <img
                           src={service.serviceImage}
                           alt={service.serviceName}
-                          className="md:w-full h-auto w-14 object-cover rounded"
+                          className="w-10 h-10 md:w-12 md:h-12 object-contain mb-2"
                         />
-                        <h2 className="text-center text-xs md:text-sm text-gray-600 font-semibold ">{service.serviceName}</h2>
+                        <h2 className="text-center text-[10px] md:text-xs text-gray-700 font-bold leading-tight">{service.serviceName}</h2>
                       </div>
                     </Link>
                   ))}
@@ -461,28 +461,28 @@ function isEmpty(obj_inside) {
                 <div><Promise /></div>
               ) : (
                 <div
-                  className={`grid h-max w-max grid-cols-${Math.ceil(all_service?.length <= 2 ? 2 : all_service?.length / 2)} gap-5 md:border-2 md:p-5  rounded-lg`} style={{ gridTemplateColumns: `repeat(${Math.ceil(all_service?.length <= 2 ? 2 : all_service?.length >2?3:all_service?.length/2)}, 1fr)` } }
+                  className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-3 gap-3 md:gap-5 md:border-2 md:p-5 rounded-xl bg-gray-50/50"
                 >
                   {all_service?.map((service) => (
                     <Link
                       to={service.servicePartName}
                       smooth={true}
-                      offset={-70}
+                      offset={-120}
                       duration={500}
                       onClick={()=>handleClickMenu(service)}
                       key={service._id}
                     >
                       <div
-                        className={`bg-white p-4 w-24 h-full flex flex-col items-center justify-between rounded border-2 border-gray-200 transition-transform transform hover:scale-95 hover:border-gray-500 gap-2 cursor-pointer ${
-                          service.serviceName === active && "border-2 border-gray-500"
+                        className={`bg-white p-3 w-full aspect-square flex flex-col items-center justify-center rounded-xl border-2 transition-all hover:shadow-md hover:border-orange-300 cursor-pointer ${
+                          service.serviceName === active ? "border-orange-500 bg-orange-50" : "border-gray-100"
                         }`}
                       >
                         <img
                           src={service.serviceImage}
                           alt={service.serviceName}
-                          className="md:w-full h-auto w-14 object-cover rounded"
+                          className="w-10 h-10 md:w-12 md:h-12 object-contain mb-2"
                         />
-                        <h2 className="text-center text-xs md:text-sm text-gray-600 font-semibold ">{service.serviceName}</h2>
+                        <h2 className="text-center text-[10px] md:text-xs text-gray-700 font-bold leading-tight">{service.serviceName}</h2>
                       </div>
                     </Link>
                   ))}

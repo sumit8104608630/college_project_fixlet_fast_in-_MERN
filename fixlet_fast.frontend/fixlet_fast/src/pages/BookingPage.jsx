@@ -576,13 +576,13 @@ const handlePay = async (amount,allItem,date) => {
               )}
 
               {/* Main Content */}
-              <div className="container mx-auto px-4 py-6 lg:py-12">
+              <div className="container  mx-auto px-4 py-15 lg:py-20">
                 <div className="max-w-6xl mx-auto">
                   {/* Mobile: Stack vertically, Desktop: Side by side */}
                   <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
                     
                     {/* Left Column - Booking Details */}
-                    <div className="flex-1 space-y-6">
+                    <div className="flex-1  space-y-6">
                       {/* Offer Banner */}
                       <div className="bg-green-100 border border-green-200 rounded-lg p-4">
                         <p className="text-center text-green-800 font-medium text-sm">

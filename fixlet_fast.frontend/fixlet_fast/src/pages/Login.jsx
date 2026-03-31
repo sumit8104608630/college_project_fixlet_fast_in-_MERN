@@ -75,10 +75,7 @@ function Login() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    return () => {
-      console.log("Cleanup function called");
-    };
-  }, [data]);
+  }, []);
 
   // Loading Spinner Component
   const LoadingSpinner = () => (

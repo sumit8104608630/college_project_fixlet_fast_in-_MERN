@@ -10,65 +10,64 @@ import play from "../assets/Google_Play_Store_badge_EN.svg.png"
 
 function Footer() {
   return (
-    <div className='bg-gray-200 mt-10 xl:block hidden '>
-    <div className=' flex flex-col px-56 pt-14 '>
-         <div className='mb-10'>      
-          <img className='w-56' src={logo}/>
+    <div className='bg-gray-100 mt-10 w-full'>
+      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-8'>
+        <div className='mb-8 flex justify-center md:justify-start'>      
+          <img className='w-40 md:w-56' src={logo} alt="Fixlet Fast Logo" />
         </div>
-        <div className='flex justify-between '>
-      <div className='flex flex-col px-5 py-10'>
-     
-      <h1 className='text-xl font-semibold text-gray-700 mb-5'>Company</h1>
-      <ul className='flex flex-col gap-3'>
-        <li><Link className='text-gray-700 text-lg hover:underline' to={"/about"}>About us</Link></li>
-        <li><a href='#' className='text-gray-700 text-lg hover:underline'>Privacy Policy</a></li>
-        <li><a href='#' className='text-gray-700 text-lg hover:underline'>Terms & Condition</a></li>
-        <li><a href='#' className='text-gray-700 text-lg hover:underline'>Anti-discrimination policy</a></li>
-        <li><a target='blank' href="http://localhost:5174/" className='text-gray-700 text-lg hover:underline'>Careers</a></li>
-      </ul>
-      </div>
+        
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-8 mb-10'>
+          <div className='flex flex-col'>
+            <h1 className='text-lg font-bold text-gray-800 mb-4'>Company</h1>
+            <ul className='flex flex-col gap-2'>
+              <li><Link className='text-gray-600 hover:text-orange-500 transition-colors' to={"/about"}>About us</Link></li>
+              <li><a href='#' className='text-gray-600 hover:text-orange-500 transition-colors'>Privacy Policy</a></li>
+              <li><a href='#' className='text-gray-600 hover:text-orange-500 transition-colors'>Terms & Condition</a></li>
+              <li><a href='#' className='text-gray-600 hover:text-orange-500 transition-colors'>Anti-discrimination policy</a></li>
+              <li><a target='_blank' rel="noopener noreferrer" href="http://localhost:5174/" className='text-gray-600 hover:text-orange-500 transition-colors'>Careers</a></li>
+            </ul>
+          </div>
 
+          <div className='flex flex-col'>
+            <h1 className='text-lg font-bold text-gray-800 mb-4'>For Customers</h1>
+            <ul className='flex flex-col gap-2'>
+              <li><Link to={"/feedback"} className='text-gray-600 hover:text-orange-500 transition-colors'>Feedback</Link></li>
+              <li><a href='#' className='text-gray-600 hover:text-orange-500 transition-colors'>Customer policy</a></li>
+              <li><a href='#' className='text-gray-600 hover:text-orange-500 transition-colors'>Services near you</a></li>
+              <li><Link className='text-gray-600 hover:text-orange-500 transition-colors' to={"/contact"}>Contact</Link></li>
+            </ul>
+          </div>
 
-      <div className='flex flex-col px-5 py-10'>
-      <h1 className='text-xl font-semibold text-gray-700 mb-5'>For customer</h1>
-      <ul className='flex flex-col gap-3'>
-        <li><Link to={"/feedback"} className='text-gray-700 text-lg hover:underline'>Feed back</Link></li>
-        <li><a href='#' className='text-gray-700 text-lg hover:underline'> Customer policy</a></li>
-        <li><a href='#' className='text-gray-700 text-lg hover:underline'>Service near you</a></li>
-        <li><Link className='text-gray-700 text-lg hover:underline' to={"/contact"}>Contact</Link></li>
-      </ul>
-      </div>
+          <div className='flex flex-col'>
+            <h1 className='text-lg font-bold text-gray-800 mb-4'>For Partners</h1>
+            <ul className='flex flex-col gap-2'>
+              <li><a href='#' className='text-gray-600 hover:text-orange-500 transition-colors'>Register as professional</a></li>
+            </ul>
+          </div>
 
-
-      <div className='flex flex-col px-5 py-10'>
-      <h1 className='text-xl font-semibold text-gray-700 mb-5'>For Partner</h1>
-      <ul className='flex flex-col gap-3'>
-        <li><a href='#' className='text-gray-700 text-lg hover:underline'>Register as professional</a></li>
-      </ul>
-      </div>
-
-      <div className='flex items-start flex-col  px-5 py-10'>
-      <h1 className='text-xl  font-semibold text-gray-700 mb-5'>Social link</h1>
-      <ul className='flex  mb-5 gap-3'>
-        <li><a href='#' ><FaInstagram  size={25} className='text-gray-700' /></a></li>
-        <li><a href='#' ><FaXTwitter  size={25} className='text-gray-700' /></a></li>
-        <li><a href='#' ><CiFacebook   size={25} className='text-gray-700' /></a></li>
-        <li><a href='#' ><CiLinkedin   size={25} className='text-gray-700' /></a></li>
-      
-      </ul>
-      <div>
-        <ul className='flex flex-col gap-2 items-center'>
-          <li><a href='#'><img className='w-28' src={apple}></img></a></li>
-          <li><a href='#'><img className='w-24' src={play}></img></a></li>
-          </ul>
+          <div className='flex flex-col'>
+            <h1 className='text-lg font-bold text-gray-800 mb-4'>Social Links</h1>
+            <div className='flex gap-4 mb-6'>
+              <a href='#' className='text-gray-600 hover:text-orange-500 transition-colors'><FaInstagram size={24} /></a>
+              <a href='#' className='text-gray-600 hover:text-orange-500 transition-colors'><FaXTwitter size={24} /></a>
+              <a href='#' className='text-gray-600 hover:text-orange-500 transition-colors'><CiFacebook size={24} /></a>
+              <a href='#' className='text-gray-600 hover:text-orange-500 transition-colors'><CiLinkedin size={24} /></a>
+            </div>
+            <div className='flex flex-col gap-3'>
+              <a href='#'><img className='w-28' src={apple} alt="App Store" /></a>
+              <a href='#'><img className='w-28' src={play} alt="Play Store" /></a>
+            </div>
+          </div>
+        </div>
+        
+        <hr className='border-gray-300 mb-6' />
+        
+        <div className='text-center'>
+          <p className='text-gray-500 text-sm'>
+            © {new Date().getFullYear()} Fixlet Fast. All rights reserved.
+          </p>
         </div>
       </div>
-</div>
-    </div>
-    <hr className='w-full h-0.5 bg-gray-400'></hr>
-    <div className='flex justify-center items-center py-5'>
-      <span className='text-gray-600'> © Copyright 2024 Urban Company. All rights reserved. | CIN: U74140DL2014PTC274413</span>
-    </div>
     </div>
   )
 }

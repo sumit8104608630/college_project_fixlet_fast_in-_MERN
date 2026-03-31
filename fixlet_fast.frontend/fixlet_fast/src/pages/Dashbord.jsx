@@ -72,19 +72,20 @@ axios.get(`${apiUrl}/global/user_count`).then(response=>response.data).then(data
     },[dispatch])
 
   useEffect(() => {
-    window.scroll(0,0)
-    if (link3Toggle||link2Toggle||link1Toggle) {
-      document.body.style.overflow="hidden"
-      
+    if (link3Toggle || link2Toggle || link1Toggle) {
+      document.body.style.overflow = "hidden"
     } else {
-      // Restore normal scroll behavior
       document.body.style.overflow = "auto";
     }
 
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [link3Toggle,link2Toggle,link1Toggle,dispatch,]);
+  }, [link3Toggle, link2Toggle, link1Toggle]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
 
 
@@ -114,388 +115,251 @@ const handleAddressSet=()=>{
   return (
     <>{isLoading||cartLoading?<Loader/>:
 <>
-
-   <ProfileMobileMenu
-        isOpen={isProfileMenuOpen}
-        onClose={setIsProfileMenuOpen}  
-      />
-
-
-      <div className='block md:hidden'>
-      {!Context.showAddress&&
-        <>
-      <div className='flex h-max fixed w-full z-10 shadow-sm  bg-white  flex-col gap-3 px-2 py-2'>
-        {userInfo?
-        <div className='flex items-center justify-between px-2'>
-        <div className='flex gap-4 justify-center items-center'>
-               <div>
-                    <button onClick={()=>setIsProfileMenuOpen(true)}>
-                    <CgProfile  className='text-orange-500 ' size={30} />
-                    </button>
-                </div>
-                <Location/>
-      </div>
-          <div>
-          {Context.cartShow&&
-      <div className="relative">
-            <Link to="/cart">
-            <p className='p-1 border-2 border-gray-800 rounded-full'><CiShoppingCart size={20} /></p>
-            {cartCount >0 && (
-                <span className="absolute top-0 right-0 translate-x-1/3 -translate-y-1/3 text-xs font-semibold text-white bg-red-600 rounded-full px-2 py-0.5">
-                  {cartCount}
-                </span>
-              )}
-            </Link>
-          </div>
-       
-      }
-      
-      
-      
-          </div>
-        </div>:
-                  <div className='flex w-full justify-end gap-5'>
-      
-                  <div>
-                  <NavLink className={({isActive})=>`${isActive?"text-white border-orange-500 border-2 font-semibold text-xs md:text-lg bg-orange-500 px-5 py-1 rounded-full":"text-orange-500 text-xs md:text-lg font-semibold border-2 px-5 py-1 rounded-full border-orange-500"} hover:text-orange-500 hover:border-orange-500  hover:bg-white`} to={"/login"}>
-                    Login
-                  </NavLink>
-                  </div>
-      
-                  <div>
-                  <NavLink  className={({isActive})=>`${isActive?"text-white border-orange-500 border-2 font-semibold text-xs md:text-lg bg-orange-500 px-5 py-1 rounded-full":"text-orange-500 text-xs md:text-lg font-semibold border-2 px-5 py-1 rounded-full border-orange-500"} hover:text-orange-500 hover:border-orange-500  hover:bg-white`} to={"/register"}>
-                    Sign Up
-                  </NavLink>
-                  </div>
-                  
-                </div>
-      }
-        <div className="sticky top-0  z-10 px-2 py-2">
-        <SearchBar />
-      </div>
-      
-      </div>
-
-      </>
-      }</div>
-
-
-
-
-{/* this is main dash board */}
-      
-
-      <main  className={ `custom-dashBoardScroll  pt-20 xl:pt-28  pb-4  w-full xl:px-32 ${ link3Toggle&&"  overflow-hidden "}` }>
-{link3Toggle&&
-<div className='fixed z-20 px-5 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
-  
-
-  
-      <div className=' border-1 rounded   backdrop-blur-lg bg-opacity-10 '>
-      <button onClick={()=>setlink3Toggle(false)} className='bg-white rounded-full p-1 mb-2 absolute right-0  -top-10 translate-y-0'><IoCloseOutline size={20}/></button>
-
-      <div className='rounded border-gray-600  shadow p-5 bg-white'>
-              <h1 className='mb-5 font-semibold text-lg'>Electrician, Plumber & Carpenter</h1>
-              <div className='flex  gap-5 mb-5  mt-3'>
-              <div className='flex gap-5 '>
-              <div className='md:w-24'>
-            <Link  to={{pathname:`/serviceDetailPage/service_data_get`,search:`?city=${city||"mumbai"}&categories=electrician`}} state={ {headLine: 'Electrician'} } className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className="md:w-11 w-32 " src={electricity_image} alt="Cleaning" />
-              </div>
-                <span className='text-xs mt-1'>Electrician</span>
-            </Link>
-            </div>
-
-            <div className='md:w-24'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=plumber`}   state={{ headLine: 'Plumber' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className="md:w-11 w-32 " src={plumber} alt="Plumber" />
-              </div>
-                <span className='text-xs mt-1'>Plumber</span>
-            </Link>
-            </div>
-
-            <div className='md:w-24'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=carpenter`} state={{ headLine: 'Carpenter' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className="md:w-11 w-32 " src={carpenter} alt="Festival Decoration" />
-              </div>
-              <span className='text-xs mt-1'>Carpenter</span>
-            </Link>
-          </div>
-            </div>
-            </div>
-            </div>
-              </div></div>
-
-}
-
-
-
-
-{link1Toggle&&
-<div className='fixed z-20 px-5 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen '>
-  
-  
-      <div className=' border-1 rounded   backdrop-blur-lg bg-opacity-10 '>
-      <button onClick={()=>setlink1Toggle(false)} className='bg-white rounded-full p-1 mb-2 absolute right-0  -top-10 translate-y-0'><IoCloseOutline size={20}/></button>
-
-      <div className='rounded border-gray-600  shadow p-5 bg-white'>
-              <h1 className='mb-5 font-semibold text-lg'>AC & Appliance repair</h1>
-              <div className='flex flex-col  gap-5 mb-5  mt-3'>
-              <div className='flex gap-5 '>
-
-              <div className='md:w-24'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=acservice`} state={{ headLine: 'AC repair & Service' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className="md:w-11 w-32 " src={ac_repair} alt="Cleaning" />
-              </div>
-                <span className='text-xs mt-1'>AC repair & Service</span>
-            </Link>
-            </div>
-
-              <div className='md:w-24'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=chimney`} state={{ headLine: 'Chimney Repair & Service' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className="md:w-11 w-32 " src={chimney} alt="Cleaning" />
-              </div>
-                <span className='text-xs mt-1'>Chimney Repair & Service</span>
-            </Link>
-            </div>
-
-            <div className='md:w-24'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=gasstoverepair`} state={{ headLine: 'Gas Repair & service' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className="md:w-11 w-32 " src={gas} alt="Electrician" />
-              </div>
-                <span className='text-xs mt-1'>Gas Repair & service</span>
-            </Link>
-            </div>
-         
-            </div>
-
-
-
-
-
-            <div className='flex gap-5 '>
-            <div className='md:w-24'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=refrigerator`} state={{ headLine: 'Refrigerator Repair ' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className="md:w-11 w-32 " src={refrigerator} alt="Festival Decoration" />
-              </div>
-              <span className='text-xs mt-1'>Refrigerator Repair </span>
-            </Link>
-          </div>
-
-            <div className='md:w-24'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=mixergrinder`} state={{ headLine: 'Mixer & Grinder Repair' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className="md:w-11 w-32 " src={mixer} alt="Electrician" />
-              </div>
-                <span className='text-xs mt-1'>Mixer & Grinder Repair</span>
-            </Link>
-            </div>
-
-            <div className='md:w-24'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=washingmachine`} state={{ headLine: 'Washin Machine Repair' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className="md:w-11 w-32 " src={washinMashin} alt="Festival Decoration" />
-              </div>
-              <span className='text-xs mt-1'>Washin Machine Repair </span>
-            </Link>
-          </div>
-            </div>
-            </div>
-            </div>
-              </div></div>
-
-}
-
-
-
-{link2Toggle?
-  <div className='fixed z-20 px-5 bg-opacity-50 left-0 top-0 justify-center items-center bg-black flex w-full h-screen '>
-  <div className=' border-1 rounded    backdrop-blur-lg bg-opacity-10 '>
-      <button onClick={()=>setlink2Toggle(false)} className='bg-white rounded-full p-1 mb-2 absolute right-0  -top-10 translate-y-0'><IoCloseOutline size={20}/></button>
-
-              
-              <div className='rounded border-gray-600  shadow p-5 bg-white'>
-              <h1 className='mb-5 font-semibold text-lg'>Cleaning & Pest pest control</h1>
-              <span>Cleaning</span>
-              <div className='flex  gap-5 mb-5  mt-3'>
-              <div className='md:w-24'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=bathroom_kitchen`} state={{ headLine: 'Bathroom & Kitchen Cleaning' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className=" md:w-11 w-32 " src={bathroom} alt="Cleaning" />
-              </div>
-                <span className='text-xs mt-1'>Bathroom & Kitchen Cleaning</span>
-            </Link>
-            </div>
-
-            <div className='md:w-24'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=fullhome`} state={{ headLine: 'Full Home Cleaning' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className=" md:w-11 w-32 " src={home} alt="Electrician" />
-              </div>
-                <span className='text-xs mt-1'>Full Home Cleaning</span>
-            </Link>
-            </div>
-
-            <div className='md:w-24'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=sofaCleaning`} state={{ headLine: 'Sofa Cleaning' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className=" md:w-11 w-32 " src={sofa_image} alt="Festival Decoration" />
-              </div>
-              <span className='text-xs mt-1'>Sofa Cleaning</span>
-            </Link>
-          </div>
-            </div>
-
-            <span>Pest Control</span>
-              <div className='flex  gap-5  mt-3'>
-              <div className='md:w-24'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=pestcontrol`} state={{ headLine: 'Insect Pest Control' }} className="relative w-full flex flex-col text-center  hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className=" md:w-11 w-12" src={pest} alt="Cleaning" />
-              </div>
-                <span className='text-xs mt-1'>Insect Pest Control</span>
-            </Link>
-            </div>
-
-
-
-            <div className='md:w-24'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=bedbugcontrol`}state={{ headLine: 'Bed Bugs Control' }} className="relative w-full flex flex-col text-center   hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className=" md:w-11 w-12 " src={bed} alt="Festival Decoration" />
-              </div>
-              <span className='text-xs mt-1'>Bed Bugs Control</span>
-            </Link>
-          </div>
-            </div>
-            </div>
-              </div></div>:""
-
-}
-
-
-
-
-
-
-
-
-        <div className=' flex w-full items-center justify-between'>
-
-          <div className='flex  flex-col '>
-          <h1  className='text-4xl w-96  text-start  xl:block hidden  text-gray-600 font-semibold'>
-            Home service at your doorstep
+    <main  className='pt-20 md:pt-28 pb-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+      {/* Hero Section */}
+      <div className='flex flex-col lg:flex-row items-center justify-between gap-10 mb-16'>
+        <div className='flex flex-col flex-1 w-full'>
+          <h1 className='text-3xl md:text-5xl lg:text-6xl text-gray-800 font-bold mb-6 text-center lg:text-left leading-tight'>
+            Home services at your doorstep
           </h1>
-          <div className='flex flex-col w-full  gap-5 mt-10 px-5 md:px-10 pt-5 pb-10 border-1 xl:rounded   xl:border-gray-600 xl:shadow justify-center items-center'>
-          <h1 className='text-start w-full  xl:block hidden text-lg text-gray-600'>What are you looking for?</h1>
-            <div className='flex gap-5'>
-             <div className='w-22 md:w-28 '>
-            <button onClick={()=>setlink2Toggle(true)} className="relative  hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className="md:w-11 w-32 " src={cleaning} alt="AC Repair" />
-               </div>
-                <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
-                <span className='text-xs mt-1'>Cleaning & pest control</span>
-            </button>
+          
+          <div className='bg-white rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8'>
+            <h2 className='text-xl font-semibold text-gray-700 mb-6 text-center lg:text-left'>What are you looking for?</h2>
+            
+            <div className='grid grid-cols-3 gap-4 md:gap-6'>
+              <button onClick={() => setlink2Toggle(true)} className="flex flex-col items-center group">
+                <div className="bg-orange-50 p-4 rounded-2xl group-hover:bg-orange-100 transition-colors duration-300 w-full aspect-square flex items-center justify-center">
+                  <img className="w-12 h-12 object-contain" src={cleaning} alt="Cleaning" />
+                </div>
+                <span className='text-[10px] md:text-xs mt-2 font-medium text-gray-600 text-center'>Cleaning & Pest Control</span>
+              </button>
+
+              <button onClick={() => setlink1Toggle(true)} className="flex flex-col items-center group">
+                <div className="bg-blue-50 p-4 rounded-2xl group-hover:bg-blue-100 transition-colors duration-300 w-full aspect-square flex items-center justify-center">
+                  <img className="w-12 h-12 object-contain" src={ac_repair} alt="AC Repair" />
+                </div>
+                <span className='text-[10px] md:text-xs mt-2 font-medium text-gray-600 text-center'>AC & Appliance Repair</span>
+              </button>
+
+              <button onClick={() => setlink3Toggle(true)} className="flex flex-col items-center group">
+                <div className="bg-green-50 p-4 rounded-2xl group-hover:bg-green-100 transition-colors duration-300 w-full aspect-square flex items-center justify-center">
+                  <img className="w-12 h-12 object-contain" src={electresian} alt="Electrician" />
+                </div>
+                <span className='text-[10px] md:text-xs mt-2 font-medium text-gray-600 text-center'>Electrician, Plumber & Carpenter</span>
+              </button>
+
+              <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=lightdecoration`} state={{ headLine: 'Festival Lights decoration' }} className="flex flex-col items-center group">
+                <div className="bg-yellow-50 p-4 rounded-2xl group-hover:bg-yellow-100 transition-colors duration-300 w-full aspect-square flex items-center justify-center">
+                  <img className="w-12 h-12 object-contain" src={festival_decoration} alt="Decoration" />
+                </div>
+                <span className='text-[10px] md:text-xs mt-2 font-medium text-gray-600 text-center'>Festival Lights</span>
+              </Link>
+
+              <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=wallpanel`} state={{ headLine: 'Wall Panel installation' }} className="flex flex-col items-center group">
+                <div className="bg-purple-50 p-4 rounded-2xl group-hover:bg-purple-100 transition-colors duration-300 w-full aspect-square flex items-center justify-center">
+                  <img className="w-12 h-12 object-contain" src={wallPanel} alt="Wall Panel" />
+                </div>
+                <span className='text-[10px] md:text-xs mt-2 font-medium text-gray-600 text-center'>Wall Panel</span>
+              </Link>
+
+              <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=wallpainting`} state={{ headLine: 'Painting & Water proofing' }} className="flex flex-col items-center group">
+                <div className="bg-red-50 p-4 rounded-2xl group-hover:bg-red-100 transition-colors duration-300 w-full aspect-square flex items-center justify-center">
+                  <img className="w-12 h-12 object-contain" src={paint} alt="Paint" />
+                </div>
+                <span className='text-[10px] md:text-xs mt-2 font-medium text-gray-600 text-center'>Painting & Waterproofing</span>
+              </Link>
             </div>
 
-            <div className='w-22 md:w-28'>
-            <button onClick={()=>setlink1Toggle(true)} className="relative hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className="md:w-11 w-32 " src={ac_repair} alt="Cleaning" />
+            <div className='flex justify-between mt-8 pt-6 border-t border-gray-100'>
+              <div className='flex flex-col items-center'>
+                <span className='text-xl font-bold text-gray-800'>4.8</span>
+                <span className='text-xs text-gray-500'>Service Rating</span>
               </div>
-                <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
-                <span className='text-xs mt-1'>AC & Appliance Repair</span>
-            </button>
+              <div className='flex flex-col items-center'>
+                <span className='text-xl font-bold text-gray-800'>{user_globally}</span>
+                <span className='text-xs text-gray-500'>Global Customers</span>
+              </div>
             </div>
+          </div>
+        </div>
+        
+        <div className='hidden lg:block flex-1'>
+          <Addvertice />
+        </div>
+      </div>
 
-            <div  className='  w-22 md:w-28'>
-            <button onClick={()=>!link2Toggle?setlink3Toggle(true):setlink3Toggle(false )} className="relative  hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className="md:w-11 w-32 " src={electresian} alt="Electrician" />
-              </div>
-                <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
-                <span className='text-xs mt-1'>Electrician,Plumber & Carpenter</span>
+      {/* Quick Access Section */}
+      <div className='mb-16'>
+        <div className='flex items-center justify-between mb-6'>
+          <h2 className='text-2xl font-bold text-gray-800'>Quick Access</h2>
+          <div className='hidden md:flex gap-2'>
+            <button onClick={scrollLeft} className='p-2 rounded-full bg-gray-100 hover:bg-orange-500 hover:text-white transition-all'>
+              <IoIosArrowDropleft size={24} />
             </button>
-            </div>
+            <button onClick={scrollRight} className='p-2 rounded-full bg-gray-100 hover:bg-orange-500 hover:text-white transition-all'>
+              <IoIosArrowDropright size={24} />
+            </button>
+          </div>
+        </div>
+        <div ref={scrollContainRef} className='overflow-x-auto pb-4 scrollbar-hide'>
+          <QuickAccess />
+        </div>
+      </div>
 
-  
-              </div>
-            <div className='flex gap-5'>
-            <div className='w-22 md:w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=lightdecoration`} state={{ headLine: 'Festival Lights decoration' }} className="relative  flex flex-col text-center hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className="md:w-11 w-32 " src={festival_decoration} alt="Festival Decoration" />
-              </div>
-              <span className="absolute left-1/2 bottom-0 h-[2px] w-0  bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
-              <span className='text-xs mt-1'>Festival Lights decoration</span>
+      {/* Banner Section */}
+      <div className='mb-16'>
+        <div className='bg-amber-100 rounded-3xl overflow-hidden flex flex-col md:flex-row items-center'>
+          <div className='p-8 md:p-12 flex-1'>
+            <span className='inline-block px-4 py-1 bg-green-700 text-white text-sm font-semibold rounded-full mb-4'>
+              Decorate your Home
+            </span>
+            <h2 className='text-2xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight'>
+              Transform your living space with our premium selection
+            </h2>
+            <p className='text-gray-600 mb-8'>
+              Designed for comfort and style, our home essentials bring a new life to your space.
+            </p>
+            <Link to="/" className='inline-block px-8 py-3 bg-black text-white font-bold rounded-xl hover:bg-gray-800 transition-colors'>
+              Buy Now
             </Link>
           </div>
-
-
-          <div className='w-22 md:w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=wallpanel`} state={{ headLine: 'Wall Panel installation' }} className="relative w-full flex flex-col text-center    hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className="md:w-11 w-32 " src={wallPanel} alt="Wall Panel" />
-              </div>
-              <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
-              <span className='text-xs mt-1'>Wall Panel installation</span>
-            </Link>
-            </div>
-
-            <div className='w-22 md:w-28'>
-            <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=wallpainting`} state={{ headLine: 'Painting & Water proofing' }} className="relative w-full flex flex-col text-center hover:text-gray-600 group">
-              <div className="bg-gray-100 object-cover overflow-hidden px-8 rounded py-3">
-                <img className="md:w-11 w-32 " src={paint} alt="Paint" />
-              </div>
-              <span className="absolute left-1/2 bottom-0 h-[2px] w-0 bg-gray-600 transition-all duration-300 group-hover:left-0 group-hover:w-full"></span>
-              <span className='text-xs mt-1'>Painting & Water proofing</span>
-            </Link>
-            </div>
-  
-              </div>
-
+          <div className='flex-1 w-full h-64 md:h-auto'>
+            <img className='w-full h-full object-cover' src={sofa} alt="Sofa Decoration" />
           </div>
-          <div className='flex justify-between w-full  md:mt-5 px-5'>
-                <div className='flex flex-col items-center'><span className='md:text-xl text-base  font-semibold'>4.8</span><h1 className='text-gray-600 text-sm'>Service Rating</h1></div> 
-                <div className='flex flex-col items-center'><span className='md:text-xl text-base  font-semibold'>{user_globally}</span><h1 className='text-gray-600 text-sm'>Customer Globally</h1></div> 
+        </div>
+      </div>
+
+      {/* Modals/Popups */}
+      {link3Toggle && (
+        <div className='fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm'>
+          <div className='bg-white rounded-3xl shadow-2xl w-full max-w-2xl relative overflow-hidden'>
+            <button onClick={() => setlink3Toggle(false)} className='absolute right-4 top-4 p-2 bg-gray-100 rounded-full hover:bg-red-500 hover:text-white transition-all z-10'>
+              <IoCloseOutline size={24} />
+            </button>
+            <div className='p-8'>
+              <h3 className='text-2xl font-bold text-gray-800 mb-6'>Electrician, Plumber & Carpenter</h3>
+              <div className='grid grid-cols-3 gap-6'>
+                <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=electrician`} className='flex flex-col items-center group'>
+                  <div className='bg-gray-50 p-6 rounded-2xl w-full aspect-square flex items-center justify-center group-hover:bg-orange-50 transition-colors'>
+                    <img src={electricity_image} alt="Electrician" className='w-full h-full object-contain' />
+                  </div>
+                  <span className='text-sm mt-3 font-medium text-gray-700'>Electrician</span>
+                </Link>
+                <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=plumber`} className='flex flex-col items-center group'>
+                  <div className='bg-gray-50 p-6 rounded-2xl w-full aspect-square flex items-center justify-center group-hover:bg-orange-50 transition-colors'>
+                    <img src={plumber} alt="Plumber" className='w-full h-full object-contain' />
+                  </div>
+                  <span className='text-sm mt-3 font-medium text-gray-700'>Plumber</span>
+                </Link>
+                <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=carpenter`} className='flex flex-col items-center group'>
+                  <div className='bg-gray-50 p-6 rounded-2xl w-full aspect-square flex items-center justify-center group-hover:bg-orange-50 transition-colors'>
+                    <img src={carpenter} alt="Carpenter" className='w-full h-full object-contain' />
+                  </div>
+                  <span className='text-sm mt-3 font-medium text-gray-700'>Carpenter</span>
+                </Link>
               </div>
-        </div>
-          <Addvertice/>
-        </div>
-
-<div className='relative mt-20 gap-5 flex px-8 md:px-0  items-center'>
-<button onClick={scrollLeft} className=' xl:block hidden h-max' ><IoIosArrowDropleft className='text-orange-500' size={50}/></button>
-        <div ref={scrollContainRef} className='w-full custom-ResponsiveScrollbar overflow-auto custom-dashBoardScroll'>
-          <QuickAccess/>
-          </div>
-<button onClick={scrollRight} className=' xl:block hidden h-max'><IoIosArrowDropright className='text-orange-500' size={50}/></button>
-</div>
-
-<div className='px-2 '>
-        <div className='flex mt-14 md:py-10 py-5  md:px-10 px-5 w-full rounded bg-amber-100'>
-          <div className=' flex flex-col justify-between ' >
-            <div className=''>
-            <span className='md:text-xl text-base px-3 md:px-5 w-max rounded py-1 md:py-2  text-white bg-green-700 '>Decorate your Home</span>
-            <p className='text-xs mt-1 md:text-2xl font-normal text-gray-600  py-5'>Transform your living space with our premium selection of sofas and home essentials, designed for comfort and style</p>
             </div>
-            <Link > <span className='text-xs md:text-xl  bg-black py-2 font-bold  text-white  rounded px-5 md:px-10'>By now</span></Link>
           </div>
-          <div className='  flex  justify-end'><img  className='rounded  w-80 md:h-auto h-32 md:w-96 ' src={sofa}></img></div>
         </div>
-</div>
+      )}
 
+      {link1Toggle && (
+        <div className='fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm'>
+          <div className='bg-white rounded-3xl shadow-2xl w-full max-w-2xl relative overflow-hidden'>
+            <button onClick={() => setlink1Toggle(false)} className='absolute right-4 top-4 p-2 bg-gray-100 rounded-full hover:bg-red-500 hover:text-white transition-all z-10'>
+              <IoCloseOutline size={24} />
+            </button>
+            <div className='p-8'>
+              <h3 className='text-2xl font-bold text-gray-800 mb-6'>AC & Appliance Repair</h3>
+              <div className='grid grid-cols-3 gap-6'>
+                <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=ac_repair`} className='flex flex-col items-center group'>
+                  <div className='bg-gray-50 p-4 rounded-2xl w-full aspect-square flex items-center justify-center group-hover:bg-orange-50 transition-colors'>
+                    <img src={ac_repair} alt="AC" className='w-full h-full object-contain' />
+                  </div>
+                  <span className='text-xs mt-3 font-medium text-gray-700'>AC Repair</span>
+                </Link>
+                <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=chimney`} className='flex flex-col items-center group'>
+                  <div className='bg-gray-50 p-4 rounded-2xl w-full aspect-square flex items-center justify-center group-hover:bg-orange-50 transition-colors'>
+                    <img src={chimney} alt="Chimney" className='w-full h-full object-contain' />
+                  </div>
+                  <span className='text-xs mt-3 font-medium text-gray-700 text-center'>Chimney Repair</span>
+                </Link>
+                <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=gasstoverepair`} className='flex flex-col items-center group'>
+                  <div className='bg-gray-50 p-4 rounded-2xl w-full aspect-square flex items-center justify-center group-hover:bg-orange-50 transition-colors'>
+                    <img src={gas} alt="Gas" className='w-full h-full object-contain' />
+                  </div>
+                  <span className='text-xs mt-3 font-medium text-gray-700 text-center'>Gas Stove</span>
+                </Link>
+                <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=refrigerator`} className='flex flex-col items-center group'>
+                  <div className='bg-gray-50 p-4 rounded-2xl w-full aspect-square flex items-center justify-center group-hover:bg-orange-50 transition-colors'>
+                    <img src={refrigerator} alt="Refrigerator" className='w-full h-full object-contain' />
+                  </div>
+                  <span className='text-xs mt-3 font-medium text-gray-700 text-center'>Refrigerator</span>
+                </Link>
+                <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=mixergrinder`} className='flex flex-col items-center group'>
+                  <div className='bg-gray-50 p-4 rounded-2xl w-full aspect-square flex items-center justify-center group-hover:bg-orange-50 transition-colors'>
+                    <img src={mixer} alt="Mixer" className='w-full h-full object-contain' />
+                  </div>
+                  <span className='text-xs mt-3 font-medium text-gray-700 text-center'>Mixer/Grinder</span>
+                </Link>
+                <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=washingmachine`} className='flex flex-col items-center group'>
+                  <div className='bg-gray-50 p-4 rounded-2xl w-full aspect-square flex items-center justify-center group-hover:bg-orange-50 transition-colors'>
+                    <img src={washinMashin} alt="Washing" className='w-full h-full object-contain' />
+                  </div>
+                  <span className='text-xs mt-3 font-medium text-gray-700 text-center'>Washing Machine</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
-
-      </main>
-      </>
+      {link2Toggle && (
+        <div className='fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm'>
+          <div className='bg-white rounded-3xl shadow-2xl w-full max-w-2xl relative overflow-hidden'>
+            <button onClick={() => setlink2Toggle(false)} className='absolute right-4 top-4 p-2 bg-gray-100 rounded-full hover:bg-red-500 hover:text-white transition-all z-10'>
+              <IoCloseOutline size={24} />
+            </button>
+            <div className='p-8'>
+              <h3 className='text-2xl font-bold text-gray-800 mb-6'>Cleaning & Pest Control</h3>
+              <div className='grid grid-cols-3 gap-6'>
+                <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=bathroom_kitchen`} className='flex flex-col items-center group'>
+                  <div className='bg-gray-50 p-4 rounded-2xl w-full aspect-square flex items-center justify-center group-hover:bg-orange-50 transition-colors'>
+                    <img src={bathroom} alt="Bathroom" className='w-full h-full object-contain' />
+                  </div>
+                  <span className='text-xs mt-3 font-medium text-gray-700 text-center'>Bathroom/Kitchen</span>
+                </Link>
+                <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=fullhome`} className='flex flex-col items-center group'>
+                  <div className='bg-gray-50 p-4 rounded-2xl w-full aspect-square flex items-center justify-center group-hover:bg-orange-50 transition-colors'>
+                    <img src={home} alt="Full Home" className='w-full h-full object-contain' />
+                  </div>
+                  <span className='text-xs mt-3 font-medium text-gray-700 text-center'>Full Home</span>
+                </Link>
+                <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=sofaCleaning`} className='flex flex-col items-center group'>
+                  <div className='bg-gray-50 p-4 rounded-2xl w-full aspect-square flex items-center justify-center group-hover:bg-orange-50 transition-colors'>
+                    <img src={sofa_image} alt="Sofa" className='w-full h-full object-contain' />
+                  </div>
+                  <span className='text-xs mt-3 font-medium text-gray-700 text-center'>Sofa Cleaning</span>
+                </Link>
+                <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=pestcontrol`} className='flex flex-col items-center group'>
+                  <div className='bg-gray-50 p-4 rounded-2xl w-full aspect-square flex items-center justify-center group-hover:bg-orange-50 transition-colors'>
+                    <img src={pest} alt="Pest" className='w-full h-full object-contain' />
+                  </div>
+                  <span className='text-xs mt-3 font-medium text-gray-700 text-center'>Insect Control</span>
+                </Link>
+                <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=bedbugcontrol`} className='flex flex-col items-center group'>
+                  <div className='bg-gray-50 p-4 rounded-2xl w-full aspect-square flex items-center justify-center group-hover:bg-orange-50 transition-colors'>
+                    <img src={bed} alt="Bed Bug" className='w-full h-full object-contain' />
+                  </div>
+                  <span className='text-xs mt-3 font-medium text-gray-700 text-center'>Bed Bugs</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </main>
+</>
 }
     </>
   )

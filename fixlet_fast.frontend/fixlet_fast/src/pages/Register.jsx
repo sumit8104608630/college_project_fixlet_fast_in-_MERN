@@ -67,19 +67,19 @@ function Register() {
   const confirmPassword=(e)=>{
     setConfirmPassword(e.target.value)
   }
-  useEffect(()=>{
-    window.scrollTo(0,0)
-    if(formData.email.length>0){
-      //console.log("yes")
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    if (formData.email.length > 0) {
       setError(false)
       setSendOtp(true)
-    }else{
+    } else {
       setSendOtp(false)
       setOtpInput(false)
-
     }
-
-  },[formData.email])
+  }, [formData.email])
 
 
 

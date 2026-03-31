@@ -153,256 +153,199 @@ function Location(props) {
 
   return (
     <>
-      {!Show.showAddress &&
+      {!Show.showAddress && (
         <>
-          <div className='md:block hidden'>
-            <button onClick={handleToggle} className='bg-white flex items-center px-2 py-2 rounded-lg'>
-              <FaLocationDot className='text-gray-500' size={20} />
-              {/* Replace <p> with <span> to avoid invalid nesting */}
-              <span className='text-gray-600 text-sm w-96 text-ellipsis overflow-hidden whitespace-nowrap px-2'>
-                {location || userInfo?.location}
+          <div className='md:block hidden w-full max-w-[250px] lg:max-w-[350px]'>
+            <button onClick={handleToggle} className='bg-white flex items-center px-3 py-2 rounded-xl shadow-sm border border-gray-100 hover:border-orange-200 transition-all w-full'>
+              <FaLocationDot className='text-orange-500 shrink-0' size={18} />
+              <span className='text-gray-600 text-xs lg:text-sm truncate px-2 text-left flex-1'>
+                {location || userInfo?.location || "Select Location"}
               </span>
-              <FaLocationCrosshairs size={20} className='text-gray-500' />
+              <FaLocationCrosshairs size={18} className='text-gray-400 shrink-0 hover:text-orange-500 transition-colors' />
             </button>
           </div>
 
           <button
             onClick={handleToggle}
-            className='flex flex-col md:hidden cursor-pointer'>
-            <div><p className='overflow-hidden w-40 text-ellipsis whitespace-nowrap'>{userInfo?.location}</p></div>
-            <div className='flex items-center gap-2'><span className=''>{userInfo?.city.charAt(0).toUpperCase() + userInfo?.city.slice(1)}</span><span><IoIosArrowDown /></span></div>
+            className='flex flex-col md:hidden cursor-pointer max-w-[120px]'>
+            <div className='flex items-center gap-1'>
+              <FaLocationDot className='text-orange-500 shrink-0' size={12} />
+              <p className='text-[10px] font-bold text-gray-800 truncate'>
+                {userInfo?.city ? userInfo.city.charAt(0).toUpperCase() + userInfo.city.slice(1) : "Select City"}
+              </p>
+              <IoIosArrowDown size={10} className="text-gray-500" />
+            </div>
+            <p className='text-[8px] text-gray-500 truncate pl-4'>{userInfo?.location}</p>
           </button>
         </>
-      }
+      )}
 
-      {Show.showAddress &&
+      {Show.showAddress && (
         <>
           <div className='w-full md:block hidden'>
-            <div className='flex w-full items-center justify-between'>
-              <div className='flex items-center gap-2'>
-                <FaLocationDot className='text-gray-600' size={25} />
-                <span className='text-gray-600 text-sm w-96 text-ellipsis px-2'>
-                  {location ? location : userInfo?.location}
+            <div className='flex w-full items-center justify-between gap-4 bg-gray-50 p-3 rounded-xl border border-gray-100'>
+              <div className='flex items-center gap-3 overflow-hidden'>
+                <FaLocationDot className='text-orange-500 shrink-0' size={22} />
+                <span className='text-gray-700 text-sm font-medium truncate'>
+                  {location ? location : userInfo?.location || "No location set"}
                 </span>
               </div>
+              <button
+                onClick={handleToggle}
+                className='shrink-0 px-4 py-1.5 text-sm bg-white text-orange-600 rounded-lg border border-orange-200 hover:bg-orange-50 transition-colors font-semibold shadow-sm'>
+                Change
+              </button>
+            </div>
+          </div>
+          <div className='flex items-center md:hidden justify-between w-full px-2 py-1 bg-orange-50 rounded-lg'>
+            <div className='flex items-center gap-2 overflow-hidden'>
+              <FaLocationDot className='text-orange-500 shrink-0' size={14} />
+              <p className='text-[10px] text-gray-700 truncate'>{userInfo?.location || "Select location"}</p>
+            </div>
+            <button onClick={handleToggle} className='shrink-0 text-[10px] font-bold text-orange-600 px-2 py-1 ml-2 bg-white rounded-md border border-orange-100'>Edit</button>
+          </div>
+        </>
+      )}
+
+      {toggle && (
+        <div className='fixed z-50 inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4'>
+          <div className='bg-white rounded-3xl shadow-2xl w-full max-w-md relative p-6'>
+            <button onClick={() => setToggle(false)} className='absolute right-4 top-4 p-2 hover:bg-gray-100 rounded-full transition-colors'>
+              <IoCloseOutline size={24} />
+            </button>
+
+            <h3 className='text-xl font-bold text-gray-800 mb-6'>Select Location</h3>
+
+            <button 
+              onClick={handleCurrentLocation} 
+              disabled={isLocationLoading}
+              className='w-full flex items-center justify-center gap-3 py-3 px-4 bg-orange-50 text-orange-600 font-bold rounded-2xl hover:bg-orange-100 transition-all border border-orange-100 disabled:opacity-50'
+            >
+              {isLocationLoading ? (
+                <LoadingSpinner size="w-5 h-5" />
+              ) : (
+                <FaLocationCrosshairs size={20} />
+              )}
+              Use Current Location
+            </button>
+
+            <div className='relative my-8'>
+              <div className='absolute inset-0 flex items-center'><div className='w-full border-t border-gray-100'></div></div>
+              <div className='relative flex justify-center text-sm'><span className='px-2 bg-white text-gray-400'>or set manually</span></div>
+            </div>
+
+            <button 
+              onClick={() => setToggle2(true)} 
+              className='w-full py-3 px-4 bg-gray-800 text-white font-bold rounded-2xl hover:bg-gray-900 transition-all shadow-lg'
+            >
+              Enter Address Details
+            </button>
+
+            <div className='mt-8 pt-6 border-t border-gray-50'>
+              <div className='flex items-start gap-3'>
+                <FaLocationDot className='text-gray-400 shrink-0' size={20} />
+                <div>
+                  <p className='text-xs font-bold text-gray-400 uppercase tracking-wider mb-1'>Current Selection</p>
+                  <p className='text-sm text-gray-600 leading-relaxed'>
+                    {location || userInfo?.location || "No location selected"}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {toggle2 && (
+        <div className='fixed z-[60] inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto'>
+          <div className='bg-white rounded-3xl shadow-2xl w-full max-w-lg relative p-8 my-auto'>
+            <button onClick={() => setToggle2(false)} className='absolute right-4 top-4 p-2 hover:bg-gray-100 rounded-full transition-colors'>
+              <IoCloseOutline size={24} />
+            </button>
+
+            <h2 className='text-2xl font-bold text-gray-800 mb-6'>Address Details</h2>
+            
+            <form onSubmit={handleSubmit} className='space-y-4'>
               <div>
-                <button
-                  onClick={handleToggle}
-                  className='px-5 py-2 bg-gray-100 rounded-lg border-2 border-gray-400 hover:bg-gray-200 font-semibold'>
-                  Edit
-                </button>
+                <label className='block text-xs font-bold text-gray-500 uppercase mb-1 ml-1'>Country</label>
+                <select
+                  name="country"
+                  value={formData.country}
+                  onChange={(e) => setCountry(e)}
+                  className='w-full px-4 py-3 rounded-2xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-all'
+                >
+                  <option value="">Select Country</option>
+                  {country.map((c) => (
+                    <option key={c.isoCode} value={JSON.stringify({name: c.name, code: c.isoCode})}>{c.name}</option>
+                  ))}
+                </select>
               </div>
-            </div>
-          </div>
-          <div className='flex items-center md:hidden justify-between px-2'>
-            <p className='text-xs px-0.5'>{userInfo?.location}</p>
-            <button onClick={handleToggle} className='text-orange-500 cursor-pointer border-2 px-2 py-1 rounded-lg border-gray-400'>Edit</button>
-          </div>
-        </>
-      }
 
-      {toggle &&
-        <>
-          <div className='fixed z-20 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen'>
-            <div className='relative h-max'>
-              <button onClick={() => { setToggle(false) }} className='bg-white rounded-full p-1 mb-2 absolute -top-10 right-0 translate-y-0'><IoCloseOutline size={20} /></button>
-
-              <div className='bg-white flex flex-col md:w-96 w-80 p-5 rounded'>
-                <div className=''>
-                  <button 
-                    onClick={handleCurrentLocation} 
-                    disabled={isLocationLoading}
-                    className={`w-full flex gap-2 items-center font-semibold py-2 px-1 rounded transition-all duration-200 ${
-                      isLocationLoading 
-                        ? 'text-orange-400 cursor-not-allowed opacity-70' 
-                        : 'text-orange-500 hover:text-orange-600 hover:bg-orange-50'
-                    }`}
+              <div className='grid grid-cols-2 gap-4'>
+                <div>
+                  <label className='block text-xs font-bold text-gray-500 uppercase mb-1 ml-1'>State</label>
+                  <select
+                    name="state"
+                    value={formData.state}
+                    onChange={(e) => handleStateChange(e.target.value)}
+                    className='w-full px-4 py-3 rounded-2xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-all'
                   >
-                    {isLocationLoading ? (
-                      <>
-                        <LoadingSpinner size="w-5 h-5" />
-                        <span>Getting Location...</span>
-                      </>
-                    ) : (
-                      <>
-                        <FaLocationCrosshairs size={20} className='text-orange-500' />
-                        <span>Current Location</span>
-                      </>
-                    )}
-                  </button>
+                    <option value="">Select State</option>
+                    {states.map((s) => (
+                      <option key={s.isoCode} value={s.name}>{s.name}</option>
+                    ))}
+                  </select>
                 </div>
-
-                <div className=''>
-                  <button 
-                    onClick={() => setToggle2(true)} 
-                    disabled={isLocationLoading}
-                    className={`w-full text-center gap-2 font-semibold text-white py-2 rounded mt-5 transition-all duration-200 ${
-                      isLocationLoading 
-                        ? 'bg-orange-400 cursor-not-allowed opacity-70' 
-                        : 'bg-orange-500 hover:bg-orange-600'
-                    }`}
+                <div>
+                  <label className='block text-xs font-bold text-gray-500 uppercase mb-1 ml-1'>City</label>
+                  <select
+                    name="city"
+                    value={formData.city}
+                    onChange={(e) => handleCityChange(e.target.value)}
+                    className='w-full px-4 py-3 rounded-2xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-all'
                   >
-                    Set Your Location
-                  </button>
-                </div>
-
-                <hr className='w-full h-0.5 bg-gray-400 my-3'></hr>
-                <div className='flex items-center'>
-                  {not_in_area ?
-                    <div className='flex flex-col gap-5 mt-5 items-center justify-center w-full'>
-                      <div className=''><img className='w-72' src={locationImage}></img></div>
-                      <div className="text-center text-gray-700 font-medium p-4">
-                        <span className='text-lg'>We're not there yet, but we'll arrive soon. Thanks for your patience!</span>
-                      </div>
-                    </div> :
-                    <>
-                      <FaLocationDot className='text-gray-500' size={25} />
-                      <p className='text-gray-600 text-sm w-full px-2'>{location ? location : userInfo.location}</p>
-                    </>
-                  }
+                    <option value="">Select City</option>
+                    {cities.flat().map((city) => (
+                      <option key={city.name} value={city.name}>{city.name}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
-            </div>
+
+              <div>
+                <label className='block text-xs font-bold text-gray-500 uppercase mb-1 ml-1'>Street Address</label>
+                <input
+                  type="text"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  placeholder="House No, Street, Area"
+                  className='w-full px-4 py-3 rounded-2xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-all'
+                />
+              </div>
+
+              <div>
+                <label className='block text-xs font-bold text-gray-500 uppercase mb-1 ml-1'>Pincode</label>
+                <input
+                  type="text"
+                  name="pincode"
+                  value={formData.pincode}
+                  onChange={handleChange}
+                  className='w-full px-4 py-3 rounded-2xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-all'
+                />
+              </div>
+
+              <button 
+                type="submit"
+                disabled={isFormSubmitting}
+                className='w-full py-4 bg-orange-500 text-white font-bold rounded-2xl hover:bg-orange-600 transition-all shadow-lg shadow-orange-200 mt-4 disabled:opacity-50'
+              >
+                {isFormSubmitting ? <LoadingSpinner size="w-6 h-6" /> : 'Save Address'}
+              </button>
+            </form>
           </div>
-
-          {toggle2 &&
-            <div className='absolute overflow-auto md:px-2 px-5 z-30 py-10 justify-center items-center bg-opacity-50 left-0 top-0 bg-black flex w-full h-screen'>
-              <div className='relative h-full'>
-                <button onClick={() => setToggle2(false)} className='bg-white rounded-full p-1 mb-2 absolute -top-0 right-0 translate-y-0'><IoCloseOutline size={20} /></button>
-
-                <div className="max-w-lg mx-auto mt-10 w-full bg-white p-8 rounded-lg shadow-lg">
-                  <h2 className="text-2xl font-bold mb-6 text-center text-gray-600">
-                    Address Form
-                  </h2>
-                  <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
-                      <label className="block text-sm font-medium text-gray-400 mb-1">
-                        Country
-                      </label>
-                      <select
-                        name="country"
-                        value={formData.country}
-                        onChange={(e) => setCountry(e)}
-                        disabled={isFormSubmitting}
-                        className={`w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 ${
-                          isFormSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                        }`}
-                      >
-                        <option value="">Select Country</option>
-                        {country.flat().map((country) => (
-                          <option key={country.name}
-                            value={JSON.stringify({ name: country.name, code: country.isoCode })} // Encode as a JSON string
-                          >
-                            {country.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className='flex gap-2'>
-                      <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-400 mb-1">
-                          State
-                        </label>
-                        <select
-                          name="state"
-                          value={formData.state}
-                          onChange={(e) => handleStateChange(e.target.value)}
-                          disabled={isFormSubmitting}
-                          className={`w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 ${
-                            isFormSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                          }`}
-                        >
-                          <option value="">Select State</option>
-                          {states.map((state) => (
-                            <option key={state.isoCode} value={state.name}>
-                              {state.name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-400 mb-1">
-                          City
-                        </label>
-                        <select
-                          name="city"
-                          value={formData.city}
-                          onChange={(e) => handleCityChange(e.target.value)}
-                          disabled={isFormSubmitting}
-                          className={`w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 ${
-                            isFormSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                          }`}
-                        >
-                          <option value="">Select City</option>
-                          {cities.flat().map((city) => (
-                            <option key={city.name} value={city.name}>
-                              {city.name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="mb-4">
-                      <label className="block text-sm font-medium text-gray-400 mb-1">
-                        Pin Code
-                      </label>
-                      <input
-                        type="text"
-                        name="pincode"
-                        value={formData.pincode}
-                        onChange={handleChange}
-                        disabled={isFormSubmitting}
-                        placeholder="Enter your pin code"
-                        className={`w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 ${
-                          isFormSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                        }`}
-                      />
-                    </div>
-
-                    <div className="mb-4">
-                      <label className="block text-sm font-medium text-gray-400 mb-1">
-                        Address
-                      </label>
-                      <textarea
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                        disabled={isFormSubmitting}
-                        placeholder="Enter your address like street, Road etc.."
-                        className={`w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 ${
-                          isFormSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                        }`}
-                      ></textarea>
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={isFormSubmitting}
-                      className={`w-full py-2 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-200 ${
-                        isFormSubmitting
-                          ? 'bg-orange-400 text-white cursor-not-allowed opacity-80'
-                          : 'border-2 border-orange-500 hover:bg-orange-500 hover:text-white text-gray-600 hover:bg-orange-600'
-                      }`}
-                    >
-                      {isFormSubmitting ? (
-                        <div className="flex items-center justify-center gap-2">
-                          <LoadingSpinner />
-                          <span>Submitting...</span>
-                        </div>
-                      ) : (
-                        'Submit'
-                      )}
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          }
-        </>
-      }
+        </div>
+      )}
     </>
   )
 }
