@@ -12,8 +12,8 @@ function Footer() {
   return (
     <div className='bg-gray-100 mt-10 w-full'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-8'>
-        <div className='mb-8 flex justify-center md:justify-start'>      
-          <img className='w-40 md:w-56' src={logo} alt="Fixlet Fast Logo" />
+        <div className='mb-12 flex justify-center md:justify-start'>      
+          <img className='w-48 md:w-56' src={logo} alt="Fixlet Fast Logo" />
         </div>
         
         <div className='grid grid-cols-2 md:grid-cols-4 gap-8 mb-10'>

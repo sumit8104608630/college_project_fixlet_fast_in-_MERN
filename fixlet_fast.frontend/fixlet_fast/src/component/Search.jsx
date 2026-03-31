@@ -123,24 +123,20 @@ useEffect(() => {
   
 
   return (
-    <div className="relative z-0">
-      <div className="flex items-center bg-white border border-gray-300 rounded-lg shadow-sm">
+    <div className="relative w-full" ref={searchRef}>
+      <div className="relative flex items-center w-full">
         <input
-          size={50}
-          value={key}
-          onFocus={()=>setShowResult(true)}
-          onChange={(e) => handleChange(e)}
           type="text"
-          ref={searchRef}
-          placeholder={`Search ${placeholder}`}
-          className="w-full py-1 placeholder-gray-600 px-4 text-sm text-gray-700 rounded-l-lg focus:outline-none"
+          value={key}
+          onFocus={() => setShowResult(true)}
+          onChange={(e) => setKey(e.target.value)}
+          placeholder={placeholder}
+          className="w-full bg-gray-50 border border-gray-200 text-gray-800 text-sm rounded-2xl px-5 py-3.5 pl-12 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-500 transition-all shadow-sm"
         />
-        <button className="p-2 rounded-r-lg hover:text-orange-500 focus:outline-none">
-          <FaSearch
-            size={20}
-            className="text-gray-400 cursor-pointer hover:text-orange-500 transition duration-300 ease-in-out"
-          />
-        </button>
+        <FaSearch className="absolute left-4 text-gray-400" size={18} />
+        {searchLoading && (
+          <div className="absolute right-4 animate-spin rounded-full h-5 w-5 border-b-2 border-orange-500"></div>
+        )}
       </div>
       {showFilter &&showResult && (
         <div className="absolute bg-white border-2 w-full rounded-lg mt-2 px-2 py-1">

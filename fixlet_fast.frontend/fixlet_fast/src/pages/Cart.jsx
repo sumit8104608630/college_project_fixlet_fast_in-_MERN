@@ -63,74 +63,86 @@ useEffect(() => {
 
 
   return (<>{cartLoading&&offerLoading?<><Loader/></>:
-    <main className=' md:pt-28 pt-20  flex flex-col   items-center w-full md:px-32'>
-      <div className='w-full bg-white shadow-sm fixed top-0 px-5 py-5 '>
-     <Link to={"/"}>
-            <FaArrowLeftLong className='' size={25}/>
-    </Link>
-    </div>
-      {cartEmpty?
-      <div className='flex justify-between gap-5  flex-col items-center px-5 pt-3 '>
-                          <div>
-                            <img className='w-36' src={emptyCart} />
-                          </div>
-                          <div className='flex flex-col items-center '>
-                          <h1 className='text-lg md:text-xl font-medium text-gray-600'>No item in your cart</h1>
-                          <span className='text-xs md:text-base text-gray-500'>Lets add some service</span>
-                          </div>
-                          <div >
-                          <Link to={'/'} className='px-5 py-2 text-xs md:text-xl font-semibold text-gray-700 hover:bg-gray-100 bg-white border-2  rounded-lg'>Explore service</Link>
-                          </div>
-                        </div>
-                        :
-      <div className='w-full md:w-1/2'>
-              <div className='flex px-2 md:px-0 gap-4 items-center justify-start w-full mb-5'>
-                <IoCart size={50} className='text-orange-500' />
-                <h1 className='text-3xl text-gray-700 font-bold'>Your Cart</h1>
+    <main className='min-h-screen bg-gray-50 pb-10'>
+      <div className='w-full bg-white shadow-sm sticky top-0 z-10 px-4 py-4 md:px-8 flex items-center gap-4'>
+        <Link to={"/"} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+          <FaArrowLeftLong size={20}/>
+        </Link>
+        <h1 className='text-xl font-bold text-gray-800'>My Cart</h1>
+      </div>
+
+      <div className="container mx-auto px-4 mt-6">
+        {cartEmpty ? (
+          <div className='flex flex-col items-center justify-center py-20 text-center'>
+            <img className='w-48 md:w-64 mb-8 opacity-80' src={emptyCart} alt="Empty Cart" />
+            <h1 className='text-2xl font-bold text-gray-800 mb-2'>Your cart is empty</h1>
+            <p className='text-gray-500 mb-8 max-w-xs'>Looks like you haven't added any services yet. Explore our top services and book now!</p>
+            <Link to={'/'} className='px-10 py-3 bg-orange-500 text-white font-bold rounded-2xl hover:bg-orange-600 transition-all shadow-lg shadow-orange-200'>
+              Explore Services
+            </Link>
+          </div>
+        ) : (
+          <div className='max-w-3xl mx-auto'>
+            <div className='flex items-center gap-4 mb-8'>
+              <div className="bg-orange-100 p-3 rounded-2xl">
+                <IoCart size={32} className='text-orange-600' />
               </div>
-      {
-  cartItems.map((item,i)=>{
-    return(
-    <div className='' key={item._id}>
-      {i!=0&&<hr className='h-0.5  bg-gray-400'/>}
-    <h1 className='text-2xl md:text-3xl px-2 md:p-0 pt-2 font-medium text-gray-600 mb-2' >{item.serviceTypeName}</h1>
-    <p className='flex px-2 text-gray-700  mb-3 items-center'><span>Total service {item.totalQuantity}</span> . <span className='flex items-center'><LuIndianRupee size={15} />
-    {
-item?.totalPrice
-}
-    </span></p>
-    <>
-    {
-      item.productDetails?.map(item=>{
-        return(
-          <div className='flex px-5' key={item.subService.subServiceId}>
-            <div className='flex flex-col '>
-            <p className='md:text-xl text-lg items-center  flex gap-2'><li>{item.subService.subServiceName}</li><span className='text-gray-500 text-base'>x {item.subService.quantity}</span></p>
-                 <div className="flex gap-2 items-center">{/*
-                  <FaRegClock size={12} />
-                  <span>{item.subService.serviceTime > 60 ? (
-                    (((item.subService.serviceTime) / 60).toFixed() > (item.subService.serviceTime) / 60 ? ((item.subService.serviceTime) / 60).toFixed() - 1 : ((item.subService.serviceTime) / 60).toFixed() + "." + (((item.subService.serviceTime) / 60 - 1) * 60).toFixed()) + " hr"
-                  ) : `${item.subService.serviceTime} mins`} </span>
-    */}</div>
+              <div>
+                <h2 className='text-2xl font-bold text-gray-800'>Order Summary</h2>
+                <p className='text-sm text-gray-500'>{cartItems.length} service categories in cart</p>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              {cartItems.map((item, i) => (
+                <div className='bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden' key={item._id}>
+                  <div className="p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h3 className='text-xl font-bold text-gray-800 mb-1'>{item.serviceTypeName}</h3>
+                        <p className='text-sm text-gray-500 font-medium'>{item.totalQuantity} items selected</p>
+                      </div>
+                      <div className="flex items-center bg-orange-50 px-3 py-1 rounded-full">
+                        <LuIndianRupee size={14} className="text-orange-600" />
+                        <span className='text-lg font-bold text-orange-600'>{item?.totalPrice}</span>
+                      </div>
+                    </div>
+
+                    <div className='space-y-3 mb-6'>
+                      {item.productDetails?.map(subItem => (
+                        <div className='flex items-center justify-between py-2 border-b border-gray-50 last:border-0' key={subItem.subService.subServiceId}>
+                          <div className="flex items-center gap-3">
+                            <div className="w-1.5 h-1.5 rounded-full bg-orange-400"></div>
+                            <span className="text-gray-700 font-medium">{subItem.subService.subServiceName}</span>
+                          </div>
+                          <span className='text-gray-400 text-sm font-bold'>x{subItem.subService.quantity}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className='grid grid-cols-2 gap-3'>
+                      <Link 
+                        to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=${item._id}`}  
+                        state={{ headLine: `${item?.serviceTypeName}` }} 
+                        className='py-3 px-4 rounded-2xl font-bold text-gray-600 border-2 border-gray-100 hover:bg-gray-50 text-center transition-colors'
+                      >
+                        Add More
+                      </Link>
+                      <Link 
+                        to={`/check_out/?city=${city||"mumbai"}&categories=${item._id}`} 
+                        className='py-3 px-4 rounded-2xl font-bold text-white bg-orange-500 hover:bg-orange-600 text-center transition-all shadow-md shadow-orange-100'
+                      >
+                        Checkout
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        )
-      })
-     
-    }
-    </>
-    <div className='flex w-full px-2 gap-2 my-5'>
-      <Link to={`/serviceDetailPage/service_data_get?city=${city||"mumbai"}&categories=${item._id}`}  state={{ headLine: `${item?.serviceTypeName}` }} className='md:px-5 px-2 md:py-2 py-1 md:text-xl text-lg flex items-center justify-center  text-center font-semibold text-gray-700   hover:bg-gray-100 w-full bg-white border-2  rounded-lg'>Add Service</Link>
-      <Link to={`/check_out/?city=${city||"mumbai"}&categories=${item._id}`} className='md:px-5 px-2 md:py-2 py-1 md:text-xl text-lg  font-semibold text-white text-center flex items-center justify-center bg-orange-500 w-full  rounded-lg'>Checkout</Link>
-    </div>
-    </div>
-    
-    )
-  })
-} 
-</div>
-}
-</main>
+        )}
+      </div>
+    </main>
     }
     </>
   )

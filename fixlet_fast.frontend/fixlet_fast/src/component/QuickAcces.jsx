@@ -70,27 +70,31 @@ function QuickAcces() {
 
 
 
-    <div className='flex w-max gap-11  overflow-auto justify-between  '>
+    <div className='flex w-max gap-6 md:gap-11 overflow-x-auto pb-4 scrollbar-hide px-4'>
 
-    <div className=" rounded z-0 overflow-hidden ">
-<Link className='group h-40  w-80 ' to={`/serviceDetailPage/service_data_get?city=${city || "mumbai"}&categories=lightdecoration`}  state={{ headLine: 'AC repair & Service' }} >
-<div className="relative flex flex-col h-40 rounded w-80 justify-end overflow-hidden">
-<div className="absolute z-10 inset-0   bg-cover  transform transition-transform duration-300 scale-100 group-hover:scale-110" style={{ backgroundImage: `url(${decoration_img})` }}>
-</div>
-<div className='relative z-10  flex items-center bg-opacity-60 bg-black w-40 h-full font-semibold text-white  my-auto'><p className='px-2 text-base'>Create a Magical Ambiance with Perfect Light Decorations</p></div>
+    <div className="rounded-2xl z-0 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+      <Link className='group block h-32 md:h-40 w-64 md:w-80' to={`/serviceDetailPage/service_data_get?city=${city || "mumbai"}&categories=lightdecoration`} state={{ headLine: 'AC repair & Service' }}>
+        <div className="relative flex flex-col h-full rounded-2xl w-full justify-end overflow-hidden">
+          <div className="absolute inset-0 bg-cover transform transition-transform duration-500 scale-100 group-hover:scale-110" style={{ backgroundImage: `url(${decoration_img})`, backgroundPosition: 'center' }}>
+          </div>
+          <div className='absolute inset-0 bg-gradient-to-r from-black/80 to-transparent flex items-center w-3/4 md:w-1/2 h-full'>
+            <p className='px-4 text-xs md:text-sm font-bold text-white leading-tight'>Create a Magical Ambiance with Perfect Light Decorations</p>
+          </div>
+        </div>
+      </Link>
+    </div>
 
-</div></Link>
-</div>
-
-<div className=" rounded  overflow-hidden z-0 ">
-<Link className='group h-40  w-80 ' to={`/serviceDetailPage/service_data_get?city=${city || "mumbai"}&categories=acservice`}  state={{ headLine: 'AC repair & Service' }} >
-<div className="relative flex flex-col h-40 rounded w-80 justify-end overflow-hidden">
-<div className="absolute z-10 inset-0   bg-cover  transform transition-transform duration-300 scale-100 group-hover:scale-110" style={{ backgroundImage: `url(${AC_service_image})` }}>
-</div>
-<div className='relative z-10  flex items-center bg-opacity-60 bg-black w-40 h-full font-semibold text-white  my-auto'><p className='px-2 text-base'>Save Energy, Save Money  Book Your Service Now!</p></div>
-
-</div></Link>
-</div>
+    <div className="rounded-2xl z-0 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+      <Link className='group block h-32 md:h-40 w-64 md:w-80' to={`/serviceDetailPage/service_data_get?city=${city || "mumbai"}&categories=acservice`} state={{ headLine: 'AC repair & Service' }}>
+        <div className="relative flex flex-col h-full rounded-2xl w-full justify-end overflow-hidden">
+          <div className="absolute inset-0 bg-cover transform transition-transform duration-500 scale-100 group-hover:scale-110" style={{ backgroundImage: `url(${AC_service_image})`, backgroundPosition: 'center' }}>
+          </div>
+          <div className='absolute inset-0 bg-gradient-to-r from-black/80 to-transparent flex items-center w-3/4 md:w-1/2 h-full'>
+            <p className='px-4 text-xs md:text-sm font-bold text-white leading-tight'>Save Energy, Save Money Book Your Service Now!</p>
+          </div>
+        </div>
+      </Link>
+    </div>
 
 
 <div className=" rounded  overflow-hidden z-0 ">

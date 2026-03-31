@@ -106,7 +106,7 @@ useEffect(() => {
  
   useEffect(()=>{
     setShowMenu(true)
-    Context.setShowHeader(false)
+    Context.setShowHeader(true) // Ensure header is shown
     Context.setShowSearch(false)
     // if(!userInfo){
     //   navigate('/login')
@@ -389,25 +389,9 @@ function isEmpty(obj_inside) {
         <Loader />
       ) : (
 <>
-
-{showMenu?
-<div className='fixed  bg-white w-full'>
-        <div className='xl:hidden justify-between flex py-3 px-5'>
-        <div> 
-      <button onClick={handle_back} >
-    <FaArrowLeftLong className='' size={25}/>
-    </button></div>
-        <div>
-          <button onClick={()=>setShowMenu(false)}>
-            <p className='flex bg-black rounded-lg gap-1 px-2 py-0.5 items-center'><IoMenu className='text-white'/><span className="text-white text-sm">Menu</span></p>
-          </button>
-        </div>
-      </div>
-      </div>:<div className='w-full sticky top-0 z-10 bg-white flex justify-end p-4 '><button onClick={()=>setShowMenu(true)}><IoClose className='text-4xl'/></button></div>
-}
-        <div className={` md:mt-14  w-full  flex flex-col  ${filter_cartItems?.length > 0?"pb-10":""}`}>
+        <div className={`pt-32 md:pt-28 w-full flex flex-col ${filter_cartItems?.length > 0?"pb-20":""}`}>
           {offers&&
-        <p className='w-full text-center z  md:block hidden text-gray-800 font-semibold fixed  py-2 bg-green-300 mb-5'>{offers?offers[0]?.offerDescription:""}</p>
+        <p className='w-full text-center z-[10] md:block hidden text-gray-800 font-semibold fixed top-24 py-2 bg-green-300 mb-5'>{offers?offers[0]?.offerDescription:""}</p>
           }
 
         <div className={`flex  w-full  justify-center md:justify-around`}>

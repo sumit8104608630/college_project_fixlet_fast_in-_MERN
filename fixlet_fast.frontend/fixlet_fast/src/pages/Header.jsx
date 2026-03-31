@@ -177,9 +177,9 @@ useEffect(()=>{
                 {Show.cartShow && (
                   <div className="relative">
                     <Link to="/cart">
-                      <CiShoppingCart size={28} className="text-gray-800" />
+                      <FaShoppingCart size={24} className="text-orange-500" />
                       {cartCount > 0 && (
-                        <span className="absolute -top-1 -right-1 text-[10px] font-bold text-white bg-red-600 rounded-full w-4 h-4 flex items-center justify-center">
+                        <span className="absolute -top-2 -right-2 text-[10px] font-bold text-white bg-red-600 rounded-full w-4 h-4 flex items-center justify-center">
                           {cartCount}
                         </span>
                       )}

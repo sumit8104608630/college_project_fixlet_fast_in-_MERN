@@ -8,17 +8,17 @@ import  "../index.css"
 
 
 function LayOut() {
-const footerShow=useContext(currentContext)
+const Context=useContext(currentContext)
   
 
   return (
     <div className=''>
     
-      <Header/>
-        <div className="custom-dashBoardScroll px-10  w-full">
+      {Context.showHeader && <Header/>}
+        <div className="custom-dashBoardScroll  w-full">
           <Outlet/>
         </div>
-     { footerShow.footerShow&&<Footer/> }
+     { Context.footerShow&&<Footer/> }
       
     </div>
   )
